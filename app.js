@@ -17,7 +17,8 @@ const adminRoutes = require('./routes/admin.routes.js');
 const dotenv = require('dotenv').config();
 
 //database connectivity
-var mongoDB = 'mongodb://localhost:27017/'+process.env.DATABASE;
+//var mongoDB = 'mongodb://localhost:27017/'+process.env.DATABASE;
+var mongoDB = 'mongodb+srv://localbuniya:localbuniya@123@cluster0.2oftf.mongodb.net/test'
 mongoose.connect(mongoDB, {
   useCreateIndex: true,
   useNewUrlParser: true,
