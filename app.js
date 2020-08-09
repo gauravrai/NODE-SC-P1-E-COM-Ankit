@@ -69,7 +69,7 @@ app.set("view engine", "ejs");
 
 adminRoutes(app);
 
-var port = process.env.PORT || 3001;
+var port = process.env.PORT || 3000;
 
 app.use((error, req, res, next) => {
   console.log("Error", req);
