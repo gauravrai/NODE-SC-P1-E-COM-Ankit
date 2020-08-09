@@ -1,0 +1,26 @@
+{
+  "name": "backend",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "bcrypt-nodejs": "0.0.3",
+    "connect-flash": "^0.1.1",
+    "connect-mongo": "^3.2.0",
+    "dotenv": "^8.2.0",
+    "ejs": "^3.1.3",
+    "express": "^4.17.1",
+    "express-layout": "^0.1.0",
+    "fund": "^1.0.0",
+    "moment": "^2.27.0",
+    "mongo-express": "^1.0.0-alpha.1",
+    "mongoose": "^5.9.26",
+    "nodemon": "^2.0.4",
+    "sweetalert": "^2.1.2"
+  }
+}

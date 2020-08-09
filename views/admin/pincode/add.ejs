@@ -1,0 +1,58 @@
+<div class="content-wrapper">
+  <section class="content-header">
+    <div class="container-fluid">
+      <div class="row mb-2">
+        <div class="col-sm-6">
+          <h1><%=pageTitle%></h1>
+        </div>
+        <div class="col-sm-6">
+          <ol class="breadcrumb float-sm-right">
+            <li class="breadcrumb-item"><a href="javascript:void(0)"><%=moduleName%></a></li>
+            <li class="breadcrumb-item active"><%=pageTitle%></li>
+          </ol>
+        </div>
+      </div>
+    </div>
+  </section>
+  <section class="content">
+    <div class="container-fluid">
+      <div class="row">
+        <div class="col-md-12">
+          <div class="card card-primary card-outline">
+            <div class="card-header d-flex p-0">
+              <h3 class="card-title p-3">Pincode Information</h3>
+              <ul class="nav nav-pills ml-auto p-2">
+                <li class="nav-item"><a class="btn btn-block btn-secondary" href="<%=APPCONSTANT.ADMINCALLURL%>/manage_pincode">Back</a></li>
+              </ul>
+            </div>
+            <form role="form" id="addPincodeForm" method="post">
+              <div class="card-body">
+                <div class="form-group">
+                  <label for="state">Select State</label>
+                  <select name="stateId" class="form-control" id="stateId" onchange="getLocationFields(this.value, 'city', 'get_city', 'Select City', '')">
+                    <option value="">Select State</option>
+                  <% for(let i = 0; i < stateData.length; i++){ %>
+                    <option value="<%=stateData[i].id%>"><%=stateData[i].name%></option>
+                  <% } %>
+                  </select>
+                </div>
+                <span id="cityData" class="locationFields"></span>
+                <div class="form-group">
+                  <label for="pincode">Pincode</label>
+                  <input type="text" name="pincode" class="form-control" id="pincode" placeholder="Pincode">
+                </div>
+              </div>
+              <div class="card-footer">
+                <a href="<%=APPCONSTANT.ADMINCALLURL%>/manage_pincode" class="btn btn-default">Cancel</a>
+                <button type="submit" class="btn btn-primary">Submit</button>
+              </div>
+            </form>
+          </div>
+        </div>
+        <div class="col-md-6">
+
+        </div>
+      </div>
+    </div>
+  </section>
+</div>

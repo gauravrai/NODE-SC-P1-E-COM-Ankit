@@ -1,0 +1,13 @@
+
+
+	<div class="form-group">
+		<label for="<%=name%>Id"><%=label%></label>
+		<select name="<%=name%>Id" class="form-control" id="<%=name%>Id" <% if(functionName != ''){ %> onchange="getLocationFields(this.value, '<%=nextField%>', 'get_<%=nextField%>', 'Select <%=nextField%>', '<%=functionName%>')"<% } %> >
+		  <option value=""><%=label%></option>
+		  <% if(data && data.length>0){ %>
+		  	<% for(let i = 0; i < data.length; i++){ %>
+			<option value="<%=data[i].id%>"><%= name == 'pincode'?data[i].pincode:data[i].name%></option>
+			<% 	} %>
+		  <% } %>
+		</select>
+	</div>

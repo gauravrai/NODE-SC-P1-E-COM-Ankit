@@ -1,0 +1,119 @@
+<div class="content-wrapper">
+  <section class="content-header">
+    <div class="container-fluid">
+      <div class="row mb-2">
+        <div class="col-sm-6">
+          <h1><%=pageTitle%></h1>
+        </div>
+        <div class="col-sm-6">
+          <ol class="breadcrumb float-sm-right">
+            <li class="breadcrumb-item"><a href="javascript:void(0)"><%=moduleName%></a></li>
+            <li class="breadcrumb-item active"><%=pageTitle%></li>
+          </ol>
+        </div>
+      </div>
+    </div>
+  </section>
+  <section class="content">
+    <div class="container-fluid">
+      <div class="row">
+        <div class="col-md-12">
+          <div class="card card-primary card-outline">
+            <div class="card-header d-flex p-0">
+              <h3 class="card-title p-3">Role Information</h3>
+              <ul class="nav nav-pills ml-auto p-2">
+                <li class="nav-item"><a class="btn btn-block btn-secondary" href="<%=APPCONSTANT.ADMINCALLURL%>/manage_role">Back</a></li>
+              </ul>
+            </div>
+            <form role="form" id="addRoleForm" method="post">
+              <div class="card-body">
+                <div class="form-group">
+                  <label for="name">Role Name</label>
+                  <input type="text" name="name" class="form-control" id="name" placeholder="Role Name">
+                </div>
+                <div class="form-group">
+                  <label for="description">Role Description</label>
+                  <textarea name="description" class="form-control" id="description" placeholder="Role Description"></textarea>
+                </div>
+              </div>
+              <div class="card-header">
+                <h3 class="card-title">Permission</h3>
+              </div>
+              <div class="card-body">
+                <table class="table table-bordered">
+                  <thead>                  
+                    <tr>
+                      <th>Menu</th>
+                      <th align="center" style="width: 15%;">Add</th>
+                      <th align="center" style="width: 15%;">Edit</th>
+                      <th align="center" style="width: 15%;">Delete</th>
+                    </tr>
+                  </thead>
+                </table>
+
+                <div id="accordion">
+                  <div class="card">
+                    <% var k=1;for(var i=0; i < menuData.length; i++) {
+                      var menu = menuData[i];
+                      if(menu.name){
+                    %>
+                    <div class="card-header" id="headingOne<%=menu.id%>">
+                        <div data-toggle="collapse" data-target="#collapseOne<%=menu.id%>" aria-expanded="true" aria-controls="collapseOne<%=menu.id%>">
+                          <input type="checkbox" onclick="checkAllmenu(this.id)" id="menu_<%=menu.id%>"  value="<%=menu.id%>" name="menuCheck[]">
+                          &nbsp;&nbsp;
+                          <label class="custom-chk" for="menu_<%=menu.id%>"><i class="fas <%=menu.class%>"></i> <%=menu.name%></label>
+                        </div>
+                    </div>
+                    <div id="collapseOne<%=menu.id%>" class="collapse <%if(k ==1){%>show<%}%>" aria-labelledby="headingOne<%=menu.id%>" data-parent="#accordion">
+                      <div class="card-body">
+                        <table class="table table-striped">
+                          <%
+                          if(menu.submenu && menu.submenu.length){
+                            for(var i_sub=0; i_sub < menu.submenu.length; i_sub++) {
+                              var submenu = menu.submenu[i_sub];
+                          %>
+                          <tr>
+                            <td>
+                              &nbsp;&nbsp;
+                              <input type="checkbox" class="menu_<%=menu.id%>" onclick="checkAllsubmenu(this.id)"  id="submenu_<%=submenu.id%>_<%=menu.id%>"  value="<%=submenu.id%>" name="menuCheck[<%=menu.id%>][]">
+                              &nbsp;&nbsp;
+                              <label class="custom-chk cld" for="submenu_<%=submenu.id%>_<%=menu.id%>" > <%=submenu.name%></label>
+                            </td>
+                            <td align="center">
+                              <input type="checkbox"  id="submenu_<%=submenu.id%>_<%=menu.id%>_add" class="menu_<%=menu.id%> submenu_<%=submenu.id%>"  value="1" name="menuCheck_<%=submenu.id%>_add" onclick="checksubmenuPermission(this.id)" >
+                              <label class="custom-chk" for="submenu_<%=submenu.id%>_<%=menu.id%>_add"></label>
+                            </td>
+                            <td align="center">
+                              <input type="checkbox"  id="submenu_<%=submenu.id%>_<%=menu.id%>_edit" class="menu_<%=menu.id%> submenu_<%=submenu.id%>"  value="1" name="menuCheck_<%=submenu.id%>_edit" onclick="checksubmenuPermission(this.id)" >
+                              <label class="custom-chk" for="submenu_<%=submenu.id%>_<%=menu.id%>_edit"></label>
+                            </td>
+                            <td align="center">
+                              <input type="checkbox" value="1" id="submenu_<%=submenu.id%>_<%=menu.id%>_del" name="menuCheck_<%=submenu.id%>_delete" class="menu_<%=menu.id%> submenu_<%=submenu.id%>" onclick="checksubmenuPermission(this.id)">
+                              <label class="custom-chk" for="submenu_<%=submenu.id%>_<%=menu.id%>_del"></label>
+                            </td>
+                          </tr>
+                          <%}}%>
+                        </table>
+                      </div>
+                    </div>
+
+                    <%k++;
+                    }
+                    }%>
+                  </div>
+                </div>
+              </div>
+              <div class="card-footer">
+                <a href="<%=APPCONSTANT.ADMINCALLURL%>/manage_role" class="btn btn-default">Cancel</a>
+                <button type="submit" class="btn btn-primary">Submit</button>
+              </div>
+            </form>
+          </div>
+        </div>
+        <div class="col-md-6">
+
+        </div>
+      </div>
+    </div>
+  </section>
+</div>
