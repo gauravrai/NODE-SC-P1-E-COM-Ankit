@@ -6,7 +6,7 @@ $(document).ready(function() {
         "ajax": {
             url: 'list_role',
             type: "POST",          
-          }
+        }
     });
 
     $('#administratorTable').DataTable( {
@@ -16,7 +16,7 @@ $(document).ready(function() {
         "ajax": {
             url: 'list_administrator',
             type: "POST",          
-          }
+        }
     });
 
     $('#categoryTable').DataTable( {
@@ -26,7 +26,7 @@ $(document).ready(function() {
         "ajax": {
             url: 'list_category',
             type: "POST",          
-          }
+        }
     });
 
     $('#stateTable').DataTable( {
@@ -36,7 +36,7 @@ $(document).ready(function() {
         "ajax": {
             url: 'list_state',
             type: "POST",          
-          }
+        }
     });
 
     $('#cityTable').DataTable( {
@@ -46,7 +46,7 @@ $(document).ready(function() {
         "ajax": {
             url: 'list_city',
             type: "POST",          
-          }
+        }
     });
 
     $('#pincodeTable').DataTable( {
@@ -56,7 +56,7 @@ $(document).ready(function() {
         "ajax": {
             url: 'list_pincode',
             type: "POST",          
-          }
+        }
     });
 
     $('#areaTable').DataTable( {
@@ -66,7 +66,7 @@ $(document).ready(function() {
         "ajax": {
             url: 'list_area',
             type: "POST",          
-          }
+        }
     });
 
     $('#societyTable').DataTable( {
@@ -76,7 +76,7 @@ $(document).ready(function() {
         "ajax": {
             url: 'list_society',
             type: "POST",          
-          }
+        }
     });
 
     $('#towerTable').DataTable( {
@@ -84,9 +84,9 @@ $(document).ready(function() {
         "serverSide": true,
         "ordering": false,
         "ajax": {
-            url: 'list_society',
+            url: 'list_tower',
             type: "POST",          
-          }
+        }
     });
 });
 

@@ -32,6 +32,7 @@ function menu_active()
 			{
 				$(this).find('a').addClass("active");
 				$(this).parent().siblings('a').addClass("active");
+				$(this).parent().parent().addClass("menu-open");
 			}
 		});
 	}
@@ -108,3 +109,31 @@ function getLocationFields(id, name, controller, label, functionName){
 		}
 	});
 }
+
+$('body').on('click', '.nav-sidebar .has-treeview', function() {
+	if($(this).hasClass('menu-open') == false){
+		$(this).addClass('menu-open');
+		$(this > ul).slideDown();
+	}else
+	{
+		$(this).removeClass('menu-open');
+		$(this > ul).sldeUp();
+	}
+});
+
+$("#searchHead").click(function(){
+	$("#searchBox").slideToggle("slow");
+	// var class_data = $("#global_search").attr('class');
+
+	// if(class_data=="srch-icn ti-search")
+	// {
+	//   $("#global_search").removeClass("ti-search");
+	//   $("#global_search").addClass("ti-close");
+	// }
+	// if(class_data=="srch-icn ti-close")
+	// {
+	//   $("#global_search").removeClass("ti-close");
+	//   $("#global_search").addClass("ti-search");
+	// }
+
+});

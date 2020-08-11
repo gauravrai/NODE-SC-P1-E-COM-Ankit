@@ -13,6 +13,7 @@ module.exports = function(app) {
 	var pincodeRoutes = require('./admin/pincode.routes');
 	var areaRoutes = require('./admin/area.routes');
 	var societyRoutes = require('./admin/society.routes');
+	var towerRoutes = require('./admin/tower.routes');
 
 	var ajaxRoutes = require('./admin/ajax.routes');
 	var router = express.Router();
@@ -29,6 +30,7 @@ module.exports = function(app) {
 	pincodeRoutes(router);
 	areaRoutes(router);
 	societyRoutes(router);
+	towerRoutes(router);
 	
 	ajaxRoutes(router);
 }

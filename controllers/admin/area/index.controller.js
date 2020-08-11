@@ -15,8 +15,11 @@ module.exports = {
 	manageArea: async function(req,res){
 		let moduleName = 'Location Management';
 		let pageTitle = 'Manage Area';
+		let stateData = await State.find({status: true, deletedAt: 0});	
+		let cityData = await City.find({status: true, deletedAt: 0});	
+		let pincodeData = await Pincode.find({status: true, deletedAt: 0});	
 		await config.helpers.permission('manage_area', req, (err,permissionData)=>{
-			res.render('admin/area/view.ejs',{layout:'admin/layout/layout', pageTitle:pageTitle, moduleName:moduleName, permissionData:permissionData});
+			res.render('admin/area/view.ejs',{layout:'admin/layout/layout', pageTitle:pageTitle, moduleName:moduleName, permissionData:permissionData, stateData:stateData, cityData:cityData, pincodeData:pincodeData });
 		});
 	},
 

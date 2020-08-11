@@ -48,8 +48,8 @@ module.exports = {
 		let name = req.body.name;
 		let label = req.body.label;
 		let functionName = req.body.functionName;
-		let societyId = req.param('id');
-		let data = await Society.find({ societyId: mongoose.mongo.ObjectID(societyId), status: true, deletedAt: 0 });
+		let areaId = req.param('id');
+		let data = await Society.find({ areaId: mongoose.mongo.ObjectID(areaId), status: true, deletedAt: 0 });
 		res.render('admin/ajax/locationfields',{layout:false, data:data, name:name, label: label, functionName:functionName, nextField:nextField } );
 	}
 }

@@ -30,7 +30,7 @@
                   let menu = allMenu[i];
                   if(menu.name){            
               %>
-              <li class="nav-item has-treeview menu-open">
+              <li class="nav-item has-treeview">
                 <a href="#" class="nav-link">
                   <i class="nav-icon fas <%=menu.class%>"></i>
                   <p>
@@ -38,7 +38,7 @@
                     <i class="fas fa-angle-left right"></i>
                   </p>
                 </a>
-                <ul class="nav nav-treeview" style="display: block;">
+                <ul class="nav nav-treeview">
                  <%
                     let item=0;
                     if(menu.submenu && menu.submenu.length){
