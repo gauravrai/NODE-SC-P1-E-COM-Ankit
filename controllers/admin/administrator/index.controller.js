@@ -7,6 +7,7 @@ const bcrypt = require("bcrypt-nodejs");
 const moment = require('moment');
 const Admin = model.admin;
 const Role = model.role;
+const Store = model.store;
 const ADMINCALLURL = config.constant.ADMINCALLURL;
 
 module.exports = {
@@ -91,7 +92,8 @@ module.exports = {
 			let moduleName = 'Role Management';
 			let pageTitle = 'Add Administrator';
 			let roleData = await Role.find({status:true, deletedAt: 0});
-			res.render('admin/administrator/add.ejs',{layout:'admin/layout/layout', pageTitle:pageTitle, moduleName:moduleName, roleData:roleData} );
+			let storeData = await Store.find({status:true, deletedAt: 0});
+			res.render('admin/administrator/add.ejs',{layout:'admin/layout/layout', pageTitle:pageTitle, moduleName:moduleName, roleData:roleData,storeData:storeData} );
 		}else{
 			let adminData = {
 				superadmin : false,
@@ -100,6 +102,7 @@ module.exports = {
 				username : req.body.username,
 				password : bcrypt.hashSync(req.body.password),
 				roleId : mongoose.mongo.ObjectId(req.body.roleId),
+				storeId : mongoose.mongo.ObjectId(req.body.StoreId)
 			};
 			let admin = new Admin(adminData);
 			admin.save(function(err, data){
@@ -116,9 +119,10 @@ module.exports = {
 			let moduleName = 'Role Management';
 			let pageTitle = 'Edit Administrator';
 			let roleData = await Role.find({status:true, deletedAt: 0});
+			let storeData = await Store.find({status:true, deletedAt: 0});
 			let adminId = req.body.id;
 			let administratorData = await Admin.findOne({_id: mongoose.mongo.ObjectId(adminId), status:true});			
-			res.render('admin/administrator/edit',{layout:'admin/layout/layout', pageTitle:pageTitle, moduleName:moduleName, roleData:roleData, administratorData:administratorData} );
+			res.render('admin/administrator/edit',{layout:'admin/layout/layout', pageTitle:pageTitle, moduleName:moduleName, roleData:roleData, administratorData:administratorData,storeData:storeData} );
 		}
 		if(req.method == "POST"){
 			let administratorData = {
@@ -126,6 +130,7 @@ module.exports = {
 				email : req.body.email,
 				username : req.body.username,
 				roleId : mongoose.mongo.ObjectId(req.body.roleId),
+				storeId : mongoose.mongo.ObjectId(req.body.StoreId),
 			};
 			if(req.body.password) {
 				administratorData.password = bcrypt.hashSync(req.body.password)

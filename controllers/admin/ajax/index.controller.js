@@ -10,6 +10,7 @@ const State = model.state;
 const Pincode = model.pincode;
 const Area = model.area;
 const Society = model.society;
+const SubCategory = model.sub_category;
 const ADMINCALLURL = config.constant.ADMINCALLURL;
 
 module.exports = {
@@ -22,7 +23,24 @@ module.exports = {
 		let data = await City.find({ stateId: mongoose.mongo.ObjectID(stateId), status: true, deletedAt: 0 });
 		res.render('admin/ajax/locationfields',{layout:false, data:data, name:name, label: label, functionName:functionName, nextField:nextField } );
 	},
-
+	getSubCategory: async function(req,res){
+		
+		let cateId = req.body.ids;
+		var cateIdSplit = cateId.split(',');
+		//console.log(cateId);
+		let appender = "";
+		cateIdSplit.forEach(element => { 
+			if(appender==""){
+				appender = mongoose.mongo.ObjectID(element)
+			}else{
+				appender += ","+mongoose.mongo.ObjectID(element)
+			}	
+		  }); 
+		  //console.log(appender); 
+		
+		let data = await SubCategory.find({cat_id: {$in:cateIdSplit}, status: true, deletedAt: 0 });
+		res.render('admin/ajax/subcategory',{layout:false, data:data} );
+	},
 	getPincode: async function(req,res){
 		let nextField = 'area';
 		let name = req.body.name;

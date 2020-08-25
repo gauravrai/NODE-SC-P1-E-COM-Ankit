@@ -110,6 +110,28 @@ function getLocationFields(id, name, controller, label, functionName){
 	});
 }
 
+
+
+
+//Delete data function
+function getLocationFieldsMulti(id, name, controller, label, functionName){
+	
+    $.ajax({
+		type: 'POST',
+		url: controller+'/'+id,
+		data: {name: name, label: label, functionName:functionName},
+		success: function(response) {
+			console.log(response);
+			if(response){
+				$('#'+name+'Data').html(response);	
+			}
+			else{
+				$('#'+name+'Data').html('');	
+			}
+		}
+	});
+}
+
 $('body').on('click', '.nav-sidebar .has-treeview', function() {
 	if($(this).hasClass('menu-open') == false){
 		$(this).addClass('menu-open');

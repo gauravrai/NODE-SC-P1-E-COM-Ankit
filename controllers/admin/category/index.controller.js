@@ -10,9 +10,10 @@ const ADMINCALLURL = config.constant.ADMINCALLURL;
 
 module.exports = {
 	manageCategory: async function(req,res){
+		let moduleName = 'Category Management';
 		let pageTitle = 'Manage Category';
 		await config.helpers.permission('manage_category', req, (err,permissionData)=>{
-			res.render('admin/category/view.ejs',{layout:'admin/layout/layout', pageTitle:pageTitle, permissionData:permissionData});
+			res.render('admin/category/view.ejs',{layout:'admin/layout/layout', pageTitle:pageTitle,moduleName:moduleName,permissionData:permissionData});
 		});
 	},
 
@@ -81,15 +82,17 @@ module.exports = {
 
 	addCategory: async function(req,res){
 		if(req.method == "GET"){
+			let moduleName = 'Category Management';
 			let pageTitle = 'Add Category';
-			res.render('admin/category/add.ejs',{layout:'admin/layout/layout', pageTitle:pageTitle} );
+			res.render('admin/category/add.ejs',{layout:'admin/layout/layout', pageTitle:pageTitle,moduleName:moduleName} );
 		}else{
 			let categoryData = {
 				name : req.body.name,
-				slug : req.body.slug,
+				slug : req.body.slug
 			};
-			let category = new Category(categoryData);
-			category.save(function(err, data){
+			//console.log(categoryData);
+			let categoryobj = new Category(categoryData);
+			categoryobj.save(function(err, data){
 				if(err){console.log(err)}
 				req.flash('msg', {msg:'Category has been Created Successfully', status:false});	
 				res.redirect(config.constant.ADMINCALLURL+'/manage_category');
@@ -100,10 +103,11 @@ module.exports = {
 
 	editCategory: async function(req,res){
 		if(req.method == "GET"){
+			let moduleName = 'Category Management';
 			let pageTitle = 'Edit Category';
 			let id = req.body.id;
 			let categoryData = await Category.findOne({_id: mongoose.mongo.ObjectId(id), deletedAt: 0});			
-			res.render('admin/category/edit',{layout:'admin/layout/layout', pageTitle:pageTitle, categoryData:categoryData} );
+			res.render('admin/category/edit',{layout:'admin/layout/layout', pageTitle:pageTitle,moduleName:moduleName,categoryData:categoryData} );
 		}
 		if(req.method == "POST"){
 			let categoryData = {
@@ -149,8 +153,8 @@ module.exports = {
 	
 	checkSlugCategory: function(req,res){
 		console.log('coming')
-		var slug = req.param('slug');
-		var id = req.param('id');
+		var slug = req.body.slug;
+		var id = req.body.id;
 		var search = {deletedAt:0,slug:slug};
 		if(id){
 			search._id = {$ne:id}

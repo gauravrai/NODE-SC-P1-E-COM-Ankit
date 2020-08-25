@@ -80,7 +80,7 @@ module.exports = {
 	addRole: async function(req,res){
 		if(req.method == "GET"){
 			let moduleName = 'Role Management';
-			let pageTitle = 'Add Role';
+			let pageTitle = 'Add Role 1';
 			let menuData = await Menu.find({status:true, deletedAt: 0}).sort({order: 1});
 			res.render('admin/role/add',{layout:'admin/layout/layout', pageTitle:pageTitle, moduleName:moduleName, menuData:menuData} );
 		}

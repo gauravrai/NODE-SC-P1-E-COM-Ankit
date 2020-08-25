@@ -1,0 +1,13 @@
+
+
+	<div class="form-group">
+		<label for="subcategoryId">Select Sub Category</label>
+		<select name="subcategoryId" class="form-control" id="subcategoryId">
+		  <option value="">Select Sub Category</option>
+		  <% if(data && data.length>0){ %>
+		  	<% for(let i = 0; i < data.length; i++){ %>
+			<option value="<%=data[i].id%>"><%= data[i].sub_cat_name%></option>
+			<% 	} %>
+		  <% } %>
+		</select>
+	</div>

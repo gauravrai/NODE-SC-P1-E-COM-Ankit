@@ -28,6 +28,16 @@ $(document).ready(function() {
             type: "POST",          
         }
     });
+    
+    $('#subcategoryTable').DataTable( {
+        "processing": true,
+        "serverSide": true,
+        "ordering": false,
+        "ajax": {
+            url: 'list_subcategory',
+            type: "POST",          
+        }
+    });
 
     $('#stateTable').DataTable( {
         "processing": true,
@@ -85,6 +95,24 @@ $(document).ready(function() {
         "ordering": false,
         "ajax": {
             url: 'list_tower',
+            type: "POST",          
+        }
+    });
+    $('#storeTable').DataTable( {
+        "processing": true,
+        "serverSide": true,
+        "ordering": false,
+        "ajax": {
+            url: 'list_store',
+            type: "POST",          
+        }
+    });
+    $('#productTable').DataTable( {
+        "processing": true,
+        "serverSide": true,
+        "ordering": false,
+        "ajax": {
+            url: 'list_product',
             type: "POST",          
         }
     });

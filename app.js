@@ -18,7 +18,7 @@ const dotenv = require('dotenv').config();
 
 //database connectivity
 //var mongoDB = 'mongodb://localhost:27017/'+process.env.DATABASE;
-var mongoDB = 'mongodb+srv://localbuniya:localbuniya@123@cluster0.2oftf.mongodb.net/test'
+var mongoDB = 'mongodb+srv://localbuniya:localbuniya@123@cluster0.2oftf.mongodb.net/test';
 mongoose.connect(mongoDB, {
   useCreateIndex: true,
   useNewUrlParser: true,
@@ -70,7 +70,7 @@ app.set("view engine", "ejs");
 
 adminRoutes(app);
 
-var port = process.env.PORT || 3000;
+var port = process.env.PORT || 3001;
 
 app.use((error, req, res, next) => {
   console.log("Error", req);
@@ -81,5 +81,5 @@ app.use((error, req, res, next) => {
 });
 
 app.listen(port, function () {
-  console.log("Softchilli app listening on port: " + port);
+  console.log("LocalBaniya app listening on port: " + port);
 })

@@ -24,6 +24,9 @@ let AdminSchema = new Schema({
     roleId: {
         type: ObjectId
     },
+    storeId: {
+        type: ObjectId
+    },
     status: {
         type: Boolean,
         default : true

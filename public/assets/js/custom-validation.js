@@ -93,15 +93,15 @@ $(document).ready(function () {
             },
             slug: {
                 required: true,
-                remote: {
-                    url: "check_slug_category",
-                    type: "post",
-                    data: {
-                        slug: function() {
-                            return $( "#slug" ).val();
-                        }
-                    }
-                }
+                // remote: {
+                //     url: "check_slug_category",
+                //     type: "post",
+                //     data: {
+                //         slug: function() {
+                //             return $( "#slug" ).val();
+                //         }
+                //     }
+                // }
             },
         },
         messages: {
@@ -126,6 +126,43 @@ $(document).ready(function () {
         }
     });
     
+    $('#addSubCategoryForm, #editSubCategoryForm').validate({
+        rules: {
+            categoryId: {
+                required: true,
+            },
+            subcategory: {
+                required: true,
+            },
+            slug: {
+                required: true,   
+            },
+        },
+        messages: {
+            categoryId: {
+                required: "Please enter a Category Name"
+            },
+            subcategory: {
+                required: "Please enter a Sub Category Name"
+            },
+            slug: {
+                required: "Please enter a Slug",
+                remote: "Slug already taken"
+            }
+        },
+        errorElement: 'span',
+        errorPlacement: function (error, element) {
+            error.addClass('invalid-feedback');
+            element.closest('.form-group').append(error);
+        },
+        highlight: function (element, errorClass, validClass) {
+            $(element).addClass('is-invalid');
+        },
+        unhighlight: function (element, errorClass, validClass) {
+            $(element).removeClass('is-invalid');
+        }
+    });
+
     $('#addStateForm, #editStateForm').validate({
         rules: {
             name: {
@@ -351,6 +388,108 @@ $(document).ready(function () {
             },
             name: {
                 required: "Please enter tower Name"
+            }
+        },
+        errorElement: 'span',
+        errorPlacement: function (error, element) {
+            error.addClass('invalid-feedback');
+            element.closest('.form-group').append(error);
+        },
+        highlight: function (element, errorClass, validClass) {
+            $(element).addClass('is-invalid');
+        },
+        unhighlight: function (element, errorClass, validClass) {
+            $(element).removeClass('is-invalid');
+        }
+    });
+
+    $('#addStoreForm, #editStoreForm').validate({
+        rules: {
+            store: {
+                required: true,
+            },
+            stateId: {
+                required: true,
+            },
+            cityId: {
+                required: true,
+            },
+            address: {
+                required: true,
+            }
+        },
+        messages: {
+            store: {
+                required: "Please select Store Name"
+            },
+            stateId: {
+                required: "Please select State"
+            },
+            cityId: {
+                required: "Please select City"
+            },
+            address: {
+                required: "Please enter a Store Address"
+            }
+        },
+        errorElement: 'span',
+        errorPlacement: function (error, element) {
+            error.addClass('invalid-feedback');
+            element.closest('.form-group').append(error);
+        },
+        highlight: function (element, errorClass, validClass) {
+            $(element).addClass('is-invalid');
+        },
+        unhighlight: function (element, errorClass, validClass) {
+            $(element).removeClass('is-invalid');
+        }
+    });
+
+    $('#addProductForm,#editProductForm').validate({
+        rules: {
+            categoryId: {
+                required: true,
+            },
+            subcategoryId: {
+                required: true,
+            },
+            product: {
+                required: true,
+            },
+            price: {
+                required: true,
+            },
+            offer: {
+                required: true, 
+            },
+            discount: {
+                required: true, 
+            },
+            thumbnail: {
+                required: true,
+            }
+        },
+        messages: {
+            categoryId: {
+                required: "Please select Category Name"
+            },
+            subcategoryId: {
+                required: "Please select Sub Category Name"
+            },
+            product: {
+                required: "Please select Product Name"
+            },
+            price: {
+                required: "Please enter Product Price"
+            },
+            offer: {
+                required: "Please Select Product Offer"
+            },
+            discount: {
+                required: "Please Select Product Discount"
+            },
+            thumbnail: {
+                required: "Please Select Product Thumbnail Image"
             }
         },
         errorElement: 'span',
