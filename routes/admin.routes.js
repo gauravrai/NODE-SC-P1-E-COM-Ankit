@@ -17,6 +17,8 @@ module.exports = function(app) {
 	var towerRoutes = require('./admin/tower.routes');
 	var storeRoutes = require('./admin/store.routes');
 	var productRoutes = require('./admin/product.routes');
+	var offerRoutes   = require('./admin/offer.routes');
+	var discountRoutes   = require('./admin/discount.routes');
 
 	var ajaxRoutes = require('./admin/ajax.routes');
 	var router = express.Router();
@@ -37,6 +39,8 @@ module.exports = function(app) {
 	towerRoutes(router);
 	storeRoutes(router);
 	productRoutes(router);
+	offerRoutes(router);
+	discountRoutes(router);
 	
 	ajaxRoutes(router);
 }

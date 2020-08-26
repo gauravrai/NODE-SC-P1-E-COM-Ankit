@@ -1,0 +1,175 @@
+<div class="content-wrapper">
+    <section class="content-header">
+      <div class="container-fluid">
+        <div class="row mb-2">
+          <div class="col-sm-6">
+            <h1><%=pageTitle%></h1>
+          </div>
+          <div class="col-sm-6">
+            <ol class="breadcrumb float-sm-right">
+              <li class="breadcrumb-item"><a href="javascript:void(0)"><%=moduleName%></a></li>
+              <li class="breadcrumb-item active"><%=pageTitle%></li>
+            </ol>
+          </div>
+        </div>
+      </div>
+    </section>
+    <section class="content">
+      <div class="container-fluid">
+        <div class="row">
+          <div class="col-md-12">
+            <div class="card card-primary card-outline">
+              <div class="card-header d-flex p-0">
+                <h3 class="card-title p-3">Offer Information</h3>
+                <ul class="nav nav-pills ml-auto p-2">
+                  <li class="nav-item"><a class="btn btn-block btn-secondary" href="<%=APPCONSTANT.ADMINCALLURL%>/manage_offer">Back</a></li>
+                </ul>
+              </div>
+              <form role="form" id="addOfferForm" method="post" enctype="multipart/form-data">
+                <div class="card-body">
+                    <div class="form-group">
+                        <label for="offer_name">Offer Name</label>
+                        <input type="text" name="offer_name" class="form-control" id="offer_name" placeholder="Offer Name">
+                    </div>
+                    <div class="form-group">
+                        <label for="categoryId">Select Category</label>
+                        <select name="categoryId" class="form-control" id="categoryId">
+                        <option value="">Select Category</option>
+                        <% for(let i = 0; i < categoryData.length; i++){ %>
+                            <option value="<%=categoryData[i].id%>"><%=categoryData[i].name%></option>
+                          <% } %>
+                        </select>
+                    </div>
+                    <span id="subcategoryData" class="locationFields">
+                        <div class="form-group">
+                            <label for="subcategoryId">Select Sub  Category</label>
+                            <select name="subcategoryId" class="form-control" id="subcategoryId">
+                            <option value="">Select Sub Category</option>
+                            <% for(let i = 0; i < subcategoryData.length; i++){ %>
+                                <option value="<%=subcategoryData[i].id%>"><%=subcategoryData[i].sub_cat_name%></option>
+                              <% } %>
+                            </select>
+                        </div>
+                    </span>
+                    <div class="form-group">
+                        <label for="productId">Select Product</label>
+                        <select name="productId" class="form-control" id="productId">
+                        <option value="">Select Product</option>
+                        <% for(let i = 0; i < productData.length; i++){ %>
+                            <option value="<%=productData[i].id%>"><%=productData[i].name%></option>
+                          <% } %>
+                        </select>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="offertype">Select Offer Type</label>
+                        <select name="offertype" class="form-control" id="offertype">
+                        <option value="">Select Offer Type</option>
+                        <option value="percentage">Percentage</option>
+                        <option value="fixed">Fixed</option>
+                        </select>
+                    </div>
+                    <div class="form-group" id="percentage_div" style="display:none;">
+                        <label for="percentage">Percentage</label>
+                        <input type="text" name="percentage" class="form-control" id="percentage" placeholder="Percentage">
+                    </div>
+                    <div class="form-group" id="fixed_div" style="display:none;">
+                        <label for="fixed">Fixed</label>
+                        <input type="text" name="fixed" class="form-control" id="fixed" placeholder="Fixed">
+                    </div>
+
+                    <div class="form-group">
+                        <label for="min_cart_value">Minimum Cart Value</label>
+                        <input type="text" name="min_cart_value" class="form-control" id="min_cart_value" placeholder="Minimum Cart Value">
+                    </div> 
+                    <div class="form-group">
+                        <label for="from">From Date</label>
+                        <input type="date" name="from" class="form-control" id="from" placeholder="From Date">
+                    </div>
+                    <div class="form-group">
+                        <label for="to">To Date</label>
+                        <input type="date" name="to" class="form-control" id="to" placeholder="To Date">
+                    </div>
+                
+                    <div class="form-group">
+                        <label for="capping">Capping</label>
+                        <input type="text" name="capping" class="form-control" id="capping" placeholder="Capping">
+                    </div>
+                    <div class="form-group">
+                        <label for="applyfor">Select Apply For</label>
+                        <select name="applyfor" class="form-control" id="applyfor">
+                            <option value="">Select Apply For</option>
+                            <option value="web">Wed</option>
+                            <option value="app">App</option>
+                            <option value="both">Both</option>
+                        </select>
+                    </div>
+
+                    <!-- <div class="form-group"></div>
+                    <div class='input-group date' id='datetimepicker1'>
+                        <input type='text' class="form-control" />
+                        <span class="input-group-addon">
+                            <span class="glyphicon glyphicon-calendar"></span>
+                        </span>
+                    </div>
+                    </div> -->
+                   
+                    
+                    
+                </div>
+                <div class="card-footer">
+                  <a href="<%=APPCONSTANT.ADMINCALLURL%>/manage_offer" class="btn btn-default">Cancel</a>
+                  <button type="submit" class="btn btn-primary">Submit</button>
+                </div>
+              </form>
+            </div>
+          </div>
+          <div class="col-md-6">
+  
+          </div>
+        </div>
+      </div>
+    </section>
+  </div>
+
+  <script>
+
+
+    $(document).on("change","#offertype",function(){
+          var checkvalue = $(this).val();
+          if(checkvalue=="percentage"){
+            $("#percentage_div").show();
+            $("#fixed_div").hide();
+          } else {
+            $("#fixed_div").show();
+            $("#percentage_div").hide();
+          }
+    });
+  
+
+    $(document).on("change", "#categoryId", function(){
+        var ids = "";
+        $('option:selected', $(this)).each(function() {
+
+          if(ids==""){
+            ids = $(this).val();
+          }else{
+            ids += ","+$(this).val();
+          }
+          });
+          $.ajax({
+          type: 'POST',
+          url: 'get_subcategory/',
+          data: {ids:ids},
+          success: function(response) {
+            console.log(response);
+            if(response){
+              $('#subcategoryData').html(response);	
+            }
+            else{
+              $('#subcategoryData').html('');	
+            }
+          }
+        });
+    });
+  </script>

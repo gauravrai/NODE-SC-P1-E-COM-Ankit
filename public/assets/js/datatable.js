@@ -116,6 +116,24 @@ $(document).ready(function() {
             type: "POST",          
         }
     });
+    $('#offerTable').DataTable( {
+        "processing": true,
+        "serverSide": true,
+        "ordering": false,
+        "ajax": {
+            url: 'list_offer',
+            type: "POST",          
+        }
+    });
+    $('#discountTable').DataTable( {
+        "processing": true,
+        "serverSide": true,
+        "ordering": false,
+        "ajax": {
+            url: 'list_discount',
+            type: "POST",          
+        }
+    });
 });
 
 //Delete data function
