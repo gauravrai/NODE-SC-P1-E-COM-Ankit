@@ -47,7 +47,22 @@ let ProductSchema = new Schema({
             type: String
         }
     },
+    stock_keeping: {
+        type: String
+    },
     image1:{
+        type: String
+    },
+    brand:{
+        type: String
+    },
+    featured: {
+        type: Boolean,
+    },
+    quantity: {
+        type: String
+    },
+    weight_in: {
         type: String
     },
     status: {

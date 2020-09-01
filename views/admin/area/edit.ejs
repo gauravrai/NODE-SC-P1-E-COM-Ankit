@@ -26,44 +26,48 @@
               </ul>
             </div>
             <form role="form" id="editAreaForm" method="post">
-              <div class="card-body">
-                <div class="form-group">
-                  <label for="stateId">Select State</label>
-                  <select name="stateId" class="form-control" id="stateId" onchange="getLocationFields(this.value, 'city', 'get_city', 'Select City', 'get_pincode')">
-                    <option value="">Select State</option>
-                    <% for(let i = 0; i < stateData.length; i++){ %>
-                    <option value="<%=stateData[i].id%>" <% if(areaData.stateId == stateData[i].id){ %> selected="selected" <% } %> ><%=stateData[i].name%></option>
-                    <% } %>
-                  </select>
+              <div id="tableContent" style="padding: 0 17px 0 10px;">
+                <div class="form-row">
+                  <!-- <div class="card-body"> -->
+                    <div class="form-group col-md-3">
+                      <label for="stateId">Select State</label>
+                      <select name="stateId" class="form-control" id="stateId" onchange="getLocationFields(this.value, 'city', 'get_city', 'Select City', 'get_pincode')">
+                        <option value="">Select State</option>
+                        <% for(let i = 0; i < stateData.length; i++){ %>
+                        <option value="<%=stateData[i].id%>" <% if(areaData.stateId == stateData[i].id){ %> selected="selected" <% } %> ><%=stateData[i].name%></option>
+                        <% } %>
+                      </select>
+                    </div>
+                    <span id="cityData" class="locationFields col-md-3">
+                      <div class="form-group">
+                        <label for="cityId">Select City</label>
+                        <select name="cityId" class="form-control" id="cityId">
+                          <option value="">Select City</option>
+                          <% for(let i = 0; i < cityData.length; i++){ %>
+                          <option value="<%=cityData[i].id%>" <% if(areaData.cityId == cityData[i].id){ %> selected="selected" <% } %> ><%=cityData[i].name%></option>
+                          <% } %>
+                        </select>
+                      </div>
+                    </span>
+                    <span id="pincodeData" class="locationFields col-md-3">
+                      <div class="form-group">
+                        <label for="pincodeId">Select Pincode</label>
+                        <select name="pincodeId" class="form-control" id="pincodeId">
+                          <option value="">Select Pincode</option>
+                          <% for(let i = 0; i < pincodeData.length; i++){ %>
+                          <option value="<%=pincodeData[i].id%>" <% if(areaData.pincodeId == pincodeData[i].id){ %> selected="selected" <% } %> ><%=pincodeData[i].pincode%></option>
+                          <% } %>
+                        </select>
+                      </div>
+                    </span>
+                    <div class="form-group col-md-3">
+                      <input type="hidden" name="id" value="<%=areaData.id?areaData.id:''%>">
+                      <label for="name">Area Name</label>
+                      <input type="text" name="name" class="form-control" id="name" placeholder="Area Name" value="<%=areaData.name?areaData.name:''%>">
+                    </div>
+                  <!-- </div> -->
                 </div>
-                <span id="cityData" class="locationFields">
-                  <div class="form-group">
-                    <label for="cityId">Select City</label>
-                    <select name="cityId" class="form-control" id="cityId">
-                      <option value="">Select City</option>
-                      <% for(let i = 0; i < cityData.length; i++){ %>
-                      <option value="<%=cityData[i].id%>" <% if(areaData.cityId == cityData[i].id){ %> selected="selected" <% } %> ><%=cityData[i].name%></option>
-                      <% } %>
-                    </select>
-                  </div>
-                </span>
-                <span id="pincodeData" class="locationFields">
-                  <div class="form-group">
-                    <label for="pincodeId">Select Pincode</label>
-                    <select name="pincodeId" class="form-control" id="pincodeId">
-                      <option value="">Select Pincode</option>
-                      <% for(let i = 0; i < pincodeData.length; i++){ %>
-                      <option value="<%=pincodeData[i].id%>" <% if(areaData.pincodeId == pincodeData[i].id){ %> selected="selected" <% } %> ><%=pincodeData[i].pincode%></option>
-                      <% } %>
-                    </select>
-                  </div>
-                </span>
-                <div class="form-group">
-                  <input type="hidden" name="id" value="<%=areaData.id?areaData.id:''%>">
-                  <label for="name">Area Name</label>
-                  <input type="text" name="name" class="form-control" id="name" placeholder="Area Name" value="<%=areaData.name?areaData.name:''%>">
-                </div>
-              </div>
+              </div>  
               <div class="card-footer">
                 <a href="<%=APPCONSTANT.ADMINCALLURL%>/manage_area" class="btn btn-default">Cancel</a>
                 <button type="submit" class="btn btn-primary">Submit</button>

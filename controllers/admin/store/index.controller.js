@@ -149,7 +149,7 @@ module.exports = {
 			}
 			else{
 				let change_status = "changeStatus(this,\'1\',\'change_status_store\',\'list_store\',\'store\');";	
-				res.send('<span class="badge bg-danger" style="cursor:pointer;" onclick="'+change_status+'">Inactive</span>');
+				res.send('<span class="badge bg-danger"  style="cursor:pointer;" onclick="'+change_status+'">Inactive</span>');
 			}
 	    })
     },

@@ -36,6 +36,10 @@
                   <label for="slug">Slug</label>
                   <input type="text" name="slug" class="form-control" id="slug" placeholder="Slug" value="<%=categoryData.slug?categoryData.slug:''%>">
                 </div>
+                <div class="form-group">
+                  <label for="short">Short Order</label>
+                  <input type="text" name="short" class="form-control" value="<%=categoryData.short?categoryData.short:''%>" id="short" placeholder="short">
+                </div>
               </div>
               <div class="card-footer">
                 <a href="<%=APPCONSTANT.ADMINCALLURL%>/manage_category" class="btn btn-default">Cancel</a>

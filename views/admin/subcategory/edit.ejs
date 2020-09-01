@@ -45,6 +45,10 @@
                         <input type="hidden" name="id" value="<%=subcategoryData.id?subcategoryData.id:''%>">
                         <input type="text" name="slug" value="<%=subcategoryData.slug?subcategoryData.slug:''%>" class="form-control" id="slug" placeholder="Sub Category slug">
                     </div>
+                    <div class="form-group">
+                      <label for="short">Short Order</label>
+                      <input type="text" name="short" class="form-control" value="<%=subcategoryData.short?subcategoryData.short:''%>" id="short" placeholder="short">
+                    </div>
                 </div>
                 <div class="card-footer">
                   <a href="<%=APPCONSTANT.ADMINCALLURL%>/manage_subcategory" class="btn btn-default">Cancel</a>

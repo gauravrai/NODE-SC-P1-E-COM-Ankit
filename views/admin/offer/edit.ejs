@@ -25,97 +25,104 @@
                   <li class="nav-item"><a class="btn btn-block btn-secondary" href="<%=APPCONSTANT.ADMINCALLURL%>/manage_offer">Back</a></li>
                 </ul>
               </div>
-              <form role="form" id="addOfferForm" method="post" enctype="multipart/form-data">
-                <div class="card-body">
-                    <div class="form-group">
-                        <label for="offer_name">Offer Name</label>
-                        <input type="text" name="offer_name" class="form-control" value="<%=offerData.name%>" id="offer_name" placeholder="Offer Name">
-                    </div>
-                    <div class="form-group">
-                        <label for="categoryId">Select Category</label>
-                        <select name="categoryId" class="form-control" id="categoryId">
-                        <option value="">Select Category</option>
-                        <% for(let i = 0; i < categoryData.length; i++){ %>
-                            <option value="<%=categoryData[i].id%>" <% if(offerData.cate_id == categoryData[i].id){ %> selected="selected" <% } %> ><%=categoryData[i].name%></option>
-                          <% } %>
-                        </select>
-                    </div>
-                    <span id="subcategoryData" class="locationFields">
-                        <div class="form-group">
-                            <label for="subcategoryId">Select Sub  Category</label>
-                            <select name="subcategoryId" class="form-control" id="subcategoryId">
-                            <option value="">Select Sub Category</option>
-                            <% for(let i = 0; i < subcategoryData.length; i++){ %>
-                                <option value="<%=subcategoryData[i].id%>"<% if(offerData.s_cate_id == subcategoryData[i].id){ %> selected="selected" <% } %> ><%=subcategoryData[i].sub_cat_name%></option>
-                              <% } %>
-                            </select>
-                        </div>
-                    </span>
-                    <div class="form-group">
-                        <label for="productId">Select Product</label>
-                        <select name="productId" class="form-control" id="productId">
-                        <option value="">Select Product</option>
-                        <% for(let i = 0; i < productData.length; i++){ %>
-                            <option value="<%=productData[i].id%>"<% if(offerData.product_id == productData[i].id){ %> selected="selected" <% } %> ><%=productData[i].name%></option>
-                          <% } %>
-                        </select>
-                    </div>
-                    
-                    <div class="form-group">
-                        <label for="offertype">Select Offer Type</label>
-                        <select name="offertype" class="form-control" id="offertype">
-                        <option value="">Select Offer Type</option>
-                        <option value="percentage"<% if(offerData.offer_type =="percentage"){ %> selected="selected" <% } %> >Percentage</option>
-                        <option value="fixed"<% if(offerData.offer_type =="fixed"){ %> selected="selected" <% } %> >Fixed</option>
-                        </select>
-                    </div>
-                    <div class="form-group" id="percentage_div" <% offerData.percentage!=null? style="display:none;":style="display:block;"%> >
-                        <label for="percentage">Percentage</label>
-                        <input type="text" name="percentage" class="form-control" value="<%=offerData.percentage%>" id="percentage" placeholder="Percentage">
-                    </div>
-                    <div class="form-group" id="fixed_div" <% offerData.fixed!=null? style="display:none;":style="display:block;"%>>
-                        <label for="fixed">Fixed</label>
-                        <input type="text" name="fixed" class="form-control" value="<%= offerData.fixed%>" id="fixed" placeholder="Fixed">
-                    </div>
+              <form role="form" id="editOfferForm" method="post" enctype="multipart/form-data">
+                <div id="tableContent" style="padding: 0 17px 0 10px;">
+                  <div class="form-row">
+                      <!-- <div class="card-body"> -->
+                        
+                          <div class="form-group col-md-3">
+                              <label for="offer_name">Offer Name</label>
+                              <input type="text" name="offer_name" class="form-control" value="<%=offerData.name%>" id="offer_name" placeholder="Offer Name">
+                          </div>
+                          <div class="form-group col-md-3">
+                              <label for="categoryId">Select Category</label>
+                              <select name="categoryId" class="form-control" id="categoryId">
+                              <option value="">Select Category</option>
+                              <% for(let i = 0; i < categoryData.length; i++){ %>
+                                  <option value="<%=categoryData[i].id%>" <% if(offerData.cate_id == categoryData[i].id){ %> selected="selected" <% } %> ><%=categoryData[i].name%></option>
+                                <% } %>
+                              </select>
+                          </div>
+                          <!-- <span id="subcategoryData" class="locationFields form-group col-md-3"> -->
+                            <div  id="subcategoryData" class="col-md-3">
+                              <div class="form-group">
+                                  <label for="subcategoryId">Select Sub  Category</label>
+                                  <select name="subcategoryId" class="form-control" id="subcategoryId">
+                                  <option value="">Select Sub Category</option>
+                                  <% for(let i = 0; i < subcategoryData.length; i++){ %>
+                                      <option value="<%=subcategoryData[i].id%>"<% if(offerData.s_cate_id == subcategoryData[i].id){ %> selected="selected" <% } %> ><%=subcategoryData[i].sub_cat_name%></option>
+                                    <% } %>
+                                  </select>
+                              </div>
+                            </div>
+                          <!-- </span> -->
+                          <div class="form-group col-md-3">
+                              <label for="productId">Select Product</label>
+                              <select name="productId" class="form-control" id="productId">
+                              <option value="">Select Product</option>
+                              <% for(let i = 0; i < productData.length; i++){ %>
+                                  <option value="<%=productData[i].id%>"<% if(offerData.product_id == productData[i].id){ %> selected="selected" <% } %> ><%=productData[i].name%></option>
+                                <% } %>
+                              </select>
+                          </div>
+                          
+                          <div class="form-group col-md-3">
+                              <label for="offertype">Select Offer Type</label>
+                              <select name="offertype" class="form-control" id="offertype">
+                              <option value="">Select Offer Type</option>
+                              <option value="percentage"<% if(offerData.offer_type =="percentage"){ %> selected="selected" <% } %> >Percentage</option>
+                              <option value="fixed"<% if(offerData.offer_type =="fixed"){ %> selected="selected" <% } %> >Fixed</option>
+                              </select>
+                          </div>
+                          <div class="form-group col-md-3" id="percentage_div" <% offerData.percentage!=null? style="display:none;":style="display:block;"%> >
+                              <label for="percentage">Percentage</label>
+                              <input type="text" name="percentage" class="form-control" value="<%=offerData.percentage%>" id="percentage" placeholder="Percentage">
+                          </div>
+                          <div class="form-group col-md-3" id="fixed_div" <% offerData.fixed!=null? style="display:none;":style="display:block;"%>>
+                              <label for="fixed">Fixed</label>
+                              <input type="text" name="fixed" class="form-control" value="<%= offerData.fixed%>" id="fixed" placeholder="Fixed">
+                          </div>
 
-                    <div class="form-group">
-                        <label for="min_cart_value">Minimum Cart Value</label>
-                        <input type="text" name="min_cart_value" class="form-control" value="<%=offerData.minimum_cart_value%>" id="min_cart_value" placeholder="Minimum Cart Value">
-                    </div> 
-                    <div class="form-group">
-                        <label for="from">From Date</label>
-                        <input type="date" name="from" class="form-control" id="from" value="<%=moment(offerData.from).format('YYYY-MM-DD')%>" placeholder="From Date">
-                    </div>
-                    <div class="form-group">
-                        <label for="to">To Date</label>
-                        <input type="date" name="to" class="form-control" id="to" value="<%=moment(offerData.to).format('YYYY-MM-DD')%>" placeholder="To Date">
-                    </div>
-                
-                    <div class="form-group">
-                        <label for="capping">Capping</label>
-                        <input type="text" name="capping" class="form-control" id="capping" value="<%=offerData.capping%>" placeholder="Capping">
-                    </div>
-                    <div class="form-group">
-                        <label for="applyfor">Select Apply For</label>
-                        <select name="applyfor" class="form-control" id="applyfor">
-                            <option value="">Select Apply For</option>
-                            <option value="web"<% if(offerData.apply_for =="web"){ %> selected="selected" <% } %> >Wed</option>
-                            <option value="app"<% if(offerData.apply_for =="app"){ %> selected="selected" <% } %> >App</option>
-                            <option value="both"<% if(offerData.apply_for =="both"){ %> selected="selected" <% } %> >Both</option>
-                        </select>
-                    </div>
+                          <div class="form-group col-md-3">
+                              <label for="min_cart_value">Minimum Cart Value</label>
+                              <input type="text" name="min_cart_value" class="form-control" value="<%=offerData.minimum_cart_value%>" id="min_cart_value" placeholder="Minimum Cart Value">
+                          </div> 
+                          <div class="form-group col-md-3">
+                              <label for="from">From Date</label>
+                              <input type="date" name="from" class="form-control" id="from" value="<%=moment(offerData.from).format('YYYY-MM-DD')%>" placeholder="From Date">
+                          </div>
+                          <div class="form-group col-md-3">
+                              <label for="to">To Date</label>
+                              <input type="date" name="to" class="form-control" id="to" value="<%=moment(offerData.to).format('YYYY-MM-DD')%>" placeholder="To Date">
+                          </div>
+                      
+                          <div class="form-group col-md-3">
+                              <label for="capping">Capping</label>
+                              <input type="text" name="capping" class="form-control" id="capping" value="<%=offerData.capping%>" placeholder="Capping">
+                          </div>
+                          <div class="form-group col-md-3">
+                              <label for="applyfor">Select Apply For</label>
+                              <select name="applyfor" class="form-control" id="applyfor">
+                                  <option value="">Select Apply For</option>
+                                  <option value="website"<% if(offerData.apply_for =="website"){ %> selected="selected" <% } %> >Website</option>
+                                  <option value="app"<% if(offerData.apply_for =="app"){ %> selected="selected" <% } %> >App</option>
+                                  <option value="both"<% if(offerData.apply_for =="both"){ %> selected="selected" <% } %> >Both</option>
+                              </select>
+                          </div>
 
-                    <!-- <div class="form-group"></div>
-                    <div class='input-group date' id='datetimepicker1'>
-                        <input type='text' class="form-control" />
-                        <span class="input-group-addon">
-                            <span class="glyphicon glyphicon-calendar"></span>
-                        </span>
-                    </div>
-                    </div> -->
-                   
-                    
-                    
+                          <!-- <div class="form-group"></div>
+                          <div class='input-group date' id='datetimepicker1'>
+                              <input type='text' class="form-control" />
+                              <span class="input-group-addon">
+                                  <span class="glyphicon glyphicon-calendar"></span>
+                              </span>
+                          </div>
+                          </div> -->
+                        
+                          
+                          
+                      <!-- </div> -->
+                  </div>
                 </div>
                 <div class="card-footer">
                   <a href="<%=APPCONSTANT.ADMINCALLURL%>/manage_offer" class="btn btn-default">Cancel</a>

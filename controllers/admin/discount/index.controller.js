@@ -87,7 +87,7 @@ module.exports = {
 			res.render('admin/discount/add.ejs',{layout:'admin/layout/layout', pageTitle:pageTitle, moduleName:moduleName} );
 		}else{
 			let discountData = {
-				coupon_no : req.body.coupon_no,
+				coupon_no : req.body.coupon_no.toUpperCase(),
 				name : req.body.coupon_name,
 				min_Order_gst : req.body.min_order,
 				no_of_uses : req.body.no_of_uses,
@@ -119,7 +119,7 @@ module.exports = {
 		}
 		if(req.method == "POST"){
 			let discountData = {
-				coupon_no : req.body.coupon_no,
+				coupon_no : req.body.coupon_no.toUpperCase(),
 				name : req.body.coupon_name,
 				min_Order_gst : req.body.min_order,
 				no_of_uses : req.body.no_of_uses,

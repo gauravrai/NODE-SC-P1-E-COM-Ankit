@@ -14,6 +14,7 @@ const SubCategory = model.sub_category;
 const Store = model.store;
 const State = model.state;
 const Product = model.product;
+const Brand   = model.brand;
 const ProductImage = model.product_image
 const ADMINCALLURL = config.constant.ADMINCALLURL;
 
@@ -124,10 +125,10 @@ module.exports = {
 					arr1.push(moment(data[i].createdAt).format('DD-MM-YYYY'));
 					if(!data[i].status){
 						let change_status = "changeStatus(this,\'1\',\'change_status_product\',\'list_product\',\'product\');";	
-						arr1.push('<span class="badge bg-danger" onclick="'+change_status+'" id="'+data[i]._id+'">Inactive</span>');
+						arr1.push('<span class="badge bg-danger" style="cursor:pointer;" onclick="'+change_status+'" id="'+data[i]._id+'">Inactive</span>');
 					}else{
 						let change_status = "changeStatus(this,\'0\',\'change_status_product\',\'list_product\',\'product\');";
-						arr1.push('<span class="badge bg-success" onclick="'+change_status+'" id="'+data[i]._id+'">Active</span>');
+						arr1.push('<span class="badge bg-success" style="cursor:pointer;" onclick="'+change_status+'" id="'+data[i]._id+'">Active</span>');
 					}
 					let $but_edit = '-';
 					if(permissionData.edit=='1'){
@@ -153,11 +154,14 @@ module.exports = {
 				let moduleName = 'Product Management';
 				let pageTitle = 'Add Product';
 				let categoryData = await Category.find({status:true, deletedAt: 0});
+				//console.log(categoryData);return 0;
 				let storeData = await Store.find({status:true, deletedAt: 0});
 				let stateData = await State.find({status:true, deletedAt: 0});
-				res.render('admin/product/add.ejs',{layout:'admin/layout/layout', pageTitle:pageTitle, moduleName:moduleName,storeData:storeData,stateData:stateData,categoryData:categoryData });
+				let brandData = await Brand.find({status:true, deletedAt: 0})
+				res.render('admin/product/add.ejs',{layout:'admin/layout/layout', pageTitle:pageTitle, moduleName:moduleName,storeData:storeData,stateData:stateData,categoryData:categoryData,brandData:brandData });
 			}else{ 
-				//console.log(req.body);
+				//console.log(req.files);
+				//console.log(req.body); return false;
 				//let catId = Array.isArray(req.body.categoryId);
 				let categoryId  = Array.isArray(req.body.categoryId);
 				if(categoryId=="true") {
@@ -182,7 +186,12 @@ module.exports = {
 					offer : req.body.offer,
 					discount: req.body.discount,
 					discription : req.body.description,
-					seo_keyword : req.body.seo
+					seo_keyword : req.body.product.toLowerCase(),
+					stock_keeping : req.body.stock_keeping.toUpperCase(),
+					brand : req.body.brand,
+					featured : req.body.featured ? true : false,
+					quantity : req.body.quantity,
+					weight_in : req.body.weight_in
 					 
 				};
 				let product = new Product(productData);
@@ -409,6 +418,7 @@ module.exports = {
 			let categoryData = await Category.find({status:true, deletedAt: 0});
 			let storeData = await Store.find({status:true, deletedAt: 0});
 			let subcategoryData = await SubCategory.find({status:true, deletedAt: 0});
+			let brandData       = await Brand.find({status:true, deletedAt: 0});
 			let productData = await Product.findOne({_id: mongoose.mongo.ObjectId(id), status: true, deletedAt: 0});
 			res.render('admin/product/edit',{layout:'admin/layout/layout', pageTitle:pageTitle, moduleName:moduleName, categoryData:categoryData, subcategoryData:subcategoryData,storeData:storeData,productData:productData} );
 		}
@@ -439,11 +449,11 @@ module.exports = {
 			if(err) console.error(err);
 			if(status == '1'){
 				let change_status = "changeStatus(this,\'0\',\'change_status_product\',\'list_product\',\'product\');";
-				res.send('<span class="badge bg-success" onclick="'+change_status+'">Active</span>');
+				res.send('<span class="badge bg-success" style="cursor:pointer;" onclick="'+change_status+'">Active</span>');
 			}
 			else{
 				let change_status = "changeStatus(this,\'1\',\'change_status_product\',\'list_product\',\'product\');";	
-				res.send('<span class="badge bg-danger" onclick="'+change_status+'">Inactive</span>');
+				res.send('<span class="badge bg-danger" style="cursor:pointer;" onclick="'+change_status+'">Inactive</span>');
 			}
 	    })
 	},

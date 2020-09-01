@@ -12,6 +12,9 @@ let SubCategorySchema = new Schema({
     slug: {
         type: String
     },
+    short: {
+        type: Number
+    },
     status: {
         type: Boolean,
         default : true

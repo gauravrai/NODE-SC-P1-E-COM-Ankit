@@ -504,4 +504,176 @@ $(document).ready(function () {
             $(element).removeClass('is-invalid');
         }
     });
+    $('#addDiscountForm,#editDiscountForm').validate({
+        rules: {
+            coupon_no: {
+                required: true,
+            },
+            coupon_name: {
+                required: true,
+            },
+            min_order: {
+                required: true,
+            },
+            no_of_uses: {
+                required: true,
+            },
+            offertype: {
+                required: true, 
+            },
+            from: {
+                required: true, 
+            },
+            to: {
+                required: true,
+            },
+            capping: {
+                required: true,
+            },
+            applyfor: {
+                required: true,
+            }
+        },
+        messages: {
+            coupon_no: {
+                required: "Please enter Coupon Number"
+            },
+            coupon_name: {
+                required: "Please Enter Coupon Name"
+            },
+            min_order: {
+                required: "Please Enter Minimum Order Excluding GST"
+            },
+            no_of_uses: {
+                required: "Please enter No Of Uses"
+            },
+            offertype: {
+                required: "Please Enter Offer Type"
+            },
+            from: {
+                required: "Please Enter From Date"
+            },
+            to: {
+                required: "Please Enter To Date"
+            },
+            capping: {
+                required: "Please Enter Capping"
+            },
+            applyfor: {
+                required: "Please Enter Apply For"
+            }
+        },
+        errorElement: 'span',
+        errorPlacement: function (error, element) {
+            error.addClass('invalid-feedback');
+            element.closest('.form-group').append(error);
+        },
+        highlight: function (element, errorClass, validClass) {
+            $(element).addClass('is-invalid');
+        },
+        unhighlight: function (element, errorClass, validClass) {
+            $(element).removeClass('is-invalid');
+        }
+    });
+    $('#addOfferForm,#editOfferForm').validate({
+        rules: {
+            offer_name: {
+                required: true,
+            },
+            categoryId: {
+                required: true,
+            },
+            subcategoryId: {
+                required: true,
+            },
+            productId: {
+                required: true,
+            },
+            offertype: {
+                required: true,
+            },
+            min_cart_value: {
+                required: true, 
+            },
+            from: {
+                required: true, 
+            },
+            to: {
+                required: true,
+            },
+            capping: {
+                required: true,
+            },
+            applyfor: {
+                required: true,
+            }
+        },
+        messages: {
+            offer_name: {
+                required: "Please Enter Offer Name"
+            },
+            categoryId: {
+                required: "Please select Category Name"
+            },
+            subcategoryId: {
+                required: "Please select Sub Category Name"
+            },
+            productId: {
+                required: "Please select Product Name"
+            },
+            offertype: {
+                required: "Please enter Offer Type"
+            },
+            min_cart_value: {
+                required: "Please Enter Minimum Cart Value"
+            },
+            from: {
+                required: "Please Enter From Date"
+            },
+            to: {
+                required: "Please Enter to Date"
+            },
+            capping: {
+                required: "Please Enter Capping"
+            },
+            applyfor: {
+                required: "Please Enter Apply For"
+            }
+        },
+        errorElement: 'span',
+        errorPlacement: function (error, element) {
+            error.addClass('invalid-feedback');
+            element.closest('.form-group').append(error);
+        },
+        highlight: function (element, errorClass, validClass) {
+            $(element).addClass('is-invalid');
+        },
+        unhighlight: function (element, errorClass, validClass) {
+            $(element).removeClass('is-invalid');
+        }
+    });
+
+    $('#addBrandForm,#editBrandForm').validate({
+        rules: {
+            name: {
+                required: true,
+            }
+        },
+        messages: {
+            name: {
+                required: "Please Enter Brand Name"
+            }
+        },
+        errorElement: 'span',
+        errorPlacement: function (error, element) {
+            error.addClass('invalid-feedback');
+            element.closest('.form-group').append(error);
+        },
+        highlight: function (element, errorClass, validClass) {
+            $(element).addClass('is-invalid');
+        },
+        unhighlight: function (element, errorClass, validClass) {
+            $(element).removeClass('is-invalid');
+        }
+    });
 });

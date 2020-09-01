@@ -7,7 +7,7 @@ module.exports = {
 	SITENAME : "Softchilli",
 	ADMINSITEURL:SITEURL+'admin/',
 	ADMINCALLURL:'/admin',
-	APIURL:'/api',
+	APIURL:'/api/v1',
 	TIMEZONE:process.env.TIMEZONE,
 	FORMATETIME:'DD-MM-YYYY hh:mm A',
   	COMPANYLOGO:SITEURL+"", 

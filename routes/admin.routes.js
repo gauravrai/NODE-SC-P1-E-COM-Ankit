@@ -19,6 +19,7 @@ module.exports = function(app) {
 	var productRoutes = require('./admin/product.routes');
 	var offerRoutes   = require('./admin/offer.routes');
 	var discountRoutes   = require('./admin/discount.routes');
+	var brandRoutes      =  require('./admin/brand.routes');
 
 	var ajaxRoutes = require('./admin/ajax.routes');
 	var router = express.Router();
@@ -41,6 +42,8 @@ module.exports = function(app) {
 	productRoutes(router);
 	offerRoutes(router);
 	discountRoutes(router);
+    brandRoutes(router);
+
 	
 	ajaxRoutes(router);
 }

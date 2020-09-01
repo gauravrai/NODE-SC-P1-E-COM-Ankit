@@ -60,10 +60,10 @@ module.exports = {
 					arr1.push(moment(data[i].createdAt).format('DD-MM-YYYY'));
 					if(!data[i].status){
 						let change_status = "changeStatus(this,\'1\',\'change_status_subcategory\',\'list_subcategory\',\'subcategory\');";	
-						arr1.push('<span class="badge bg-danger" onclick="'+change_status+'" id="'+data[i]._id+'">Inactive</span>');
+						arr1.push('<span class="badge bg-danger" style="cursor:pointer;" onclick="'+change_status+'" id="'+data[i]._id+'">Inactive</span>');
 					}else{
 						let change_status = "changeStatus(this,\'0\',\'change_status_subcategory\',\'list_subcategory\',\'subcategory\');";
-						arr1.push('<span class="badge bg-success" onclick="'+change_status+'" id="'+data[i]._id+'">Active</span>');
+						arr1.push('<span class="badge bg-success" style="cursor:pointer;" onclick="'+change_status+'" id="'+data[i]._id+'">Active</span>');
 					}
 					let $but_edit = '-';
 					if(permissionData.edit=='1'){
@@ -94,7 +94,8 @@ module.exports = {
 			let subcategoryData = {
                 sub_cat_name : req.body.subcategory,
                 cat_id: req.body.categoryId,
-				slug : req.body.slug
+				slug : req.body.slug,
+				short: req.body.short
 			};
 			//console.log(categoryData);
 			let subcategoryobj = new SubCategory(subcategoryData);
@@ -119,7 +120,8 @@ module.exports = {
 			let subcategoryData = {
 				sub_cat_name : req.body.subcategory,
 				cat_id : mongoose.mongo.ObjectId(req.body.categoryId),
-                slug   : req.body.slug
+				slug   : req.body.slug,
+				short: req.body.short
 			};
 			await SubCategory.updateOne(
 				{ _id: mongoose.mongo.ObjectId(req.body.id) },
@@ -140,11 +142,11 @@ module.exports = {
 			if(err) console.error(err);
 			if(status == '1'){
 				let change_status = "changeStatus(this,\'0\',\'change_status_subcategory\',\'list_subcategory\',\'subcategory\');";
-				res.send('<span class="badge bg-success" onclick="'+change_status+'">Active</span>');
+				res.send('<span class="badge bg-success" style="cursor:pointer;" onclick="'+change_status+'">Active</span>');
 			}
 			else{
 				let change_status = "changeStatus(this,\'1\',\'change_status_subcategory\',\'list_subcategory\',\'subcategory\');";	
-				res.send('<span class="badge bg-danger" onclick="'+change_status+'">Inactive</span>');
+				res.send('<span class="badge bg-danger" style="cursor:pointer;" onclick="'+change_status+'">Inactive</span>');
 			}
 	    })
     },

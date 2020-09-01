@@ -26,23 +26,27 @@
               </ul>
             </div>
             <form role="form" id="addAreaForm" method="post">
-              <div class="card-body">
-                <div class="form-group">
-                  <label for="state">Select State</label>
-                  <select name="stateId" class="form-control" id="stateId" onchange="getLocationFields(this.value, 'city', 'get_city', 'Select City', 'get_pincode')">
-                    <option value="">Select State</option>
-                  <% for(let i = 0; i < stateData.length; i++){ %>
-                    <option value="<%=stateData[i].id%>"><%=stateData[i].name%></option>
-                  <% } %>
-                  </select>
+              <div id="tableContent" style="padding: 0 17px 0 10px;">
+                <div class="form-row">
+                  <!-- <div class="card-body"> -->
+                    <div class="form-group col-md-3">
+                      <label for="state">Select State</label>
+                      <select name="stateId" class="form-control" id="stateId" onchange="getLocationFields(this.value, 'city', 'get_city', 'Select City', 'get_pincode')">
+                        <option value="">Select State</option>
+                      <% for(let i = 0; i < stateData.length; i++){ %>
+                        <option value="<%=stateData[i].id%>"><%=stateData[i].name%></option>
+                      <% } %>
+                      </select>
+                    </div>
+                    <span id="cityData" class="locationFields col-md-3"></span>
+                    <span id="pincodeData" class="locationFields col-md-3"></span>
+                    <div class="form-group col-md-3">
+                      <label for="name">Area Name</label>
+                      <input type="text" name="name" class="form-control" id="name" placeholder="Area Name">
+                    </div>
+                  <!-- </div> -->
                 </div>
-                <span id="cityData" class="locationFields"></span>
-                <span id="pincodeData" class="locationFields"></span>
-                <div class="form-group">
-                  <label for="name">Area Name</label>
-                  <input type="text" name="name" class="form-control" id="name" placeholder="Area Name">
-                </div>
-              </div>
+              </div>  
               <div class="card-footer">
                 <a href="<%=APPCONSTANT.ADMINCALLURL%>/manage_area" class="btn btn-default">Cancel</a>
                 <button type="submit" class="btn btn-primary">Submit</button>

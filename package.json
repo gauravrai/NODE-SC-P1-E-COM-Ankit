@@ -19,6 +19,7 @@
     "express-layout": "^0.1.0",
     "fs": "0.0.1-security",
     "fund": "^1.0.0",
+    "jsonwebtoken": "^8.5.1",
     "moment": "^2.27.0",
     "mongo-express": "^1.0.0-alpha.1",
     "mongoose": "^5.9.26",

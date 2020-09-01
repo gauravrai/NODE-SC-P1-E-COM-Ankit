@@ -14,6 +14,7 @@ const http = require('http');
 const mongoose = require('mongoose');
 const mwInput = require('./middleware/input');
 const adminRoutes = require('./routes/admin.routes.js');
+const apiRoutes  = require('./routes/api.routes.js');
 const dotenv = require('dotenv').config();
 
 //database connectivity
@@ -69,6 +70,7 @@ app.set("view engine", "ejs");
 //routes
 
 adminRoutes(app);
+apiRoutes(app);
 
 var port = process.env.PORT || 3001;
 

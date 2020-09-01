@@ -134,6 +134,16 @@ $(document).ready(function() {
             type: "POST",          
         }
     });
+
+    $('#brandTable').DataTable( {
+        "processing": true,
+        "serverSide": true,
+        "ordering": false,
+        "ajax": {
+            url: 'list_brand',
+            type: "POST",          
+        }
+    });
 });
 
 //Delete data function
