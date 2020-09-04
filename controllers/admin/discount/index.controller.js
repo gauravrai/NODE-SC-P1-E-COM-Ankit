@@ -165,4 +165,14 @@ module.exports = {
         	res.send('done');
         })
 	},
+	checkCouponNo : async function(req,res){
+		let coupon_no  = req.body.coupon_no;
+		let couponData = await Discount.find({coupon_no:coupon_no, status:true, deletedAt: 0});
+		//console.log(couponData);
+		if(couponData.length>0){
+			return res.status(200).json({ code:1 , status: 'exists', message: "Coupon Number  Already Inserted !!"});
+		} else {
+		 return res.status(200).json({ code:0 , status: '', message: "" });
+		}
+ },
 }

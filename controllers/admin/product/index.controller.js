@@ -464,4 +464,14 @@ module.exports = {
         	res.send('done');
         })
 	},
+	checkStockkeeping : async function(req,res){
+		   let stockkeeping  = req.body.stock_keeping;
+		   let productData = await Product.find({stock_keeping:stockkeeping, status:true, deletedAt: 0});
+		   console.log(productData);
+		   if(productData.length>0){
+			   return res.status(200).json({ code:1 , status: 'exists', message: "Stock Keeping Unit Already Inserted !!"});
+		   } else {
+			return res.status(200).json({ code:0 , status: '', message: "" });
+		   }
+	},
 }

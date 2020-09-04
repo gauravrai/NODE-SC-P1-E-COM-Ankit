@@ -6,6 +6,7 @@ module.exports = function(app) {
 	var categoryRoutes = require('./api/categories.routes');
 	var subcategoryRoutes = require('./api/subcategories.routes');
 	var productRoutes = require('./api/product.routes');
+	var customerRoutes = require('./api/customer.routes');
 	//var roleRoutes = require('./api/category.routes');
 	
 	var router = express.Router();
@@ -15,6 +16,7 @@ module.exports = function(app) {
 	categoryRoutes(router);
 	subcategoryRoutes(router);
 	productRoutes(router);
+	customerRoutes(router);
 	//dashboardRoutes(router);
 	
 }

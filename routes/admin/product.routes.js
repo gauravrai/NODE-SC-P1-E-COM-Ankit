@@ -8,5 +8,6 @@ module.exports = function(router) {
     router.all(config.constant.ADMINCALLURL+'/edit_product',isloggedin, indexController.editProduct);
     router.all(config.constant.ADMINCALLURL+'/change_status_product/:id',isloggedin, indexController.changeStatusProduct);
     router.all(config.constant.ADMINCALLURL+'/delete_product/:id',isloggedin, indexController.deleteProduct); 
+    router.all(config.constant.ADMINCALLURL+'/checkStockkeeping',isloggedin, indexController.checkStockkeeping); 
     
 }
