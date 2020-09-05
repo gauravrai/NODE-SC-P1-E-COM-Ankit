@@ -50,8 +50,7 @@ module.exports = {
 
             return res.status(200).json({ message: "Invaild Mobile Number" });
         }
-       
-       
+          
     },
 
     loginCustomer:async function(req,res){
