@@ -6,6 +6,7 @@ const mongoose = require('mongoose');
 const bcrypt = require("bcrypt-nodejs");
 const moment = require('moment');
 const Custumer     = model.custumer;
+const jwt = require("jsonwebtoken");
 
 module.exports = {
 	
@@ -33,7 +34,18 @@ module.exports = {
         if(mobile_number.match(phoneRegex)){
             var customercheck = await Custumer.find({mobile:mobile_number,status:true, deletedAt: 0});
             if(customercheck.length > 0) {
-                    return res.status(200).json({ message: "Mobile Number  Already Inserted!" });
+                    const token = jwt.sign(
+                        {
+                            mobile: customercheck.mobile
+                        },
+                        process.env.JWT_KEY, 
+                        {
+                            expiresIn: '1h',
+                        }
+                    );
+                    //return res.status(200).json({ message: "Mobile Number  Already Inserted!" });
+                    return res.status(200).json({ data: customercheck,registration:"false", token:token, status: 'success', message: "Customer Otp  and mobile verification!!"});
+                    
             } else {
                     let customerData = {
                         mobile : mobile_number,
@@ -43,7 +55,16 @@ module.exports = {
                     let customer = new Custumer(customerData);
                     customer.save(function(err, data){
                         if(err){console.log(err)}
-                        return res.status(200).json({ data: data, status: 'success', message: "Customer  Add successfully!!"});
+                        const token = jwt.sign(
+                            {
+                                mobile: data.mobile
+                            },
+                            process.env.JWT_KEY, 
+                            {
+                                expiresIn: '1h',
+                            }
+                        );
+                        return res.status(200).json({ data: data, registration:"true", token:token, status: 'success', message: "Customer  Add successfully!!"});
                     })
             }
         } else {
@@ -53,8 +74,37 @@ module.exports = {
           
     },
 
-    loginCustomer:async function(req,res){
-        
-    }
+    checkCustomerOtp:async function(req,res) {
+        var mobile_number = req.body.mobile;
+        var otp           = req.body.otp;
+        if (mobile_number ==null || mobile_number == '')
+        {
+            return res.status(200).json({ message: "(mobile) Number is Not Empty" });
+        }
+        if (otp ==null || otp == '')
+        {
+            return res.status(200).json({ message: "Otp is Not Empty" });
+        }
+        var customercheck = await Custumer.find({mobile:mobile_number,opt:otp,status:true, deletedAt: 0});
+        if(customercheck.length>0){
+
+            const token = jwt.sign(
+                {
+                    mobile: customercheck.mobile
+                },
+                process.env.JWT_KEY, 
+                {
+                    expiresIn: '1h',
+                }
+            );
+            
+            return res.status(200).json({ data: customercheck, token:token, registration:"false", status: 'success', message: "Customer  verification successfully!!"});
+        } else {
+           return res.status(200).json({ data: customercheck,  status: 'Fail', message: "Customer  verification failed !!"}); 
+        }      
+    },
+    customerProfile: async function(req,res) {
+
+    },
 	
 }

@@ -3,8 +3,8 @@ var config = require('../../config/index');
 
 module.exports = function(router) {
      router.all(config.constant.APIURL+'/addcustomer', indexController.addCustomer); 
-     router.post(config.constant.APIURL+'/logincustomer', indexController.loginCustomer);
-    // router.get(config.constant.APIURL+'/getproductBySubcat', indexController.productListBySubCatId);
+     router.post(config.constant.APIURL+'/checkcustomerotp', indexController.checkCustomerOtp);
+     router.post(config.constant.APIURL+'/customer_profile', indexController.customerProfile);
 
     
 }
