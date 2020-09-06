@@ -18,7 +18,12 @@ module.exports = {
         // console.log(categoryData);
         // console.log(stringify(categoryData));return false;
         // var categoryData = {name:"chandan",email:"chandan@gmail.com"};
-        return res.status(200).json({ data: categoryData, status: 'success', message: "Data fetched successfully!!",code:200 });
+        if(categoryData.length>0) {
+            return res.status(200).json({ data: categoryData, status: 'success', message: "Data fetched successfully!!",code:200 });
+        } else {
+            return res.status(200).json({ data: categoryData, status: 'success', message: "Data No Found!!",code:200 });
+        }
+        
 		
     },
     
