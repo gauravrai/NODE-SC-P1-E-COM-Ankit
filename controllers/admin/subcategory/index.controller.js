@@ -45,6 +45,7 @@ module.exports = {
 			obj.recordsTotal = results.count?results.count:0;
 			obj.recordsFiltered =results.count?results.count:0;
 			var data = results.data?results.data:[];
+			//console.log(data); return false;
 			var arr =[];
             var perdata = {add:1,edit:1,delete:1}
             //console.log(data);
@@ -52,7 +53,10 @@ module.exports = {
 				for(i=0;i<data.length;i++){
                     var arr1 = [];
 					await config.helpers.category.getNameById(data[i].cat_id, async function (categoryName) {
-						arr1.push(categoryName.name);
+						var cat_name = categoryName ? categoryName.name : 'A/N';
+						//console.log(categoryName.name);return false;
+						//arr1.push(categoryName.name);
+						arr1.push(cat_name);
                     })
                     arr1.push(data[i].sub_cat_name);
 					

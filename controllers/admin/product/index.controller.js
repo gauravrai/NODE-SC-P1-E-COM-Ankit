@@ -113,10 +113,14 @@ module.exports = {
 				for(i=0;i<data.length;i++){
 					var arr1 = [];
 					await config.helpers.category.getNameById(data[i].cate_id, async function (categoryName) {
-						arr1.push(categoryName.name);
+						var cat_name = categoryName ? categoryName.name : 'A/N';
+						//arr1.push(categoryName.name);
+						arr1.push(cat_name);
 					})
 					await config.helpers.subcategory.getSubCatNameById(data[i].s_cate_id, async function (subcategoryName) {
-						arr1.push(subcategoryName.sub_cat_name);
+						var subcat_name = subcategoryName ? subcategoryName.sub_cat_name : 'A/N';
+						//arr1.push(subcategoryName.sub_cat_name);
+						arr1.push(subcat_name);
 					})
 					//arr1.push(data[i].s_cate_id);
                     arr1.push(data[i].name);
