@@ -129,7 +129,7 @@ module.exports = {
 
 	deleteCity : async function(req,res){
 		let id = req.param("id");
-		return City.deleteOne({_id:  mongoose.mongo.ObjectId(id)},function(err,data){        	
+		return City.updateOne({_id:  mongoose.mongo.ObjectId(id)},{deletedAt:2},function(err,data){        	
 			if(err) console.error(err);
         	res.send('done');
         })

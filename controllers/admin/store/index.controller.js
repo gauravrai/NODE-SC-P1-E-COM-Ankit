@@ -155,7 +155,7 @@ module.exports = {
     },
     deleteStore : async function(req,res){
 		let id = req.param("id");
-		return Store.deleteOne({_id:  mongoose.mongo.ObjectId(id)},function(err,data){        	
+		return Store.updateOne({_id:  mongoose.mongo.ObjectId(id)},{deletedAt:2},function(err,data){        	
 			if(err) console.error(err);
         	res.send('done');
         })

@@ -194,10 +194,15 @@ module.exports = {
 
 	deleteRole : async function(req,res){
 		let id = req.param("id");
-		return Role.deleteOne({_id:  mongoose.mongo.ObjectId(id)},function(err,data){        	
-			if(err) console.error(err);
-        	res.send('done');
-        })
+
+		// return Role.deleteOne({_id:  mongoose.mongo.ObjectId(id)},function(err,data){        	
+		// 	if(err) console.error(err);
+        // 	res.send('done');
+		// })
+		return Role.updateOne({_id:  mongoose.mongo.ObjectId(id)},{deletedAt:2},function(err,data){        	
+			 	if(err) console.error(err);
+			 	res.send('done');
+	    })
 	},
 
 	changeStatusRole : function(req,res){

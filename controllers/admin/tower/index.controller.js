@@ -156,7 +156,7 @@ module.exports = {
 
 	deleteTower : async function(req,res){
 		let id = req.param("id");
-		return Tower.deleteOne({_id:  mongoose.mongo.ObjectId(id)},function(err,data){        	
+		return Tower.updateOne({_id:  mongoose.mongo.ObjectId(id)},{deletedAt:2},function(err,data){        	
 			if(err) console.error(err);
         	res.send('done');
         })

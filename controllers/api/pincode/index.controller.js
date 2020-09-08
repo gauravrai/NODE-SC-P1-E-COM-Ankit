@@ -13,9 +13,14 @@ module.exports = {
     // @route       GET api/v1/pincodeList
     // @description Get all pincodeList
     // @access      Public
-	pincodeList:async function(req,res){
+	pincodeListByCity:async function(req,res){
+        var cityId = req.body.cityId;
+        if (cityId==null || cityId=='')
+        {
+            return res.status(200).json({ message: "City Id  is Not Empty" });
+        }
         var pincodeData = [];
-        var pincodeData = await Pincode.find({status:true, deletedAt: 0},{pincode:1,stateId:1,cityId:1,_id:1});
+        var pincodeData = await Pincode.find({cityId:cityId,status:true, deletedAt: 0},{pincode:1,stateId:1,cityId:1,_id:1});
         
         if(pincodeData.length>0) {
             return res.status(200).json({ data: pincodeData, status: 'success', message: "Data fetched successfully!!",code:200 });

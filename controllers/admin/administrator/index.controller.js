@@ -148,7 +148,7 @@ module.exports = {
 
 	deleteAdministrator : async function(req,res){
 		let id = req.param("id");
-		return Admin.deleteOne({_id:  mongoose.mongo.ObjectId(id)},function(err,data){        	
+		return Admin.updateOne({_id:  mongoose.mongo.ObjectId(id)},{deletedAt:2},function(err,data){        	
 			if(err) console.error(err);
         	res.send('done');
         })

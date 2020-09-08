@@ -12,6 +12,8 @@ module.exports = function(app) {
 	var pincodeRoutes = require('./api/pincode.routes');
 	var areaRoutes = require('./api/area.routes');
 	var societiesRoutes = require('./api/societies.routes');
+	var towerRoutes = require('./api/tower.routes');
+	var brandRoutes = require('./api/brand.routes');
 	//var roleRoutes = require('./api/category.routes');
 	
 	var router = express.Router();
@@ -27,6 +29,8 @@ module.exports = function(app) {
 	pincodeRoutes(router);
 	areaRoutes(router);
 	societiesRoutes(router);
+	towerRoutes(router);
+	brandRoutes(router);
 	//dashboardRoutes(router);
 	
 }

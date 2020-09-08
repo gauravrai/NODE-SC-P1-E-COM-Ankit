@@ -13,9 +13,14 @@ module.exports = {
     // @route       GET api/v1/societiesList
     // @description Get all areaList
     // @access      Public
-	societiesList:async function(req,res){
+	societiesListByAreaId:async function(req,res){
+        var areaId = req.body.areaId;
+        if (areaId==null || areaId=='')
+        {
+            return res.status(200).json({ message: "Area Id Id  is Not Empty" });
+        }
         var societiesData = [];
-        var societiesData = await Society.find({status:true, deletedAt: 0},{name:1,stateId:1,cityId:1,pincodeId:1,areaId:1,_id:1});
+        var societiesData = await Society.find({areaId:areaId, status:true, deletedAt: 0},{name:1,stateId:1,cityId:1,pincodeId:1,areaId:1,_id:1});
         
         if(societiesData.length>0) {
             return res.status(200).json({ data: societiesData, status: 'success', message: "Data fetched successfully!!",code:200 });
