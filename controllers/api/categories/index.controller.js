@@ -22,12 +22,41 @@ module.exports = {
             return res.status(200).json({ data: categoryData, status: 'success', message: "Data fetched successfully!!",code:200 });
         } else {
             return res.status(200).json({ data: categoryData, status: 'success', message: "Data No Found!!",code:200 });
-        }
-        
-		
+        }	
     },
-    
-    
 
-	
+    // @route       GET api/v1/category and sub category
+    // @description Get all categories nd sub category
+    // @access      Public  
+    getCategoriesSubcategory:async function(req,res){
+        var categorySubcategoryData = [];
+        var categorySubcategoryData = await Category.aggregate([
+            { $lookup:
+               {
+                 from: 'sub_categories',
+                 localField: '_id',
+                 foreignField: 'cat_id',
+                 as: 'subcategory'
+               }
+            },
+            {
+                $project: { 
+                    _id:1,
+                    name:1,
+                    slug:1,
+                    "subcategory._id":1,
+                    "subcategory.sub_cat_name":1,
+                    "subcategory.slug":1,
+                    "subcategory.cat_id":1
+                }
+            }
+            
+        ]);
+        //console.log(categorySubcategoryData);  
+        if(categorySubcategoryData.length>0) { 
+                return res.status(200).json({ data: categorySubcategoryData, status: 'success', message: "Data fetched successfully!!",code:200 }); 
+        } else {
+                return res.status(200).json({ data: categorySubcategoryData, status: 'success', message: "Data fetched successfully!!",code:200 });
+        }
+    },
 }

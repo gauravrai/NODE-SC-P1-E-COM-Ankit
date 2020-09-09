@@ -31,7 +31,7 @@ module.exports = {
         
         if (mobile_number ==null || mobile_number == '')
         {
-            return res.status(200).json({ message: "Mobile Number is Not Empty" });
+            return res.status(400).json({ message: "Mobile Number is Not Empty" });
         }
 
         if(mobile_number.match(phoneRegex)){
@@ -104,7 +104,7 @@ module.exports = {
             }
         } else {
 
-            return res.status(200).json({ message: "Invaild Mobile Number" });
+            return res.status(400).json({ message: "Invaild Mobile Number" });
         }
           
     },
@@ -114,11 +114,11 @@ module.exports = {
         var otp           = req.body.otp;
         if (mobile_number ==null || mobile_number == '')
         {
-            return res.status(200).json({ message: "Mobile Number is Not Empty" });
+            return res.status(400).json({ message: "Mobile Number is Not Empty" });
         }
         if (otp ==null || otp == '')
         {
-            return res.status(200).json({ message: "Otp is Not Empty" });
+            return res.status(400).json({ message: "Otp is Not Empty" });
         }
         var customercheck = await Custumer.find({mobile:mobile_number,opt:otp,status:true, deletedAt: 0});
         if(customercheck.length>0){
@@ -142,12 +142,23 @@ module.exports = {
         var mobile_number = req.body.mobile;
         if (mobile_number ==null || mobile_number == '')
         {
-            return res.status(200).json({ message: "Mobile Number is Not Empty" });
+            return res.status(400).json({ message: "Mobile Number is Not Empty" });
         }
 
         var customerProfilecheck = await CustumerProfile.find({mobile:mobile_number,status:true, deletedAt: 0});
+        //console.log(customerProfilecheck);return false;
         if(customerProfilecheck.length>0) {
-            return res.status(200).json({ data: customerProfilecheck,  status: 'success', message: "Customer  Profile Data!!"});
+            const token = jwt.sign(
+                {
+                    _id: customerProfilecheck._id,
+                    mobile: customerProfilecheck.mobile
+                },
+                process.env.JWT_KEY, 
+                {
+                    expiresIn: '1h',
+                }
+            );
+            return res.status(200).json({ data: customerProfilecheck, token:token, status: 'success', message: "Customer  Profile Data!!"});
         } else {
             return res.status(200).json({ data:customerProfilecheck, status: 'success', message: "No  Data Found!!"});
         }
@@ -160,19 +171,19 @@ module.exports = {
         var   address  = req.body.address;
         if (mobile_number ==null || mobile_number == '')
         {
-            return res.status(200).json({ message: "Mobile Number is Not Empty" });
+            return res.status(400).json({ message: "Mobile Number is Not Empty" });
         }
         if (name ==null || name == '')
         {
-            return res.status(200).json({ message: "Name is Not Empty" });
+            return res.status(400).json({ message: "Name is Not Empty" });
         }
         if (email ==null || email == '')
         {
-            return res.status(200).json({ message: "Email is Not Empty" });
+            return res.status(400).json({ message: "Email is Not Empty" });
         }
         if (address ==null || address == '')
         {
-            return res.status(200).json({ message: "Address is Not Empty" });
+            return res.status(400).json({ message: "Address is Not Empty" });
         }
         let customerprofileData = {
             mobile : mobile_number,
