@@ -9,7 +9,7 @@ const whitelist = [
 
   // Dev env
   "http://lb.softchilli.com/",
-
+  "http://softchilli.com/",
   // prod env
   "https://test.com"
 
