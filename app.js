@@ -16,6 +16,8 @@ const mwInput = require('./middleware/input');
 const adminRoutes = require('./routes/admin.routes.js');
 const apiRoutes  = require('./routes/api.routes.js');
 const dotenv = require('dotenv').config();
+const cors = require('cors');  
+const corsConfig = require('./config/corsConfig');
 
 //database connectivity
 //var mongoDB = 'mongodb://localhost:27017/'+process.env.DATABASE;
@@ -63,6 +65,9 @@ app.use(function (req, res, next) {
   res.locals.SESSION = req.session;
   next();
 })
+
+/**CROSS enabling config */
+app.use(cors(corsConfig.corsOptions));
 
 app.set("views", path.join(__dirname, "views"));
 app.set("view engine", "ejs");
