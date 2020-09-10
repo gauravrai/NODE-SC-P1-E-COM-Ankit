@@ -10,6 +10,8 @@ module.exports = {
 	APIURL:'/api/v1',
 	TIMEZONE:process.env.TIMEZONE,
 	FORMATETIME:'DD-MM-YYYY hh:mm A',
-  	COMPANYLOGO:SITEURL+"", 
+	COMPANYLOGO:SITEURL+"", 
+	JWT_Token :"secret",
+	  
 	LIMIT: 10
 }

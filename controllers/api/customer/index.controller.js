@@ -8,6 +8,7 @@ const moment = require('moment');
 const jwt = require("jsonwebtoken");
 const Custumer     = model.custumer;
 const CustumerProfile     = model.customer_profile;
+const JWTtoken = config.constant.JWT_Token;
 var http = require('http'),
     url = require('url');
 
@@ -25,6 +26,7 @@ module.exports = {
 		
     },
     addCustomer:async function(req,res){
+        //console.log(JWTtoken); return false;
         var mobile_number = req.body.mobile;
         var opt  = "123456"
         var phoneRegex = /^(0|[+91]{3})?[7-9][0-9]{9}$/;
@@ -61,7 +63,8 @@ module.exports = {
                         {
                             mobile: customercheck.mobile
                         },
-                        process.env.JWT_KEY, 
+                        //process.env.JWT_KEY, 
+                        JWTtoken,
                         {
                             expiresIn: '1h',
                         }
@@ -94,7 +97,8 @@ module.exports = {
                             {
                                 mobile: data.mobile
                             },
-                            process.env.JWT_KEY, 
+                            //process.env.JWT_KEY, 
+                            JWTtoken,
                             {
                                 expiresIn: '1h',
                             }
@@ -127,7 +131,8 @@ module.exports = {
                 {
                     mobile: customercheck.mobile
                 },
-                process.env.JWT_KEY, 
+                //process.env.JWT_KEY, 
+                JWTtoken,
                 {
                     expiresIn: '1h',
                 }
@@ -153,7 +158,8 @@ module.exports = {
                     _id: customerProfilecheck._id,
                     mobile: customerProfilecheck.mobile
                 },
-                process.env.JWT_KEY, 
+                //process.env.JWT_KEY, 
+                JWTtoken,
                 {
                     expiresIn: '1h',
                 }
