@@ -110,9 +110,6 @@ function getLocationFields(id, name, controller, label, functionName){
 	});
 }
 
-
-
-
 //Delete data function
 function getLocationFieldsMulti(id, name, controller, label, functionName){
 	
@@ -159,3 +156,48 @@ $("#searchHead").click(function(){
 	// }
 
 });
+
+function checkSlug(controller, checkType,user_id)
+{
+    var name=$('#name').val();
+    if(checkType=='checkFromName')
+    {
+        name=name.trim();
+		name=name.toLowerCase();
+        name=name.replace(/[^a-zA-Z ]/g,"");
+        name=name.replace(/ /g,"-");
+        $('#slug').val(name);
+    }
+    var slug=$('#slug').val();
+    if(checkType=='checkFromSlug')
+    {
+		slug=slug.trim();
+		slug=slug.toLowerCase();
+        slug=slug.replace(/ /g,"-");
+        slug=slug.replace(/[^a-z-A-Z ]/g,"");
+        $('#slug').val(slug);
+    }
+    if(slug!='')
+    {
+        $.ajax({
+            type: "POST",
+            url: controller,
+            data: { slug:slug, id:user_id },
+            success: function(response)
+            {
+                if(response=='OK')
+                {
+					$("#slug").addClass('is-invalid');
+                    $("#submitBtn").attr("disabled",true);
+                    $('#slug_error').html('Slug already exist. Please enter different name.');
+                }
+                else
+                {
+					$("#slug").removeClass('is-invalid');
+                    $("#submitBtn").attr("disabled",false);
+                    $('#slug_error').html('');
+                }
+            }
+        });
+    }
+}

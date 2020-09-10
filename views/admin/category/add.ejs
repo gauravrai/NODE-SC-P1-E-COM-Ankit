@@ -29,11 +29,12 @@
               <div class="card-body">
                 <div class="form-group">
                   <label for="name">Name</label>
-                  <input type="text" name="name" class="form-control" id="name" placeholder="Category Name">
+                  <input type="text" name="name" class="form-control" id="name" placeholder="Category Name" onblur="checkSlug('check_slug_category', 'checkFromName', '')">
                 </div>
                 <div class="form-group">
                   <label for="slug">Slug</label>
-                  <input type="text" name="slug" class="form-control" id="slug" placeholder="Slug">
+                  <input type="text" name="slug" class="form-control" id="slug" placeholder="Slug" onblur="checkSlug('check_slug_category', 'checkFromSlug', '')">
+                  <span id="slug_error" class="customError"></span>
                 </div>
                 <div class="form-group">
                   <label for="short">Short Order</label>
@@ -42,7 +43,7 @@
               </div>
               <div class="card-footer">
                 <a href="<%=APPCONSTANT.ADMINCALLURL%>/manage_category" class="btn btn-default">Cancel</a>
-                <button type="submit" class="btn btn-primary">Submit</button>
+                <button type="submit" class="btn btn-primary" id="submitBtn">Submit</button>
               </div>
             </form>
           </div>

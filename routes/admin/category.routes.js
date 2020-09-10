@@ -8,5 +8,5 @@ module.exports = function(router) {
     router.all(config.constant.ADMINCALLURL+'/edit_category',isloggedin, indexController.editCategory);   
     router.all(config.constant.ADMINCALLURL+'/delete_category/:id',isloggedin, indexController.deleteCategory);   
     router.all(config.constant.ADMINCALLURL+'/change_status_category/:id',isloggedin, indexController.changeStatusCategory); 
-    //router.all(config.constant.ADMINCALLURL+'/check_slug_category',isloggedin, indexController.checkSlugCategory); 
+    router.all(config.constant.ADMINCALLURL+'/check_slug_category',isloggedin, indexController.checkSlugCategory); 
 }

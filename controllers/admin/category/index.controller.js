@@ -166,10 +166,10 @@ module.exports = {
 		console.log('categoryData',categoryData);
 			if(categoryData.length > 0){
 		console.log('coming if');
-				return false;
+				res.send('OK');
 			}else{
 		console.log('coming else');
-				return true;
+				res.send();
 			}
 		})
 	}
