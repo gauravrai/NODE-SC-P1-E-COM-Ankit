@@ -11,7 +11,8 @@ const whitelist = [
   "http://lb.softchilli.com/",
 
   // prod env
-  "https://test.com"
+  "https://sc-p1-local-buniya.herokuapp.com",
+  "http://sc-p1-local-buniya.herokuapp.com"
 
 ];
 
