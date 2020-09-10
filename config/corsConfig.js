@@ -9,8 +9,8 @@ const whitelist = [
   "http://localhost:5000",
 
   // Dev env
-  "http://lb.softchilli.com/",
-  "http://softchilli.com/",
+  "http://lb.softchilli.com",
+  "http://softchilli.com",
   // prod env
   "https://test.com"
 
