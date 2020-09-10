@@ -30,6 +30,10 @@ mongoose.connect(mongoDB, {
 var db = mongoose.connection;
 db.on('error', console.error.bind(console, 'MongoDB connection error:'));
 
+/**CROSS enabling config */
+app.use(cors(corsConfig.corsOptions));
+
+
 //view engine
 app.use(cookieParser())
 app.use(layout());
@@ -66,8 +70,7 @@ app.use(function (req, res, next) {
   next();
 })
 
-/**CROSS enabling config */
-app.use(cors(corsConfig.corsOptions));
+
 
 app.set("views", path.join(__dirname, "views"));
 app.set("view engine", "ejs");
