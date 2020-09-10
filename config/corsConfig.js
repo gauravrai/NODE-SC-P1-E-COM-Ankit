@@ -5,11 +5,12 @@ const whitelist = [
   // Development origin and ports
   "http://localhost:2001",
   "http://localhost:3001",
+  "http://localhost:3000",
   "http://localhost:5000",
 
   // Dev env
-  "http://lb.softchilli.com/",
-
+  "http://lb.softchilli.com",
+  "http://softchilli.com",
   // prod env
   "https://sc-p1-local-buniya.herokuapp.com",
   "http://sc-p1-local-buniya.herokuapp.com"
