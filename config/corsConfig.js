@@ -5,6 +5,7 @@ const whitelist = [
   // Development origin and ports
   "http://localhost:2001",
   "http://localhost:3001",
+  "http://localhost:3000",
   "http://localhost:5000",
 
   // Dev env
