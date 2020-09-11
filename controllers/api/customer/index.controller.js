@@ -70,7 +70,7 @@ module.exports = {
                         }
                     );
                     //return res.status(200).json({ message: "Mobile Number  Already Inserted!" });
-                    return res.status(200).json({ data: customercheck,registration:"false", token:token, status: 'success', message: "Customer Otp  and mobile verification!!"});
+                    return res.status(200).json({ data: customercheck,registration:"true", token:token, status: 'success', message: "Customer Otp  and mobile verification!!"});
                     
             } else {
                     let customerData = {
@@ -103,7 +103,7 @@ module.exports = {
                                 expiresIn: '1h',
                             }
                         );
-                        return res.status(200).json({ data: data, registration:"true", token:token, status: 'success', message: "Customer  Add successfully!!"});
+                        return res.status(200).json({ data: data, registration:"false", token:token, status: 'success', message: "Customer  Add successfully!!"});
                     })
             }
         } else {

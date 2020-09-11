@@ -38,12 +38,12 @@
                     </div>
                     <div class="form-group">
                         <label for="subcategory">Sub Category Name</label>
-                        <input type="text" name="subcategory" value="<%=subcategoryData.sub_cat_name?subcategoryData.sub_cat_name:''%>" class="form-control" id="subcategory" placeholder="Sub Category Name">
+                        <input type="text" name="subcategory" value="<%=subcategoryData.sub_cat_name?subcategoryData.sub_cat_name:''%>" onblur="checkSlugone('check_slug_subcategory', 'checkFromName', '<%=subcategoryData.id?subcategoryData.id:''%>','subcategory')" class="form-control" id="subcategory" placeholder="Sub Category Name">
                     </div>
                     <div class="form-group">
                         <label for="slug">Sub Category Slug</label>
                         <input type="hidden" name="id" value="<%=subcategoryData.id?subcategoryData.id:''%>">
-                        <input type="text" name="slug" value="<%=subcategoryData.slug?subcategoryData.slug:''%>" class="form-control" id="slug" placeholder="Sub Category slug">
+                        <input type="text" name="slug" value="<%=subcategoryData.slug?subcategoryData.slug:''%>" onblur="checkSlugone('check_slug_subcategory', 'checkFromSlug', '<%=subcategoryData.id?subcategoryData.id:''%>','')" class="form-control" id="slug" placeholder="Sub Category slug" readonly>
                     </div>
                     <div class="form-group">
                       <label for="short">Short Order</label>

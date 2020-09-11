@@ -201,3 +201,51 @@ function checkSlug(controller, checkType,user_id)
         });
     }
 }
+
+function checkSlugone(controller, checkType,user_id,nameid)
+{ 
+	var name=$('#'+nameid).val();
+    if(checkType=='checkFromName')
+    {
+        name=name.trim();
+		name=name.toLowerCase();
+        name=name.replace(/[^a-zA-Z ]/g,"");
+        name=name.replace(/ /g,"-");
+        $('#slug').val(name);
+    }
+    var slug=$('#slug').val();
+    if(checkType=='checkFromSlug')
+    {
+		slug=slug.trim();
+		slug=slug.toLowerCase();
+        slug=slug.replace(/ /g,"-");
+        slug=slug.replace(/[^a-z-A-Z ]/g,"");
+        $('#slug').val(slug);
+    }
+    if(slug!='')
+    {
+        $.ajax({
+            type: "POST",
+            url: controller,
+            data: { slug:slug, id:user_id },
+            success: function(response)
+            {console.log(response);
+                if(response.staus=='OK')
+                {   
+					$("#slug").val(slug+'-'+response.length);
+					
+					//$("#slug").addClass('is-invalid');
+                   // $("#submitBtn").attr("disabled",true);
+                    //$('#slug_error').html('Slug already exist. Please enter different name.');
+                }
+                else
+                {
+					// $("#slug").removeClass('is-invalid');
+                    // $("#submitBtn").attr("disabled",false);
+					// $('#slug_error').html('');
+					$("#slug").val(slug);
+                }
+            }
+        });
+    }
+}

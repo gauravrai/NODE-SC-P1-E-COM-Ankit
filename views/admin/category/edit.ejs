@@ -34,7 +34,7 @@
                 </div>
                 <div class="form-group">
                   <label for="slug">Slug</label>
-                  <input type="text" name="slug" class="form-control" id="slug" placeholder="Slug" value="<%=categoryData.slug?categoryData.slug:''%>" onblur="checkSlug('check_slug_category', 'checkFromSlug', '<%=categoryData.id?categoryData.id:''%>')">
+                  <input type="text" name="slug" class="form-control" id="slug" placeholder="Slug" readonly value="<%=categoryData.slug?categoryData.slug:''%>" onblur="checkSlug('check_slug_category', 'checkFromSlug', '<%=categoryData.id?categoryData.id:''%>')">
                   <span id="slug_error" class="customError"></span>
                 </div>
                 <div class="form-group">

@@ -161,4 +161,26 @@ module.exports = {
         	res.send('done');
         })
 	},
+	checkSlug: function(req,res){
+		console.log('coming')
+		var slug = req.body.slug;
+		var id = req.body.id;
+		var search = {deletedAt:0,slug:new RegExp(slug, 'i')};
+		if(id){
+			search._id = {$ne:id}
+		}
+		//console.log('search',search);
+		SubCategory.find(search).exec(function(err,subcategoryData){
+		//console.log('subcategoryData',subcategoryData);
+			if(subcategoryData.length > 0){
+				var length = subcategoryData.length;
+				var data = {'staus':'OK','length':length};
+		//console.log(length);
+				res.send(data);
+			}else{
+		console.log('coming else');
+				res.send();
+			}
+		})
+	}
 }
