@@ -32,22 +32,22 @@
                         <select name="categoryId" class="form-control" id="categoryId">
                         <option value="">Select Category</option>
                         <% for(let i = 0; i < categoryData.length; i++){ %>
-                        <option value="<%=categoryData[i].id%>" <% if(subcategoryData.cat_id == categoryData[i].id){ %> selected="selected" <% } %>><%=categoryData[i].name%></option>
+                        <option value="<%=categoryData[i].id%>" <% if(subcategoryData.categoryId == categoryData[i].id){ %> selected="selected" <% } %>><%=categoryData[i].name%></option>
                         <% } %>
                         </select>
                     </div>
                     <div class="form-group">
-                        <label for="subcategory">Sub Category Name</label>
-                        <input type="text" name="subcategory" value="<%=subcategoryData.sub_cat_name?subcategoryData.sub_cat_name:''%>" onblur="checkSlugone('check_slug_subcategory', 'checkFromName', '<%=subcategoryData.id?subcategoryData.id:''%>','subcategory')" class="form-control" id="subcategory" placeholder="Sub Category Name">
+                        <label for="name">Name</label>
+                        <input type="text" name="name" value="<%=subcategoryData.name?subcategoryData.name:''%>" onblur="checkSlug('check_slug_subcategory', 'checkFromName', '<%=subcategoryData.id?subcategoryData.id:''%>')" class="form-control" id="name" placeholder="Name">
                     </div>
                     <div class="form-group">
-                        <label for="slug">Sub Category Slug</label>
+                        <label for="slug">Slug</label>
                         <input type="hidden" name="id" value="<%=subcategoryData.id?subcategoryData.id:''%>">
-                        <input type="text" name="slug" value="<%=subcategoryData.slug?subcategoryData.slug:''%>" onblur="checkSlugone('check_slug_subcategory', 'checkFromSlug', '<%=subcategoryData.id?subcategoryData.id:''%>','')" class="form-control" id="slug" placeholder="Sub Category slug" readonly>
+                        <input type="text" name="slug" value="<%=subcategoryData.slug?subcategoryData.slug:''%>" onblur="checkSlug('check_slug_subcategory', 'checkFromSlug', '<%=subcategoryData.id?subcategoryData.id:''%>')" class="form-control" id="slug" placeholder="Slug" readonly>
                     </div>
                     <div class="form-group">
-                      <label for="short">Short Order</label>
-                      <input type="text" name="short" class="form-control" value="<%=subcategoryData.short?subcategoryData.short:''%>" id="short" placeholder="short">
+                      <label for="order">Order</label>
+                      <input type="text" name="order" class="form-control" value="<%=subcategoryData.order?subcategoryData.order:''%>" id="order" placeholder="Order">
                     </div>
                 </div>
                 <div class="card-footer">

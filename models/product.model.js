@@ -6,64 +6,38 @@ let ProductSchema = new Schema({
     name: {
         type: String
     },
-    cate_id: {
+    categoryId: {
         type: ObjectId
     },
-    s_cate_id: {
+    subcategoryId: {
         type: ObjectId
     },
-    price: {
-        type: String
-
-    },
-    inventory:{
-        store_id: {
-            type: ObjectId,
-        },
-        quantity: {
-            type: String,
-        },
-    },
-    offer:{
-        type: String
+    offer: {
+        type: String,
     },
     discount:{
         type: String
     },
-    discription:{
+    description:{
         type: String
     },
-    seo_keyword:{
+    stock: {
         type: String
     },
-    image:{
-        thumb_image: {
-            type: String,
-        },
-        small_image: {
-            type: String,
-        },
-        large_image: {
-            type: String
-        }
-    },
-    stock_keeping: {
-        type: String
-    },
-    image1:{
-        type: String
-    },
-    brand:{
-        type: String
+    brandId:{
+        type: ObjectId
     },
     featured: {
         type: Boolean,
     },
-    quantity: {
+    weight: {
         type: String
     },
-    weight_in: {
-        type: String
+    inventory:{
+        type:  Array
+    },
+    image:{
+        type:  Array
     },
     status: {
         type: Boolean,

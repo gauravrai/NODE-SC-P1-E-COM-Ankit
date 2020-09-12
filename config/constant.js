@@ -13,5 +13,6 @@ module.exports = {
 	COMPANYLOGO:SITEURL+"", 
 	JWT_Token :"secret",
 	  
-	LIMIT: 10
+	LIMIT: 10,	  
+	PRODUCTIMAGELENGTH: 3
 }

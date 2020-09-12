@@ -154,7 +154,7 @@ module.exports = {
 		}		
 	},
 
-	deleteTower : async function(req,res){
+	deleteTower: async function(req,res){
 		let id = req.param("id");
 		return Tower.updateOne({_id:  mongoose.mongo.ObjectId(id)},{deletedAt:2},function(err,data){        	
 			if(err) console.error(err);
@@ -162,7 +162,7 @@ module.exports = {
         })
 	},
 
-	changeStatusTower : function(req,res){
+	changeStatusTower: function(req,res){
 		let id = req.param("id");
 		let status = req.param("status");
 		return Tower.updateOne({_id: mongoose.mongo.ObjectId(id)}, {

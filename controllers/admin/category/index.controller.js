@@ -89,9 +89,8 @@ module.exports = {
 			let categoryData = {
 				name : req.body.name,
 				slug : req.body.slug,
-				short: req.body.short
+				order: req.body.order
 			};
-			//console.log(categoryData);
 			let categoryobj = new Category(categoryData);
 			categoryobj.save(function(err, data){
 				if(err){console.log(err)}
@@ -114,7 +113,7 @@ module.exports = {
 			let categoryData = {
 				name : req.body.name,
 				slug : req.body.slug,
-				short: req.body.short
+				order: req.body.order
 			};
 			await Category.update(
 				{ _id: mongoose.mongo.ObjectId(req.body.id) },
@@ -154,21 +153,16 @@ module.exports = {
 	},
 	
 	checkSlugCategory: function(req,res){
-		console.log('coming')
 		var slug = req.body.slug;
 		var id = req.body.id;
 		var search = {deletedAt:0,slug:slug};
 		if(id){
 			search._id = {$ne:id}
 		}
-		console.log('search',search);
 		Category.find(search).exec(function(err,categoryData){
-		console.log('categoryData',categoryData);
 			if(categoryData.length > 0){
-		console.log('coming if');
 				res.send('OK');
 			}else{
-		console.log('coming else');
 				res.send();
 			}
 		})

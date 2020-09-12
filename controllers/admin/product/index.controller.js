@@ -15,59 +15,7 @@ const Store = model.store;
 const State = model.state;
 const Product = model.product;
 const Brand   = model.brand;
-const ProductImage = model.product_image
 const ADMINCALLURL = config.constant.ADMINCALLURL;
-
-
-// var storage = multer.diskStorage({
-// 	destination: "./public/uploads",
-// 	filename: (req, thumbnailImage, cb)=> {
-// 	  cb(null,thumbnailImage.filename+"_"+Date.now()+Path2D.extname(thumbnailImage.originalname));
-// 	}
-//   });
-//   var upload = multer({ storage: storage }).single('thumbnailImage');
-
-
-  // Set The Storage Engine
-const storage = multer.diskStorage({
-    destination: './public/uploads/',
-    filename: function (req, file, cb) {
-		console.log("file------------------",file);
-        cb(null, thumbnailImage.filename+"_"+ path.extname(file.originalname));
-    }
-});
-
-
-// Init Upload
-const upload = multer({
-    storage: storage,
-    limits: { fileSize: 1000000 },
-    fileFilter: function (req, file, cb) {
-		console.log("file------------------",file.thumbnailImagef);
-        checkFileType(file, cb);
-    }
-}).single('thumbnailImagef');
-// }).array("multi-files", 10);
-
-// .array("multi-files", 10);
-
-// Check File Type
-function checkFileType(file, cb) {
-	consolel.log("mimetype && extname");
-    // Allowed ext
-    const filetypes = /jpeg|jpg|png|gif/;
-    // Check ext
-    const extname = filetypes.test(path.extname(file.originalname).toLowerCase());
-    // Check mime
-    const mimetype = filetypes.test(file.mimetype);
-    if (mimetype && extname) {
-		
-        return cb(null, true);
-    } else {
-		consolel.log("Error: Only [ jpeg|jpg|png|PNG|gif ] Images are accetable!");
-        cb('Error: Only [ jpeg|jpg|png|PNG|gif ] Images are accetable!');
-    }
-}
 
 module.exports = {
 
@@ -83,7 +31,7 @@ module.exports = {
 		var search = {deletedAt:0}
 		let searchValue = req.body.search.value;
 		if(searchValue){			
-            search.product = { $regex: '.*' + searchValue + '.*',$options:'i' };
+            search.name = { $regex: '.*' + searchValue + '.*',$options:'i' };
 		}
 		
 		let skip = req.input('start') ? parseInt(req.input('start')) : 0;
@@ -112,20 +60,15 @@ module.exports = {
 			await config.helpers.permission('manage_product', req, async function(err,permissionData) {
 				for(i=0;i<data.length;i++){
 					var arr1 = [];
-					await config.helpers.category.getNameById(data[i].cate_id, async function (categoryName) {
-						var cat_name = categoryName ? categoryName.name : 'A/N';
-						//arr1.push(categoryName.name);
+					await config.helpers.category.getNameById(data[i].categoryId, async function (categoryName) {
+						var cat_name = categoryName ? categoryName.name : 'N/A';
 						arr1.push(cat_name);
 					})
-					await config.helpers.subcategory.getSubCatNameById(data[i].s_cate_id, async function (subcategoryName) {
-						var subcat_name = subcategoryName ? subcategoryName.sub_cat_name : 'A/N';
-						//arr1.push(subcategoryName.sub_cat_name);
+					await config.helpers.subcategory.getNameById(data[i].subcategoryId, async function (subcategoryName) {
+						var subcat_name = subcategoryName ? subcategoryName.name : 'N/A';
 						arr1.push(subcat_name);
 					})
-					//arr1.push(data[i].s_cate_id);
                     arr1.push(data[i].name);
-                    arr1.push(data[i].price);
-					//arr1.push(data[i].store);
 					arr1.push(moment(data[i].createdAt).format('DD-MM-YYYY'));
 					if(!data[i].status){
 						let change_status = "changeStatus(this,\'1\',\'change_status_product\',\'list_product\',\'product\');";	
@@ -158,15 +101,11 @@ module.exports = {
 				let moduleName = 'Product Management';
 				let pageTitle = 'Add Product';
 				let categoryData = await Category.find({status:true, deletedAt: 0});
-				//console.log(categoryData);return 0;
 				let storeData = await Store.find({status:true, deletedAt: 0});
 				let stateData = await State.find({status:true, deletedAt: 0});
 				let brandData = await Brand.find({status:true, deletedAt: 0})
 				res.render('admin/product/add.ejs',{layout:'admin/layout/layout', pageTitle:pageTitle, moduleName:moduleName,storeData:storeData,stateData:stateData,categoryData:categoryData,brandData:brandData });
 			}else{ 
-				//console.log(req.files);
-				//console.log(req.body); return false;
-				//let catId = Array.isArray(req.body.categoryId);
 				let categoryId  = Array.isArray(req.body.categoryId);
 				if(categoryId=="true") {
 					

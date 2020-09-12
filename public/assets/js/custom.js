@@ -249,3 +249,32 @@ function checkSlugone(controller, checkType,user_id,nameid)
         });
     }
 }
+
+$(document).on("change", "#categoryId", function(){
+	let id = $(this).val();
+	$.ajax({
+		type: 'POST',
+		url: 'get_subcategory',
+		data: {id:id},
+		success: function(response) {
+			console.log(response);
+			if(response){
+			$('#subcategoryData').html(response);	
+			}
+			else{
+			$('#subcategoryData').html('');	
+			}
+		}
+	});
+});
+
+$(document).on("change","#offerType",function(){
+	var checkvalue = $(this).val();
+	if(checkvalue=="percentage"){
+	  $("#percentage_div").show();
+	  $("#fixed_div").hide();
+	} else {
+	  $("#fixed_div").show();
+	  $("#percentage_div").hide();
+	}
+});

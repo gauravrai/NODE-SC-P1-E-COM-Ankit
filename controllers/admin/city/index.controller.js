@@ -127,7 +127,7 @@ module.exports = {
 		}		
 	},
 
-	deleteCity : async function(req,res){
+	deleteCity: async function(req,res){
 		let id = req.param("id");
 		return City.updateOne({_id:  mongoose.mongo.ObjectId(id)},{deletedAt:2},function(err,data){        	
 			if(err) console.error(err);
@@ -135,7 +135,7 @@ module.exports = {
         })
 	},
 
-	changeStatusCity : function(req,res){
+	changeStatusCity: function(req,res){
 		let id = req.param("id");
 		let status = req.param("status");
 		return City.updateOne({_id: mongoose.mongo.ObjectId(id)}, {

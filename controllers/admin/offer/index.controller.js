@@ -19,12 +19,13 @@ module.exports = {
 		await config.helpers.permission('manage_offer', req, (err,permissionData)=>{
 			res.render('admin/offer/view.ejs',{layout:'admin/layout/layout', pageTitle:pageTitle, moduleName:moduleName, permissionData:permissionData});
 		});
-    },
+	},
+	
     listOffer:function(req,res){
 		var search = {deletedAt:0}
 		let searchValue = req.body.search.value;
 		if(searchValue){			
-            search.offer = { $regex: '.*' + searchValue + '.*',$options:'i' };
+            search.name = { $regex: '.*' + searchValue + '.*',$options:'i' };
 		}
 		
 		let skip = req.input('start') ? parseInt(req.input('start')) : 0;
@@ -54,19 +55,16 @@ module.exports = {
 				for(i=0;i<data.length;i++){
                     var arr1 = [];
                     arr1.push(data[i].name);
-                    await config.helpers.product.getNameById(data[i].product_id, async function (productName) {
-						var product_name = productName ? productName.name : 'A/N';
-						//arr1.push(productName.name);
+                    await config.helpers.product.getNameById(data[i].productId, async function (productName) {
+						var product_name = productName ? productName.name : 'N/A';
 						arr1.push(product_name);
 					})
-                    await config.helpers.category.getNameById(data[i].cate_id, async function (categoryName) {
-						var cat_name = categoryName ? categoryName.name : 'A/N';
-						//arr1.push(categoryName.name);
+                    await config.helpers.category.getNameById(data[i].categoryId, async function (categoryName) {
+						var cat_name = categoryName ? categoryName.name : 'N/A';
 						arr1.push(cat_name);
 					})
-					await config.helpers.subcategory.getSubCatNameById(data[i].s_cate_id, async function (subcategoryName) {
-						var subcat_name = subcategoryName ? subcategoryName.sub_cat_name : 'A/N';
-						//arr1.push(subcategoryName.sub_cat_name);
+					await config.helpers.subcategory.getNameById(data[i].subcategoryId, async function (subcategoryName) {
+						var subcat_name = subcategoryName ? subcategoryName.name : 'N/A';
 						arr1.push(subcat_name);
 					})
 					
@@ -96,6 +94,7 @@ module.exports = {
 			});
 		});
 	},
+
     addOffer: async function(req,res){
 		if(req.method == "GET"){
 			let moduleName = 'Offer Management';
@@ -106,18 +105,18 @@ module.exports = {
 			res.render('admin/offer/add.ejs',{layout:'admin/layout/layout', pageTitle:pageTitle, moduleName:moduleName, categoryData:categoryData,subcategoryData:subcategoryData,productData:productData} );
 		}else{
 			let offerData = {
-                name : req.body.offer_name,
-				cate_id : mongoose.mongo.ObjectId(req.body.categoryId),
-				s_cate_id : mongoose.mongo.ObjectId(req.body.subcategoryId),
-                product_id : mongoose.mongo.ObjectId(req.body.productId),
-                offer_type : req.body.offertype,
+                name : req.body.name,
+				categoryId : mongoose.mongo.ObjectId(req.body.categoryId),
+				subcategoryId : mongoose.mongo.ObjectId(req.body.subcategoryId),
+                productId : mongoose.mongo.ObjectId(req.body.productId),
+                offerType : req.body.offerType,
                 percentage : req.body.percentage,
                 fixed  : req.body.fixed,
-                minimum_cart_value : req.body.min_cart_value,
+                cartValue : req.body.cartValue,
                 from : moment(req.body.from).format('YYYY-MM-DD'),
                 to : moment(req.body.to).format('YYYY-MM-DD'),
                 capping : req.body.capping,
-                apply_for :req.body.applyfor
+                applyFor :req.body.applyFor
 			};
 			//console.log(storeData);
 			let offer = new Offer(offerData);
@@ -128,7 +127,8 @@ module.exports = {
 				req.flash({});	
 			})
 		}		
-    },
+	},
+	
     editOffer: async function(req,res){
 		if(req.method == "GET"){
 			let moduleName = 'Offer Management';
@@ -142,18 +142,18 @@ module.exports = {
 		}
 		if(req.method == "POST"){
 			let offerData = {
-                name : req.body.offer_name,
-				cate_id : mongoose.mongo.ObjectId(req.body.categoryId),
-				s_cate_id : mongoose.mongo.ObjectId(req.body.subcategoryId),
-                product_id : mongoose.mongo.ObjectId(req.body.productId),
-                offer_type : req.body.offertype,
+                name : req.body.name,
+				categoryId : mongoose.mongo.ObjectId(req.body.categoryId),
+				subcategoryId : mongoose.mongo.ObjectId(req.body.subcategoryId),
+                productId : mongoose.mongo.ObjectId(req.body.productId),
+                offerType : req.body.offerType,
                 percentage : req.body.percentage,
                 fixed  : req.body.fixed,
-                minimum_cart_value : req.body.min_cart_value,
+                cartValue : req.body.cartValue,
                 from : moment(req.body.from).format('YYYY-MM-DD'),
                 to : moment(req.body.to).format('YYYY-MM-DD'),
                 capping : req.body.capping,
-                apply_for :req.body.applyfor
+                applyFor :req.body.applyFor
 			};
 			await Offer.update(
 				{ _id: mongoose.mongo.ObjectId(req.body.id) },
@@ -164,8 +164,9 @@ module.exports = {
 					req.flash({});	
 			})
 		}		
-    },
-    changeStatusOffer : function(req,res){
+	},
+	
+    changeStatusOffer: function(req,res){
 		let id = req.param("id");
 		let status = req.param("status");
 		return Offer.updateOne({_id: mongoose.mongo.ObjectId(id)}, {
@@ -181,8 +182,9 @@ module.exports = {
 				res.send('<span class="badge bg-danger" style="cursor:pointer;" onclick="'+change_status+'">Inactive</span>');
 			}
 	    })
-    },
-    deleteOffer : async function(req,res){
+	},
+	
+    deleteOffer: async function(req,res){
 		let id = req.param("id");
 		return Offer.updateOne({_id:  mongoose.mongo.ObjectId(id)},{deletedAt:2},function(err,data){        	
 			if(err) console.error(err);

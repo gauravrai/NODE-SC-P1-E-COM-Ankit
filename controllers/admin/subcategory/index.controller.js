@@ -17,12 +17,13 @@ module.exports = {
 		await config.helpers.permission('manage_subcategory', req, (err,permissionData)=>{
 			res.render('admin/subcategory/view.ejs',{layout:'admin/layout/layout', pageTitle:pageTitle,moduleName:moduleName,permissionData:permissionData});
 		});
-    },
+	},
+	
     listSubCategory:function(req,res){
 		var search = {deletedAt:0}
 		let searchValue = req.body.search.value;
 		if(searchValue){			
-            search.subcategory = { $regex: '.*' + searchValue + '.*',$options:'i' };
+            search.name = { $regex: '.*' + searchValue + '.*',$options:'i' };
 		}
 		
 		let skip = req.input('start') ? parseInt(req.input('start')) : 0;
@@ -52,14 +53,13 @@ module.exports = {
 			await config.helpers.permission('manage_subcategory', req, async function(err,permissionData) {
 				for(i=0;i<data.length;i++){
                     var arr1 = [];
-					await config.helpers.category.getNameById(data[i].cat_id, async function (categoryName) {
-						var cat_name = categoryName ? categoryName.name : 'A/N';
+                    arr1.push(data[i].name);
+					await config.helpers.category.getNameById(data[i].categoryId, async function (categoryName) {
+						var cat_name = categoryName ? categoryName.name : 'N/A';
 						//console.log(categoryName.name);return false;
 						//arr1.push(categoryName.name);
 						arr1.push(cat_name);
                     })
-                    arr1.push(data[i].sub_cat_name);
-					
 					arr1.push(data[i].slug);
 					arr1.push(moment(data[i].createdAt).format('DD-MM-YYYY'));
 					if(!data[i].status){
@@ -87,6 +87,7 @@ module.exports = {
 			});
 		});
 	},
+
     addSubCategory: async function(req,res){
 		if(req.method == "GET"){
 			let moduleName = 'Sub Category Management';
@@ -96,21 +97,22 @@ module.exports = {
 			res.render('admin/subcategory/add.ejs',{layout:'admin/layout/layout', pageTitle:pageTitle,moduleName:moduleName,categoryData:categoryData} );
 		}else{
 			let subcategoryData = {
-                sub_cat_name : req.body.subcategory,
-                cat_id: req.body.categoryId,
+                name : req.body.name,
+                categoryId: req.body.categoryId,
 				slug : req.body.slug,
-				short: req.body.short
+				order: req.body.order
 			};
 			//console.log(categoryData);
-			let subcategoryobj = new SubCategory(subcategoryData);
-			subcategoryobj.save(function(err, data){
+			let subcategory = new SubCategory(subcategoryData);
+			subcategory.save(function(err, data){
 				if(err){console.log(err)}
 				req.flash('msg', {msg:'Sub Category has been Created Successfully', status:false});	
 				res.redirect(config.constant.ADMINCALLURL+'/manage_subcategory');
 				req.flash({});	
 			})
 		}		
-    },
+	},
+	
     editSubCategory: async function(req,res){
 		if(req.method == "GET"){
 			let moduleName = 'Sub Category Management';
@@ -122,10 +124,10 @@ module.exports = {
 		}
 		if(req.method == "POST"){
 			let subcategoryData = {
-				sub_cat_name : req.body.subcategory,
-				cat_id : mongoose.mongo.ObjectId(req.body.categoryId),
+				name : req.body.name,
+				categoryId : mongoose.mongo.ObjectId(req.body.categoryId),
 				slug   : req.body.slug,
-				short: req.body.short
+				order: req.body.order
 			};
 			await SubCategory.updateOne(
 				{ _id: mongoose.mongo.ObjectId(req.body.id) },
@@ -136,8 +138,9 @@ module.exports = {
 					req.flash({});	
 			})
 		}		
-    },
-    changeStatusSubCategory : function(req,res){
+	},
+	
+    changeStatusSubCategory: function(req,res){
 		let id = req.param("id");
 		let status = req.param("status");
 		return SubCategory.updateOne({_id: mongoose.mongo.ObjectId(id)}, {
@@ -153,32 +156,27 @@ module.exports = {
 				res.send('<span class="badge bg-danger" style="cursor:pointer;" onclick="'+change_status+'">Inactive</span>');
 			}
 	    })
-    },
-    deleteSubCategory : async function(req,res){
+	},
+	
+    deleteSubCategory: async function(req,res){
 		let id = req.param("id");
 		return SubCategory.updateOne({_id:  mongoose.mongo.ObjectId(id)},{deletedAt:2},function(err,data){        	
 			if(err) console.error(err);
         	res.send('done');
         })
 	},
+
 	checkSlug: function(req,res){
-		console.log('coming')
 		var slug = req.body.slug;
 		var id = req.body.id;
-		var search = {deletedAt:0,slug:new RegExp(slug, 'i')};
+		var search = {deletedAt:0,slug:slug};
 		if(id){
 			search._id = {$ne:id}
 		}
-		//console.log('search',search);
 		SubCategory.find(search).exec(function(err,subcategoryData){
-		//console.log('subcategoryData',subcategoryData);
 			if(subcategoryData.length > 0){
-				var length = subcategoryData.length;
-				var data = {'staus':'OK','length':length};
-		//console.log(length);
-				res.send(data);
+				res.send('OK');
 			}else{
-		console.log('coming else');
 				res.send();
 			}
 		})

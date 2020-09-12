@@ -17,11 +17,12 @@ module.exports = {
 			res.render('admin/discount/view.ejs',{layout:'admin/layout/layout', pageTitle:pageTitle, moduleName:moduleName, permissionData:permissionData});
 		});
 	},
+
 	listDiscount:function(req,res){
 		var search = {deletedAt:0}
 		let searchValue = req.body.search.value;
 		if(searchValue){			
-            search.discount = { $regex: '.*' + searchValue + '.*',$options:'i' };
+            search.couponName = { $regex: '.*' + searchValue + '.*',$options:'i' };
 		}
 		
 		let skip = req.input('start') ? parseInt(req.input('start')) : 0;
@@ -50,10 +51,10 @@ module.exports = {
 			await config.helpers.permission('manage_discount', req, async function(err,permissionData) {
 				for(i=0;i<data.length;i++){
                     var arr1 = [];
-                    arr1.push(data[i].coupon_no);
-					arr1.push(data[i].name);
-                    arr1.push(data[i].min_Order_gst);
-					arr1.push(data[i].no_of_uses);
+                    arr1.push(data[i].couponNo);
+					arr1.push(data[i].couponName);
+                    arr1.push(data[i].orderValue);
+					arr1.push(data[i].noOfUses);
 					//arr1.push(data[i].store);
 					arr1.push(moment(data[i].createdAt).format('DD-MM-YYYY'));
 					if(!data[i].status){
@@ -87,17 +88,17 @@ module.exports = {
 			res.render('admin/discount/add.ejs',{layout:'admin/layout/layout', pageTitle:pageTitle, moduleName:moduleName} );
 		}else{
 			let discountData = {
-				coupon_no : req.body.coupon_no.toUpperCase(),
-				name : req.body.coupon_name,
-				min_Order_gst : req.body.min_order,
-				no_of_uses : req.body.no_of_uses,
-				offer_type : req.body.offertype,
+				couponNo : req.body.couponNo.toUpperCase(),
+				couponName : req.body.couponName,
+				orderValue : req.body.orderValue,
+				noOfUses : req.body.noOfUses,
+				offerType : req.body.offerType,
 				percentage : req.body.percentage,
 				fixed : req.body.fixed,
 				from : moment(req.body.from).format('YYYY-MM-DD'),
 				to : moment(req.body.to).format('YYYY-MM-DD'),
 				capping : req.body.capping,
-				apply_for : req.body.applyfor
+				applyFor : req.body.applyFor
 			};
 			//console.log(storeData);
 			let discountobj = new Discount(discountData);
@@ -119,17 +120,17 @@ module.exports = {
 		}
 		if(req.method == "POST"){
 			let discountData = {
-				coupon_no : req.body.coupon_no.toUpperCase(),
-				name : req.body.coupon_name,
-				min_Order_gst : req.body.min_order,
-				no_of_uses : req.body.no_of_uses,
-				offer_type : req.body.offertype,
+				couponNo : req.body.couponNo.toUpperCase(),
+				couponName : req.body.couponName,
+				orderValue : req.body.orderValue,
+				noOfUses : req.body.noOfUses,
+				offerType : req.body.offerType,
 				percentage : req.body.percentage,
 				fixed : req.body.fixed,
 				from : moment(req.body.from).format('YYYY-MM-DD'),
 				to : moment(req.body.to).format('YYYY-MM-DD'),
 				capping : req.body.capping,
-				apply_for : req.body.applyfor
+				applyFor : req.body.applyFor
 			};
 			await Discount.update(
 				{ _id: mongoose.mongo.ObjectId(req.body.id) },
@@ -166,8 +167,8 @@ module.exports = {
         })
 	},
 	checkCouponNo : async function(req,res){
-		let coupon_no  = req.body.coupon_no;
-		let couponData = await Discount.find({coupon_no:coupon_no, status:true, deletedAt: 0});
+		let couponNo  = req.body.couponNo;
+		let couponData = await Discount.find({couponNo:couponNo, status:true, deletedAt: 0});
 		//console.log(couponData);
 		if(couponData.length>0){
 			return res.status(200).json({ code:1 , status: 'exists', message: "Coupon Number  Already Inserted !!"});

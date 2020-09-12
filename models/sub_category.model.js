@@ -1,18 +1,18 @@
-const mongoose = require('mongoose');
+    const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 var ObjectId = mongoose.Schema.Types.ObjectId;
 
 let SubCategorySchema = new Schema({
-    sub_cat_name: {
+    name: {
         type: String
     },
-    cat_id: {
+    categoryId: {
         type: ObjectId
     },
     slug: {
         type: String
     },
-    short: {
+    order: {
         type: Number
     },
     status: {

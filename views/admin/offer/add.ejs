@@ -30,8 +30,8 @@
                   <div class="form-row">
                     <!-- <div class="card-body"> -->
                         <div class="form-group col-md-3">
-                            <label for="offer_name">Offer Name</label>
-                            <input type="text" name="offer_name" class="form-control" id="offer_name" placeholder="Offer Name">
+                            <label for="name">Offer Name</label>
+                            <input type="text" name="name" class="form-control" id="name" placeholder="Offer Name">
                         </div>
                         <div class="form-group col-md-3">
                             <label for="categoryId">Select Category</label>
@@ -66,8 +66,8 @@
                         </div>
                         
                         <div class="form-group col-md-3">
-                            <label for="offertype">Select Offer Type</label>
-                            <select name="offertype" class="form-control" id="offertype">
+                            <label for="offerType">Select Offer Type</label>
+                            <select name="offerType" class="form-control" id="offerType">
                             <option value="">Select Offer Type</option>
                             <option value="percentage">Percentage</option>
                             <option value="fixed">Fixed</option>
@@ -83,8 +83,8 @@
                         </div>
 
                         <div class="form-group col-md-3">
-                            <label for="min_cart_value">Minimum Cart Value</label>
-                            <input type="text" name="min_cart_value" class="form-control" id="min_cart_value" placeholder="Minimum Cart Value">
+                            <label for="cartValue">Minimum Cart Value</label>
+                            <input type="text" name="cartValue" class="form-control" id="cartValue" placeholder="Minimum Cart Value">
                         </div> 
                         <div class="form-group col-md-3">
                             <label for="from">From Date</label>
@@ -100,27 +100,14 @@
                             <input type="text" name="capping" class="form-control" id="capping" placeholder="Capping">
                         </div>
                         <div class="form-group col-md-3">
-                            <label for="applyfor">Select Apply For</label>
-                            <select name="applyfor" class="form-control" id="applyfor">
+                            <label for="applyFor">Select Apply For</label>
+                            <select name="applyFor" class="form-control" id="applyFor">
                                 <option value="">Select Apply For</option>
                                 <option value="website">Website</option>
                                 <option value="app">App</option>
                                 <option value="both">Both</option>
                             </select>
                         </div>
-
-                        <!-- <div class="form-group"></div>
-                        <div class='input-group date' id='datetimepicker1'>
-                            <input type='text' class="form-control" />
-                            <span class="input-group-addon">
-                                <span class="glyphicon glyphicon-calendar"></span>
-                            </span>
-                        </div>
-                        </div> -->
-                      
-                        
-                        
-                    <!-- </div> -->
                   </div>
                 </div>  
                 <div class="card-footer">
@@ -137,45 +124,3 @@
       </div>
     </section>
   </div>
-
-  <script>
-
-
-    $(document).on("change","#offertype",function(){
-          var checkvalue = $(this).val();
-          if(checkvalue=="percentage"){
-            $("#percentage_div").show();
-            $("#fixed_div").hide();
-          } else {
-            $("#fixed_div").show();
-            $("#percentage_div").hide();
-          }
-    });
-  
-
-    $(document).on("change", "#categoryId", function(){
-        var ids = "";
-        $('option:selected', $(this)).each(function() {
-
-          if(ids==""){
-            ids = $(this).val();
-          }else{
-            ids += ","+$(this).val();
-          }
-          });
-          $.ajax({
-          type: 'POST',
-          url: 'get_subcategory/',
-          data: {ids:ids},
-          success: function(response) {
-            console.log(response);
-            if(response){
-              $('#subcategoryData').html(response);	
-            }
-            else{
-              $('#subcategoryData').html('');	
-            }
-          }
-        });
-    });
-  </script>

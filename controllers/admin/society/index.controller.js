@@ -147,7 +147,7 @@ module.exports = {
 		}		
 	},
 
-	deleteSociety : async function(req,res){
+	deleteSociety: async function(req,res){
 		let id = req.param("id");
 		return Society.updateOne({_id:  mongoose.mongo.ObjectId(id)},{deletedAt:2},function(err,data){        	
 			if(err) console.error(err);
@@ -155,7 +155,7 @@ module.exports = {
         })
 	},
 
-	changeStatusSociety : function(req,res){
+	changeStatusSociety: function(req,res){
 		let id = req.param("id");
 		let status = req.param("status");
 		return Society.updateOne({_id: mongoose.mongo.ObjectId(id)}, {

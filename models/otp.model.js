@@ -2,15 +2,12 @@ const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 var ObjectId = mongoose.Schema.Types.ObjectId;
 
-let CategorySchema = new Schema({
-    name: {
+let OtpSchema = new Schema({
+    mobile: {
         type: String
     },
-    slug: {
+    opt: {
         type: String
-    },
-    order: {
-        type: Number
     },
     status: {
         type: Boolean,
@@ -31,4 +28,4 @@ let CategorySchema = new Schema({
 });
 
 // Export the model
-module.exports = mongoose.model('Category', CategorySchema);
+module.exports = mongoose.model('otp', OtpSchema);

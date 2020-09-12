@@ -146,7 +146,7 @@ module.exports = {
 		}		
 	},
 
-	deleteAdministrator : async function(req,res){
+	deleteAdministrator: async function(req,res){
 		let id = req.param("id");
 		return Admin.updateOne({_id:  mongoose.mongo.ObjectId(id)},{deletedAt:2},function(err,data){        	
 			if(err) console.error(err);
@@ -154,7 +154,7 @@ module.exports = {
         })
 	},
 
-	changeStatusAdministrator : function(req,res){
+	changeStatusAdministrator: function(req,res){
 		let id = req.param("id");
 		let status = req.param("status");
 		return Admin.updateOne({_id: mongoose.mongo.ObjectId(id)}, {

@@ -104,7 +104,6 @@ module.exports = {
 				cityId : mongoose.mongo.ObjectId(req.body.cityId),
 				pincodeId : mongoose.mongo.ObjectId(req.body.pincodeId)
 			};
-			console.log(areaData);
 			let area = new Area(areaData);
 			area.save(function(err, data){
 				if(err){console.log(err)}
@@ -127,7 +126,6 @@ module.exports = {
 			res.render('admin/area/edit',{layout:'admin/layout/layout', pageTitle:pageTitle, moduleName:moduleName, stateData:stateData, cityData:cityData, pincodeData:pincodeData, areaData:areaData} );
 		}
 		if(req.method == "POST"){
-			console.log('coming to the request');
 			let areaData = {
 				name : req.body.name,
 				stateId : mongoose.mongo.ObjectId(req.body.stateId),
@@ -145,7 +143,7 @@ module.exports = {
 		}		
 	},
 
-	deleteArea : async function(req,res){
+	deleteArea: async function(req,res){
 		let id = req.param("id");
 		return Area.updateOne({_id:  mongoose.mongo.ObjectId(id)},{deletedAt:2},function(err,data){        	
 			if(err) console.error(err);
@@ -153,7 +151,7 @@ module.exports = {
         })
 	},
 
-	changeStatusArea : function(req,res){
+	changeStatusArea: function(req,res){
 		let id = req.param("id");
 		let status = req.param("status");
 		return Area.updateOne({_id: mongoose.mongo.ObjectId(id)}, {

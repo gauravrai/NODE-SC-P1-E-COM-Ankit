@@ -6,27 +6,27 @@ let OfferSchema = new Schema({
     name: {
         type: String
     },
-    cate_id: {
+    categoryId: {
         type: ObjectId
     },
-    s_cate_id: {
+    subcategoryId: {
         type: ObjectId
     },
-    product_id: {
+    productId: {
         type: ObjectId
     },
-    offer_type: {
+    offerType: {
         type: String,
     },
     percentage: {
         type: String,
-        default: null
+        default: 0
     },
     fixed: {
         type: String,
-        default: null
+        default: 0
     },
-    minimum_cart_value: {
+    cartValue: {
         type: String 
     },
     from: {
@@ -38,7 +38,7 @@ let OfferSchema = new Schema({
     capping: {
         type: String
     },
-    apply_for: {
+    applyFor: {
         type: String
     },
     status: {

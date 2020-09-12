@@ -2,7 +2,7 @@ const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 var ObjectId = mongoose.Schema.Types.ObjectId;
 
-let CustomerprofileSchema = new Schema({
+let CustomerSchema = new Schema({
     mobile: {
         type: String
     },
@@ -37,4 +37,4 @@ let CustomerprofileSchema = new Schema({
 });
 
 // Export the model
-module.exports = mongoose.model('customer_profile', CustomerprofileSchema);
+module.exports = mongoose.model('customer', CustomerSchema);

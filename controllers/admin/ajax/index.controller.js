@@ -23,24 +23,7 @@ module.exports = {
 		let data = await City.find({ stateId: mongoose.mongo.ObjectID(stateId), status: true, deletedAt: 0 });
 		res.render('admin/ajax/locationfields',{layout:false, data:data, name:name, label: label, functionName:functionName, nextField:nextField } );
 	},
-	getSubCategory: async function(req,res){
-		
-		let cateId = req.body.ids;
-		var cateIdSplit = cateId.split(',');
-		//console.log(cateId);
-		let appender = "";
-		cateIdSplit.forEach(element => { 
-			if(appender==""){
-				appender = mongoose.mongo.ObjectID(element)
-			}else{
-				appender += ","+mongoose.mongo.ObjectID(element)
-			}	
-		  }); 
-		  //console.log(appender); 
-		
-		let data = await SubCategory.find({cat_id: {$in:cateIdSplit}, status: true, deletedAt: 0 });
-		res.render('admin/ajax/subcategory',{layout:false, data:data} );
-	},
+
 	getPincode: async function(req,res){
 		let nextField = 'area';
 		let name = req.body.name;
@@ -69,5 +52,11 @@ module.exports = {
 		let areaId = req.param('id');
 		let data = await Society.find({ areaId: mongoose.mongo.ObjectID(areaId), status: true, deletedAt: 0 });
 		res.render('admin/ajax/locationfields',{layout:false, data:data, name:name, label: label, functionName:functionName, nextField:nextField } );
-	}
+	},
+
+	getSubcategory: async function(req,res){
+		let id = mongoose.mongo.ObjectID(req.body.id);
+		let data = await SubCategory.find({categoryId: id, status: true, deletedAt: 0 });
+		res.render('admin/ajax/subcategory',{layout:false, data:data} );
+	},
 }

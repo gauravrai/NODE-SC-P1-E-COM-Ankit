@@ -18,12 +18,13 @@ module.exports = {
 		await config.helpers.permission('manage_store', req, (err,permissionData)=>{
 			res.render('admin/store/view.ejs',{layout:'admin/layout/layout', pageTitle:pageTitle, moduleName:moduleName, permissionData:permissionData});
 		});
-    },
+	},
+	
     listStore:function(req,res){
 		var search = {deletedAt:0}
 		let searchValue = req.body.search.value;
 		if(searchValue){			
-            search.store = { $regex: '.*' + searchValue + '.*',$options:'i' };
+            search.name = { $regex: '.*' + searchValue + '.*',$options:'i' };
 		}
 		
 		let skip = req.input('start') ? parseInt(req.input('start')) : 0;
@@ -52,8 +53,8 @@ module.exports = {
 			await config.helpers.permission('manage_store', req, async function(err,permissionData) {
 				for(i=0;i<data.length;i++){
                     var arr1 = [];
-                    arr1.push(data[i].s_name);
-                    arr1.push(data[i].s_address);
+                    arr1.push(data[i].name);
+                    arr1.push(data[i].address);
 					await config.helpers.state.getNameById(data[i].stateId, async function (stateName) {
 						arr1.push(stateName.name);
 					})
@@ -86,6 +87,7 @@ module.exports = {
 			});
 		});
 	},
+
     addStore: async function(req,res){
 		if(req.method == "GET"){
 			let moduleName = 'Store Management';
@@ -94,21 +96,22 @@ module.exports = {
 			res.render('admin/store/add.ejs',{layout:'admin/layout/layout', pageTitle:pageTitle, moduleName:moduleName, stateData:stateData} );
 		}else{
 			let storeData = {
-                s_name : req.body.store,
-				s_address : req.body.address,
+                name : req.body.name,
+				address : req.body.address,
 				stateId : mongoose.mongo.ObjectId(req.body.stateId),
 				cityId : mongoose.mongo.ObjectId(req.body.cityId)
 			};
 			//console.log(storeData);
-			let storeobj = new Store(storeData);
-			storeobj.save(function(err, data){
+			let store = new Store(storeData);
+			store.save(function(err, data){
 				if(err){console.log(err)}
 				req.flash('msg', {msg:'Store has been Created Successfully', status:false});	
 				res.redirect(config.constant.ADMINCALLURL+'/manage_store');
 				req.flash({});	
 			})
 		}		
-    },
+	},
+	
     editStore: async function(req,res){
 		if(req.method == "GET"){
 			let moduleName = 'Store Management';
@@ -121,10 +124,10 @@ module.exports = {
 		}
 		if(req.method == "POST"){
 			let storeData = {
-				s_name : req.body.store,
+				name : req.body.name,
+                address:req.body.address,
 				stateId : mongoose.mongo.ObjectId(req.body.stateId),
-                cityId : mongoose.mongo.ObjectId(req.body.cityId),
-                s_address:req.body.address
+                cityId : mongoose.mongo.ObjectId(req.body.cityId)
 			};
 			await Store.update(
 				{ _id: mongoose.mongo.ObjectId(req.body.id) },
@@ -135,7 +138,8 @@ module.exports = {
 					req.flash({});	
 			})
 		}		
-    },
+	},
+	
     changeStatusStore : function(req,res){
 		let id = req.param("id");
 		let status = req.param("status");
@@ -152,7 +156,8 @@ module.exports = {
 				res.send('<span class="badge bg-danger"  style="cursor:pointer;" onclick="'+change_status+'">Inactive</span>');
 			}
 	    })
-    },
+	},
+	
     deleteStore : async function(req,res){
 		let id = req.param("id");
 		return Store.updateOne({_id:  mongoose.mongo.ObjectId(id)},{deletedAt:2},function(err,data){        	

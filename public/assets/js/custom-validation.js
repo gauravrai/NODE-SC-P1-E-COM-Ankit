@@ -93,15 +93,6 @@ $(document).ready(function () {
             },
             slug: {
                 required: true,
-                // remote: {
-                //     url: "check_slug_category",
-                //     type: "post",
-                //     data: {
-                //         slug: function() {
-                //             return $( "#slug" ).val();
-                //         }
-                //     }
-                // }
             },
         },
         messages: {
@@ -131,7 +122,7 @@ $(document).ready(function () {
             categoryId: {
                 required: true,
             },
-            subcategory: {
+            name: {
                 required: true,
             },
             slug: {
@@ -142,7 +133,7 @@ $(document).ready(function () {
             categoryId: {
                 required: "Please enter a Category Name"
             },
-            subcategory: {
+            name: {
                 required: "Please enter a Sub Category Name"
             },
             slug: {
@@ -405,7 +396,7 @@ $(document).ready(function () {
 
     $('#addStoreForm, #editStoreForm').validate({
         rules: {
-            store: {
+            name: {
                 required: true,
             },
             stateId: {
@@ -419,7 +410,7 @@ $(document).ready(function () {
             }
         },
         messages: {
-            store: {
+            name: {
                 required: "Please select Store Name"
             },
             stateId: {
@@ -504,21 +495,22 @@ $(document).ready(function () {
             $(element).removeClass('is-invalid');
         }
     });
+
     $('#addDiscountForm,#editDiscountForm').validate({
         rules: {
-            coupon_no: {
+            couponNo: {
                 required: true,
             },
-            coupon_name: {
+            couponName: {
                 required: true,
             },
-            min_order: {
+            orderValue: {
                 required: true,
             },
-            no_of_uses: {
+            noOfUses: {
                 required: true,
             },
-            offertype: {
+            offerType: {
                 required: true, 
             },
             from: {
@@ -530,24 +522,24 @@ $(document).ready(function () {
             capping: {
                 required: true,
             },
-            applyfor: {
+            applyFor: {
                 required: true,
             }
         },
         messages: {
-            coupon_no: {
+            couponNo: {
                 required: "Please enter Coupon Number"
             },
-            coupon_name: {
+            couponName: {
                 required: "Please Enter Coupon Name"
             },
-            min_order: {
+            orderValue: {
                 required: "Please Enter Minimum Order Excluding GST"
             },
-            no_of_uses: {
+            noOfUses: {
                 required: "Please enter No Of Uses"
             },
-            offertype: {
+            offerType: {
                 required: "Please Enter Offer Type"
             },
             from: {
@@ -559,7 +551,7 @@ $(document).ready(function () {
             capping: {
                 required: "Please Enter Capping"
             },
-            applyfor: {
+            applyFor: {
                 required: "Please Enter Apply For"
             }
         },
@@ -575,9 +567,10 @@ $(document).ready(function () {
             $(element).removeClass('is-invalid');
         }
     });
+    
     $('#addOfferForm,#editOfferForm').validate({
         rules: {
-            offer_name: {
+            name: {
                 required: true,
             },
             categoryId: {
@@ -589,10 +582,10 @@ $(document).ready(function () {
             productId: {
                 required: true,
             },
-            offertype: {
+            offerType: {
                 required: true,
             },
-            min_cart_value: {
+            cartValue: {
                 required: true, 
             },
             from: {
@@ -604,12 +597,12 @@ $(document).ready(function () {
             capping: {
                 required: true,
             },
-            applyfor: {
+            applyFor: {
                 required: true,
             }
         },
         messages: {
-            offer_name: {
+            name: {
                 required: "Please Enter Offer Name"
             },
             categoryId: {
@@ -621,10 +614,10 @@ $(document).ready(function () {
             productId: {
                 required: "Please select Product Name"
             },
-            offertype: {
+            offerType: {
                 required: "Please enter Offer Type"
             },
-            min_cart_value: {
+            cartValue: {
                 required: "Please Enter Minimum Cart Value"
             },
             from: {
@@ -636,7 +629,7 @@ $(document).ready(function () {
             capping: {
                 required: "Please Enter Capping"
             },
-            applyfor: {
+            applyFor: {
                 required: "Please Enter Apply For"
             }
         },

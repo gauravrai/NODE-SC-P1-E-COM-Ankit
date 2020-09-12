@@ -3,10 +3,10 @@ const Schema = mongoose.Schema;
 var ObjectId = mongoose.Schema.Types.ObjectId;
 
 let StoreSchema = new Schema({
-    s_name: {
+    name: {
         type: String
     },
-    s_address: {
+    address: {
         type: String
     },
     stateId: {

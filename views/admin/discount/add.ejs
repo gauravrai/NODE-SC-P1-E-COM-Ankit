@@ -30,25 +30,25 @@
                   <div class="form-row">
                       <!-- <div class="card-body"> -->
                           <div class="form-group col-md-3">
-                            <label for="coupon_no">Coupon No </label>
-                            <input type="text" name="coupon_no" class="form-control coupon_no" id="coupon_no" placeholder="Please Enter This formate(  LB1234567 )">
+                            <label for="couponNo">Coupon No </label>
+                            <input type="text" name="couponNo" class="form-control couponNo" id="couponNo" placeholder="Please Enter This formate(  LB1234567 )">
                           </div>
                           <div class="form-group col-md-3">
-                              <label for="coupon_name">Coupon Name </label>
-                              <input type="text" name="coupon_name" class="form-control" id="coupon_name" placeholder="Coupon Name">
+                              <label for="couponName">Coupon Name </label>
+                              <input type="text" name="couponName" class="form-control" id="couponName" placeholder="Coupon Name">
                           </div>
                           <div class="form-group col-md-3">
-                            <label for="min_order">Minimum Order Excluding GST</label>
-                            <input type="text" name="min_order" class="form-control" id="min_order" placeholder="Minimum Order Value">
+                            <label for="orderValue">Minimum Order Excluding GST</label>
+                            <input type="text" name="orderValue" class="form-control" id="orderValue" placeholder="Minimum Order Value">
                           </div>
                           <div class="form-group col-md-3">
-                            <label for="no_of_uses"> No Of Uses</label>
-                            <input type="text" name="no_of_uses" class="form-control" id="no_of_uses" placeholder="No Of Uses">
+                            <label for="noOfUses"> No Of Uses</label>
+                            <input type="text" name="noOfUses" class="form-control" id="noOfUses" placeholder="No Of Uses">
                           </div>
                         
                           <div class="form-group col-md-3">
-                              <label for="offertype">Select Offer Type</label>
-                              <select name="offertype" class="form-control" id="offertype">
+                              <label for="offerType">Select Offer Type</label>
+                              <select name="offerType" class="form-control" id="offerType">
                               <option value="">Select Offer Type</option>
                               <option value="percentage">Percentage</option>
                               <option value="fixed">Fixed</option>
@@ -77,8 +77,8 @@
                               <input type="text" name="capping" class="form-control" id="capping" placeholder="Capping">
                           </div>
                           <div class="form-group col-md-3">
-                              <label for="applyfor">Select Apply For</label>
-                              <select name="applyfor" class="form-control" id="applyfor">
+                              <label for="applyFor">Select Apply For</label>
+                              <select name="applyFor" class="form-control" id="applyFor">
                                   <option value="">Select Apply For</option>
                                   <option value="website">Website</option>
                                   <option value="app">App</option>
@@ -106,10 +106,7 @@
     </section>
   </div>
   <script>
-
-    
-
-    $(document).on("change","#offertype",function(){
+    $(document).on("change","#offerType",function(){
           var checkvalue = $(this).val();
           if(checkvalue=="percentage"){
             $("#percentage_div").show();
@@ -120,43 +117,14 @@
           }
     });
 
-    
-
     $(document).on("click",".add_button",function(){
       var regex = new RegExp(/^[a-z]{2}[0-9]{7}$/i);
-      var textvalue = $("#coupon_no").val();
+      var textvalue = $("#couponNo").val();
         if (regex.test(textvalue)) {
         } else {
             alert("Please Enter  Coupon Number Two Character and Seven Number This Formate(  LB1234567 )");
-            $("#coupon_no").focus();
+            $("#couponNo").focus();
             return false;
         }
     });
-  
-
-    $(document).on("change", "#categoryId", function(){
-        var ids = "";
-        $('option:selected', $(this)).each(function() {
-
-          if(ids==""){
-            ids = $(this).val();
-          }else{
-            ids += ","+$(this).val();
-          }
-          });
-          $.ajax({
-          type: 'POST',
-          url: 'get_subcategory/',
-          data: {ids:ids},
-          success: function(response) {
-            console.log(response);
-            if(response){
-              $('#subcategoryData').html(response);	
-            }
-            else{
-              $('#subcategoryData').html('');	
-            }
-          }
-        });
-    });
-  </script>
+</script>

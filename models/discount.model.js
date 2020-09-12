@@ -3,28 +3,28 @@ const Schema = mongoose.Schema;
 var ObjectId = mongoose.Schema.Types.ObjectId;
 
 let DiscountSchema = new Schema({
-    coupon_no: {
+    couponName: {
         type: String
     },
-    min_Order_gst: {
+    couponNo: {
         type: String
     },
-    no_of_uses: {
+    orderValue: {
         type: String
     },
-    name: {
+    noOfUses: {
         type: String
     },
-    offer_type : {
+    offerType : {
         type: String
     },
     percentage: {
         type: String,
-        default: null
+        default: 0
     },
     fixed: {
         type: String,
-        default: null
+        default: 0
     },
     from: {
         type: Date
@@ -35,7 +35,7 @@ let DiscountSchema = new Schema({
     capping: {
         type: String
     },
-    apply_for: {
+    applyFor: {
         type: String
     },
     status: {

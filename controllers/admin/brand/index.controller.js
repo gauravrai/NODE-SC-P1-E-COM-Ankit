@@ -21,10 +21,7 @@ module.exports = {
 		var search = {deletedAt:0}
 		let searchValue = req.body.search.value;
 		if(searchValue){			
-            search.$or = [
-				{ name: { $regex: '.*' + searchValue + '.*',$options:'i' }},
-				{ slug: { $regex: '.*' + searchValue + '.*',$options:'i' }}
-			];
+            search.name = { $regex: '.*' + searchValue + '.*',$options:'i' };
 		}
 		
 		let skip = req.input('start') ? parseInt(req.input('start')) : 0;
@@ -78,6 +75,7 @@ module.exports = {
 			});
 		});
 	},
+
     addBrand: async function(req,res){
 		if(req.method == "GET"){
 			let moduleName = 'Brand Management';
@@ -87,16 +85,16 @@ module.exports = {
 			let brandData = {
 				name : req.body.name,
 			};
-			//console.log(categoryData);
-			let brandobj = new Brand(brandData);
-			brandobj.save(function(err, data){
+			let brand = new Brand(brandData);
+			brand.save(function(err, data){
 				if(err){console.log(err)}
 				req.flash('msg', {msg:'Brand has been Created Successfully', status:false});	
 				res.redirect(config.constant.ADMINCALLURL+'/manage_brand');
 				req.flash({});	
 			})
 		}		
-    },
+	},
+	
     editBrand: async function(req,res){
 		if(req.method == "GET"){
 			let moduleName = 'Brand Management';
@@ -119,7 +117,16 @@ module.exports = {
 			})
 		}		
     },
-    changeStatusBrand : function(req,res){
+    
+    deleteBrand: async function(req,res){
+		let id = req.param("id");
+		return Brand.updateOne({_id:  mongoose.mongo.ObjectId(id)},{deletedAt:2},function(err,data){        	
+			if(err) console.error(err);
+        	res.send('done');
+        })
+	},
+
+    changeStatusBrand: function(req,res){
 		let id = req.param("id");
 		let status = req.param("status");
 		return Brand.updateOne({_id: mongoose.mongo.ObjectId(id)}, {
@@ -136,13 +143,5 @@ module.exports = {
 			}
 	    })
     },
-    
-    deleteBrand : async function(req,res){
-		let id = req.param("id");
-		return Brand.updateOne({_id:  mongoose.mongo.ObjectId(id)},{deletedAt:2},function(err,data){        	
-			if(err) console.error(err);
-        	res.send('done');
-        })
-	},
 }
 

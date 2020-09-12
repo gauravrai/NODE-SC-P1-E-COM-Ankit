@@ -118,7 +118,7 @@ module.exports = {
 		}		
 	},
 
-	deleteState : async function(req,res){
+	deleteState: async function(req,res){
 		let id = req.param("id");
 		return State.updateOne({_id:  mongoose.mongo.ObjectId(id)},{deletedAt:2},function(err,data){        	
 			if(err) console.error(err);
@@ -126,7 +126,7 @@ module.exports = {
         })
 	},
 
-	changeStatusState : function(req,res){
+	changeStatusState: function(req,res){
 		let id = req.param("id");
 		let status = req.param("status");
 		return State.updateOne({_id: mongoose.mongo.ObjectId(id)}, {
