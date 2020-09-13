@@ -8,6 +8,9 @@ const moment = require('moment');
 const Subcategory = model.sub_category;
 const Product     = model.product;
 const ADMINCALLURL = config.constant.ADMINCALLURL;
+const THUMNAILPATH = config.constant.THUMBNAILUPLOADPATH;
+const SMALLPATH = config.constant.SMALLUPLOADPATH;
+const LARGEPATH = config.constant.LARGEUPLOADPATH;
 
 module.exports = {
 	
@@ -20,9 +23,9 @@ module.exports = {
         var productData = await Product.aggregate([ 
             {
                 $addFields: {
-                    "thumbnail" :"uploads/thumnail",
-                    "small" : "uploads/small",
-                    "large" : "uploads/large"
+                    "thumbnail" :THUMNAILPATH,
+                    "small" : SMALLPATH,
+                    "large" : LARGEPATH
                 }
             },
             {
