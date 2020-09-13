@@ -96,261 +96,145 @@ module.exports = {
 	},
     
     addProduct: async function(req,res){
-		try {
-			if(req.method == "GET"){
-				let moduleName = 'Product Management';
-				let pageTitle = 'Add Product';
-				let categoryData = await Category.find({status:true, deletedAt: 0});
-				let storeData = await Store.find({status:true, deletedAt: 0});
-				let stateData = await State.find({status:true, deletedAt: 0});
-				let brandData = await Brand.find({status:true, deletedAt: 0})
-				res.render('admin/product/add.ejs',{layout:'admin/layout/layout', pageTitle:pageTitle, moduleName:moduleName,storeData:storeData,stateData:stateData,categoryData:categoryData,brandData:brandData });
-			}else{ 
-				let categoryId  = Array.isArray(req.body.categoryId);
-				if(categoryId=="true") {
-					
-					categoryId1  = categoryId.join();
-				} else {
-                    categoryId1  = req.body.categoryId;
-				}
-				let subcategoryId  = Array.isArray(req.body.subcategoryId);
-				if(subcategoryId=="true") {
-					
-					subcategoryId1  = subcategoryId.join();
-				} else {
-                    subcategoryId1  = req.body.subcategoryId;
-				}
-				//console.log(subcategoryId1+"hell"); return false;
-				let productData = {	
-					cate_id : categoryId1,
-					s_cate_id : subcategoryId1,
-					name : req.body.product,
-					price : req.body.price,
-					offer : req.body.offer,
-					discount: req.body.discount,
-					discription : req.body.description,
-					seo_keyword : req.body.product.toLowerCase(),
-					stock_keeping : req.body.stock_keeping.toUpperCase(),
-					brand : req.body.brand,
-					featured : req.body.featured ? true : false,
-					quantity : req.body.quantity,
-					weight_in : req.body.weight_in
-					 
-				};
-				let product = new Product(productData);
-				let temp = product.save(async function(err, data){
-					if(err){console.log(err)}
-					let last_product_id = data.id;
-					// insert images thumnail
-					if(req.files.thumbnailImage){
-						//console.log("test-------", req.files)
-						let thumbnailImage = req.files.thumbnailImage;
-						thumbnailImage.forEach(element => { 
-
-							new Promise(async function(resolve, reject) { 
-								var imagePath = './public/uploads/thumnail/';
-								var imageName = Date.now()+'_'+element.name;
-								element.mv(imagePath+imageName, function(err,data) {
-									if (err) { 
-										console.log(err)
-										reject(err); 
-									} else { 
-										resolve(); 
-									}
-								})
-							}).then(async (result) => { 
-								// code after file upload
-								// console.log(result);
-								var imageNameSave = Date.now()+'_'+element.name;
-								let productimageData = {
-									image : imageNameSave,
-									productId:last_product_id,
-									imageType:"thumbnail"
-								};
-								let productimage = new ProductImage(productimageData);
-								productimage.save(function(err, data){
-									if(err){console.log(err)}
-								})
-							}).catch((err) => {
-								console.log(err);
-								// handle error
-							});	
-						});	
-
-					}
-					// insert small image  from here
-					if(req.files.smallImage){
-						//console.log("test-------", req.files)
-						let smallImage = req.files.smallImage;
-						smallImage.forEach(element => { 
-
-							new Promise(async function(resolve, reject) { 
-								var imagePath = './public/uploads/small/';
-								var imageName = Date.now()+'_'+element.name;
-								element.mv(imagePath+imageName, function(err,data) {
-									if (err) { 
-										console.log(err)
-										reject(err); 
-									} else { 
-										resolve(); 
-									}
-								})
-							}).then(async (result) => { 
-								// code after file upload
-								// console.log(result);
-								var imageNameSave = Date.now()+'_'+element.name;
-								let productimageData = {
-									image : imageNameSave,
-									productId:last_product_id,
-									imageType:"small"
-								};
-								let productimage = new ProductImage(productimageData);
-								productimage.save(function(err, data){
-									if(err){console.log(err)}
-								})
-							}).catch((err) => {
-								console.log(err);
-								// handle error
-							});	
-						});	
-
-					}
-					// insert large image  from here
-					if(req.files.largeImage){
-						//console.log("test-------", req.files)
-						let largeImage = req.files.largeImage;
-						largeImage.forEach(element => { 
-
-							new Promise(async function(resolve, reject) { 
-								var imagePath = './public/uploads/large/';
-								var imageName = Date.now()+'_'+element.name;
-								element.mv(imagePath+imageName, function(err,data) {
-									if (err) { 
-										console.log(err)
-										reject(err); 
-									} else { 
-										resolve(); 
-									}
-								})
-							}).then(async (result) => { 
-								// code after file upload
-								// console.log(result);
-								var imageNameSave = Date.now()+'_'+element.name;
-								let productimageData = {
-									image : imageNameSave,
-									productId:last_product_id,
-									imageType:"large"
-								};
-								let productimage = new ProductImage(productimageData);
-								productimage.save(function(err, data){
-									if(err){console.log(err)}
-								})
-							}).catch((err) => {
-								console.log(err);
-								// handle error
-							});	
-						});	
-
-					}
-					req.flash('msg', {msg:'Product has been Created Successfully', status:false});	
-					res.redirect(config.constant.ADMINCALLURL+'/manage_product');
-					req.flash({});	
-				})
-                   //console.log(req.body.categoryId.join(); 
-				
-				
-
-				
-				// new Promise(async function(resolve, reject) { 
-				// 	var videoPath = './public/uploads/';
-				// 	var videoName = Date.now()+'_'+req.files.thumbnailImagef.name;
-				// 	req.files.thumbnailImagef.mv(videoPath+videoName, function(err,data) {
-				// 		if (err) { 
-				// 			console.log(err)
-				// 			reject(err); 
-				// 		} else { 
-				// 			resolve(); 
-				// 		}
-				// 	})
-				// }).then(async (result) => { 
-				// 	// code after file upload
-				// 	console.log(result);
-				// 	var videoNameSave = Date.now()+'_'+req.files.thumbnailImagef.name;
-				// 	let productData = {
-				// 		image1 : videoNameSave
-				// 	};
-				// 	let product = new Product(productData);
-				// 	product.save(function(err, data){
-				// 		if(err){console.log(err)}
-				// 		req.flash('msg', {msg:'Administrator has been Created Successfully', status:false});	
-				// 		res.redirect(config.constant.ADMINCALLURL+'/manage_product');
-				// 		req.flash({});	
-				// 	})
-				// }).catch((err) => {
-				// 	console.log(err);
-				// 	// handle error
-				// });	
-				
-				
-/*
-				new Promise(function (resolve, reject) {
-					var videoPath = config.constant.LIVEEVENTUPLOADPATH;
-					var videoName = Date.now() + '_' + req.files.video.name;
-					req.files.video.mv(videoPath + videoName, function (err, data) {
-						eventDetail.video = videoName;
-						if (err) {
-							console.log(err)
-							reject(err);
-						} else {
-							var thumbnailPath = config.constant.LIVEEVENTTHUMBNAILUPLOADPATH;
-							var thumbnailArr = [req.files.thumbnail1, req.files.thumbnail2];
-							var thumbnail = [];
-							var i = 0;
-							async.forEach(thumbnailArr, function (thumb, callback) {
-								var thumbnailName = Date.now() + '_' + thumb.name;
-								thumb.mv(thumbnailPath + thumbnailName, function (err, data) {
-									if (err) {
-										console.log(err)
-										reject(err);
-									} else {
-										thumbnail[i++] = thumbnailName;
-										callback();
-									}
-								})
-
-							}, function (err) {
-								eventDetail.thumbnail = thumbnail;
-								resolve(eventDetail);
-							});
-						}
-					})
-				}).then(async (result) => {
-					await Event.updateOne({ _id: new ObjectId(eventId) }, eventDetail, function (err, data) {
-						if (err) { console.log(err) }
-						var responseData = {
-							id: eventId,
-						}
-						response = {
-							"status": "success",
-							"message": "Event files added successfully",
-							"data": responseData
+		if(req.method == "GET"){
+			let moduleName = 'Product Management';
+			let pageTitle = 'Add Product';
+			let categoryData = await Category.find({status:true, deletedAt: 0});
+			let storeData = await Store.find({status:true, deletedAt: 0});
+			let stateData = await State.find({status:true, deletedAt: 0});
+			let brandData = await Brand.find({status:true, deletedAt: 0})
+			res.render('admin/product/add.ejs',{layout:'admin/layout/layout', pageTitle:pageTitle, moduleName:moduleName,storeData:storeData,stateData:stateData,categoryData:categoryData,brandData:brandData });
+		}else
+		{
+			let productData = {};
+			productData = {	
+				categoryId : mongoose.mongo.ObjectId(req.body.categoryId),
+				subcategoryId : mongoose.mongo.ObjectId(req.body.subcategoryId),
+				name : req.body.name,
+				brandId : mongoose.mongo.ObjectId(req.body.brandId),
+				offer : req.body.offer,
+				discount: req.body.discount,
+				stock : req.body.stock ? req.body.stock.toUpperCase() : '',
+				discription : req.body.description,
+				featured : req.body.featured == 'on' ? true : false,
+				outOfStock : req.body.outOfStock == 'on' ? true : false
+			};
+			let store = req.body.store;
+			let storeId = req.body.storeId;
+			let inventory = [];
+			for (let i = 0; i < store; i++) {
+				let labelArr = req.body['label_'+i];
+				let weightArr = req.body['weight_'+i];
+				let priceArr = req.body['price_'+i];
+				let defaultArr = req.body['default_'+i];
+				let storeData = [];
+				for (let j = 0; j < labelArr.length; j++) {
+					if(labelArr[j] != '' && weightArr[j] != '' && priceArr[j] != '')
+					{
+						let storeFieldObj = {
+							storeId: mongoose.mongo.ObjectID(storeId[i]),
+							label : labelArr[j],
+							weight : weightArr[j],
+							price : priceArr[j],
+							default : defaultArr == j ? true : false
 						};
-						res.send(response);
-					})
-				}).catch((err) => {
-					response = {
-						"status": "error",
-						"message": "Event files not added",
-						"data": err
-					};
-					res.send(response);
-				});
-*/
-
+						storeData.push(storeFieldObj);
+					}
+				}
+				inventory.push(storeData);
 			}
-		} catch (error) {
-			console.log(error);
-		}		
+			productData.inventory = inventory;
+			let imageLength = req.body.imageLength;
+			let thumbnailArr = req.files.thumbnail;
+			let smallArr = req.files.small;
+			let largeArr = req.files.large;
+			if(imageLength == 1)
+			{
+				thumbnailArr = []; 
+				smallArr = []; 
+				largeArr = []; 
+				thumbnailArr.push(req.files.thumbnail);
+				smallArr.push(req.files.small);
+				largeArr.push(req.files.large);
+			}
+			let  image = {};
+			new Promise(function(resolve, reject) { 
+				let thumbnailImage = [];
+				let i = 0;
+				let thumbnailPath = config.constant.THUMBNAILUPLOADPATH;
+				async.forEach(thumbnailArr, function(thumbnail, callback) {
+					let thumbnailName = Date.now()+'_'+thumbnail.name;
+					thumbnailImage[i++] = thumbnailName;
+					thumbnail.mv(thumbnailPath+thumbnailName, function(err,data) {
+						if (err) { 
+							console.log(err)
+							reject(err); 
+						} else {  
+							callback();
+						}
+					})
+					
+				}, function (err) {
+					image.thumbnail = thumbnailImage;
+					resolve(); 
+				});
+			}).then(async () => { 
+				new Promise(function(resolve1, reject1) { 
+					let smallImage = [];
+					let i = 0;
+					let smallPath = config.constant.SMALLUPLOADPATH;
+					async.forEach(smallArr, function(small, callback) {
+						let smallName = Date.now()+'_'+small.name;
+						smallImage[i++] = smallName;
+						small.mv(smallPath+smallName, function(err,data) {
+							if (err) { 
+								console.log(err)
+								reject1(err); 
+							} else {  
+								callback();
+							}
+						})
+						
+					}, function (err) {
+						image.small = smallImage;
+						resolve1(); 
+					});
+				}).then(async () => { 
+					new Promise(function(resolve2, reject2) {
+						let largeImage = [];
+						let i = 0;
+						let largePath = config.constant.LARGEUPLOADPATH;
+						async.forEach(largeArr, function(large, callback) {
+							let largeName = Date.now()+'_'+large.name;
+							largeImage[i++] = largeName;
+							large.mv(largePath+largeName, function(err,data) {
+								if (err) { 
+									console.log(err)
+									reject2(err); 
+								} else {  
+									callback();
+								}
+							})
+							
+						}, function (err) {
+							image.large = largeImage;
+							resolve2();
+						});
+					}).then(async () => { 
+						productData.image = image;
+						let product = new Product(productData);
+						product.save(function(err, data){
+							if(err){console.log(err)}
+							req.flash('msg', {msg:'Product has been Created Successfully', status:false});	
+							res.redirect(config.constant.ADMINCALLURL+'/manage_product');
+							req.flash({});	
+						})
+					})
+				})
+			}).catch((err) => {
+				console.log(err);
+			}); 
+		}
 	},
 
 	editProduct: async function(req,res){
@@ -362,22 +246,29 @@ module.exports = {
 			let storeData = await Store.find({status:true, deletedAt: 0});
 			let subcategoryData = await SubCategory.find({status:true, deletedAt: 0});
 			let brandData       = await Brand.find({status:true, deletedAt: 0});
-			let productData = await Product.findOne({_id: mongoose.mongo.ObjectId(id), status: true, deletedAt: 0});
-			res.render('admin/product/edit',{layout:'admin/layout/layout', pageTitle:pageTitle, moduleName:moduleName, categoryData:categoryData, subcategoryData:subcategoryData,storeData:storeData,productData:productData} );
+			let productData = await Product.findOne({_id: mongoose.mongo.ObjectId(id), deletedAt: 0});
+			res.render('admin/product/edit',{layout:'admin/layout/layout', pageTitle:pageTitle, moduleName:moduleName, categoryData:categoryData, subcategoryData:subcategoryData, storeData:storeData, brandData:brandData, productData:productData} );
 		}
 		if(req.method == "POST"){
-			// let storeData = {
-			// 	s_name : req.body.store,
-			// 	stateId : mongoose.mongo.ObjectId(req.body.stateId),
-            //     cityId : mongoose.mongo.ObjectId(req.body.cityId),
-            //     s_address:req.body.address
-			// };
-			// await Store.update(
+			let productData = {};
+			productData = {	
+				categoryId : mongoose.mongo.ObjectId(req.body.categoryId),
+				subcategoryId : mongoose.mongo.ObjectId(req.body.subcategoryId),
+				name : req.body.name,
+				brandId : mongoose.mongo.ObjectId(req.body.brandId),
+				offer : req.body.offer,
+				discount: req.body.discount,
+				stock : req.body.stock ? req.body.stock.toUpperCase() : '',
+				discription : req.body.description,
+				featured : req.body.featured == 'on' ? true : false,
+				outOfStock : req.body.outOfStock == 'on' ? true : false
+			};
+			// await Area.update(
 			// 	{ _id: mongoose.mongo.ObjectId(req.body.id) },
-			// 	storeData, function(err,data){
+			// 	areaData, function(err,data){
 			// 		if(err){console.log(err)}
-			// 		req.flash('msg', {msg:'Store has been Updated Successfully', status:false});	
-			// 		res.redirect(config.constant.ADMINCALLURL+'/manage_store');
+			// 		req.flash('msg', {msg:'Area has been Updated Successfully', status:false});	
+			// 		res.redirect(config.constant.ADMINCALLURL+'/manage_area');
 			// 		req.flash({});	
 			// })
 		}		

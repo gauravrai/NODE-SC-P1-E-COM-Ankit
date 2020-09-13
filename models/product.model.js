@@ -30,14 +30,14 @@ let ProductSchema = new Schema({
     featured: {
         type: Boolean,
     },
-    weight: {
-        type: String
+    outOfStock: {
+        type: Boolean,
     },
     inventory:{
         type:  Array
     },
     image:{
-        type:  Array
+        type:  Object
     },
     status: {
         type: Boolean,

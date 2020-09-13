@@ -51,8 +51,8 @@
                       </div>
                       
                       <div class="form-group col-md-3">
-                        <label for="brand">Select Brands</label>
-                        <select name="brand" class="form-control" id="brand" >
+                        <label for="brandId">Select Brands</label>
+                        <select name="brandId" class="form-control" id="brandId" >
                           <option value="">Select Brand</option>
                           <% for(let i = 0; i < brandData.length; i++){ %>
                             <option value="<%=brandData[i].id%>"><%=brandData[i].name%></option>
@@ -79,78 +79,82 @@
                       </div>
 
                       <div class="form-group col-md-3">
-                        <label for="stock_keeping">Stock Keeping Unit</label>
-                        <input type="text" name="stock_keeping" class="form-control" id="stock_keeping" placeholder="Please Enter Value This formate (      LB1234567 ) ">
-                      </div>  
-
-                      <div class="form-group col-md-3">
-                        <label for="weight_in" >Product Weight In</label>
-                        <select name="weight_in" class="form-control" id="weight_in" >
-                          <option value="">Select Weight In</option>
-                          <option value="ml">ML</option>
-                          <option value="gram">Gram</option>
-                          <option value="kg">KG</option>
-                        </select>
-                      </div>
+                        <label for="stock">Stock Keeping Unit</label>
+                        <input type="text" name="stock" class="form-control" id="stock" placeholder="Please Enter Value This formate (      LB1234567 ) ">
+                      </div> 
 
                       <div class="form-group col-md-12">
-                          <label for="address">Description</label>
+                          <label for="description">Description</label>
                           <textarea name="description" class="form-control" id="description" placeholder="Description"></textarea>
                       </div> 
 
                       <div class="form-group col-md-12">
                         <label class="col-md-3" for="featured">Featured Product</label>
-                        <div class="col-md-9" style="margin-top: -30px; margin-left: -150px;">
-                          <input type="checkbox" name="featured" class="form-control" id="featured" placeholder="Please Enter featured">
+                        <div class="col-md-3" style="margin-top: -30px; margin-left: 120px;">
+                          <input type="checkbox" name="featured" class="form-control" id="featured">
+                        </div>
+                        <label class="col-md-3" for="outOfStock">Out Of Stock</label>
+                        <div class="col-md-3" style="margin-top: -30px; margin-left: 120px;">
+                          <input type="checkbox" name="outOfStock" class="form-control" id="outOfStock">
                         </div>
                       </div>
                   </div>
                   <div class="card-header">
                     <h3 class="card-title">Inventory</h3>
+                    <input type="hidden" value="<%=storeData.length%>" name="store">
                   </div>
-                  <% for(let i = 0; i < storeData.length; i++){ %>
+                  <% for(let i = 0; i < storeData.length; i++){ 
+                    let j = 0; 
+                  %>
                     <div class="col-md-12">
                       <h4 class="storeLabel"><%=storeData[i].name%></h4>
+                      <input type="hidden" value="<%=storeData[i].id%>" name="storeId">
                     </div>  
                     <div class="form-row" id="storeField_<%=i%>">
                       <div class="form-group col-md-3">
-                        <label for="label">Label</label>
-                        <input type="text" name="label" class="form-control" placeholder="Label">
+                        <label for="label_<%=i%>">Label</label>
+                        <input type="text" name="label_<%=i%>" class="form-control" id="label_<%=i%>" placeholder="Label">
                       </div>  
                       <div class="form-group col-md-3">
-                        <label for="quantity">Quantity</label>
-                        <input type="text" name="quantity" class="form-control" placeholder="Quantity">
-                      </div>  
+                        <label for="weight_<%=i%>" >Weight Unit</label>
+                        <select name="weight_<%=i%>" class="form-control" id="weight_<%=i%>" >
+                          <option value="">Select Weight Unit</option>
+                          <option value="ml">ML</option>
+                          <option value="gram">Gram</option>
+                          <option value="kg">KG</option>
+                        </select>
+                      </div>
                       <div class="form-group col-md-3">
                         <label for="price">Price</label>
-                        <input type="text" name="price" class="form-control" placeholder="Price">
+                        <input type="text" name="price_<%=i%>" class="form-control" id="price_<%=i%>" placeholder="Price">
                       </div>  
-                      <div class="form-group col-md-3">
-                        <label for="label">Default</label>
-                        <input type="radio" name="default" class="form-control">
+                      <div class="form-group col-md-2">
+                        <label for="default">Default</label>
+                        <input type="radio" name="default_<%=i%>" id="default_<%=i%>" class="form-control" value="<%=j++%>">
                       </div>  
                     </div>
                     <div class="col-md-12"> 
-                      <button type="button" class="btn btn-primary pull-right addMoreStoreFields" data-storeno="<%=i%>">Add More</button>
+                      <button type="button" class="btn btn-primary pull-right addMoreStoreFields" data-storeno="<%=i%>" data-index="<%=j%>">Add More</button>
                     </div>
                     <br><br>
                   <% } %>
+                  <input type="hidden" value="<%=APPCONSTANT.PRODUCTIMAGELENGTH%>" name="imageLength">
                   <% for(let i = 0; i < APPCONSTANT.PRODUCTIMAGELENGTH; i++){ %>
                     <div class="form-row">
-                      <div class="form-group col-md-3">
+                      <div class="form-group col-md-4">
                         <label for="thumbnail">Thumbnail</label>
-                        <input type="file" name="thumbnail">
+                        <input type="file" name="thumbnail">       
+                        <p class="text-warning"> Image size should be 100 X 100</p>
                       </div>  
-                      <div class="form-group col-md-3">
+                      <div class="form-group col-md-4">
                         <label for="small">Small</label>
-                        <input type="file" name="small">
+                        <input type="file" name="small">       
+                        <p class="text-warning"> Image size should be 260 X 260</p>
                       </div>  
-                      <div class="form-group col-md-3">
+                      <div class="form-group col-md-4">
                         <label for="large">Large</label>
-                        <input type="file" name="large">
-                      </div>  
-                      <div class="form-group col-md-3">
-                        <button type="button" class="btn btn-primary pull-right addImage">Add</button>
+                        <input type="file" name="large">       
+                        <p class="text-warning"> Image size should be 450 X 450</p>
                       </div>  
                     </div>
                   <% } %>
@@ -172,32 +176,51 @@
   <script>
     $('.addMoreStoreFields').click(function(){
       var storeno = $(this).data('storeno');
-      var html = `<div class="form-group col-md-3">
-                    <label for="label">Label</label>
-                    <input type="text" name="label" class="form-control" placeholder="Label">
+      var index = $(this).data('index');
+      var html = `<div class="form-group col-md-3 store-div-`+storeno+`-`+index+`">
+                    <label for="label_`+storeno+`">Label</label>
+                    <input type="text" name="label_`+storeno+`" class="form-control" id="label_`+storeno+`" placeholder="Label">
                   </div>  
-                  <div class="form-group col-md-3">
-                    <label for="quantity">Quantity</label>
-                    <input type="text" name="quantity" class="form-control" placeholder="Quantity">
-                  </div>  
-                  <div class="form-group col-md-3">
+                  <div class="form-group col-md-3 store-div-`+storeno+`-`+index+`">
+                    <label for="weight" >Weight Unit</label>
+                    <select name="weight_`+storeno+`" class="form-control" id="weight_`+storeno+`" >
+                      <option value="">Select Weight Unit</option>
+                      <option value="ml">ML</option>
+                      <option value="gram">Gram</option>
+                      <option value="kg">KG</option>
+                    </select>
+                  </div>
+                  <div class="form-group col-md-3 store-div-`+storeno+`-`+index+`">
                     <label for="price">Price</label>
-                    <input type="text" name="price" class="form-control" placeholder="Price">
+                    <input type="text" name="price_`+storeno+`" class="form-control" id="price_`+storeno+`" placeholder="Price">
                   </div>  
-                  <div class="form-group col-md-3">
-                    <label for="label">Default</label>
-                    <input type="radio" name="default" class="form-control">
-                  </div>  `;
+                  <div class="form-group col-md-2 store-div-`+storeno+`-`+index+`">
+                    <label for="default">Default</label>
+                    <input type="radio" name="default_`+storeno+`" id="default_`+storeno+`" class="form-control" value="`+index+`">
+                  </div>
+                  <div class="form-group col-md-1 store-div-`+storeno+`-`+index+`">
+                    <a class="deleteStoreField" href="javascript:void(0);"" data-storeno="`+storeno+`" data-index="`+index+`">Remove</a>
+                  </div>`;
       $('#storeField_'+storeno+':last').append(html);
+      index++;
+      $(this).data('index', index);
     });
 
+ 
+    $('body').on("click", ".deleteStoreField", function () {
+      var index = $(this).attr("data-index");
+      var storeno = $(this).attr("data-storeno");
+      $(".store-div-"+storeno+"-"+index).remove();
+    });
+    
     $(document).on("click",".add_button",function(){
       var regex = new RegExp(/^[a-z]{2}[0-9]{7}$/i);
-      var textvalue = $("#stock_keeping").val();
+      var textvalue = $("#stock").val();
         if (regex.test(textvalue)) {
+          
         } else {
             alert("Please Enter stock keeping Unit Two Character and Seven Number This Formate(  LB1234567 )");
-            $("#stock_keeping").focus();
+            $("#stock").focus();
             return false;
         }
     });

@@ -14,5 +14,8 @@ module.exports = {
 	JWT_Token :"secret",
 	  
 	LIMIT: 10,	  
-	PRODUCTIMAGELENGTH: 3
+	PRODUCTIMAGELENGTH: 2,	  
+	THUMBNAILUPLOADPATH: './public/uploads/product/thumbnail/',	  
+	SMALLUPLOADPATH:  './public/uploads/product/small/', 
+	LARGEUPLOADPATH:  './public/uploads/product/large/',
 }

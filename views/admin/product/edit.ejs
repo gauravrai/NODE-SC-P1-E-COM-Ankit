@@ -28,162 +28,139 @@
               <form role="form" id="editProductForm" method="post" enctype="multipart/form-data">
                 <div id="tableContent" style="padding: 0 17px 0 10px;">
                   <div class="form-row">
-                    <!-- <div class="card-body"> -->
-                        
-                        <div class="form-group col-md-3">
-                            <label for="state">Select Category</label>
-                            <select name="categoryId" class="form-control" id="categoryId">
-                            <option value="">Select Category</option>
-                            <% for(let i = 0; i < categoryData.length; i++){ %>
-                                <option value="<%=categoryData[i].id%>" <% if(productData.cate_id == categoryData[i].id){ %> selected="selected" <% } %> ><%=categoryData[i].name%></option>
-                              <% } %>
-                            </select>
-                        </div>
-                        <span id="subcategoryData" class="locationFields col-md-3">
-                            <div class="form-group">
-                                <label for="cityId">Select Sub Category</label>
-                                <select name="subcategoryId" class="form-control" id="subcategoryId">
-                                    <option value="">Select Sub Category</option>
-                                    <% for(let i = 0; i < subcategoryData.length; i++){ %>
-                                    <option value="<%=subcategoryData[i].id%>" <% if(productData.s_cate_id == subcategoryData[i].id){ %> selected="selected" <% } %> ><%=subcategoryData[i].sub_cat_name%></option>
-                                    <% } %>
-                                </select>
-                            </div>
-                        </span>
-                        
-                        <div class="form-group col-md-3">
-                            <label for="product">Product Name</label>
-                            <input type="text" name="product" class="form-control" id="product" value="<%=productData.name%>" placeholder="Product Name">
-                        </div>
-                        <div class="form-group col-md-3">
-                            <label for="price">Product Price</label>
-                            <input type="text" name="price" class="form-control" value="<%=productData.price%>" id="prece" placeholder="Product Price">
-                        </div>
-                        <!-- <div class="form-group">
-                            <label for="quantity_stock">Product Quantity  stock</label>
-                            <input type="text" name="quantity_stock" class="form-control" id="quantity_stock" placeholder="Product Quantity Stock">
-                        </div> -->
-                        <div class="col-md-3">
-                            <div class="form-group ">
-                              <label for="quantity_stock">Inventory</label>
-                              <table  WIDTH="100%" border="1px;">
-                                <!-- <tr> -->
-                                  <% for(let i = 0; i < storeData.length; i++){ %>
-                                    <tr>
-                                      <td WIDTH="50%"><label for="quantity_stock" style="text-align:center;" ><%=storeData[i].s_name%></label></td>
-                                      <input type="hidden" name="storeId" value="<%=storeData[i].id%>">
-                                      <td WIDTH="50%"><input type="text" name="s_quantity" class="form-control" id="s_quantity" placeholder="Product Quantity " style="text-align:center;" ></td>
-                                    </tr>  
-                                  <% } %>
-                                <!-- </tr> -->
-                              </table>
-                            </div>
-                        </div>
-                        
-                        <div class="form-group col-md-3">
-                            <label for="state">Select Offer applicable</label>
-                            <select name="offer" class="form-control" id="offer" >
-                            <option value="">Select Offer</option>
-                            <option value="Y" <% if(productData.offer =="Y"){ %> selected="selected" <% } %> >Yes</option>
-                            <option value="N" <% if(productData.offer == "N"){ %> selected="selected" <% } %> >No</option>
-                            </select>
-                        </div>
-                        <div class="form-group col-md-3">
-                            <label for="state">Select Discount applicable</label>
-                            <select name="discount" class="form-control" id="discount" >
-                            <option value="">Select Discount</option>
-                            <option value="Y" <% if(productData.discount =="Y"){ %> selected="selected" <% } %> >Yes</option>
-                            <option value="N"  <% if(productData.discount =="N"){ %> selected="selected" <% } %>>No</option>
-                            </select>
-                        </div>
-                        
-                        <!-- <div class="form-group">
-                            <label for="percentage">Fixed or Percentage</label>
-                            <input type="text" name="percentage" class="form-control" id="percentage" placeholder="Product percentage">
-                        </div> -->
-                        <!-- <div class="form-group">
-                            <label for="scheme">Select Referral Scheme Applicable</label>
-                            <select name="scheme" class="form-control" id="scheme" >
-                            <option value="">Select Discount</option>
-                            <option value="Y">Yes</option>
-                            <option value="N">No</option>
-                            </select>
-                        </div> -->
-                        
-                        <!-- <div class="form-group">
-                            <label for="scheme">Select Maximum Quantity Of Product</label>
-                            <select name="max_quantity" class="form-control" id="max_quantity" >
-                            <option value="">Select Discount</option>
-                            <option value="Y">Yes</option>
-                            <option value="N">No</option>
-                            </select>
-                        </div>
-                        
-                        <div class="form-group" id="quantity_div" style="display:none;">
-                            <label for="quantity ">Quantity </label>
-                            <input type="text" name="quantity " class="form-control" id="quantity " placeholder="Store Quantity">
-                        </div> -->
-                        
-                        <div class="form-group col-md-3">
-                            <label for="address">Description</label>
-                            <input type="text" name="description" class="form-control"  value="<%=productData.discription%>"id="description" placeholder="Description">
-                        </div>
-                        
-                        <!-- <div class="form-group col-md-3">
-                            <label for="seo">SEO slug</label>
-                            <input type="text" name="seo" class="form-control" id="seo" placeholder="SEO Slug">
-                        </div> -->
-                        <div class="row col-md-4">
-                          <div class="col-md-10" id="thumbnailImage">
-                              <div class="form-group">
-                                <label for="thumbnail">Product Thumbnail Image</label>
-                                <input type="file" name="thumbnailImage" class="form-control" id="thumbnail" placeholder="Thumbnail Image">
-                              </div>
-                          </div>
-                          <div class="col-md-2">
-                            <div class="form-group">
-                              <label for="thumbnail">&nbsp;</label>
-                              <button class="btn btn-sm btn-primary addMore form-control" id="addMoreThumb-thumbnailImage">Add</button>
-                            </div>                      
-                          </div>
-                        </div>
+                    <div class="form-group col-md-3">
+                      <label for="state">Select Category</label>
+                      <select name="categoryId" class="form-control" id="categoryId">
+                        <option value="">Select Category</option>
+                        <% for(let i = 0; i < categoryData.length; i++){ %>
+                          <option value="<%=categoryData[i].id%>" <% if(productData.categoryId == categoryData[i].id){ %> selected="selected" <% } %> ><%=categoryData[i].name%></option>
+                        <% } %>
+                      </select>
+                    </div>
 
-                        <div class="row col-md-4">
-                          <div class="col-md-10" id="smallImage">
-                              <div class="form-group">
-                                <label for="smaill_image">Product Small Image</label>
-                                <input type="file" name="smallImage" class="form-control" id="small_image" placeholder="Small Image">
-                              </div>
-                          </div>
-                          <div class="col-md-2">
-                            <div class="form-group">
-                              <label for="thumbnail">&nbsp;</label>
-                              <button class="btn btn-sm btn-primary addMore form-control" id="addMoreSmall-smallImage">Add</button>
-                            </div>                      
-                          </div>
-                        </div>
+                    <div class="form-group col-md-3" id="subcategoryData">
+                      <label for="state">Select Sub Category</label>
+                      <select name="subcategoryId" class="form-control" id="subcategoryId">
+                        <option value="">Select Sub Category</option>
+                        <% for(let i = 0; i < subcategoryData.length; i++){ %>
+                          <option value="<%=subcategoryData[i].id%>" <% if(productData.subcategoryId == subcategoryData[i].id){ %> selected="selected" <% } %> ><%=subcategoryData[i].name%></option>
+                        <% } %>
+                      </select>
+                    </div>
 
-                        <div class="row col-md-4">
-                          <div class="col-md-10" id="largeImage">
-                              <div class="form-group" >
-                                <label for="large_image">Product Large Image</label>
-                                <input type="file" name="largeImage" class="form-control" id="large_image" placeholder="Large Image">
-                              </div>
-                          </div>
-                          <div class="col-md-2">
-                            <div class="form-group">
-                              <label for="thumbnail">&nbsp;</label>
-                              <button class="btn btn-sm btn-primary addMore form-control" id="addMoreLarge-largeImage">Add </button>
-                            </div>                      
-                          </div>
-                        </div>
-                        <div class="form-group col-md-3">
-                          <label for="stock_keeping">Stock Keeping Unit</label>
-                          <input type="text" name="stock_keeping" class="form-control"  id="stock_keeping" placeholder="Please Enter this value(      LB1234567 ) ">
-                        </div>
-                        
-                    <!-- </div> -->
+                    <div class="form-group col-md-3">
+                        <label for="name">Product Name</label>
+                        <input type="text" name="name" class="form-control" id="name" placeholder="Product Name">
+                    </div>
+                    
+                    <div class="form-group col-md-3">
+                      <label for="brandId">Select Brands</label>
+                      <select name="brandId" class="form-control" id="brandId" >
+                        <option value="">Select Brand</option>
+                        <% for(let i = 0; i < brandData.length; i++){ %>
+                          <option value="<%=brandData[i].id%>"><%=brandData[i].name%></option>
+                        <% } %>
+                      </select>
+                    </div>
+                    
+                    <div class="form-group col-md-3">
+                        <label for="offer">Select Offer applicable</label>
+                        <select name="offer" class="form-control" id="offer" >
+                        <option value="">Select Offer</option>
+                        <option value="Yes">Yes</option>
+                        <option value="No">No</option>
+                        </select>
+                    </div>
+                    
+                    <div class="form-group col-md-3">
+                        <label for="discount">Select Discount applicable</label>
+                        <select name="discount" class="form-control" id="discount" >
+                        <option value="">Select Discount</option>
+                        <option value="Yes">Yes</option>
+                        <option value="No">No</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group col-md-3">
+                      <label for="stock">Stock Keeping Unit</label>
+                      <input type="text" name="stock" class="form-control" id="stock" placeholder="Please Enter Value This formate (      LB1234567 ) ">
+                    </div> 
+
+                    <div class="form-group col-md-12">
+                        <label for="description">Description</label>
+                        <textarea name="description" class="form-control" id="description" placeholder="Description"></textarea>
+                    </div> 
+
+                    <div class="form-group col-md-12">
+                      <label class="col-md-3" for="featured">Featured Product</label>
+                      <div class="col-md-3" style="margin-top: -30px; margin-left: 120px;">
+                        <input type="checkbox" name="featured" class="form-control" id="featured">
+                      </div>
+                      <label class="col-md-3" for="outOfStock">Out Of Stock</label>
+                      <div class="col-md-3" style="margin-top: -30px; margin-left: 120px;">
+                        <input type="checkbox" name="outOfStock" class="form-control" id="outOfStock">
+                      </div>
+                    </div>
+                </div>
+                <div class="card-header">
+                  <h3 class="card-title">Inventory</h3>
+                  <input type="hidden" value="<%=storeData.length%>" name="store">
+                </div>
+                <% for(let i = 0; i < storeData.length; i++){ 
+                  let j = 0; 
+                %>
+                  <div class="col-md-12">
+                    <h4 class="storeLabel"><%=storeData[i].name%></h4>
+                    <input type="hidden" value="<%=storeData[i].id%>" name="storeId">
+                  </div>  
+                  <div class="form-row" id="storeField_<%=i%>">
+                    <div class="form-group col-md-3">
+                      <label for="label_<%=i%>">Label</label>
+                      <input type="text" name="label_<%=i%>" class="form-control" id="label_<%=i%>" placeholder="Label">
+                    </div>  
+                    <div class="form-group col-md-3">
+                      <label for="weight_<%=i%>" >Weight Unit</label>
+                      <select name="weight_<%=i%>" class="form-control" id="weight_<%=i%>" >
+                        <option value="">Select Weight Unit</option>
+                        <option value="ml">ML</option>
+                        <option value="gram">Gram</option>
+                        <option value="kg">KG</option>
+                      </select>
+                    </div>
+                    <div class="form-group col-md-3">
+                      <label for="price">Price</label>
+                      <input type="text" name="price_<%=i%>" class="form-control" id="price_<%=i%>" placeholder="Price">
+                    </div>  
+                    <div class="form-group col-md-2">
+                      <label for="default">Default</label>
+                      <input type="radio" name="default_<%=i%>" id="default_<%=i%>" class="form-control" value="<%=j++%>">
+                    </div>  
                   </div>
+                  <div class="col-md-12"> 
+                    <button type="button" class="btn btn-primary pull-right addMoreStoreFields" data-storeno="<%=i%>" data-index="<%=j%>">Add More</button>
+                  </div>
+                  <br><br>
+                <% } %>
+                <input type="hidden" value="<%=APPCONSTANT.PRODUCTIMAGELENGTH%>" name="imageLength">
+                <% for(let i = 0; i < APPCONSTANT.PRODUCTIMAGELENGTH; i++){ %>
+                  <div class="form-row">
+                    <div class="form-group col-md-4">
+                      <label for="thumbnail">Thumbnail</label>
+                      <input type="file" name="thumbnail">       
+                      <p class="text-warning"> Image size should be 100 X 100</p>
+                    </div>  
+                    <div class="form-group col-md-4">
+                      <label for="small">Small</label>
+                      <input type="file" name="small">       
+                      <p class="text-warning"> Image size should be 260 X 260</p>
+                    </div>  
+                    <div class="form-group col-md-4">
+                      <label for="large">Large</label>
+                      <input type="file" name="large">       
+                      <p class="text-warning"> Image size should be 450 X 450</p>
+                    </div>  
+                  </div>
+                <% } %>
                 </div>    
                 <div class="card-footer">
                   <a href="<%=APPCONSTANT.ADMINCALLURL%>/manage_product" class="btn btn-default">Cancel</a>
@@ -200,62 +177,6 @@
     </section>
   </div>
   <script>
-
-    $(document).ready(function() {
-
-        var max_fields_limit1      = 3; //set limit for maximum input fields
-        var x1 = 1; //initialize counter for text box
-        $(document).on('click', "[id ^='addMoreThumb-']", function(e) {
-            var getId = $(this).attr("id");
-            var idArray = getId.split("-");
-            var copyTo = idArray[1];
-            e.preventDefault();
-            if(x1 < max_fields_limit1){ //check conditions
-                x1++; //counter increment
-                $('#'+copyTo).append('<div class="form-group"><input type="file" name="'+copyTo+'" class="form-control"><a href="#" class="remove_fieldThumb" style="margin-left:10px;">Remove</a></div>'); //add input field
-            }
-        }); 
-        $(document).on("click",".remove_fieldThumb", function(e){ //user click on remove text links
-            e.preventDefault(); $(this).parent('div').remove(); x1--;
-        })
-
-        var max_fields_limit2      = 3; //set limit for maximum input fields
-        var x2 = 1; //initialize counter for text box
-        $(document).on('click', "[id ^='addMoreSmall-']", function(e) {
-            var getId = $(this).attr("id");
-            var idArray = getId.split("-");
-            var copyTo = idArray[1];
-            e.preventDefault();
-            if(x2 < max_fields_limit2){ //check conditions
-                x2++; //counter increment
-                $('#'+copyTo).append('<div class="form-group"><input type="file" name="'+copyTo+'" class="form-control"><a href="#" class="remove_fieldSmall" style="margin-left:10px;">Remove</a></div>'); //add input field
-            }
-        }); 
-        $(document).on("click",".remove_fieldSmall", function(e){ //user click on remove text links
-            e.preventDefault(); $(this).parent('div').remove(); x2--;
-        })
-
-
-        var max_fields_limit3      = 3; //set limit for maximum input fields
-        var x3 = 1; //initialize counter for text box
-        $(document).on('click', "[id ^='addMoreLarge-']", function(e) {
-            var getId = $(this).attr("id");
-            var idArray = getId.split("-");
-            var copyTo = idArray[1];
-
-     
-            e.preventDefault();
-            if(x3 < max_fields_limit3){ //check conditions
-                x3++; //counter increment
-                $('#'+copyTo).append('<div class="form-group"><input type="file" name="'+copyTo+'" class="form-control"><a href="#" class="remove_fieldLarge" style="margin-left:10px;">Remove</a></div>'); //add input field
-            }
-        }); 
-        $(document).on("click",".remove_fieldLarge", function(e){ //user click on remove text links
-            e.preventDefault(); $(this).parent('div').remove(); x3--;
-        })
-
-
-    });
     $(document).on("click",".edit_button",function(){
       var regex = new RegExp(/^[a-z]{2}[0-9]{7}$/i);
       var textvalue = $("#stock_keeping").val();
@@ -266,39 +187,4 @@
             return false;
         }
     });
-
-      $(document).on("change","#max_quantity",function(){
-          var checkvalue = $(this).val();
-          if(checkvalue=="Y"){
-            $("#quantity_div").show();
-          } else {
-            $("#quantity_div").hide();
-          }
-      });
-
-      $(document).on("change", "#categoryId", function(){
-        var ids = "";
-        $('option:selected', $(this)).each(function() {
-
-          if(ids==""){
-            ids = $(this).val();
-          }else{
-            ids += ","+$(this).val();
-          }
-          });
-          $.ajax({
-          type: 'POST',
-          url: 'get_subcategory/',
-          data: {ids:ids},
-          success: function(response) {
-            console.log(response);
-            if(response){
-              $('#subcategoryData').html(response);	
-            }
-            else{
-              $('#subcategoryData').html('');	
-            }
-          }
-        });
-      });
   </script>

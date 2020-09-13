@@ -444,10 +444,10 @@ $(document).ready(function () {
             subcategoryId: {
                 required: true,
             },
-            product: {
+            name: {
                 required: true,
             },
-            price: {
+            brandId: {
                 required: true,
             },
             offer: {
@@ -456,22 +456,25 @@ $(document).ready(function () {
             discount: {
                 required: true, 
             },
-            thumbnail: {
-                required: true,
-            }
+            stock: {
+                required: true, 
+            },
+            description: {
+                required: true, 
+            },
         },
         messages: {
             categoryId: {
-                required: "Please select Category Name"
+                required: "Please select Category"
             },
             subcategoryId: {
-                required: "Please select Sub Category Name"
+                required: "Please select Sub Category"
             },
-            product: {
-                required: "Please select Product Name"
+            name: {
+                required: "Please enter a Product Name"
             },
-            price: {
-                required: "Please enter Product Price"
+            subcategoryId: {
+                required: "Please select Brand"
             },
             offer: {
                 required: "Please Select Product Offer"
@@ -479,8 +482,11 @@ $(document).ready(function () {
             discount: {
                 required: "Please Select Product Discount"
             },
-            thumbnail: {
-                required: "Please Select Product Thumbnail Image"
+            stock: {
+                required: "Please enter a Stock Keeping Unit"
+            },
+            description: {
+                required: "Please enter a Description"
             }
         },
         errorElement: 'span',
