@@ -14,7 +14,7 @@ module.exports = {
     // @description Get all subcategories
     // @access      Public
 	subCategories:async function(req,res){
-        var subcategoryData = await Subcategory.find({status:true, deletedAt: 0},{sub_cat_name:1,slug:1,_id:1,cat_id:1}).sort( { sub_cat_name : 1} );
+        var subcategoryData = await Subcategory.find({status:true, deletedAt: 0},{name:1,slug:1,_id:1,categoryId:1}).sort( { name : 1} );
         // console.log(categoryData);
         // console.log(stringify(categoryData));return false;
         // var categoryData = {name:"chandan",email:"chandan@gmail.com"};
@@ -34,7 +34,7 @@ module.exports = {
         var catId =  req.body.cat_id;
         var subcategoryDataByCat = [];
         if(catId){
-            var subcategoryDataByCat = await Subcategory.find({cat_id:catId,status:true, deletedAt: 0},{sub_cat_name:1,slug:1,_id:1,cat_id:1}).sort( { sub_cat_name : 1} );
+            var subcategoryDataByCat = await Subcategory.find({categoryId:catId,status:true, deletedAt: 0},{name:1,slug:1,_id:1,categoryId:1}).sort( { name : 1} );
             if(subcategoryDataByCat.length > 0) {
                 return res.status(200).json({ data: subcategoryDataByCat, status: 'success', message: "Data fetched successfully!!"});
             } else {

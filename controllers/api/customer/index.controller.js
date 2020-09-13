@@ -6,8 +6,8 @@ const mongoose = require('mongoose');
 const bcrypt = require("bcrypt-nodejs");
 const moment = require('moment');
 const jwt = require("jsonwebtoken");
-const Custumer     = model.custumer;
-const CustumerProfile     = model.customer_profile;
+const OTP     = model.otp;
+const Custumer     = model.customer;
 const JWTtoken = config.constant.JWT_Token;
 var http = require('http'),
     url = require('url');
@@ -57,11 +57,11 @@ module.exports = {
         //         res.pipe(process.stdout);
         //     }).end(JSON.stringify(data));
 
-            var customercheck = await Custumer.find({mobile:mobile_number,status:true, deletedAt: 0});
-            if(customercheck.length > 0) {
+            var otpcheck = await OTP.find({mobile:mobile_number,status:true, deletedAt: 0});
+            if(otpcheck.length > 0) {
                     const token = jwt.sign(
                         {
-                            mobile: customercheck.mobile
+                            mobile: otpcheck.mobile
                         },
                         //process.env.JWT_KEY, 
                         JWTtoken,
@@ -70,26 +70,26 @@ module.exports = {
                         }
                     );
                     //return res.status(200).json({ message: "Mobile Number  Already Inserted!" });
-                    return res.status(200).json({ data: customercheck,registration:"true", token:token, status: 'success', message: "Customer Otp  and mobile verification!!"});
+                    return res.status(200).json({ data: otpcheck,registration:"true", token:token, status: 'success', message: "Customer Otp  and mobile verification!!"});
                     
             } else {
-                    let customerData = {
+                    let otpData = {
                         mobile : mobile_number,
                         opt  : opt
                     };
                     //console.log(storeData);
-                    let customer = new Custumer(customerData);
-                    customer.save(function(err, data){
+                    let otp = new OTP(otpData);
+                    otp.save(function(err, data){
                         if(err){console.log(err)}
                         // code for add  customer profile start here
                         var mobile = data.mobile;
                         console.log(mobile);
-                        let customerprofileData = {
+                        let customerData = {
                             mobile : mobile
                         };
                         //console.log(categoryData);
-                        let customerprofileobj = new CustumerProfile(customerprofileData);
-                        customerprofileobj.save(function(err, data){
+                        let customer = new Custumer(customerData);
+                        customer.save(function(err, data){
                             if(err){console.log(err)}	
                         })
                         // code for add  customer profile End  here
@@ -114,9 +114,9 @@ module.exports = {
     },
 
     checkCustomerOtp:async function(req,res) {
-        var mobile_number = req.body.mobile;
+        var mobileNumber = req.body.mobile;
         var otp           = req.body.otp;
-        if (mobile_number ==null || mobile_number == '')
+        if (mobileNumber ==null || mobileNumber == '')
         {
             return res.status(400).json({ message: "Mobile Number is Not Empty" });
         }
@@ -124,12 +124,13 @@ module.exports = {
         {
             return res.status(400).json({ message: "Otp is Not Empty" });
         }
-        var customercheck = await Custumer.find({mobile:mobile_number,opt:otp,status:true, deletedAt: 0});
+        var customercheck = await OTP.find({mobile:mobileNumber,opt:otp,status:true, deletedAt: 0});
+        
         if(customercheck.length>0){
-
+            var customerData = await Custumer.find({mobile:mobileNumber,status:true, deletedAt: 0});
             const token = jwt.sign(
                 {
-                    mobile: customercheck.mobile
+                    mobile: customerData.mobile
                 },
                 //process.env.JWT_KEY, 
                 JWTtoken,
@@ -138,19 +139,19 @@ module.exports = {
                 }
             );
             //CustumerProfile
-            return res.status(200).json({ data: customercheck, token:token, registration:"false", status: 'success', message: "Customer  verification successfully!!"});
+            return res.status(200).json({ data: customerData, token:token, registration:"false", status: 'success', message: "Customer  verification successfully!!"});
         } else {
            return res.status(200).json({ data: customercheck,  status: 'Fail', message: "Customer  verification failed !!"}); 
         }      
     },
     customerProfile: async function(req,res) {
-        var mobile_number = req.body.mobile;
-        if (mobile_number ==null || mobile_number == '')
+        var mobileNumber = req.body.mobile;
+        if (mobileNumber ==null || mobileNumber == '')
         {
             return res.status(400).json({ message: "Mobile Number is Not Empty" });
         }
 
-        var customerProfilecheck = await CustumerProfile.find({mobile:mobile_number,status:true, deletedAt: 0});
+        var customerProfilecheck = await Custumer.find({mobile:mobileNumber,status:true, deletedAt: 0});
         //console.log(customerProfilecheck);return false;
         if(customerProfilecheck.length>0) {
             const token = jwt.sign(
@@ -197,11 +198,11 @@ module.exports = {
             email : email,
             address : address
         };
-        await CustumerProfile.updateOne(
+        await Custumer.updateOne(
             { mobile:mobile_number },
             customerprofileData, function(err,data){
                 if(err){console.log(err)}
-                return res.status(200).json({ status: 'success', message: "Customer Profile Update successfully!!"});	
+                return res.status(200).json({status: 'success', message: "Customer Profile Update successfully!!"});	
             })
     },
 	

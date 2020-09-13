@@ -1,6 +1,4 @@
 const jwt = require("jsonwebtoken");
-const messageController = require('../controllers/messageController');
-
 
 module.exports = (req, res, next) => {
   try {
@@ -13,12 +11,12 @@ module.exports = (req, res, next) => {
     let errorIn = {
         message: "Auth Failed",
         type: "AUTH_ERR",
-        code: 2001,
+        code: 401,
         messages: {
           title:"Error: Invalid Auth Token",
           description: "Invalid Auth Token: "+error}
     }
-    return res.status(200).json({
+    return res.status(401).json({
         error:errorIn, 
         status:'failed', 
         message:"Auth Failed"

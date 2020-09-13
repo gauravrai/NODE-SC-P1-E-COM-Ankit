@@ -16,10 +16,24 @@ module.exports = {
     // @access      Public
 	productList:async function(req,res){
         var productData = [];
-        var productData = await Product.find({status:true, deletedAt: 0},{}).sort( { name : 1} );
-        // console.log(categoryData);
-        // console.log(stringify(categoryData));return false;
-        // var categoryData = {name:"chandan",email:"chandan@gmail.com"};
+        //var productData = await Product.find({status:true, deletedAt: 0},{}).sort( { name : 1} );
+        var productData = await Product.aggregate([ 
+            {
+                $addFields: {
+                    "thumbnail" :"uploads/thumnail",
+                    "small" : "uploads/small",
+                    "large" : "uploads/large"
+                }
+            },
+            {
+                $project: { 
+                    createdAt:0,
+                    updatedAt:0
+                }
+            }
+            
+        ]).sort( { name : 1} );
+
         if(productData.length>0) {
             return res.status(200).json({ data: productData, status: 'success', message: "Data fetched successfully!!" });
         } else {
