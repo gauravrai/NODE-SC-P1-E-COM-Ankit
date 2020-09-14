@@ -14,6 +14,7 @@ module.exports = function(app) {
 	var societiesRoutes = require('./api/societies.routes');
 	var towerRoutes = require('./api/tower.routes');
 	var brandRoutes = require('./api/brand.routes');
+	var wishlistRoutes = require('./api/wishlist.routes');
 	//var roleRoutes = require('./api/category.routes');
 	
 	var router = express.Router();
@@ -31,6 +32,7 @@ module.exports = function(app) {
 	societiesRoutes(router);
 	towerRoutes(router);
 	brandRoutes(router);
+	wishlistRoutes(router);
 	//dashboardRoutes(router);
 	
 }

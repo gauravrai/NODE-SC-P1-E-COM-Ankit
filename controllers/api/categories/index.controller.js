@@ -49,6 +49,9 @@ module.exports = {
                     "subcategory.slug":1,
                     "subcategory.categoryId":1
                 }
+            },
+            {
+                $match : {status:true, deletedAt: 0}
             }
             
         ]);

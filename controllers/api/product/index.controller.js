@@ -33,6 +33,9 @@ module.exports = {
                     createdAt:0,
                     updatedAt:0
                 }
+            },
+            {
+                $match : {status:true, deletedAt: 0}
             }
             
         ]).sort( { name : 1} );
@@ -66,6 +69,19 @@ module.exports = {
             return res.status(200).json({ data: productData, status: 'success', message: "Data No Found!!" });
         }
         
+    },
+    searchProduct : async function(req,res){
+        var   productName  = req.body.productName;
+        if (productName ==null || productName == '')
+        {
+            return res.status(400).json({ message: "Product Name is Not Empty" });
+        }
+        var productData = await Product.find({name:new RegExp(productName, 'i'),status:true, deletedAt: 0},{}).sort( { name : 1} );
+        if(productData.length>0) {
+            return res.status(200).json({ data: productData, status: 'success', message: "Data fetched successfully!!" });
+        } else {
+            return res.status(200).json({ data: productData, status: 'success', message: "Data No Found!!" });
+        }
     }
     
     
