@@ -28,12 +28,13 @@ module.exports = {
     addCustomer:async function(req,res){
         //console.log(JWTtoken); return false;
         var mobile_number = req.body.mobile;
-        var opt  = "123456"
+        var otp = Math.floor(1000 + Math.random() * 9000);
+        //var opt  = "1234"
         var phoneRegex = /^(0|[+91]{3})?[7-9][0-9]{9}$/;
         
         if (mobile_number ==null || mobile_number == '')
         {
-            return res.status(400).json({ message: "Mobile Number is Not Empty" });
+            return res.status(400).json({ message: "Mobile cannot be empty" });
         }
 
         if(mobile_number.match(phoneRegex)){
@@ -57,7 +58,7 @@ module.exports = {
         //         res.pipe(process.stdout);
         //     }).end(JSON.stringify(data));
 
-            var otpcheck = await OTP.find({mobile:mobile_number,status:true, deletedAt: 0});
+            var otpcheck = await OTP.find({mobile:mobile_number, status:true, deletedAt: 0});
             if(otpcheck.length > 0) {
                     const token = jwt.sign(
                         {
@@ -70,7 +71,7 @@ module.exports = {
                         }
                     );
                     //return res.status(200).json({ message: "Mobile Number  Already Inserted!" });
-                    return res.status(200).json({ data: otpcheck,registration:"true", token:token, status: 'success', message: "Customer Otp  and mobile verification!!"});
+                    return res.status(200).json({ data: otpcheck, registration:"true", token:token, status: 'success', message: "Customer OTP and mobile number verified"});
                     
             } else {
                     let otpData = {
@@ -92,18 +93,7 @@ module.exports = {
                         customer.save(function(err, data){
                             if(err){console.log(err)}	
                         })
-                        // code for add  customer profile End  here
-                        const token = jwt.sign(
-                            {
-                                mobile: data.mobile
-                            },
-                            //process.env.JWT_KEY, 
-                            JWTtoken,
-                            {
-                                expiresIn: '1h',
-                            }
-                        );
-                        return res.status(200).json({ data: data, registration:"false", token:token, status: 'success', message: "Customer  Add successfully!!"});
+                        return res.status(200).json({ data: data, registration:"false", status: 'success', message: "Customer  Add successfully!!"});
                     })
             }
         } else {
