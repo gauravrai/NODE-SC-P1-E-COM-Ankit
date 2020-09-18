@@ -6,9 +6,12 @@ const mongoose = require('mongoose');
 const bcrypt = require("bcrypt-nodejs");
 const moment = require('moment');
 const jwt = require("jsonwebtoken");
+
+//models import
 const OTP     = model.otp;
-const Custumer     = model.customer;
-const JWTtoken = config.constant.JWT_Token;
+const CustomerProfile     = model.customer;
+
+const jwtSecret = config.constant.JWT_SECRET;
 var http = require('http'),
     url = require('url');
 
@@ -19,17 +22,16 @@ module.exports = {
     // @access      Public
 	productList:async function(req,res){
         var productData = await Product.find({status:true, deletedAt: 0},{}).sort( { name : 1} );
-        // console.log(categoryData);
-        // console.log(stringify(categoryData));return false;
-        // var categoryData = {name:"chandan",email:"chandan@gmail.com"};
         return res.status(200).json({ data: productData, status: 'success', message: "Data fetched successfully!!" });
 		
     },
+
+    // @route       GET api/v1/addcustomer
+    // @description Customer login page check mobile number exists in otps collection, if yes update with new otp, if not intert mobile and new otp 
+    // @access      Public
     addCustomer:async function(req,res){
-        //console.log(JWTtoken); return false;
         var mobile_number = req.body.mobile;
-        var otp = Math.floor(1000 + Math.random() * 9000);
-        //var opt  = "1234"
+        const otp = Math.floor(1000 + Math.random() * 9000);
         var phoneRegex = /^(0|[+91]{3})?[7-9][0-9]{9}$/;
         
         if (mobile_number ==null || mobile_number == '')
@@ -38,124 +40,135 @@ module.exports = {
         }
 
         if(mobile_number.match(phoneRegex)){
-
-        //     const username = 'evamastuT';
-        //     const apiKey = 'F46C7-CF479';
-        //     const apiRequest = 'Text';
-        //     const senderID = 'EVMSTU';
-        //     const apiRoute = 'TRANS';
-
-        //     // Prepare data for POST request
-        //    // $data = 'username=' . $username . '&apikey=' . $apiKey . '&apirequest=' . $apiRequest . '&route=' . $apiRoute . '&mobile=' . $reciverNumber . '&sender=' . $senderID . "&message=" . urlencode($template);
-        
-        //     var opts = url.parse('http://www.alots.in/sms-panel/api/http/index.php'),
-        //         data = { username: username, apiKey:apiKey, apiRequest:apiRequest, senderID:senderID, apiRoute:apiRoute,message:opt  };
-        //     opts.headers = {};
-        //     opts.headers['Content-Type'] = 'application/json';
-
-        //     http.request(opts, function (res) {
-        //         // do whatever you want with the response
-        //         res.pipe(process.stdout);
-        //     }).end(JSON.stringify(data));
-
-            var otpcheck = await OTP.find({mobile:mobile_number, status:true, deletedAt: 0});
-            if(otpcheck.length > 0) {
-                    const token = jwt.sign(
-                        {
-                            mobile: otpcheck.mobile
-                        },
-                        //process.env.JWT_KEY, 
-                        JWTtoken,
-                        {
-                            expiresIn: '1h',
-                        }
-                    );
-                    //return res.status(200).json({ message: "Mobile Number  Already Inserted!" });
-                    return res.status(200).json({ data: otpcheck, registration:"true", token:token, status: 'success', message: "Customer OTP and mobile number verified"});
-                    
-            } else {
+            
+            try{
+                const otpcheck = await OTP.find({mobile:mobile_number, status:true, deletedAt: 0});
+                if(otpcheck.length > 0) {
                     let otpData = {
-                        mobile : mobile_number,
-                        opt  : opt
+                            otp  : otp
                     };
-                    //console.log(storeData);
-                    let otp = new OTP(otpData);
-                    otp.save(function(err, data){
-                        if(err){console.log(err)}
-                        // code for add  customer profile start here
-                        var mobile = data.mobile;
-                        console.log(mobile);
-                        let customerData = {
-                            mobile : mobile
-                        };
-                        //console.log(categoryData);
-                        let customer = new Custumer(customerData);
-                        customer.save(function(err, data){
-                            if(err){console.log(err)}	
-                        })
-                        return res.status(200).json({ data: data, registration:"false", status: 'success', message: "Customer  Add successfully!!"});
+                    const numberInOtp = await OTP.updateOne(
+                                                    {mobile: mobile_number},
+                                                    {
+                                                        $set: {
+                                                            otp: otp
+                                                        }
+                                                    }
+                                                )
+                    
+                    const getCustomerProfile = CustomerProfile.find({
+                        mobile: mobile_number
                     })
+                    let registration = false
+
+                    if(!getCustomerProfile)
+                        registration = true
+
+                    const returnData = {
+                                registration,                                
+                            }
+                    return res.status(200).json({ data: returnData, status: 'success', message: "Customer OTP and mobile number verified"});                   
+                } else {
+                        const otpObj = new OTP({
+                                                "mobile": mobile_number,
+                                                otp
+                                            });
+                        otpObj.save()
+                        return res.status(200).json({
+                                     data: {
+                                        registration:"false"
+                                     }, 
+                                     status: 'success', 
+                                     message: "Customer added successfully"
+                                });
+                }
             }
+            catch (e){
+                console.log(e)
+                return res.status(500).json({ message: 'Internal server error' });
+            }
+            
         } else {
 
             return res.status(400).json({ message: "Invaild Mobile Number" });
         }
           
     },
+    // @route       GET api/v1/checkcustomerotp
+    // @description Customer validate otp and mobile exists 
+    // @access      Public
+    checkCustomerOtp: async function(req, res) {
+        const mobileNumber = req.body.mobile;
+        const otp           = req.body.otp;
+        if (mobileNumber ==null || mobileNumber == ''){
+            return res.status(400).json({ message: "Mobile number required" });
+        }
 
-    checkCustomerOtp:async function(req,res) {
-        var mobileNumber = req.body.mobile;
-        var otp           = req.body.otp;
-        if (mobileNumber ==null || mobileNumber == '')
-        {
-            return res.status(400).json({ message: "Mobile Number is Not Empty" });
+        if (otp ==null || otp == ''){
+            return res.status(400).json({ message: "OTP required" });
         }
-        if (otp ==null || otp == '')
-        {
-            return res.status(400).json({ message: "Otp is Not Empty" });
-        }
-        var customercheck = await OTP.find({mobile:mobileNumber,opt:otp,status:true, deletedAt: 0});
-        
-        if(customercheck.length>0){
-            var customerData = await Custumer.find({mobile:mobileNumber,status:true, deletedAt: 0});
-            const token = jwt.sign(
-                {
-                    mobile: customerData.mobile
-                },
-                //process.env.JWT_KEY, 
-                JWTtoken,
-                {
-                    expiresIn: '1h',
+        try{
+            const customerCheck = await OTP.findOne({
+                                            mobile: mobileNumber,
+                                            otp: otp,
+                                            status: true, 
+                                            deletedAt: 0
+                                        });
+            
+            if(customerCheck){
+                const customerProfile = await CustomerProfile.findOne({
+                                                mobile: mobileNumber,
+                                                status: true, 
+                                                deletedAt: 0
+                                            });
+                let registration = true
+                if(customerProfile)
+                    registration = false
+
+                const payload = {
+                    customerProfile: {
+                        id: customerCheck.id
+                    }
                 }
-            );
-            //CustumerProfile
-            return res.status(200).json({ data: customerData, token:token, registration:"false", status: 'success', message: "Customer  verification successfully!!"});
-        } else {
-           return res.status(200).json({ data: customercheck,  status: 'Fail', message: "Customer  verification failed !!"}); 
-        }      
+
+                jwt.sign(payload, jwtSecret, {
+                    expiresIn: 3600000
+                }, (error, token) => {
+                    if(error) throw error
+
+                    return res.status(200).json({ 
+                            data: {
+                                customerProfile,
+                                registration,
+                                token 
+                            }, 
+                            status: 'success', 
+                            message: "Customer verification successfull!!"
+                        });
+                })
+
+                
+            }
+            else{
+               return res.status(400).json({ data: [],  status: 'error', message: "Authentication failed"}); 
+            }   
+        }
+        catch (e){
+            console.log(e)
+            return res.status(500).json({ data: [],  status: 'error', message: "Internal server error"});
+        }
+           
     },
     customerProfile: async function(req,res) {
         var mobileNumber = req.body.mobile;
-        if (mobileNumber ==null || mobileNumber == '')
-        {
+        if (mobileNumber ==null || mobileNumber == ''){
             return res.status(400).json({ message: "Mobile Number is Not Empty" });
         }
 
-        var customerProfilecheck = await Custumer.find({mobile:mobileNumber,status:true, deletedAt: 0});
+        var customerProfilecheck = await CustomerProfile.find({mobile:mobileNumber,status:true, deletedAt: 0});
         //console.log(customerProfilecheck);return false;
         if(customerProfilecheck.length>0) {
-            const token = jwt.sign(
-                {
-                    _id: customerProfilecheck._id,
-                    mobile: customerProfilecheck.mobile
-                },
-                //process.env.JWT_KEY, 
-                JWTtoken,
-                {
-                    expiresIn: '1h',
-                }
-            );
-            return res.status(200).json({ data: customerProfilecheck, token:token, status: 'success', message: "Customer  Profile Data!!"});
+            return res.status(200).json({ data: customerProfilecheck, status: 'success', message: "Customer  Profile Data!!"});
         } else {
             return res.status(200).json({ data:customerProfilecheck, status: 'success', message: "No  Data Found!!"});
         }
@@ -188,7 +201,7 @@ module.exports = {
             email : email,
             address : address
         };
-        await Custumer.updateOne(
+        await CustomerProfile.updateOne(
             { mobile:mobile_number },
             customerprofileData, function(err,data){
                 if(err){console.log(err)}

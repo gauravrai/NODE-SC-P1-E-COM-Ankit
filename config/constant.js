@@ -11,7 +11,7 @@ module.exports = {
 	TIMEZONE:process.env.TIMEZONE,
 	FORMATETIME:'DD-MM-YYYY hh:mm A',
 	COMPANYLOGO:SITEURL+"", 
-	JWT_Token :"secret",
+	JWT_SECRET :"local_BnaiyaSecret",
 	  
 	LIMIT: 10,	  
 	PRODUCTIMAGELENGTH: 2,	  

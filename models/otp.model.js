@@ -6,7 +6,7 @@ let OtpSchema = new Schema({
     mobile: {
         type: String
     },
-    opt: {
+    otp: {
         type: String
     },
     status: {
