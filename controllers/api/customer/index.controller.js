@@ -42,8 +42,8 @@ module.exports = {
         if(mobile_number.match(phoneRegex)){
             
             try{
-                const otpcheck = await OTP.find({mobile:mobile_number, status:true, deletedAt: 0});
-                if(otpcheck.length > 0) {
+                const otpcheck = await OTP.findOne({mobile:mobile_number, status:true, deletedAt: 0});
+                if(otpcheck) {
                     let otpData = {
                             otp  : otp
                     };
@@ -56,13 +56,13 @@ module.exports = {
                                                     }
                                                 )
                     
-                    const getCustomerProfile = CustomerProfile.find({
+                    const getCustomerProfile = CustomerProfile.findOne({
                         mobile: mobile_number
                     })
-                    let registration = false
+                    let registration = true
 
-                    if(!getCustomerProfile)
-                        registration = true
+                    if(getCustomerProfile)
+                        registration = false
 
                     const returnData = {
                                 registration,                                
@@ -76,7 +76,7 @@ module.exports = {
                         otpObj.save()
                         return res.status(200).json({
                                      data: {
-                                        registration:"false"
+                                        registration: true
                                      }, 
                                      status: 'success', 
                                      message: "Customer added successfully"
