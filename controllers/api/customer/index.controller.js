@@ -59,15 +59,19 @@ module.exports = {
                     const getCustomerProfile = CustomerProfile.findOne({
                         mobile: mobile_number
                     })
-                    let registration = true
+                    let profileUpdated = false
 
                     if(getCustomerProfile)
-                        registration = false
+                        profileUpdated = true
 
                     const returnData = {
-                                registration,                                
+                                profileUpdated,                                
                             }
-                    return res.status(200).json({ data: returnData, status: 'success', message: "Customer OTP and mobile number verified"});                   
+                    return res.status(200).json({ 
+                                data: returnData, 
+                                status: 'success', 
+                                message: "Customer OTP and mobile number verified"
+                            });                   
                 } else {
                         const otpObj = new OTP({
                                                 "mobile": mobile_number,
@@ -76,7 +80,7 @@ module.exports = {
                         otpObj.save()
                         return res.status(200).json({
                                      data: {
-                                        registration: true
+                                        profileUpdated: false
                                      }, 
                                      status: 'success', 
                                      message: "Customer added successfully"
@@ -121,9 +125,9 @@ module.exports = {
                                                 status: true, 
                                                 deletedAt: 0
                                             });
-                let registration = true
+                let profileUpdated = false
                 if(customerProfile)
-                    registration = false
+                    profileUpdated = true
 
                 const payload = {
                     customerProfile: {
@@ -139,7 +143,7 @@ module.exports = {
                     return res.status(200).json({ 
                             data: {
                                 customerProfile,
-                                registration,
+                                profileUpdated,
                                 token 
                             }, 
                             status: 'success', 
