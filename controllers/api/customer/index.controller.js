@@ -37,7 +37,10 @@ module.exports = {
         
         if (mobile_number ==null || mobile_number == '')
         {
-            return res.status(400).json({ message: "Mobile cannot be empty" });
+            return res.status(400).json({ 
+                status: 'error',
+                message: "Mobile cannot be empty" 
+            });
         }
 
         if(mobile_number.match(phoneRegex)){
@@ -57,11 +60,11 @@ module.exports = {
                                                     }
                                                 )
                     
-                    const getCustomerProfile = CustomerProfile.findOne({
-                        mobile: mobile_number
-                    })
+                    const getCustomerProfile = await CustomerProfile.findOne({
+                                                    mobile: mobile_number
+                                                })
                     let profileUpdated = false
-
+                    
                     if(getCustomerProfile)
                         profileUpdated = true
 
@@ -90,12 +93,18 @@ module.exports = {
             }
             catch (e){
                 console.log(e)
-                return res.status(500).json({ message: 'Internal server error' });
+                return res.status(500).json({ 
+                    status: 'error',
+                    message: 'Internal server error' 
+                });
             }
             
         } else {
 
-            return res.status(400).json({ message: "Invaild Mobile Number" });
+            return res.status(400).json({ 
+                status: 'error',
+                message: "Invaild Mobile Number" 
+            });
         }
           
     },
@@ -106,11 +115,17 @@ module.exports = {
         const mobileNumber = req.body.mobile;
         const otp           = req.body.otp;
         if (mobileNumber ==null || mobileNumber == ''){
-            return res.status(400).json({ message: "Mobile number required" });
+            return res.status(400).json({ 
+                status: 'error', 
+                message: "Mobile number required" 
+            });
         }
 
         if (otp ==null || otp == ''){
-            return res.status(400).json({ message: "OTP required" });
+            return res.status(400).json({ 
+                status: 'error',
+                message: "OTP required" 
+            });
         }
         try{
             const customerCheck = await OTP.findOne({
@@ -151,16 +166,22 @@ module.exports = {
                             message: "Customer verification successfull!!"
                         });
                 })
-
-                
             }
             else{
-               return res.status(400).json({ data: [],  status: 'error', message: "Authentication failed"}); 
+               return res.status(400).json({ 
+                                data: [],  
+                                status: 'error', 
+                                message: "Authentication failed"
+                            }); 
             }   
         }
         catch (e){
             console.log(e)
-            return res.status(500).json({ data: [],  status: 'error', message: "Internal server error"});
+            return res.status(500).json({ 
+                                    data: [],  
+                                    status: 'error', 
+                                    message: "Internal server error"
+                                });
         }
            
     },
