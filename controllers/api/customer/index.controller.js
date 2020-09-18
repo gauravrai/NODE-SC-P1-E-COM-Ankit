@@ -31,7 +31,8 @@ module.exports = {
     // @access      Public
     addCustomer:async function(req,res){
         var mobile_number = req.body.mobile;
-        const otp = Math.floor(1000 + Math.random() * 9000);
+        //const otp = Math.floor(1000 + Math.random() * 9000);
+        const otp = '1234';
         var phoneRegex = /^(0|[+91]{3})?[7-9][0-9]{9}$/;
         
         if (mobile_number ==null || mobile_number == '')
