@@ -65,9 +65,9 @@ module.exports = {
                     if(getCustomer)
                         profileUpdated = true
 
-                    const returnData = {
+                    const returnData = [{
                                 profileUpdated,                                
-                            }
+                            }]
                     return res.status(200).json({ 
                                 data: returnData, 
                                 status: 'success', 
