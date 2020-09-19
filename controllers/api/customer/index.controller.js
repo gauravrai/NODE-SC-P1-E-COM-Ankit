@@ -6,11 +6,11 @@ const mongoose = require('mongoose');
 const bcrypt = require("bcrypt-nodejs");
 const moment = require('moment');
 const jwt = require("jsonwebtoken");
+const { validationResult } = require('express-validator')
 
 //models import
 const OTP     = model.otp;
-const CustomerProfile     = model.customer;
-
+const Customer     = model.customer;
 const jwtSecret = config.constant.JWT_SECRET;
 var http = require('http'),
     url = require('url');
@@ -34,13 +34,10 @@ module.exports = {
         //const otp = Math.floor(1000 + Math.random() * 9000);
         const otp = '1234';
         var phoneRegex = /^(0|[+91]{3})?[7-9][0-9]{9}$/;
-        
-        if (mobile_number ==null || mobile_number == '')
-        {
-            return res.status(400).json({ 
-                status: 'error',
-                message: "Mobile cannot be empty" 
-            });
+
+        const errors = validationResult(req)
+        if(!errors.isEmpty()){
+            return res.status(400).json({errors: errors.array()})
         }
 
         if(mobile_number.match(phoneRegex)){
@@ -60,12 +57,12 @@ module.exports = {
                                                     }
                                                 )
                     
-                    const getCustomerProfile = await CustomerProfile.findOne({
+                    const getCustomer = await Customer.findOne({
                                                     mobile: mobile_number
                                                 })
                     let profileUpdated = false
                     
-                    if(getCustomerProfile)
+                    if(getCustomer)
                         profileUpdated = true
 
                     const returnData = {
@@ -95,7 +92,9 @@ module.exports = {
                 console.log(e)
                 return res.status(500).json({ 
                     status: 'error',
-                    message: 'Internal server error' 
+                    errors: [{
+                        msg: "Internal server error"
+                    }] 
                 });
             }
             
@@ -103,7 +102,9 @@ module.exports = {
 
             return res.status(400).json({ 
                 status: 'error',
-                message: "Invaild Mobile Number" 
+                errors: [{
+                    msg: "Invalid mobile number"
+                }]
             });
         }
           
@@ -112,44 +113,36 @@ module.exports = {
     // @description Customer validate otp and mobile exists 
     // @access      Public
     checkCustomerOtp: async function(req, res) {
-        const mobileNumber = req.body.mobile;
-        const otp           = req.body.otp;
-        if (mobileNumber ==null || mobileNumber == ''){
-            return res.status(400).json({ 
-                status: 'error', 
-                message: "Mobile number required" 
-            });
+
+        const errors = validationResult(req)
+        if(!errors.isEmpty()){
+            return res.status(400).json({errors: errors.array()})
         }
 
-        if (otp ==null || otp == ''){
-            return res.status(400).json({ 
-                status: 'error',
-                message: "OTP required" 
-            });
-        }
+        const { mobile, otp } = req.body
+        
         try{
             const customerCheck = await OTP.findOne({
-                                            mobile: mobileNumber,
-                                            otp: otp,
+                                            mobile,
+                                            otp,
                                             status: true, 
                                             deletedAt: 0
                                         });
             
             if(customerCheck){
-                const customerProfile = await CustomerProfile.findOne({
-                                                mobile: mobileNumber,
+                const customer = await Customer.findOne({
+                                                mobile,
                                                 status: true, 
                                                 deletedAt: 0
-                                            });
+                                            })
+                                            .select('-deletedAt');
                 let profileUpdated = false
-                if(customerProfile)
+                if(customer)
                     profileUpdated = true
 
                 const payload = {
-                    customerProfile: {
-                        id: customerCheck.id
+                        mobile
                     }
-                }
 
                 jwt.sign(payload, jwtSecret, {
                     expiresIn: 3600000
@@ -158,7 +151,7 @@ module.exports = {
 
                     return res.status(200).json({ 
                             data: {
-                                customerProfile,
+                                customer,
                                 profileUpdated,
                                 token 
                             }, 
@@ -171,7 +164,9 @@ module.exports = {
                return res.status(400).json({ 
                                 data: [],  
                                 status: 'error', 
-                                message: "Authentication failed"
+                                errors: [{
+                                    msg: "Authentication failed"
+                                }]
                             }); 
             }   
         }
@@ -180,59 +175,95 @@ module.exports = {
             return res.status(500).json({ 
                                     data: [],  
                                     status: 'error', 
-                                    message: "Internal server error"
+                                    errors: [{
+                                        msg: "Internal server error"
+                                    }]
                                 });
         }
            
     },
-    customerProfile: async function(req,res) {
-        var mobileNumber = req.body.mobile;
-        if (mobileNumber ==null || mobileNumber == ''){
-            return res.status(400).json({ message: "Mobile Number is Not Empty" });
-        }
+    customer: async function( req, res ) {
 
-        var customerProfilecheck = await CustomerProfile.find({mobile:mobileNumber,status:true, deletedAt: 0});
-        //console.log(customerProfilecheck);return false;
-        if(customerProfilecheck.length>0) {
-            return res.status(200).json({ data: customerProfilecheck, status: 'success', message: "Customer  Profile Data!!"});
-        } else {
-            return res.status(200).json({ data:customerProfilecheck, status: 'success', message: "No  Data Found!!"});
+        const customercheck = await Customer.findOne({
+                                        mobile: req.user.mobile,
+                                        status: true, 
+                                        deletedAt: 0
+                                    })
+                                    .select('-deletedAt');
+        let message = "Data not found"
+        if(customercheck) {
+            message = "Customer data found"
         }
+        return res.status(200).json({ 
+                                data: customercheck, 
+                                status: 'success', 
+                                message
+                            });
         
     },
-    updateCustomerProfile: async function(req,res) {
-        var   mobile_number  = req.body.mobile;
-        var   name  = req.body.name;
-        var   email  = req.body.email;
-        var   address  = req.body.address;
-        if (mobile_number ==null || mobile_number == '')
-        {
-            return res.status(400).json({ message: "Mobile Number is Not Empty" });
+    updateCustomer: async function( req, res ) {
+        
+        const errors = validationResult(req)
+        if(!errors.isEmpty()){
+            return res.status(400).json({errors: errors.array()})
         }
-        if (name ==null || name == '')
-        {
-            return res.status(400).json({ message: "Name is Not Empty" });
-        }
-        if (email ==null || email == '')
-        {
-            return res.status(400).json({ message: "Email is Not Empty" });
-        }
-        if (address ==null || address == '')
-        {
-            return res.status(400).json({ message: "Address is Not Empty" });
-        }
-        let customerprofileData = {
-            mobile : mobile_number,
+
+
+        const { mobile, name, email, address } = req.body
+        
+        let CustomerData = {
             name : name,
             email : email,
             address : address
         };
-        await CustomerProfile.updateOne(
-            { mobile:mobile_number },
-            customerprofileData, function(err,data){
-                if(err){console.log(err)}
-                return res.status(200).json({status: 'success', message: "Customer Profile Update successfully!!"});	
+        try {
+            const customer = await Customer.findOne({
+                mobile: req.user.mobile
             })
+            
+            if(!customer){
+                //update the customer profile
+                const customerPObj = await new Customer({
+                                            name,
+                                            "mobile": req.user.mobile,
+                                            email,
+                                            address
+                                        });
+                customerPObj.save()
+                return res.status(200).json({
+                                data: CustomerData,
+                                status: 'success', 
+                                message: "Customer profile added successfully!!"
+                            });
+            }
+            else{
+                //insert new customer profile
+                await Customer.updateOne({ 
+                    mobile: req.user.mobile 
+                },
+                CustomerData, function( err, data ){
+                    if(err) console.log(err)
+
+                    return res.status(200).json({
+                                data: CustomerData,
+                                status: 'success', 
+                                message: "Customer profile updated successfully!!"
+                            }); 
+                })
+            }
+            
+        }
+        catch (e){
+            console.log(e)
+            return res.status(500).json({ 
+                                    data: [],  
+                                    status: 'error', 
+                                    errors: [{
+                                        msg: "Internal server error"
+                                    }]
+                                });
+        }
+        
     },
 	
 }

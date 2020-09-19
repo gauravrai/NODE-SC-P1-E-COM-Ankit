@@ -1,12 +1,7 @@
 const model  = require('../../../models/index.model');
 const config = require('../../../config/index');
 const db 	   = config.connection;
-const async = require("async");
-const mongoose = require('mongoose');
-const bcrypt = require("bcrypt-nodejs");
-const moment = require('moment');
 const Area = model.area;
-const ADMINCALLURL = config.constant.ADMINCALLURL;
 
 module.exports = {
 	

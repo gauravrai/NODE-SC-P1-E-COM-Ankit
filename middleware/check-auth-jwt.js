@@ -1,11 +1,13 @@
 const jwt = require("jsonwebtoken");
+const config = require('../config/index');
+const jwtSecret = config.constant.JWT_SECRET;
 
 module.exports = (req, res, next) => {
   try {
     const token = req.headers.authorization.split(" ")[1];
 
-    const decoded = jwt.verify(token, "secret");
-    req.userData = decoded;
+    const decoded = jwt.verify(token, jwtSecret);
+    req.user = decoded;
     next();
   } catch (error) {
     let errorIn = {
@@ -17,8 +19,8 @@ module.exports = (req, res, next) => {
           description: "Invalid Auth Token: "+error}
     }
     return res.status(401).json({
-        error:errorIn, 
-        status:'failed', 
+        data:errorIn, 
+        status:'error', 
         message:"Auth Failed"
     });
   }
