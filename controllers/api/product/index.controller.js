@@ -1,13 +1,9 @@
 const model  = require('../../../models/index.model');
 const config = require('../../../config/index');
-const db 	   = config.connection;
-const async = require("async");
-const mongoose = require('mongoose');
-const bcrypt = require("bcrypt-nodejs");
-const moment = require('moment');
-const Subcategory = model.sub_category;
 const Product     = model.product;
-const ADMINCALLURL = config.constant.ADMINCALLURL;
+const THUMNAILPATH = config.constant.THUMBNAILUPLOADPATH;
+const SMALLPATH = config.constant.SMALLUPLOADPATH;
+const LARGEPATH = config.constant.LARGEUPLOADPATH;
 
 module.exports = {
 	
@@ -16,10 +12,27 @@ module.exports = {
     // @access      Public
 	productList:async function(req,res){
         var productData = [];
-        var productData = await Product.find({status:true, deletedAt: 0},{}).sort( { name : 1} );
-        // console.log(categoryData);
-        // console.log(stringify(categoryData));return false;
-        // var categoryData = {name:"chandan",email:"chandan@gmail.com"};
+        //var productData = await Product.find({status:true, deletedAt: 0},{}).sort( { name : 1} );
+        var productData = await Product.aggregate([ 
+            {
+                $addFields: {
+                    "thumbnail" :THUMNAILPATH,
+                    "small" : SMALLPATH,
+                    "large" : LARGEPATH
+                }
+            },
+            {
+                $project: { 
+                    createdAt:0,
+                    updatedAt:0
+                }
+            },
+            {
+                $match : {status:true, deletedAt: 0}
+            }
+            
+        ]).sort( { name : 1} );
+
         if(productData.length>0) {
             return res.status(200).json({ data: productData, status: 'success', message: "Data fetched successfully!!" });
         } else {
@@ -49,6 +62,19 @@ module.exports = {
             return res.status(200).json({ data: productData, status: 'success', message: "Data No Found!!" });
         }
         
+    },
+    searchProduct : async function(req,res){
+        var   productName  = req.body.productName;
+        if (productName ==null || productName == '')
+        {
+            return res.status(400).json({ message: "Product Name is Not Empty" });
+        }
+        var productData = await Product.find({name:new RegExp(productName, 'i'),status:true, deletedAt: 0},{}).sort( { name : 1} );
+        if(productData.length>0) {
+            return res.status(200).json({ data: productData, status: 'success', message: "Data fetched successfully!!" });
+        } else {
+            return res.status(200).json({ data: productData, status: 'success', message: "Data No Found!!" });
+        }
     }
     
     

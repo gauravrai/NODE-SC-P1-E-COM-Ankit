@@ -1,18 +1,21 @@
 const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
-var ObjectId = mongoose.Schema.Types.ObjectId;
 
 let CustomerSchema = new Schema({
+
     mobile: {
-        type: String
+        type: String,
+        required: true,
+        unique: true
     },
     name: {
         type: String,
-        default: null
+        required: true
     },
     email: {
         type: String,
-        default: null
+        required: true,
+        unique: true
     },
     address: {
         type: String,

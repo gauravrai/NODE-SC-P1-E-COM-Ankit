@@ -35,7 +35,7 @@ module.exports = {
                {
                  from: 'sub_categories',
                  localField: '_id',
-                 foreignField: 'cat_id',
+                 foreignField: 'categoryId',
                  as: 'subcategory'
                }
             },
@@ -45,10 +45,13 @@ module.exports = {
                     name:1,
                     slug:1,
                     "subcategory._id":1,
-                    "subcategory.sub_cat_name":1,
+                    "subcategory.name":1,
                     "subcategory.slug":1,
-                    "subcategory.cat_id":1
+                    "subcategory.categoryId":1
                 }
+            },
+            {
+                $match : {status:true, deletedAt: 0}
             }
             
         ]);

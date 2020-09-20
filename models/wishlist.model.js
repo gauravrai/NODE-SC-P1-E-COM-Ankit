@@ -2,18 +2,12 @@ const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 var ObjectId = mongoose.Schema.Types.ObjectId;
 
-let SubCategorySchema = new Schema({
-    name: {
-        type: String
-    },
-    categoryId: {
+let WishlistSchema = new Schema({
+    productId: {
         type: ObjectId
     },
-    slug: {
-        type: String
-    },
-    order: {
-        type: Number
+    userId: {
+        type: ObjectId
     },
     status: {
         type: Boolean,
@@ -34,4 +28,4 @@ let SubCategorySchema = new Schema({
 });
 
 // Export the model
-module.exports = mongoose.model('Sub_Category', SubCategorySchema);
+module.exports = mongoose.model('wishlist', WishlistSchema);

@@ -94,7 +94,6 @@ module.exports = {
 			});
 		});
 	},
-
     addOffer: async function(req,res){
 		if(req.method == "GET"){
 			let moduleName = 'Offer Management';
