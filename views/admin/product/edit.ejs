@@ -26,6 +26,7 @@
                 </ul>
               </div>
               <form role="form" id="editProductForm" method="post" enctype="multipart/form-data">
+                <input type="hidden" name="id" value="<%=productData.id%>">
                 <div id="tableContent" style="padding: 0 17px 0 10px;">
                   <div class="form-row">
                     <div class="form-group col-md-3">
@@ -50,7 +51,7 @@
 
                     <div class="form-group col-md-3">
                         <label for="name">Product Name</label>
-                        <input type="text" name="name" class="form-control" id="name" placeholder="Product Name">
+                        <input type="text" name="name" class="form-control" id="name" placeholder="Product Name" value="<%=productData.name%>">
                     </div>
                     
                     <div class="form-group col-md-3">
@@ -58,7 +59,7 @@
                       <select name="brandId" class="form-control" id="brandId" >
                         <option value="">Select Brand</option>
                         <% for(let i = 0; i < brandData.length; i++){ %>
-                          <option value="<%=brandData[i].id%>"><%=brandData[i].name%></option>
+                          <option value="<%=brandData[i].id%>" <% if(productData.brandId == brandData[i].id){ %> selected="selected" <% } %> ><%=brandData[i].name%></option>
                         <% } %>
                       </select>
                     </div>
@@ -67,8 +68,8 @@
                         <label for="offer">Select Offer applicable</label>
                         <select name="offer" class="form-control" id="offer" >
                         <option value="">Select Offer</option>
-                        <option value="Yes">Yes</option>
-                        <option value="No">No</option>
+                        <option value="Yes" <% if(productData.offer == 'Yes'){ %> selected="selected" <% } %> >Yes</option>
+                        <option value="No" <% if(productData.offer == 'No'){ %> selected="selected" <% } %> >No</option>
                         </select>
                     </div>
                     
@@ -76,29 +77,29 @@
                         <label for="discount">Select Discount applicable</label>
                         <select name="discount" class="form-control" id="discount" >
                         <option value="">Select Discount</option>
-                        <option value="Yes">Yes</option>
-                        <option value="No">No</option>
+                        <option value="Yes" <% if(productData.discount == 'Yes'){ %> selected="selected" <% } %> >Yes</option>
+                        <option value="No" <% if(productData.discount == 'No'){ %> selected="selected" <% } %> >No</option>
                         </select>
                     </div>
 
                     <div class="form-group col-md-3">
                       <label for="stock">Stock Keeping Unit</label>
-                      <input type="text" name="stock" class="form-control" id="stock" placeholder="Please Enter Value This formate (      LB1234567 ) ">
+                      <input type="text" name="stock" class="form-control" id="stock" placeholder="Please Enter Value This formate (      LB1234567 ) " value="<%=productData.stock%>">
                     </div> 
 
                     <div class="form-group col-md-12">
                         <label for="description">Description</label>
-                        <textarea name="description" class="form-control" id="description" placeholder="Description"></textarea>
+                        <textarea name="description" class="form-control" id="description" placeholder="Description"><%=productData.description%></textarea>
                     </div> 
 
                     <div class="form-group col-md-12">
                       <label class="col-md-3" for="featured">Featured Product</label>
                       <div class="col-md-3" style="margin-top: -30px; margin-left: 120px;">
-                        <input type="checkbox" name="featured" class="form-control" id="featured">
+                        <input type="checkbox" name="featured" class="form-control" id="featured" <% if(productData.featured == true){ %> checked="checked" <% } %> >
                       </div>
                       <label class="col-md-3" for="outOfStock">Out Of Stock</label>
                       <div class="col-md-3" style="margin-top: -30px; margin-left: 120px;">
-                        <input type="checkbox" name="outOfStock" class="form-control" id="outOfStock">
+                        <input type="checkbox" name="outOfStock" class="form-control" id="outOfStock" <% if(productData.outOfStock == true){ %> checked="checked" <% } %> >
                       </div>
                     </div>
                 </div>
@@ -107,35 +108,41 @@
                   <input type="hidden" value="<%=storeData.length%>" name="store">
                 </div>
                 <% for(let i = 0; i < storeData.length; i++){ 
-                  let j = 0; 
-                %>
+                  let j = 0; %>
                   <div class="col-md-12">
                     <h4 class="storeLabel"><%=storeData[i].name%></h4>
-                    <input type="hidden" value="<%=storeData[i].id%>" name="storeId">
+                    <input type="hidden"  value="<%=storeData[i].id%>" name="storeId">
                   </div>  
                   <div class="form-row" id="storeField_<%=i%>">
-                    <div class="form-group col-md-3">
+                  <% for(let k = 0; k < productData.inventory[i].length; k++){ %>
+                    <div class="form-group col-md-3 store-div-<%=i%>-<%=k%>">
                       <label for="label_<%=i%>">Label</label>
-                      <input type="text" name="label_<%=i%>" class="form-control" id="label_<%=i%>" placeholder="Label">
+                      <input type="text" name="label_<%=i%>" class="form-control" id="label_<%=i%>" placeholder="Label" value="<%=productData.inventory[i][k].label%>">
                     </div>  
-                    <div class="form-group col-md-3">
+                    <div class="form-group col-md-3 store-div-<%=i%>-<%=k%>">
                       <label for="weight_<%=i%>" >Weight Unit</label>
                       <select name="weight_<%=i%>" class="form-control" id="weight_<%=i%>" >
                         <option value="">Select Weight Unit</option>
-                        <option value="ml">ML</option>
-                        <option value="gram">Gram</option>
-                        <option value="kg">KG</option>
+                        <option value="ml" <% if(productData.inventory[i][k].weight == 'ml'){ %> selected="selected" <% } %> >ML</option>
+                        <option value="gram" <% if(productData.inventory[i][k].weight == 'gram'){ %> selected="selected" <% } %> >Gram</option>
+                        <option value="kg" <% if(productData.inventory[i][k].weight == 'kg'){ %> selected="selected" <% } %> >KG</option>
                       </select>
                     </div>
-                    <div class="form-group col-md-3">
+                    <div class="form-group col-md-3 store-div-<%=i%>-<%=k%>">
                       <label for="price">Price</label>
-                      <input type="text" name="price_<%=i%>" class="form-control" id="price_<%=i%>" placeholder="Price">
+                      <input type="text" name="price_<%=i%>" class="form-control" id="price_<%=i%>" placeholder="Price" value="<%=productData.inventory[i][k].price%>">
                     </div>  
-                    <div class="form-group col-md-2">
+                    <div class="form-group col-md-2 store-div-<%=i%>-<%=k%>">
                       <label for="default">Default</label>
-                      <input type="radio" name="default_<%=i%>" id="default_<%=i%>" class="form-control" value="<%=j++%>">
+                      <input type="radio" name="default_<%=i%>" id="default_<%=i%>" class="form-control" value="<%=j++%>"  <% if(productData.inventory[i][k].default == true){ %> checked="checked" <% } %> >
                     </div>  
-                  </div>
+                    <% if(k != 0){ %>
+                    <div class="form-group col-md-1 store-div-<%=i%>-<%=k%>">
+                      <a class="deleteStoreField" href="javascript:void(0);"" data-storeno="<%=i%>" data-index="<%=k%>">Remove</a>
+                    </div>
+                    <% } %>
+                  <% } %>
+                </div>
                   <div class="col-md-12"> 
                     <button type="button" class="btn btn-primary pull-right addMoreStoreFields" data-storeno="<%=i%>" data-index="<%=j%>">Add More</button>
                   </div>
@@ -146,17 +153,20 @@
                   <div class="form-row">
                     <div class="form-group col-md-4">
                       <label for="thumbnail">Thumbnail</label>
-                      <input type="file" name="thumbnail">       
+                      <input type="file" name="thumbnail_<%=i%>">   
+                      <input type="hidden" name="thumbnailhidden" value="<%=productData.image.thumbnail[i]%>" >      
                       <p class="text-warning"> Image size should be 100 X 100</p>
                     </div>  
                     <div class="form-group col-md-4">
                       <label for="small">Small</label>
-                      <input type="file" name="small">       
+                      <input type="file" name="small_<%=i%>">    
+                      <input type="hidden" name="smallhidden" value="<%=productData.image.small[i]%>" >       
                       <p class="text-warning"> Image size should be 260 X 260</p>
                     </div>  
                     <div class="form-group col-md-4">
                       <label for="large">Large</label>
-                      <input type="file" name="large">       
+                      <input type="file" name="large_<%=i%>"> 
+                      <input type="hidden" name="largehidden" value="<%=productData.image.large[i]%>" >       
                       <p class="text-warning"> Image size should be 450 X 450</p>
                     </div>  
                   </div>
@@ -177,13 +187,51 @@
     </section>
   </div>
   <script>
+    $('.addMoreStoreFields').click(function(){
+      var storeno = $(this).data('storeno');
+      var index = $(this).data('index');
+      var html = `<div class="form-group col-md-3 store-div-`+storeno+`-`+index+`">
+                    <label for="label_`+storeno+`">Label</label>
+                    <input type="text" name="label_`+storeno+`" class="form-control" id="label_`+storeno+`" placeholder="Label">
+                  </div>  
+                  <div class="form-group col-md-3 store-div-`+storeno+`-`+index+`">
+                    <label for="weight" >Weight Unit</label>
+                    <select name="weight_`+storeno+`" class="form-control" id="weight_`+storeno+`" >
+                      <option value="">Select Weight Unit</option>
+                      <option value="ml">ML</option>
+                      <option value="gram">Gram</option>
+                      <option value="kg">KG</option>
+                    </select>
+                  </div>
+                  <div class="form-group col-md-3 store-div-`+storeno+`-`+index+`">
+                    <label for="price">Price</label>
+                    <input type="text" name="price_`+storeno+`" class="form-control" id="price_`+storeno+`" placeholder="Price">
+                  </div>  
+                  <div class="form-group col-md-2 store-div-`+storeno+`-`+index+`">
+                    <label for="default">Default</label>
+                    <input type="radio" name="default_`+storeno+`" id="default_`+storeno+`" class="form-control" value="`+index+`">
+                  </div>
+                  <div class="form-group col-md-1 store-div-`+storeno+`-`+index+`">
+                    <a class="deleteStoreField" href="javascript:void(0);"" data-storeno="`+storeno+`" data-index="`+index+`">Remove</a>
+                  </div>`;
+      $('#storeField_'+storeno+':last').append(html);
+      index++;
+      $(this).data('index', index);
+    });
+
+ 
+    $('body').on("click", ".deleteStoreField", function () {
+      var index = $(this).attr("data-index");
+      var storeno = $(this).attr("data-storeno");
+      $(".store-div-"+storeno+"-"+index).remove();
+    });
     $(document).on("click",".edit_button",function(){
       var regex = new RegExp(/^[a-z]{2}[0-9]{7}$/i);
-      var textvalue = $("#stock_keeping").val();
+      var textvalue = $("#stock").val();
         if (regex.test(textvalue)) {
         } else {
             alert("Please Enter stock keeping Unit Two Character and Seven Number This Formate(  LB1234567 )");
-            $("#stock_keeping").focus();
+            $("#stock").focus();
             return false;
         }
     });

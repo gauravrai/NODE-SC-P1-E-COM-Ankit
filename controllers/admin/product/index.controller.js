@@ -259,18 +259,135 @@ module.exports = {
 				offer : req.body.offer,
 				discount: req.body.discount,
 				stock : req.body.stock ? req.body.stock.toUpperCase() : '',
-				discription : req.body.description,
+				description : req.body.description,
 				featured : req.body.featured == 'on' ? true : false,
 				outOfStock : req.body.outOfStock == 'on' ? true : false
 			};
-			// await Area.update(
-			// 	{ _id: mongoose.mongo.ObjectId(req.body.id) },
-			// 	areaData, function(err,data){
-			// 		if(err){console.log(err)}
-			// 		req.flash('msg', {msg:'Area has been Updated Successfully', status:false});	
-			// 		res.redirect(config.constant.ADMINCALLURL+'/manage_area');
-			// 		req.flash({});	
-			// })
+			let store = req.body.store;
+			let storeId = req.body.storeId;
+			let inventory = [];
+			for (let i = 0; i < store; i++) {
+				let labelArr = req.body['label_'+i];
+				let weightArr = req.body['weight_'+i];
+				let priceArr = req.body['price_'+i];
+				let defaultArr = req.body['default_'+i];
+				let storeData = [];
+				for (let j = 0; j < labelArr.length; j++) {
+					if(labelArr[j] != '' && weightArr[j] != '' && priceArr[j] != '')
+					{
+						let storeFieldObj = {
+							storeId: mongoose.mongo.ObjectID(storeId[i]),
+							label : labelArr[j],
+							weight : weightArr[j],
+							price : priceArr[j],
+							default : defaultArr == j ? true : false
+						};
+						storeData.push(storeFieldObj);
+					}
+				}
+				inventory.push(storeData);
+			}
+			productData.inventory = inventory;
+			if(Object.keys(req.files).length !== 0)
+			{
+				let imageLength = req.body.imageLength;
+				let thumbnailArr = [];
+				let smallArr = [];
+				let largeArr = [];
+				for (let i = 0; i <= imageLength.length; i++) {
+					let thumbnail = req.files['thumbnail_'+i];
+					let small = req.files['small_'+i];
+					let large = req.files['large_'+i];
+					new Promise(function(resolve, reject) { 
+						if(typeof thumbnail != 'undefined')
+						{
+							let thumbnailPath = config.constant.THUMBNAILUPLOADPATH;
+							let thumbnailName = Date.now()+'_'+thumbnail.name;
+							thumbnailArr[i] = thumbnailName;
+							thumbnail.mv(thumbnailPath+thumbnailName, function(err,data) {
+								if (err) { 
+									console.log(err)
+									reject(err); 
+								} else {  
+									resolve();
+								}
+							})
+						}
+						else
+						{
+							thumbnailArr[i] = req.body.thumbnailhidden[i];
+							resolve();
+						}
+					}).then(async () => { 
+						new Promise(function(resolve1, reject1) { 
+							if(typeof small != 'undefined')
+							{
+								let smallPath = config.constant.SMALLUPLOADPATH;
+								let smallName = Date.now()+'_'+small.name;
+								smallArr[i] = smallName;
+								small.mv(smallPath+smallName, function(err,data) {
+									if (err) { 
+										console.log(err)
+										reject1(err); 
+									} else {  
+										resolve1();
+									}
+								})
+							}
+							else
+							{
+								smallArr[i] = req.body.smallhidden[i];
+								resolve1();
+							}
+						}).then(async () => { 
+							new Promise(function(resolve2, reject2) {
+								if(typeof large != 'undefined')
+								{
+									let largePath = config.constant.LARGEUPLOADPATH;
+									let largeName = Date.now()+'_'+large.name;
+									largeArr[i] = largeName;
+									large.mv(largePath+largeName, function(err,data) {
+										if (err) { 
+											console.log(err)
+											reject2(err); 
+										} else {  
+											resolve2();
+										}
+									})
+								}
+								else
+								{
+									largeArr[i] = req.body.largehidden[i];
+									resolve2();
+								}
+							}).then(async () => {
+								let data = {}
+								let image = {
+									'thumbnail' : thumbnailArr,
+									'small' : smallArr,
+									'large' : largeArr
+								}
+								data.image = image;
+								await Product.updateOne(
+									{ _id: mongoose.mongo.ObjectId(req.body.id) },
+									data, function(err,data){
+										if(err){console.log(err)}
+								})
+							});
+						})
+					}).catch((err) => {
+						console.log(err);
+					});
+				}
+			}
+			await Product.update(
+				{ _id: mongoose.mongo.ObjectId(req.body.id) },
+				productData, function(err,data){
+					if(err){console.log(err)}
+					req.flash('msg', {msg:'Product has been Updated Successfully', status:false});	
+					res.redirect(config.constant.ADMINCALLURL+'/manage_product');
+					req.flash({});	
+			})
 		}		
     },
 

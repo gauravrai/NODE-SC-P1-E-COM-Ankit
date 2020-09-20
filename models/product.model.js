@@ -27,6 +27,9 @@ let ProductSchema = new Schema({
     brandId:{
         type: ObjectId
     },
+    price:{
+        type: Number
+    },
     featured: {
         type: Boolean,
     },
