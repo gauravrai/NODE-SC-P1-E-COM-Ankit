@@ -1,42 +1,87 @@
 const model  = require('../../../models/index.model');
 const config = require('../../../config/index');
+const mongoose = require('mongoose');
 const Product     = model.product;
-const THUMNAILPATH = config.constant.THUMBNAILUPLOADPATH;
-const SMALLPATH = config.constant.SMALLUPLOADPATH;
-const LARGEPATH = config.constant.LARGEUPLOADPATH;
-
+const { validationResult } = require('express-validator');
 module.exports = {
 	
     // @route       GET api/v1/product
     // @description Get all product
     // @access      Public
 	productList:async function(req,res){
-        var productData = [];
-        //var productData = await Product.find({status:true, deletedAt: 0},{}).sort( { name : 1} );
-        var productData = await Product.aggregate([ 
+        const errors = validationResult(req)
+        if(!errors.isEmpty()){
+            return res.status(400).json({errors: errors.array()})
+        }
+        try{
+            const { filter, categoryId, maxPrice, minPrice, brandId, sortName, sortValue } = req.body;
+            let pageno = req.body.pageno ? parseInt(req.body.pageno) : config.constant.PAGENO;
+            let limit = config.constant.LIMIT;
+            let skip = (pageno-1) * limit;
+            let condition = {status:true, deletedAt: 0};
+            if(parseInt(filter) == 1)
             {
-                $addFields: {
-                    "thumbnail" :THUMNAILPATH,
-                    "small" : SMALLPATH,
-                    "large" : LARGEPATH
+                if(categoryId)
+                {
+                    condition.categoryId = mongoose.mongo.ObjectId(categoryId);
                 }
-            },
-            {
-                $project: { 
-                    createdAt:0,
-                    updatedAt:0
+                if(minPrice && maxPrice)
+                {
+                    condition.inventory = { price: { $gte: parseInt(minPrice),$lte: parseInt(maxPrice) } };
                 }
-            },
-            {
-                $match : {status:true, deletedAt: 0}
+                if(brandId)
+                {
+                    condition.brandId = mongoose.mongo.ObjectId(brandId);
+                }
             }
-            
-        ]).sort( { name : 1} );
-
-        if(productData.length>0) {
-            return res.status(200).json({ data: productData, status: 'success', message: "Data fetched successfully!!" });
-        } else {
-            return res.status(200).json({ data: productData, status: 'success', message: "Data No Found!!" });
+            let sort = {};
+            if(sortName)
+            {
+                sort[sortName] = parseInt(sortValue);
+            }else{
+                sort = { name: 1 };
+            }
+            let productData = await Product.aggregate([ 
+                {
+                    $match : condition
+                },
+                {
+                    $addFields: {
+                        "thumbnailPath" : config.constant.THUMNAILPATH,
+                        "smallPath" : config.constant.SMALLPATH,
+                        "largePath" : config.constant.LARGEPATH
+                    }
+                },
+                {
+                    $project: { 
+                        createdAt:0,
+                        updatedAt:0
+                    }
+                }
+            ]).sort(sort).skip(skip).limit(limit);
+            if(productData.length>0) {
+                return res.status(200).json({ 
+                                            data: productData, 
+                                            status: 'success', 
+                                            message: "Data fetched successfully!!" 
+                                        });
+            } else {
+                return res.status(400).json({ 
+                                            data: [], 
+                                            status: 'error', 
+                                            message: "No Data Found!!" 
+                                        });
+            } 
+        }
+        catch (e){
+            console.log(e)
+            return res.status(500).json({ 
+                                    data: [],  
+                                    status: 'error', 
+                                    errors: [{
+                                        msg: "Internal server error"
+                                    }]
+                                });
         }
         
 		

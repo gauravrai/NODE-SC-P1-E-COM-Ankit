@@ -13,9 +13,13 @@ module.exports = {
 	COMPANYLOGO:SITEURL+"", 
 	JWT_SECRET :"local_BnaiyaSecret",
 	  
-	LIMIT: 10,	  
+	PAGENO: 1,	  
+	LIMIT: 2,	  
 	PRODUCTIMAGELENGTH: 2,	  
 	THUMBNAILUPLOADPATH: './public/uploads/product/thumbnail/',	  
 	SMALLUPLOADPATH:  './public/uploads/product/small/', 
 	LARGEUPLOADPATH:  './public/uploads/product/large/',
+	THUMBNAILSHOWPATH: SITEURL+'/uploads/product/thumbnail/',	  
+	SMALLSHOWPATH:  SITEURL+'/uploads/product/small/', 
+	LARGESHOWPATH:  SITEURL+'/uploads/product/large/',
 }
