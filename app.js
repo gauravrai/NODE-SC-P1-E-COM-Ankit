@@ -16,8 +16,8 @@ const mwInput = require('./middleware/input');
 const adminRoutes = require('./routes/admin.routes.js');
 const apiRoutes  = require('./routes/api.routes.js');
 const dotenv = require('dotenv').config();
-// const cors = require('cors');  
-// const corsConfig = require('./config/corsConfig');
+const cors = require('cors');  
+const corsConfig = require('./config/corsConfig');
 
 //database connectivity
 //var mongoDB = 'mongodb://localhost:27017/'+process.env.DATABASE;
@@ -31,7 +31,7 @@ var db = mongoose.connection;
 db.on('error', console.error.bind(console, 'MongoDB connection error:'));
 
 /**CROSS enabling config */
-// app.use(cors(corsConfig.corsOptions));
+app.use(cors(corsConfig.corsOptions));
 
 
 //view engine
