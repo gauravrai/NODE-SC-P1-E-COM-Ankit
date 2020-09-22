@@ -14,16 +14,24 @@ module.exports = {
             return res.status(400).json({errors: errors.array()})
         }
         try{
-            const { filter, categoryId, maxPrice, minPrice, brandId, sortName, sortValue } = req.query;
+            const { filter, string, categoryId, subcategoryId, maxPrice, minPrice, brandId, featured, sortName, sortValue } = req.query;
             let pageno = req.query.pageno ? parseInt(req.query.pageno) : config.constant.PAGENO;
             let limit = config.constant.LIMIT;
             let skip = (pageno-1) * limit;
             let condition = {status:true, deletedAt: 0};
             if(parseInt(filter) == 1)
             {
+                if(string)
+                {
+                    condition.string = mongoose.mongo.ObjectId(string);
+                }
                 if(categoryId)
                 {
                     condition.categoryId = mongoose.mongo.ObjectId(categoryId);
+                }
+                if(subcategoryId)
+                {
+                    condition.subcategoryId = mongoose.mongo.ObjectId(subcategoryId);
                 }
                 if(minPrice && maxPrice)
                 {
@@ -31,7 +39,11 @@ module.exports = {
                 }
                 if(brandId)
                 {
-                    condition.brandId = mongoose.mongo.ObjectId(brandId);
+                    condition.brandId = {$in: brandId };
+                }
+                if(featured)
+                {
+                    condition.featured = mongoose.mongo.ObjectId(featured);
                 }
             }
             let sort = {};
