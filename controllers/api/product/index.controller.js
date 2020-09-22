@@ -14,8 +14,8 @@ module.exports = {
             return res.status(400).json({errors: errors.array()})
         }
         try{
-            const { filter, categoryId, maxPrice, minPrice, brandId, sortName, sortValue } = req.body;
-            let pageno = req.body.pageno ? parseInt(req.body.pageno) : config.constant.PAGENO;
+            const { filter, categoryId, maxPrice, minPrice, brandId, sortName, sortValue } = req.query;
+            let pageno = req.query.pageno ? parseInt(req.query.pageno) : config.constant.PAGENO;
             let limit = config.constant.LIMIT;
             let skip = (pageno-1) * limit;
             let condition = {status:true, deletedAt: 0};
