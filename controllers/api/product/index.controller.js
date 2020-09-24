@@ -39,7 +39,12 @@ module.exports = {
                 }
                 if(brandId)
                 {
-                    condition.brandId = {$in: brandId.split(',') };
+                    let brandArr = brandId.split(',');
+                    for (let i = 0; i < brandArr.length; i++) {
+                        brandArr[i] = mongoose.mongo.ObjectId(brandArr[i]);
+                        
+                    }
+                    condition.brandId = {$in: brandArr };
                 }
                 if(featured)
                 {
@@ -112,7 +117,7 @@ module.exports = {
         }
         try{
             var string = req.query.string;
-            var productData = await Product.find({name:new RegExp(string, 'i'),status:true, deletedAt: 0}).sort( { name : 1} );
+            var productData = await Product.find({name:new RegExp(string, 'i'),status:true, deletedAt: 0},{name:1}).sort( { name : 1} ).limit(10);
             if(productData.length>0) {
                 return res.status(200).json({ 
                                             data: productData, 
