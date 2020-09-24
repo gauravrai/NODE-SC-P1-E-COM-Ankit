@@ -23,7 +23,7 @@ module.exports = {
             {
                 if(string)
                 {
-                    condition.string = mongoose.mongo.ObjectId(string);
+                    condition.name = new RegExp(string, 'i');
                 }
                 if(categoryId)
                 {
@@ -39,13 +39,15 @@ module.exports = {
                 }
                 if(brandId)
                 {
-                    condition.brandId = {$in: brandId };
+                    condition.brandId = {$in: brandId.split(',') };
                 }
                 if(featured)
                 {
-                    condition.featured = mongoose.mongo.ObjectId(featured);
+                    condition.featured = featured == 1 ? true : false;
                 }
             }
+            
+            // console.log('condition--------',condition);
             let sort = {};
             if(sortName)
             {
@@ -66,8 +68,10 @@ module.exports = {
                 },
                 {
                     $project: { 
+                        __v:0,
                         createdAt:0,
                         updatedAt:0
+                        // reportedBy: { $arrayElemAt: ['$inventory', 0] } ,
                     }
                 }
             ]).sort(sort).skip(skip).limit(limit);
@@ -98,6 +102,42 @@ module.exports = {
         
 		
     },
+    // @route       GET api/v1/searchproduct
+    // @description Search product
+    // @access      Public
+    searchProduct : async function(req,res){
+        const errors = validationResult(req)
+        if(!errors.isEmpty()){
+            return res.status(400).json({errors: errors.array()})
+        }
+        try{
+            var string = req.query.string;
+            var productData = await Product.find({name:new RegExp(string, 'i'),status:true, deletedAt: 0}).sort( { name : 1} );
+            if(productData.length>0) {
+                return res.status(200).json({ 
+                                            data: productData, 
+                                            status: 'success', 
+                                            message: "Data fetched successfully!!" 
+                                        });
+            } else {
+                return res.status(400).json({ 
+                                            data: [], 
+                                            status: 'error', 
+                                            message: "No Data Found!!" 
+                                        });
+            }
+        }
+        catch (e){
+            console.log(e)
+            return res.status(500).json({ 
+                                    data: [],  
+                                    status: 'error', 
+                                    errors: [{
+                                        msg: "Internal server error"
+                                    }]
+                                });
+        }
+    },
     productListByCatId:async function(req,res){
         var productData = [];
         var catId =  req.body.cat_id;
@@ -120,19 +160,6 @@ module.exports = {
         }
         
     },
-    searchProduct : async function(req,res){
-        var   productName  = req.body.productName;
-        if (productName ==null || productName == '')
-        {
-            return res.status(400).json({ message: "Product Name is Not Empty" });
-        }
-        var productData = await Product.find({name:new RegExp(productName, 'i'),status:true, deletedAt: 0},{}).sort( { name : 1} );
-        if(productData.length>0) {
-            return res.status(200).json({ data: productData, status: 'success', message: "Data fetched successfully!!" });
-        } else {
-            return res.status(200).json({ data: productData, status: 'success', message: "Data No Found!!" });
-        }
-    }
     
     
 
