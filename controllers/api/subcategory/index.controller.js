@@ -14,7 +14,26 @@ module.exports = {
     // @description Get all subcategories
     // @access      Public
 	subCategories:async function(req,res){
-        var subcategoryData = await Subcategory.find({status:true, deletedAt: 0},{name:1,slug:1,_id:1,categoryId:1}).sort( { name : 1} );
+        var subcategoryData = await await Subcategory.aggregate([ 
+            {
+                $match : {status:true, deletedAt: 0}
+            },
+            {
+                $addFields: {
+                    "thumbnailPath" : config.constant.SUBCATEGORYTHUMNAILPATH,
+                    "smallPath" : config.constant.SUBCATEGORYSMALLPATH,
+                    "largePath" : config.constant.SUBCATEGORYLARGEPATH
+                }
+            },
+            {
+                $project: { 
+                    __v:0,
+                    createdAt:0,
+                    updatedAt:0
+                    // reportedBy: { $arrayElemAt: ['$inventory', 0] } ,
+                }
+            }
+        ]).sort( { name : 1} );
         // console.log(categoryData);
         // console.log(stringify(categoryData));return false;
         // var categoryData = {name:"chandan",email:"chandan@gmail.com"};

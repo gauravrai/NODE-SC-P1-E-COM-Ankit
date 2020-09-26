@@ -2,6 +2,7 @@ const model  = require('../../../models/index.model');
 const config = require('../../../config/index');
 const mongoose = require('mongoose');
 const Product     = model.product;
+const Requestproduct = model.request_product;
 const { validationResult } = require('express-validator');
 module.exports = {
 	
@@ -105,6 +106,64 @@ module.exports = {
         
 		
     },
+    // @route       GET api/v1/productDetail
+    // @description Get all productDetail
+    // @access      Public
+	productDetail : async function(req,res){
+        const errors = validationResult(req)
+        if(!errors.isEmpty()){
+            return res.status(400).json({errors: errors.array()})
+        }
+        try{
+            const { productId } = req.query;
+            let condition = {status:true, deletedAt: 0};
+            condition.id = mongoose.mongo.ObjectId(productId);
+            let productData = await Product.aggregate([ 
+                {
+                    $match : condition
+                },
+                {
+                    $addFields: {
+                        "thumbnailPath" : config.constant.PRODUCTTHUMNAILPATH,
+                        "smallPath" : config.constant.PRODUCTSMALLPATH,
+                        "largePath" : config.constant.PRODUCTLARGEPATH
+                    }
+                },
+                {
+                    $project: { 
+                        __v:0,
+                        createdAt:0,
+                        updatedAt:0
+                    }
+                }
+            ]).sort(sort).skip(skip).limit(limit);
+            if(productData.length>0) {
+                return res.status(200).json({ 
+                                            data: productData, 
+                                            status: 'success', 
+                                            message: "Data fetched successfully!!" 
+                                        });
+            } else {
+                return res.status(400).json({ 
+                                            data: [], 
+                                            status: 'error', 
+                                            message: "No Data Found!!" 
+                                        });
+            } 
+        }
+        catch (e){
+            console.log(e)
+            return res.status(500).json({ 
+                                    data: [],  
+                                    status: 'error', 
+                                    errors: [{
+                                        msg: "Internal server error"
+                                    }]
+                                });
+        }
+        
+		
+    },
     // @route       GET api/v1/searchproduct
     // @description Search product
     // @access      Public
@@ -151,6 +210,7 @@ module.exports = {
         }
         try{
             let userRequestData = {
+                userId : req.body.userId,
 				name : req.body.name,
 				email : req.body.email,
 				mobile : req.body.mobile,
@@ -158,12 +218,12 @@ module.exports = {
 				pincode : req.body.pincode,
 				description : req.body.description,
 			};
-			let brand = new Brand(userRequestData);
-			brand.save(function(err, data){
+			let requestproduct = new Requestproduct(userRequestData);
+			requestproduct.save(function(err, data){
 				return res.status(200).json({ 
-                    data: productData, 
+                    data: userRequestData, 
                     status: 'success', 
-                    message: "Request send successfully!!" 
+                    message: "Request for product send successfully!!" 
                 });	
 			})
         }
@@ -177,29 +237,7 @@ module.exports = {
                                     }]
                                 });
         }
-    },
-    productListByCatId:async function(req,res){
-        var productData = [];
-        var catId =  req.body.cat_id;
-        var productData = await Product.find({cate_id:catId,status:true, deletedAt: 0},{}).sort( { name : 1} );
-        if(productData.length>0) {
-            return res.status(200).json({ data: productData, status: 'success', message: "Data fetched successfully!!" });
-        } else {
-            return res.status(200).json({ data: productData, status: 'success', message: "Data No Found!!" });
-        }
-        
-    },
-    productListBySubCatId: async function(req,res){
-        var productData = [];
-        var subcatId =  req.body.sub_catid;
-        var productData = await Product.find({s_cate_id:subcatId,status:true, deletedAt: 0},{}).sort( { name : 1} );
-        if(productData.length>0) {
-            return res.status(200).json({ data: productData, status: 'success', message: "Data fetched successfully!!" });
-        } else {
-            return res.status(200).json({ data: productData, status: 'success', message: "Data No Found!!" });
-        }
-        
-    },
+    }
     
     
 

@@ -14,7 +14,26 @@ module.exports = {
     // @description Get all categories
     // @access      Public
 	categories:async function(req,res){
-        var categoryData = await Category.find({status:true, deletedAt: 0},{name:1,slug:1,_id:1}).sort( { name : 1} );
+        var categoryData = await Category.aggregate([ 
+            {
+                $match : {status:true, deletedAt: 0}
+            },
+            {
+                $addFields: {
+                    "thumbnailPath" : config.constant.CATEGORYTHUMNAILPATH,
+                    "smallPath" : config.constant.CATEGORYSMALLPATH,
+                    "largePath" : config.constant.CATEGORYLARGEPATH
+                }
+            },
+            {
+                $project: { 
+                    __v:0,
+                    createdAt:0,
+                    updatedAt:0
+                    // reportedBy: { $arrayElemAt: ['$inventory', 0] } ,
+                }
+            }
+        ]).sort( { name : 1} );
         // console.log(categoryData);
         // console.log(stringify(categoryData));return false;
         // var categoryData = {name:"chandan",email:"chandan@gmail.com"};

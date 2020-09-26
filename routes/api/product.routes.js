@@ -3,7 +3,14 @@ var config = require('../../config/index');
 const { check } = require('express-validator')
 
 module.exports = function(router) {
-    router.get(config.constant.APIURL+'/product', indexController.productList);
+	router.get(config.constant.APIURL+'/product', indexController.productList);
+	router.get(
+		config.constant.APIURL+'/productDetail', 
+		[
+		    check('productId', 'Product id is required').not().isEmpty()
+		], 
+		indexController.productDetail
+	); 
     router.get(
 		config.constant.APIURL+'/searchproduct', 
 		[
@@ -23,6 +30,4 @@ module.exports = function(router) {
 		], 
 		indexController.userRequestForProduct
 	); 
-    router.get(config.constant.APIURL+'/getproductBycat', indexController.productListByCatId);
-    router.get(config.constant.APIURL+'/getproductBySubcat', indexController.productListBySubCatId);
 }
