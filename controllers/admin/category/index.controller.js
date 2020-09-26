@@ -91,13 +91,60 @@ module.exports = {
 				slug : req.body.slug,
 				order: req.body.order
 			};
-			let categoryobj = new Category(categoryData);
-			categoryobj.save(function(err, data){
-				if(err){console.log(err)}
-				req.flash('msg', {msg:'Category has been Created Successfully', status:false});	
-				res.redirect(config.constant.ADMINCALLURL+'/manage_category');
-				req.flash({});	
-			})
+			let  image = {};
+			new Promise(function(resolve, reject) { 
+				let thumbnailPath = config.constant.CATEGORYTHUMBNAILUPLOADPATH;
+				let thumbnailName = Date.now()+'_'+req.files.thumbnail.name;
+                image.thumbnail = thumbnailName;
+                req.files.thumbnail.mv(thumbnailPath+thumbnailName, function(err,data) {
+                    if (err) { 
+                        console.log(err)
+                        reject(err); 
+                    } else {  
+                        resolve();
+                    }
+                })
+			}).then(async () => { 
+				new Promise(function(resolve1, reject1) { 
+					let smallPath = config.constant.CATEGORYSMALLUPLOADPATH;
+                    let smallName = Date.now()+'_'+req.files.small.name;
+                    image.small = smallName;
+                    req.files.small.mv(smallPath+smallName, function(err,data) {
+                        if (err) { 
+                            console.log(err)
+                            reject1(err); 
+                        } else {  
+                            resolve1();
+                        }
+                    })
+				}).then(async () => { 
+					new Promise(function(resolve2, reject2) {
+						let largePath = config.constant.CATEGORYLARGEUPLOADPATH;
+                        let largeName = Date.now()+'_'+req.files.large.name;
+                        image.large = largeName;
+                        req.files.large.mv(largePath+largeName, function(err,data) {
+                            if (err) { 
+                                console.log(err)
+                                reject2(err); 
+                            } else {  
+                                resolve2();
+                            }
+                        })
+					}).then(async () => { 
+						categoryData.image = image;
+						console.log(categoryData);
+						let categoryobj = new Category(categoryData);
+						categoryobj.save(function(err, data){
+							if(err){console.log(err)}
+							req.flash('msg', {msg:'Category has been Created Successfully', status:false});	
+							res.redirect(config.constant.ADMINCALLURL+'/manage_category');
+							req.flash({});	
+						})
+					})
+				})
+			}).catch((err) => {
+				console.log(err);
+			});
 		}		
 	},
 
@@ -115,6 +162,83 @@ module.exports = {
 				slug : req.body.slug,
 				order: req.body.order
 			};
+			if(Object.keys(req.files).length !== 0)
+			{
+				let image = {}
+				new Promise(function(resolve, reject) { 
+					if(typeof req.files.thumbnail != 'undefined')
+					{
+						let thumbnailPath = config.constant.CATEGORYTHUMBNAILUPLOADPATH;
+						let thumbnailName = Date.now()+'_'+req.files.thumbnail.name;
+						image.thumbnail = thumbnailName;
+						req.files.thumbnail.mv(thumbnailPath+thumbnailName, function(err,data) {
+							if (err) { 
+								console.log(err)
+								reject(err); 
+							} else {  
+								resolve();
+							}
+						})
+					}
+					else
+					{
+						image.thumbnail = req.body.thumbnailhidden
+					}
+				}).then(async () => { 
+					new Promise(function(resolve1, reject1) { 
+						if(typeof req.files.small != 'undefined')
+						{
+							let smallPath = config.constant.CATEGORYSMALLUPLOADPATH;
+							let smallName = Date.now()+'_'+req.files.small.name;
+							image.small = smallName;
+							req.files.small.mv(smallPath+smallName, function(err,data) {
+								if (err) { 
+									console.log(err)
+									reject1(err); 
+								} else {  
+									resolve1();
+								}
+							})
+						}
+						else
+						{
+							image.small = req.body.smallhidden
+						}
+					}).then(async () => { 
+						new Promise(function(resolve2, reject2) {
+							if(typeof req.files.large != 'undefined')
+							{
+								let largePath = config.constant.CATEGORYLARGEUPLOADPATH;
+								let largeName = Date.now()+'_'+req.files.large.name;
+								image.large = largeName;
+								req.files.large.mv(largePath+largeName, function(err,data) {
+									if (err) { 
+										console.log(err)
+										reject2(err); 
+									} else {  
+										resolve2();
+									}
+								})
+							}
+							else
+							{
+								image.large = req.body.largehidden
+							}
+						}).then(async () => { 
+							let data = {
+								image : image
+							}
+							await Category.updateOne(
+								{ _id: mongoose.mongo.ObjectId(req.body.id) },
+								data, function(err,data){
+									if(err){console.log(err)}
+							})
+						})
+					})
+				}).catch((err) => {
+					console.log(err);
+				});
+			}
 			await Category.update(
 				{ _id: mongoose.mongo.ObjectId(req.body.id) },
 				categoryData, function(err,data){

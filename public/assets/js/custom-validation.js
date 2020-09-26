@@ -94,14 +94,31 @@ $(document).ready(function () {
             slug: {
                 required: true,
             },
+            thumbnail: {
+                required: true,
+            },
+            small: {
+                required: true,
+            },
+            large: {
+                required: true,
+            },
         },
         messages: {
             name: {
                 required: "Please enter a Name"
             },
             slug: {
-                required: "Please enter a Slug",
-                remote: "Slug already taken"
+                required: "Please enter a Slug"
+            },
+            thumbnail: {
+                required: "Please select thumbnail image"
+            },
+            small: {
+                required: "Please select small image"
+            },
+            large: {
+                required: "Please select large image"
             }
         },
         errorElement: 'span',
@@ -128,6 +145,15 @@ $(document).ready(function () {
             slug: {
                 required: true,   
             },
+            thumbnail: {
+                required: true,
+            },
+            small: {
+                required: true,
+            },
+            large: {
+                required: true,
+            },
         },
         messages: {
             categoryId: {
@@ -139,6 +165,15 @@ $(document).ready(function () {
             slug: {
                 required: "Please enter a Slug",
                 remote: "Slug already taken"
+            },
+            thumbnail: {
+                required: "Please select thumbnail image"
+            },
+            small: {
+                required: "Please select small image"
+            },
+            large: {
+                required: "Please select large image"
             }
         },
         errorElement: 'span',

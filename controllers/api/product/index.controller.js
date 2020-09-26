@@ -51,8 +51,6 @@ module.exports = {
                     condition.featured = featured == 1 ? true : false;
                 }
             }
-            
-            // console.log('condition--------',condition);
             let sort = {};
             if(sortName)
             {
@@ -66,9 +64,9 @@ module.exports = {
                 },
                 {
                     $addFields: {
-                        "thumbnailPath" : config.constant.THUMNAILPATH,
-                        "smallPath" : config.constant.SMALLPATH,
-                        "largePath" : config.constant.LARGEPATH
+                        "thumbnailPath" : config.constant.PRODUCTTHUMNAILPATH,
+                        "smallPath" : config.constant.PRODUCTSMALLPATH,
+                        "largePath" : config.constant.PRODUCTLARGEPATH
                     }
                 },
                 {
@@ -131,6 +129,43 @@ module.exports = {
                                             message: "No Data Found!!" 
                                         });
             }
+        }
+        catch (e){
+            console.log(e)
+            return res.status(500).json({ 
+                                    data: [],  
+                                    status: 'error', 
+                                    errors: [{
+                                        msg: "Internal server error"
+                                    }]
+                                });
+        }
+    },
+    // @route       GET api/v1/userRequestForProduct
+    // @description User request for product
+    // @access      Public
+    userRequestForProduct : async function(req,res){
+        const errors = validationResult(req)
+        if(!errors.isEmpty()){
+            return res.status(400).json({errors: errors.array()})
+        }
+        try{
+            let userRequestData = {
+				name : req.body.name,
+				email : req.body.email,
+				mobile : req.body.mobile,
+				address : req.body.address,
+				pincode : req.body.pincode,
+				description : req.body.description,
+			};
+			let brand = new Brand(userRequestData);
+			brand.save(function(err, data){
+				return res.status(200).json({ 
+                    data: productData, 
+                    status: 'success', 
+                    message: "Request send successfully!!" 
+                });	
+			})
         }
         catch (e){
             console.log(e)

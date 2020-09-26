@@ -12,6 +12,9 @@ let CategorySchema = new Schema({
     order: {
         type: Number
     },
+    image: {
+        type: Object
+    },
     status: {
         type: Boolean,
         default : true

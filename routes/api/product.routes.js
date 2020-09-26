@@ -11,8 +11,18 @@ module.exports = function(router) {
 		], 
 		indexController.searchProduct
 	); 
+    router.get(
+		config.constant.APIURL+'/userRequestForProduct', 
+		[
+		    check('name', 'Name is required').not().isEmpty(),
+		    check('email', 'Email is required').not().isEmpty().isEmail(),
+		    check('mobile', 'Mobile is required').not().isEmpty(),
+		    check('address', 'Address is required').not().isEmpty(),
+		    check('pincode', 'Pincode is required').not().isEmpty(),
+		    check('description', 'Description is required').not().isEmpty()
+		], 
+		indexController.userRequestForProduct
+	); 
     router.get(config.constant.APIURL+'/getproductBycat', indexController.productListByCatId);
     router.get(config.constant.APIURL+'/getproductBySubcat', indexController.productListBySubCatId);
-
-    
 }

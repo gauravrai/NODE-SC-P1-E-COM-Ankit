@@ -129,17 +129,14 @@ module.exports = {
 				let defaultArr = req.body['default_'+i];
 				let storeData = [];
 				for (let j = 0; j < labelArr.length; j++) {
-					if(labelArr[j] != '' && weightArr[j] != '' && priceArr[j] != '')
-					{
-						let storeFieldObj = {
-							storeId: mongoose.mongo.ObjectID(storeId[i]),
-							label : labelArr[j],
-							weight : weightArr[j],
-							price : priceArr[j],
-							default : defaultArr == j ? true : false
-						};
-						storeData.push(storeFieldObj);
-					}
+					let storeFieldObj = {
+						storeId: mongoose.mongo.ObjectID(storeId[i]),
+						label : labelArr[j],
+						weight : weightArr[j],
+						price : priceArr[j],
+						default : defaultArr == j ? true : false
+					};
+					storeData.push(storeFieldObj);
 				}
 				inventory.push(storeData);
 			}
@@ -161,7 +158,7 @@ module.exports = {
 			new Promise(function(resolve, reject) { 
 				let thumbnailImage = [];
 				let i = 0;
-				let thumbnailPath = config.constant.THUMBNAILUPLOADPATH;
+				let thumbnailPath = config.constant.PRODUCTTHUMBNAILUPLOADPATH;
 				async.forEach(thumbnailArr, function(thumbnail, callback) {
 					let thumbnailName = Date.now()+'_'+thumbnail.name;
 					thumbnailImage[i++] = thumbnailName;
@@ -182,7 +179,7 @@ module.exports = {
 				new Promise(function(resolve1, reject1) { 
 					let smallImage = [];
 					let i = 0;
-					let smallPath = config.constant.SMALLUPLOADPATH;
+					let smallPath = config.constant.PRODUCTSMALLUPLOADPATH;
 					async.forEach(smallArr, function(small, callback) {
 						let smallName = Date.now()+'_'+small.name;
 						smallImage[i++] = smallName;
@@ -203,7 +200,7 @@ module.exports = {
 					new Promise(function(resolve2, reject2) {
 						let largeImage = [];
 						let i = 0;
-						let largePath = config.constant.LARGEUPLOADPATH;
+						let largePath = config.constant.PRODUCTLARGEUPLOADPATH;
 						async.forEach(largeArr, function(large, callback) {
 							let largeName = Date.now()+'_'+large.name;
 							largeImage[i++] = largeName;
@@ -301,7 +298,7 @@ module.exports = {
 					new Promise(function(resolve, reject) { 
 						if(typeof thumbnail != 'undefined')
 						{
-							let thumbnailPath = config.constant.THUMBNAILUPLOADPATH;
+							let thumbnailPath = config.constant.PRODUCTTHUMBNAILUPLOADPATH;
 							let thumbnailName = Date.now()+'_'+thumbnail.name;
 							thumbnailArr[i] = thumbnailName;
 							thumbnail.mv(thumbnailPath+thumbnailName, function(err,data) {
@@ -322,7 +319,7 @@ module.exports = {
 						new Promise(function(resolve1, reject1) { 
 							if(typeof small != 'undefined')
 							{
-								let smallPath = config.constant.SMALLUPLOADPATH;
+								let smallPath = config.constant.PRODUCTSMALLUPLOADPATH;
 								let smallName = Date.now()+'_'+small.name;
 								smallArr[i] = smallName;
 								small.mv(smallPath+smallName, function(err,data) {
@@ -343,7 +340,7 @@ module.exports = {
 							new Promise(function(resolve2, reject2) {
 								if(typeof large != 'undefined')
 								{
-									let largePath = config.constant.LARGEUPLOADPATH;
+									let largePath = config.constant.PRODUCTLARGEUPLOADPATH;
 									let largeName = Date.now()+'_'+large.name;
 									largeArr[i] = largeName;
 									large.mv(largePath+largeName, function(err,data) {
