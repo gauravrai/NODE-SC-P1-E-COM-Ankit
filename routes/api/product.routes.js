@@ -18,9 +18,10 @@ module.exports = function(router) {
 		], 
 		indexController.searchProduct
 	); 
-    router.get(
+    router.post(
 		config.constant.APIURL+'/userRequestForProduct', 
 		[
+		    check('productId', 'Product Id is required').not().isEmpty(),
 		    check('name', 'Name is required').not().isEmpty(),
 		    check('email', 'Email is required').not().isEmpty().isEmail(),
 		    check('mobile', 'Mobile is required').not().isEmpty(),

@@ -211,6 +211,7 @@ module.exports = {
         try{
             let userRequestData = {
                 userId : req.body.userId,
+                productId : req.body.productId,
 				name : req.body.name,
 				email : req.body.email,
 				mobile : req.body.mobile,

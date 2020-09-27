@@ -6,6 +6,9 @@ let RequestProductSchema = new Schema({
     userId: {
         type: ObjectId
     },
+    productId: {
+        type: ObjectId
+    },
     name: {
         type: String
     },
