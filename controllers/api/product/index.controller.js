@@ -117,7 +117,7 @@ module.exports = {
         try{
             const { productId } = req.query;
             let condition = {status:true, deletedAt: 0};
-            condition.id = mongoose.mongo.ObjectId(productId);
+            condition._id = mongoose.mongo.ObjectId(productId);
             let productData = await Product.aggregate([ 
                 {
                     $match : condition
