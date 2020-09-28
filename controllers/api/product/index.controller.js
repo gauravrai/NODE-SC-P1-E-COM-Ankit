@@ -136,7 +136,7 @@ module.exports = {
                         updatedAt:0
                     }
                 }
-            ]).sort(sort).skip(skip).limit(limit);
+            ]);
             if(productData.length>0) {
                 return res.status(200).json({ 
                                             data: productData, 
