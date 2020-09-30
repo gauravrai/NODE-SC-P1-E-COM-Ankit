@@ -65,9 +65,9 @@ module.exports = {
                 },
                 {
                     $addFields: {
-                        "thumbnailPath" : config.constant.PRODUCTTHUMNAILPATH,
-                        "smallPath" : config.constant.PRODUCTSMALLPATH,
-                        "largePath" : config.constant.PRODUCTLARGEPATH
+                        "thumbnailPath" : config.constant.PRODUCTTHUMBNAILSHOWPATH,
+                        "smallPath" : config.constant.PRODUCTSMALLSHOWPATH,
+                        "largePath" : config.constant.PRODUCTLARGESHOWPATH
                     }
                 },
                 {
@@ -124,9 +124,9 @@ module.exports = {
                 },
                 {
                     $addFields: {
-                        "thumbnailPath" : config.constant.PRODUCTTHUMNAILPATH,
-                        "smallPath" : config.constant.PRODUCTSMALLPATH,
-                        "largePath" : config.constant.PRODUCTLARGEPATH
+                        "thumbnailPath" : config.constant.PRODUCTTHUMBNAILSHOWPATH,
+                        "smallPath" : config.constant.PRODUCTSMALLSHOWPATH,
+                        "largePath" : config.constant.PRODUCTLARGESHOWPATH
                     }
                 },
                 {

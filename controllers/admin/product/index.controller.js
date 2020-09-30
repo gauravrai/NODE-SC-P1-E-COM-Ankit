@@ -115,7 +115,7 @@ module.exports = {
 				offer : req.body.offer,
 				discount: req.body.discount,
 				stock : req.body.stock ? req.body.stock.toUpperCase() : '',
-				discription : req.body.description,
+				description : req.body.description,
 				featured : req.body.featured == 'on' ? true : false,
 				outOfStock : req.body.outOfStock == 'on' ? true : false
 			};
@@ -128,13 +128,30 @@ module.exports = {
 				let priceArr = req.body['price_'+i];
 				let defaultArr = req.body['default_'+i];
 				let storeData = [];
-				for (let j = 0; j < labelArr.length; j++) {
+				console.log(labelArr.length);
+				if(labelArr.length > 0)
+				{
+					for (let j = 0; j < labelArr.length; j++) {
+						if(labelArr[j] != '' && weightArr[j] != '' && priceArr[j] != '')
+						{
+							let storeFieldObj = {
+								storeId: mongoose.mongo.ObjectID(storeId[i]),
+								label : labelArr[j],
+								weight : weightArr[j],
+								price : priceArr[j],
+								default : defaultArr == j ? true : false
+							};
+							storeData.push(storeFieldObj);
+						}
+					}
+				}else
+				{
 					let storeFieldObj = {
 						storeId: mongoose.mongo.ObjectID(storeId[i]),
-						label : labelArr[j],
-						weight : weightArr[j],
-						price : priceArr[j],
-						default : defaultArr == j ? true : false
+						label : '',
+						weight : '',
+						price : '',
+						default : false
 					};
 					storeData.push(storeFieldObj);
 				}
@@ -269,18 +286,31 @@ module.exports = {
 				let priceArr = req.body['price_'+i];
 				let defaultArr = req.body['default_'+i];
 				let storeData = [];
-				for (let j = 0; j < labelArr.length; j++) {
-					if(labelArr[j] != '' && weightArr[j] != '' && priceArr[j] != '')
-					{
-						let storeFieldObj = {
-							storeId: mongoose.mongo.ObjectID(storeId[i]),
-							label : labelArr[j],
-							weight : weightArr[j],
-							price : priceArr[j],
-							default : defaultArr == j ? true : false
-						};
-						storeData.push(storeFieldObj);
+				if(labelArr.length > 0)
+				{
+					for (let j = 0; j < labelArr.length; j++) {
+						if(labelArr[j] != '' && weightArr[j] != '' && priceArr[j] != '')
+						{
+							let storeFieldObj = {
+								storeId: mongoose.mongo.ObjectID(storeId[i]),
+								label : labelArr[j],
+								weight : weightArr[j],
+								price : priceArr[j],
+								default : defaultArr == j ? true : false
+							};
+							storeData.push(storeFieldObj);
+						}
 					}
+				}else
+				{
+					let storeFieldObj = {
+						storeId: mongoose.mongo.ObjectID(storeId[i]),
+						label : '',
+						weight : '',
+						price : '',
+						default : false
+					};
+					storeData.push(storeFieldObj);
 				}
 				inventory.push(storeData);
 			}
@@ -415,7 +445,6 @@ module.exports = {
 	checkStockkeeping : async function(req,res){
 		   let stockkeeping  = req.body.stock_keeping;
 		   let productData = await Product.find({stock_keeping:stockkeeping, status:true, deletedAt: 0});
-		   console.log(productData);
 		   if(productData.length>0){
 			   return res.status(200).json({ code:1 , status: 'exists', message: "Stock Keeping Unit Already Inserted !!"});
 		   } else {

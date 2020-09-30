@@ -20,9 +20,9 @@ module.exports = {
             },
             {
                 $addFields: {
-                    "thumbnailPath" : config.constant.CATEGORYTHUMNAILPATH,
-                    "smallPath" : config.constant.CATEGORYSMALLPATH,
-                    "largePath" : config.constant.CATEGORYLARGEPATH
+                    "thumbnailPath" : config.constant.CATEGORYTHUMBNAILSHOWPATH,
+                    "smallPath" : config.constant.CATEGORYSMALLSHOWPATH,
+                    "largePath" : config.constant.CATEGORYLARGESHOWPATH
                 }
             },
             {
