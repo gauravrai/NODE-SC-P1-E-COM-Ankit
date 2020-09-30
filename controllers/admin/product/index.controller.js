@@ -128,7 +128,6 @@ module.exports = {
 				let priceArr = req.body['price_'+i];
 				let defaultArr = req.body['default_'+i];
 				let storeData = [];
-				console.log(labelArr.length);
 				if(labelArr.length > 0)
 				{
 					for (let j = 0; j < labelArr.length; j++) {
