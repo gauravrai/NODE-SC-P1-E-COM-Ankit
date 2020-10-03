@@ -14,7 +14,7 @@ module.exports = {
 	JWT_SECRET :"local_BnaiyaSecret",
 	  
 	PAGENO: 1,	  
-	LIMIT: 2,	  
+	LIMIT: 10,	  
 	PRODUCTIMAGELENGTH: 2,	  
 	PRODUCTTHUMBNAILUPLOADPATH: './public/uploads/product/thumbnail/',	  
 	PRODUCTSMALLUPLOADPATH:  './public/uploads/product/small/', 

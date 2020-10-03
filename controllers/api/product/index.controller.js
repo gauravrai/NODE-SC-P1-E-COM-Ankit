@@ -36,7 +36,7 @@ module.exports = {
                 }
                 if(minPrice && maxPrice)
                 {
-                    condition.inventory = { price: { $gte: parseInt(minPrice),$lte: parseInt(maxPrice) } };
+                    condition.price = { $gte: parseInt(minPrice),$lte: parseInt(maxPrice) };
                 }
                 if(brandId)
                 {

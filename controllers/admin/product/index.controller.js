@@ -122,6 +122,7 @@ module.exports = {
 			let store = req.body.store;
 			let storeId = req.body.storeId;
 			let inventory = [];
+			let price = 0;
 			for (let i = 0; i < store; i++) {
 				let labelArr = req.body['label_'+i];
 				let weightArr = req.body['weight_'+i];
@@ -140,6 +141,10 @@ module.exports = {
 								price : priceArr[j],
 								default : defaultArr == j ? true : false
 							};
+							if(defaultArr == j)
+							{
+								price = priceArr[j];
+							}
 							storeData.push(storeFieldObj);
 						}
 					}
@@ -157,6 +162,7 @@ module.exports = {
 				inventory.push(storeData);
 			}
 			productData.inventory = inventory;
+			productData.price = price;
 			let imageLength = req.body.imageLength;
 			let thumbnailArr = req.files.thumbnail;
 			let smallArr = req.files.small;
@@ -279,6 +285,7 @@ module.exports = {
 			let store = req.body.store;
 			let storeId = req.body.storeId;
 			let inventory = [];
+			let price = 0;
 			for (let i = 0; i < store; i++) {
 				let labelArr = req.body['label_'+i];
 				let weightArr = req.body['weight_'+i];
@@ -297,6 +304,10 @@ module.exports = {
 								price : priceArr[j],
 								default : defaultArr == j ? true : false
 							};
+							if(defaultArr == j)
+							{
+								price = priceArr[j];
+							}
 							storeData.push(storeFieldObj);
 						}
 					}
@@ -314,6 +325,7 @@ module.exports = {
 				inventory.push(storeData);
 			}
 			productData.inventory = inventory;
+			productData.price = price;
 			if(Object.keys(req.files).length !== 0)
 			{
 				let imageLength = req.body.imageLength;
