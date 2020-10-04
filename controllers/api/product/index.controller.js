@@ -75,7 +75,6 @@ module.exports = {
                         __v:0,
                         createdAt:0,
                         updatedAt:0
-                        // reportedBy: { $arrayElemAt: ['$inventory', 0] } ,
                     }
                 }
             ]).sort(sort).skip(skip).limit(limit);
@@ -140,6 +139,64 @@ module.exports = {
             if(productData.length>0) {
                 return res.status(200).json({ 
                                             data: productData, 
+                                            status: 'success', 
+                                            message: "Data fetched successfully!!" 
+                                        });
+            } else {
+                return res.status(400).json({ 
+                                            data: [], 
+                                            status: 'error', 
+                                            message: "No Data Found!!" 
+                                        });
+            } 
+        }
+        catch (e){
+            console.log(e)
+            return res.status(500).json({ 
+                                    data: [],  
+                                    status: 'error', 
+                                    errors: [{
+                                        msg: "Internal server error"
+                                    }]
+                                });
+        }
+        
+		
+    },
+	productDetailAnother : async function(req,res){
+        const errors = validationResult(req)
+        if(!errors.isEmpty()){
+            return res.status(400).json({errors: errors.array()})
+        }
+        try{
+            const { productId } = req.query;
+            let condition = {status:true, deletedAt: 0};
+            condition._id = mongoose.mongo.ObjectId(productId);
+            let productData = await Product.aggregate([ 
+                {
+                    $match : condition
+                },
+                {
+                    $addFields: {
+                        "thumbnailPath" : config.constant.PRODUCTTHUMBNAILSHOWPATH,
+                        "smallPath" : config.constant.PRODUCTSMALLSHOWPATH,
+                        "largePath" : config.constant.PRODUCTLARGESHOWPATH
+                    }
+                },
+                {
+                    $project: { 
+                        __v:0,
+                        createdAt:0,
+                        updatedAt:0
+                    }
+                },
+                { 
+                    $unwind : "$inventory"
+                }
+            ]);
+            if(productData.length>0) {
+                return res.status(200).json({ 
+                                            data: productData[0], 
                                             status: 'success', 
                                             message: "Data fetched successfully!!" 
                                         });

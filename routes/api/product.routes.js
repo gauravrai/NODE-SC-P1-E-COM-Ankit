@@ -11,6 +11,13 @@ module.exports = function(router) {
 		], 
 		indexController.productDetail
 	); 
+	router.get(
+		config.constant.APIURL+'/productDetailAnother', 
+		[
+		    check('productId', 'Product id is required').not().isEmpty()
+		], 
+		indexController.productDetailAnother
+	); 
     router.get(
 		config.constant.APIURL+'/searchproduct', 
 		[
