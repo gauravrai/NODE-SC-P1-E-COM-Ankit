@@ -11,6 +11,7 @@ const Pincode = model.pincode;
 const Area = model.area;
 const Society = model.society;
 const SubCategory = model.sub_category;
+const Product = model.product;
 const ADMINCALLURL = config.constant.ADMINCALLURL;
 
 module.exports = {
@@ -58,5 +59,12 @@ module.exports = {
 		let id = mongoose.mongo.ObjectID(req.body.id);
 		let data = await SubCategory.find({categoryId: id, status: true, deletedAt: 0 });
 		res.render('admin/ajax/subcategory',{layout:false, data:data} );
+	},
+
+	getProduct: async function(req,res){
+		let id = mongoose.mongo.ObjectID(req.body.id);
+		let data = await Product.find({subcategoryId: id, status: true, deletedAt: 0, offer:"Yes"});
+		console.log(data);
+		res.render('admin/ajax/product',{layout:false, data:data} );
 	},
 }

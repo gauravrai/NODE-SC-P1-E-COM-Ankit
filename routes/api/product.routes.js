@@ -11,13 +11,6 @@ module.exports = function(router) {
 		], 
 		indexController.productDetail
 	); 
-	router.get(
-		config.constant.APIURL+'/productDetailAnother', 
-		[
-		    check('productId', 'Product id is required').not().isEmpty()
-		], 
-		indexController.productDetailAnother
-	); 
     router.get(
 		config.constant.APIURL+'/searchproduct', 
 		[
@@ -32,8 +25,6 @@ module.exports = function(router) {
 		    check('name', 'Name is required').not().isEmpty(),
 		    check('email', 'Email is required').not().isEmpty().isEmail(),
 		    check('mobile', 'Mobile is required').not().isEmpty(),
-		    check('address', 'Address is required').not().isEmpty(),
-		    check('pincode', 'Pincode is required').not().isEmpty(),
 		    check('description', 'Description is required').not().isEmpty()
 		], 
 		indexController.userRequestForProduct

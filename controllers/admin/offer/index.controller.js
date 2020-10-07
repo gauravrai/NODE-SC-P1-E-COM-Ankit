@@ -100,7 +100,7 @@ module.exports = {
 			let pageTitle = 'Add Offer';
             let categoryData = await Category.find({status: true, deletedAt: 0});
             let subcategoryData = await Subcategory.find({status: true, deletedAt: 0});
-            let productData     = await Product.find({status: true,offer:"Y",deletedAt: 0});
+            let productData = await Product.find({status: true, offer:"Yes", deletedAt: 0});
 			res.render('admin/offer/add.ejs',{layout:'admin/layout/layout', pageTitle:pageTitle, moduleName:moduleName, categoryData:categoryData,subcategoryData:subcategoryData,productData:productData} );
 		}else{
 			let offerData = {

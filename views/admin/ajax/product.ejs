@@ -1,0 +1,11 @@
+
+
+	<div class="form-group">
+		<label for="productId">Select Product</label>
+		<select name="productId" class="form-control" id="productId">
+		<option value="">Select Product</option>
+		<% for(let i = 0; i < data.length; i++){ %>
+			<option value="<%=data[i].id%>"><%=data[i].name%></option>
+		  <% } %>
+		</select>
+	</div>

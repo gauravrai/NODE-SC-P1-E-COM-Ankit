@@ -64,6 +64,29 @@ module.exports = {
                     $match : condition
                 },
                 {
+                    $unwind: "$inventory"
+                },
+                {
+                    $group: {
+                        "_id":"$_id",
+                        "inventory": { $first:"$inventory" },
+                        "status": { $first:"$status" },
+                        "deletedAt": { $first:"$deletedAt" },
+                        "categoryId": { $first:"$categoryId" },
+                        "subcategoryId": { $first:"$subcategoryId" },
+                        "name": { $first:"$name" },
+                        "brandId": { $first:"$brandId" },
+                        "price": { $first:"$price" },
+                        "offer": { $first:"$offer" },
+                        "discount": { $first:"$discount" },
+                        "stock": { $first:"$stock" },
+                        "description": { $first:"$description" },
+                        "featured": { $first:"$featured" },
+                        "outOfStock": { $first:"$outOfStock" },
+                        "image": { $first:"$image" }
+                    }
+                },
+                {
                     $addFields: {
                         "thumbnailPath" : config.constant.PRODUCTTHUMBNAILSHOWPATH,
                         "smallPath" : config.constant.PRODUCTSMALLSHOWPATH,
@@ -109,61 +132,6 @@ module.exports = {
     // @description Get all productDetail
     // @access      Public
 	productDetail : async function(req,res){
-        const errors = validationResult(req)
-        if(!errors.isEmpty()){
-            return res.status(400).json({errors: errors.array()})
-        }
-        try{
-            const { productId } = req.query;
-            let condition = {status:true, deletedAt: 0};
-            condition._id = mongoose.mongo.ObjectId(productId);
-            let productData = await Product.aggregate([ 
-                {
-                    $match : condition
-                },
-                {
-                    $addFields: {
-                        "thumbnailPath" : config.constant.PRODUCTTHUMBNAILSHOWPATH,
-                        "smallPath" : config.constant.PRODUCTSMALLSHOWPATH,
-                        "largePath" : config.constant.PRODUCTLARGESHOWPATH
-                    }
-                },
-                {
-                    $project: { 
-                        __v:0,
-                        createdAt:0,
-                        updatedAt:0
-                    }
-                }
-            ]);
-            if(productData.length>0) {
-                return res.status(200).json({ 
-                                            data: productData, 
-                                            status: 'success', 
-                                            message: "Data fetched successfully!!" 
-                                        });
-            } else {
-                return res.status(400).json({ 
-                                            data: [], 
-                                            status: 'error', 
-                                            message: "No Data Found!!" 
-                                        });
-            } 
-        }
-        catch (e){
-            console.log(e)
-            return res.status(500).json({ 
-                                    data: [],  
-                                    status: 'error', 
-                                    errors: [{
-                                        msg: "Internal server error"
-                                    }]
-                                });
-        }
-        
-		
-    },
-	productDetailAnother : async function(req,res){
         const errors = validationResult(req)
         if(!errors.isEmpty()){
             return res.status(400).json({errors: errors.array()})

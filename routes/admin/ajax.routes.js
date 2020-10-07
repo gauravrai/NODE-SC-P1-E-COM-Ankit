@@ -7,4 +7,5 @@ module.exports = function(router) {
     router.all(config.constant.ADMINCALLURL+'/get_area/:id',isloggedin, indexController.getArea);
     router.all(config.constant.ADMINCALLURL+'/get_society/:id',isloggedin, indexController.getSociety);
     router.all(config.constant.ADMINCALLURL+'/get_subcategory',isloggedin, indexController.getSubcategory);
+    router.all(config.constant.ADMINCALLURL+'/get_product',isloggedin, indexController.getProduct);
 }

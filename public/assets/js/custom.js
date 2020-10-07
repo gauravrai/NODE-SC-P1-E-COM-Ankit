@@ -257,12 +257,28 @@ $(document).on("change", "#categoryId", function(){
 		url: 'get_subcategory',
 		data: {id:id},
 		success: function(response) {
-			console.log(response);
 			if(response){
 			$('#subcategoryData').html(response);	
 			}
 			else{
 			$('#subcategoryData').html('');	
+			}
+		}
+	});
+});
+
+$(document).on("change", "#subcategoryId", function(){
+	let id = $(this).val();
+	$.ajax({
+		type: 'POST',
+		url: 'get_product',
+		data: {id:id},
+		success: function(response) {
+			if(response){
+			$('#productData').html(response);	
+			}
+			else{
+			$('#productData').html('');	
 			}
 		}
 	});

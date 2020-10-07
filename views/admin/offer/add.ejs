@@ -49,13 +49,13 @@
                                 <select name="subcategoryId" class="form-control" id="subcategoryId">
                                 <option value="">Select Sub Category</option>
                                 <% for(let i = 0; i < subcategoryData.length; i++){ %>
-                                    <option value="<%=subcategoryData[i].id%>"><%=subcategoryData[i].sub_cat_name%></option>
+                                    <option value="<%=subcategoryData[i].id%>"><%=subcategoryData[i].name%></option>
                                   <% } %>
                                 </select>
                             </div>
                             </div>
                         <!-- </span> -->
-                        <div class="form-group col-md-3">
+                        <div id="productData" class="form-group col-md-3">
                             <label for="productId">Select Product</label>
                             <select name="productId" class="form-control" id="productId">
                             <option value="">Select Product</option>
