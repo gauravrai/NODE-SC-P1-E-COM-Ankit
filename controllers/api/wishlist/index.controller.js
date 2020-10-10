@@ -117,18 +117,13 @@ module.exports = {
             return res.status(400).json({errors: errors.array()})
         }
         try{
-            // let wishlistData = {
-            //     userId : mongoose.mongo.ObjectId(req.body.userId),
-            //     productId : mongoose.mongo.ObjectId(req.body.productId)
-			// };
-			// let wishlist = new Wishlist(wishlistData);
-			// wishlist.save(function(err, data){
-			// 	return res.status(200).json({ 
-            //         data: wishlistData, 
-            //         status: 'success', 
-            //         message: "Wishlist removed successfully!!" 
-            //     });	
-			// })
+			Wishlist.deleteOne({ userId : mongoose.mongo.ObjectId(req.body.userId), productId : mongoose.mongo.ObjectId(req.body.productId) }, function(err, data){
+				return res.status(200).json({ 
+                    data: [], 
+                    status: 'success', 
+                    message: "Wishlist removed successfully!!" 
+                });	
+			})
         }
         catch (e){
             console.log(e)
