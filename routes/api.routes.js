@@ -15,6 +15,7 @@ module.exports = function(app) {
 	var towerRoutes = require('./api/tower.routes');
 	var brandRoutes = require('./api/brand.routes');
 	var wishlistRoutes = require('./api/wishlist.routes');
+	var cartRoutes = require('./api/cart.routes');
 	//var roleRoutes = require('./api/category.routes');
 	
 	var router = express.Router();
@@ -33,6 +34,7 @@ module.exports = function(app) {
 	towerRoutes(router);
 	brandRoutes(router);
 	wishlistRoutes(router);
+	cartRoutes(router);
 	//dashboardRoutes(router);
 	
 }

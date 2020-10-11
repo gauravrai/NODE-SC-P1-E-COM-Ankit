@@ -15,9 +15,6 @@ let CartSchema = new Schema({
     shippingPrice: {
         type: Number,
     },
-    totalPrice:{
-        type: Number
-    },
     quantity:{
         type: Number
     },
@@ -27,7 +24,7 @@ let CartSchema = new Schema({
     address: {
         type: String
     },
-    zipcode:{
+    pincode:{
         type: Number
     },
     status: {
