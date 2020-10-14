@@ -2,6 +2,7 @@ const model  = require('../../../models/index.model');
 const config = require('../../../config/index');
 const mongoose = require('mongoose');
 const Product     = model.product;
+const Wishlist     = model.wishlist;
 const Requestproduct = model.request_product;
 const { validationResult } = require('express-validator');
 module.exports = {
@@ -15,7 +16,7 @@ module.exports = {
             return res.status(400).json({errors: errors.array()})
         }
         try{
-            const { filter, string, categoryId, subcategoryId, maxPrice, minPrice, brandId, featured, sortName, sortValue } = req.query;
+            const { filter, string, categoryId, subcategoryId, maxPrice, minPrice, brandId, featured, sortName, sortValue, userId } = req.query;
             let pageno = req.query.pageno ? parseInt(req.query.pageno) : config.constant.PAGENO;
             let limit = config.constant.LIMIT;
             let skip = (pageno-1) * limit;
@@ -102,6 +103,15 @@ module.exports = {
                 }
             ]).sort(sort).skip(skip).limit(limit);
             if(productData.length>0) {
+                for (let i = 0; i < productData.length; i++) {
+                let wishlistData = await Wishlist.findOne({userId : mongoose.mongo.ObjectID(userId), productId: mongoose.mongo.ObjectID(productData[i]._id)});
+                    let wishlist = false;
+                    if(wishlistData)
+                    {
+                        wishlist = true;
+                    }
+                    productData[i].wishlist = wishlist;
+                }
                 return res.status(200).json({ 
                                             data: productData, 
                                             status: 'success', 

@@ -79,7 +79,8 @@ module.exports = {
                     $project: { 
                         __v:0,
                         createdAt:0,
-                        updatedAt:0
+                        updatedAt:0,
+                        "productData.inventory":0
                     }
                 }
             ]).skip(skip).limit(limit);

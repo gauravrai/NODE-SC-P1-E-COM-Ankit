@@ -3,7 +3,11 @@ var config = require('../../config/index');
 const { check } = require('express-validator')
 
 module.exports = function(router) {
-	router.get(config.constant.APIURL+'/product', indexController.productList);
+	router.get(config.constant.APIURL+'/product', 
+	[
+		check('userId', 'User id is required').not().isEmpty()
+	], 
+	indexController.productList);
 	router.get(
 		config.constant.APIURL+'/productDetail', 
 		[
