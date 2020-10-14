@@ -91,7 +91,8 @@ module.exports = {
                     $addFields: {
                         "thumbnailPath" : config.constant.PRODUCTTHUMBNAILSHOWPATH,
                         "smallPath" : config.constant.PRODUCTSMALLSHOWPATH,
-                        "largePath" : config.constant.PRODUCTLARGESHOWPATH
+                        "largePath" : config.constant.PRODUCTLARGESHOWPATH,
+                        "wishlist" : false
                     }
                 },
                 {
@@ -103,14 +104,16 @@ module.exports = {
                 }
             ]).sort(sort).skip(skip).limit(limit);
             if(productData.length>0) {
-                for (let i = 0; i < productData.length; i++) {
-                let wishlistData = await Wishlist.findOne({userId : mongoose.mongo.ObjectID(userId), productId: mongoose.mongo.ObjectID(productData[i]._id)});
-                    let wishlist = false;
-                    if(wishlistData)
-                    {
-                        wishlist = true;
+                if(userId) {
+                    for (let i = 0; i < productData.length; i++) {
+                    let wishlistData = await Wishlist.findOne({userId : mongoose.mongo.ObjectID(userId), productId: mongoose.mongo.ObjectID(productData[i]._id)});
+                        let wishlist = false;
+                        if(wishlistData)
+                        {
+                            wishlist = true;
+                        }
+                        productData[i].wishlist = wishlist;
                     }
-                    productData[i].wishlist = wishlist;
                 }
                 return res.status(200).json({ 
                                             data: productData, 

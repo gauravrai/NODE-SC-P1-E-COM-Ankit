@@ -6,7 +6,9 @@ module.exports = function(router) {
   	router.post(
 		config.constant.APIURL+'/addToCart', 
 		[
-      		check('productId', 'Product Id is required').not().isEmpty()
+      		check('productId', 'Product Id is required').not().isEmpty(),
+      		check('quantity', 'Quantity is required').not().isEmpty(),
+      		check('price', 'Price is required').not().isEmpty(),
 		], 
 		indexController.addToCart
 	); 

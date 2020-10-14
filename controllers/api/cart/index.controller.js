@@ -20,6 +20,7 @@ module.exports = {
             return res.status(400).json({errors: errors.array()})
         }
         try{
+            console.log('coming to addTOCart');
             let userId = req.query.userId;
             let productId = req.query.productId;
             let sessionId = req.query.sessionId;
@@ -36,6 +37,7 @@ module.exports = {
             {
                 cartCondition.sessionId = sessionId;
             }   
+            console.log('cartCondition------------',cartCondition);
             var cartData = await Cart.find(cartCondition);
             if(cartData.length>0) {
                 cartId = cartData.id;
@@ -49,6 +51,7 @@ module.exports = {
             }
             else
             {
+                console.log('coming to else part of cart')
                 let cartInsertData = {
                     userId : req.body.userId,
                     sessionId : req.body.sessionId,
@@ -58,10 +61,12 @@ module.exports = {
                     address : userData.address,
                     pincode : userData.pincode,
                 };
+                console.log('cartInsertData-------',cartInsertData)
                 let cart = new Cart(cartInsertData);
                 cart.save();
                 cartId = cart.id;
             }
+            console.log('cartId-------',cartId)
             let cartItemInsertData = {
                 cartId : cartId,
                 userId : req.body.userId,
@@ -70,10 +75,10 @@ module.exports = {
                 price : req.body.price,
                 quantity : req.body.quantity
             };
-            let cartitem = new Cart(cartItemInsertData);
+            let cartitem = new Cartitem(cartItemInsertData);
             cartitem.save(function(err, data){
 				return res.status(200).json({ 
-                    data: userRequestData, 
+                    data: cartitem, 
                     status: 'success', 
                     message: "Cart has been updated successfully!!" 
                 });	
