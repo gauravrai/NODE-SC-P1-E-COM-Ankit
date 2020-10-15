@@ -14,14 +14,26 @@ module.exports = {
 		};
 		let wishlist = new Wishlist(wishlistData);
 		wishlist.save();
-		let cartItemCondition = { productId: mongoose.mongo.ObjectID(productId), userId: mongoose.mongo.ObjectID(userId) };
-		// let cartUpdateData = {
-		// 	grandTotal : ( cartData.grandTotal + req.body.price * req.body.quantity ),
-		// 	quantity : ( cartData.quantity + req.body.quantity )
-		// };
-		// let updateCartData = Cart.update({id:mongoose.mongo.ObjectID(cartData.id)},cartUpdateData);
-		await Cartitem.deleteOne(cartItemCondition);
-		cb(data);
+
+		let cartItemCondition = { cartId: mongoose.mongo.ObjectID(cartData.id), userId: mongoose.mongo.ObjectID(userId) };
+		let cartItemDeleteCondition = { cartId: mongoose.mongo.ObjectID(cartData.id), productId: mongoose.mongo.ObjectID(productId), userId: mongoose.mongo.ObjectID(userId) };
+		let deletedData = await Cartitem.findOne(cartItemDeleteCondition);
+		await Cartitem.deleteOne(cartItemDeleteCondition);
+		let cartItemData = await Cartitem.find(cartItemCondition);
+		if(cartItemData.length > 0) {
+			console.log(cartData);
+			console.log(deletedData);
+			let cartUpdateData = {
+				grandTotal : ( parseInt(cartData.grandTotal) - parseInt(deletedData.totalPrice) ),
+				quantity : ( parseInt(cartData.quantity) - parseInt(deletedData.quantity) )
+			};
+			console.log(cartUpdateData);
+			let updateCartData = await Cart.update({_id:mongoose.mongo.ObjectID(cartData.id)},cartUpdateData);
+			cb();
+		}else {
+			await Cart.deleteOne({_id: mongoose.mongo.ObjectID(cartData.id)});
+			cb();
+		}
 	}
 };
 

@@ -118,7 +118,7 @@ module.exports = {
             return res.status(400).json({errors: errors.array()})
         }
         try{
-			Wishlist.deleteOne({ userId : mongoose.mongo.ObjectId(req.body.userId), productId : mongoose.mongo.ObjectId(req.body.productId) }, function(err, data){
+			await Wishlist.deleteOne({ userId : mongoose.mongo.ObjectId(req.body.userId), productId : mongoose.mongo.ObjectId(req.body.productId) }, function(err, data){
 				return res.status(200).json({ 
                     data: [], 
                     status: 'success', 

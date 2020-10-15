@@ -24,8 +24,8 @@ module.exports = {
             let userId = req.body.userId;
             let productId = req.body.productId;
             let sessionId = req.body.sessionId;
-            let quantity = req.body.quantity;
-            let price = req.body.price;
+            let quantity = parseInt(req.body.quantity);
+            let price = parseInt(req.body.price);
             let moveToWishlist = req.body.moveToWishlist;
             let cartCondition = {} ;
             let cartItemCondition = { productId: mongoose.mongo.ObjectID(productId) } ;
@@ -40,78 +40,78 @@ module.exports = {
                 cartCondition.sessionId = sessionId;
                 cartItemCondition.sessionId = sessionId;
             }  
-             console.log({id: mongoose.mongo.ObjectID(userId), deletedAt: 0, status: true});
-             console.log(userData);
             let cartData = await Cart.find(cartCondition);
             if(moveToWishlist)
             {
-                await config.helpers.cart.moveToWishlist(productId, userId, cartData, async function (wishlistData) {
-                    console.log(wishlistData);
+                console.log('coming to move to wishlist')
+                await config.helpers.cart.moveToWishlist(productId, userId, cartData[0], async function (wishlistData) {
                     return res.status(200).json({ 
-                        data: wishlistData, 
+                        data: [], 
                         status: 'success', 
                         message: "Product moved to wishlist successfully!!" 
                     });	
                 });
             }
-            if(cartData.length>0) {
-                cartId = cartData.id;
-                let cartUpdateData = {
-                    userId : req.body.userId,
-                    sessionId : req.body.sessionId,
-                    grandTotal : ( cartData.grandTotal + req.body.price * req.body.quantity ),
-                    quantity : ( cartData.quantity + req.body.quantity )
-                };
-                let updateCartData = Cart.update({id:mongoose.mongo.ObjectID(cartData.id)},cartUpdateData);
-            }
             else
             {
-                let cartInsertData = {
-                    userId : req.body.userId,
-                    sessionId : req.body.sessionId,
-                    grandTotal : req.body.price * req.body.quantity,
-                    quantity : req.body.quantity,
-                    customerDetail : userData ? userData : {},
-                    address : userData.address ? userData.address : '',
-                    pincode : userData.pincode ? userData.pincode : '',
-                };
-                let cart = new Cart(cartInsertData);
-                cart.save();
-                cartId = cart.id;
-            }
-            let cartItemData = await Cartitem.find(cartItemCondition);
-            if(cartItemData.length>0) { 
-                let cartItemUpdateData = {
-                    price : ( cartItemData.price + req.body.price ),
-                    totalPrice : ( cartItemData.totalPrice + req.body.price * req.body.quantity ),
-                    quantity : ( cartItemData.quantity + req.body.quantity )
-                };
-                let updateCartData = Cartitem.update({id:mongoose.mongo.ObjectID(cartItemData.id)},cartItemUpdateData);
-                return res.status(200).json({ 
-                    data: updateCartData, 
-                    status: 'success', 
-                    message: "Cart has been updated successfully!!" 
-                });	
-            }
-            else
-            {
-                let cartItemInsertData = {
-                    cartId : cartId,
-                    userId : req.body.userId,
-                    sessionId : req.body.sessionId,
-                    productId : req.body.productId,
-                    price : req.body.price,
-                    totalPrice : req.body.price * req.body.quantity,
-                    quantity : req.body.quantity
-                };
-                let cartitem = new Cartitem(cartItemInsertData);
-                cartitem.save(function(err, data){
+                if(cartData.length>0) {
+                    cartId = cartData[0].id;
+                    let cartUpdateData = {
+                        userId : userId,
+                        sessionId : sessionId,
+                        grandTotal : ( parseInt(cartData[0].grandTotal) + price * quantity ),
+                        quantity : ( parseInt(cartData[0].quantity) + quantity )
+                    };
+                    let updateCartData = await Cart.update({_id:mongoose.mongo.ObjectID(cartData[0].id)},cartUpdateData);
+                }
+                else
+                {
+                    let cartInsertData = {
+                        userId : userId,
+                        sessionId : sessionId,
+                        grandTotal : price * quantity,
+                        quantity : quantity,
+                        customerDetail : userData ? userData : {},
+                        address : userData.address ? userData.address : '',
+                        pincode : userData.pincode ? userData.pincode : '',
+                    };
+                    let cart = new Cart(cartInsertData);
+                    cart.save();
+                    cartId = cart.id;
+                }
+                let cartItemData = await Cartitem.find(cartItemCondition);
+                if(cartItemData.length>0) { 
+                    let cartItemUpdateData = {
+                        totalPrice : ( parseInt(cartItemData[0].totalPrice) + price * quantity ),
+                        quantity : ( parseInt(cartItemData[0].quantity) + quantity )
+                    };
+                    let updateCartData = await Cartitem.update({_id:mongoose.mongo.ObjectID(cartItemData[0].id)},cartItemUpdateData);
                     return res.status(200).json({ 
-                        data: cartitem, 
+                        data: [], 
                         status: 'success', 
-                        message: "Cart has been added successfully!!" 
+                        message: "Cart has been updated successfully!!" 
                     });	
-                })
+                }
+                else
+                {
+                    let cartItemInsertData = {
+                        cartId : cartId,
+                        userId : userId,
+                        sessionId : sessionId,
+                        productId : productId,
+                        price : price,
+                        totalPrice : price * quantity,
+                        quantity : quantity
+                    };
+                    let cartitem = new Cartitem(cartItemInsertData);
+                    cartitem.save(function(err, data){
+                        return res.status(200).json({ 
+                            data: [], 
+                            status: 'success', 
+                            message: "Cart has been added successfully!!" 
+                        });	
+                    })
+                }
             }
         }
         catch (e){
