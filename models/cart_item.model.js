@@ -18,6 +18,9 @@ let CartItemSchema = new Schema({
     price:{
         type: Number
     },
+    totalPrice:{
+        type: Number
+    },
     discountId:{
         type: ObjectId
     },
