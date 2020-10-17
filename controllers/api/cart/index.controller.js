@@ -42,6 +42,7 @@ module.exports = {
                 cartItemCondition.sessionId = sessionId;
             }  
             let cartData = await Cart.find(cartCondition);
+            let cartItemData = await Cartitem.find(cartItemCondition);
             if(moveToWishlist)
             {
                 await config.helpers.cart.moveToWishlist(productId, varientId, userId, cartData[0], async function (wishlistData) {
@@ -56,11 +57,15 @@ module.exports = {
             {
                 if(cartData.length>0) {
                     cartId = cartData[0].id;
+                    let previousGrandTotal = parseInt(cartData[0].grandTotal);
+                    let previousQuantity = parseInt(cartData[0].quantity);
+                    if(cartItemData.length>0) {
+                        previousGrandTotal = previousGrandTotal - cartItemData[0].totalPrice;
+                        previousQuantity = previousQuantity - cartItemData[0].quantity;
+                    }
                     let cartUpdateData = {
-                        userId : userId,
-                        sessionId : sessionId,
-                        grandTotal : ( parseInt(cartData[0].grandTotal) + price * quantity ),
-                        quantity : ( parseInt(cartData[0].quantity) + quantity )
+                        grandTotal : ( previousGrandTotal + price * quantity ),
+                        quantity : ( previousQuantity + quantity )
                     };
                     let updateCartData = await Cart.update({_id:mongoose.mongo.ObjectID(cartData[0].id)},cartUpdateData);
                 }
@@ -79,11 +84,10 @@ module.exports = {
                     cart.save();
                     cartId = cart.id;
                 }
-                let cartItemData = await Cartitem.find(cartItemCondition);
                 if(cartItemData.length>0) { 
                     let cartItemUpdateData = {
-                        totalPrice : ( parseInt(cartItemData[0].totalPrice) + price * quantity ),
-                        quantity : ( parseInt(cartItemData[0].quantity) + quantity )
+                        totalPrice : ( price * quantity ),
+                        quantity : quantity
                     };
                     let updateCartData = await Cartitem.update({_id:mongoose.mongo.ObjectID(cartItemData[0].id)},cartItemUpdateData);
                     return res.status(200).json({ 
@@ -126,4 +130,114 @@ module.exports = {
                                 });
         }
     },
+    
+	removeFromCart: async function(req,res) {
+        const errors = validationResult(req)
+        if(!errors.isEmpty()){
+            return res.status(400).json({errors: errors.array()})
+        }
+        try{
+            let cartItemId = req.body.cartItemId;
+            let cartItemCondition = { _id: mongoose.mongo.ObjectID(cartItemId) } ;
+            
+            let deletedData = await Cartitem.findOne(cartItemCondition);
+            let cartId = deletedData.cartId;
+            let cartData = await Cart.findOne({_id:mongoose.mongo.ObjectID(cartId)});
+            await Cartitem.deleteOne(cartItemCondition);
+
+            let cartItemData = await Cartitem.find( {cartId : mongoose.mongo.ObjectID(cartId)} );
+            if(cartItemData.length > 0) {
+                let cartUpdateData = {
+                    grandTotal : ( parseInt(cartData.grandTotal) - parseInt(deletedData.totalPrice) ),
+                    quantity : ( parseInt(cartData.quantity) - parseInt(deletedData.quantity) )
+                };
+                let updateCartData = await Cart.update({_id:mongoose.mongo.ObjectID(cartData.id)},cartUpdateData);
+                return res.status(200).json({ 
+                    data: [], 
+                    status: 'success', 
+                    message: "Cart has been updated successfully!!" 
+                });	
+            }else {
+                await Cart.deleteOne({_id: mongoose.mongo.ObjectID(cartId)});
+                return res.status(200).json({ 
+                    data: [], 
+                    status: 'success', 
+                    message: "Cart has been updated successfully!!" 
+                });	
+            }
+        }
+        catch (e){
+            console.log(e)
+            return res.status(500).json({ 
+                                    data: [],  
+                                    status: 'error', 
+                                    errors: [{
+                                        msg: "Internal server error"
+                                    }]
+                                });
+        }
+	},
+    
+	getCartData: async function(req,res) {
+        const errors = validationResult(req)
+        if(!errors.isEmpty()){
+            return res.status(400).json({errors: errors.array()})
+        }
+        try{
+            let userId = req.body.userId;
+            let sessionId = req.body.sessionId;
+            let cartItemCondition = { } ;
+            if(userId){
+                cartItemCondition.userId = mongoose.mongo.ObjectID(userId);
+            }else 
+            {
+                cartItemCondition.sessionId = sessionId;
+            }  
+            let cartItemData = await Cartitem.aggregate([ 
+                {
+                    $match : cartItemCondition
+                },
+                {
+                    $lookup:
+                      {
+                        from: "products",
+                        localField: "productId",
+                        foreignField: "_id",
+                        as: "productData"
+                      }
+                },
+                {
+                    $addFields: {
+                        "thumbnailPath" : config.constant.PRODUCTTHUMBNAILSHOWPATH,
+                        "smallPath" : config.constant.PRODUCTSMALLSHOWPATH,
+                        "largePath" : config.constant.PRODUCTLARGESHOWPATH
+                    }
+                }
+            ]);
+            
+            if(cartItemData.length > 0) {
+                return res.status(200).json({ 
+                    data: cartItemData, 
+                    status: 'success', 
+                    message: "Cart data found successfully!!" 
+                });	
+            }else {
+                return res.status(200).json({ 
+                    data: [], 
+                    status: 'success', 
+                    message: "Cart has been empty!!" 
+                });	
+            }
+        }
+        catch (e){
+            console.log(e)
+            return res.status(500).json({ 
+                                    data: [],  
+                                    status: 'error', 
+                                    errors: [{
+                                        msg: "Internal server error"
+                                    }]
+                                });
+        }
+	}
 }

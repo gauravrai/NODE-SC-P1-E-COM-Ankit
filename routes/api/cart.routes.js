@@ -13,4 +13,14 @@ module.exports = function(router) {
 		], 
 		indexController.addToCart
 	); 
+	router.post(
+		config.constant.APIURL+'/removeFromCart', 
+		[
+			check('cartItemId', 'cart Item Id is required').not().isEmpty()
+		], 
+		indexController.removeFromCart
+	);
+	router.get(
+		config.constant.APIURL+'/getCartData', indexController.getCartData
+	); 
 }
