@@ -56,7 +56,6 @@ module.exports = {
 			var data = results.data?results.data:[];
 			var arr =[];
             var perdata = {add:1,edit:1,delete:1}
-            //console.log(data);return false;
 			await config.helpers.permission('manage_product', req, async function(err,permissionData) {
 				for(i=0;i<data.length;i++){
 					var arr1 = [];
@@ -125,8 +124,20 @@ module.exports = {
 			let price = 0;
 			for (let i = 0; i < store; i++) {
 				let labelArr = req.body['label_'+i];
+				if(labelArr != '')
+				{
+					labelArr = Array.isArray(req.body['label_'+i]) ? req.body['label_'+i] : req.body['label_'+i].split();
+				}
 				let weightArr = req.body['weight_'+i];
+				if(weightArr != '')
+				{
+					weightArr = Array.isArray(req.body['weight_'+i]) ? req.body['weight_'+i] : req.body['weight_'+i].split();
+				}
 				let priceArr = req.body['price_'+i];
+				if(priceArr != '')
+				{
+					priceArr = Array.isArray(req.body['price_'+i]) ? req.body['price_'+i] : req.body['price_'+i].split();
+				}
 				let defaultArr = req.body['default_'+i];
 				let storeData = [];
 				if(labelArr.length > 0)
@@ -289,9 +300,26 @@ module.exports = {
 			let inventory = [];
 			let price = 0;
 			for (let i = 0; i < store; i++) {
+				let varientArr = req.body['varient_'+i];
+				if(varientArr != '')
+				{
+					varientArr = Array.isArray(req.body['varient_'+i]) ? req.body['varient_'+i] : req.body['varient_'+i].split();
+				}
 				let labelArr = req.body['label_'+i];
+				if(labelArr != '')
+				{
+					labelArr = Array.isArray(req.body['label_'+i]) ? req.body['label_'+i] : req.body['label_'+i].split();
+				}
 				let weightArr = req.body['weight_'+i];
+				if(weightArr != '')
+				{
+					weightArr = Array.isArray(req.body['weight_'+i]) ? req.body['weight_'+i] : req.body['weight_'+i].split();
+				}
 				let priceArr = req.body['price_'+i];
+				if(priceArr != '')
+				{
+					priceArr = Array.isArray(req.body['price_'+i]) ? req.body['price_'+i] : req.body['price_'+i].split();
+				}
 				let defaultArr = req.body['default_'+i];
 				let storeData = [];
 				if(labelArr.length > 0)
@@ -301,6 +329,7 @@ module.exports = {
 						{
 							let storeFieldObj = {
 								storeId: mongoose.mongo.ObjectID(storeId[i]),
+								id: varientArr[j] ? mongoose.mongo.ObjectID(varientArr[j]) : mongoose.mongo.ObjectID(),
 								label : labelArr[j],
 								weight : weightArr[j],
 								price : priceArr[j],
@@ -317,6 +346,7 @@ module.exports = {
 				{
 					let storeFieldObj = {
 						storeId: mongoose.mongo.ObjectID(storeId[i]),
+						id: varientArr[0] ? mongoose.mongo.ObjectID(varientArr[0]) : mongoose.mongo.ObjectID(),
 						label : '',
 						weight : '',
 						price : '',
