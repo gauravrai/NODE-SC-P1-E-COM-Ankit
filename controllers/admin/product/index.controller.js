@@ -135,6 +135,7 @@ module.exports = {
 						if(labelArr[j] != '' && weightArr[j] != '' && priceArr[j] != '')
 						{
 							let storeFieldObj = {
+								id: mongoose.mongo.ObjectID(),
 								storeId: mongoose.mongo.ObjectID(storeId[i]),
 								label : labelArr[j],
 								weight : weightArr[j],
@@ -151,6 +152,7 @@ module.exports = {
 				}else
 				{
 					let storeFieldObj = {
+						id: mongoose.mongo.ObjectID(),
 						storeId: mongoose.mongo.ObjectID(storeId[i]),
 						label : '',
 						weight : '',

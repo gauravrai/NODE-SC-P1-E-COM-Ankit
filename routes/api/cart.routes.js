@@ -7,8 +7,9 @@ module.exports = function(router) {
 		config.constant.APIURL+'/addToCart', 
 		[
       		check('productId', 'Product Id is required').not().isEmpty(),
-      		check('quantity', 'Quantity is required').not().isEmpty(),
+      		check('varientId', 'Varient Id is required').not().isEmpty(),
       		check('price', 'Price is required').not().isEmpty(),
+      		check('quantity', 'Quantity is required').not().isEmpty()
 		], 
 		indexController.addToCart
 	); 

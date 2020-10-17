@@ -15,6 +15,9 @@ let CartItemSchema = new Schema({
     productId: {
         type: ObjectId
     },
+    varientId: {
+        type: ObjectId
+    },
     price:{
         type: Number
     },

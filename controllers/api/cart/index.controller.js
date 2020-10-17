@@ -23,12 +23,13 @@ module.exports = {
         try{
             let userId = req.body.userId;
             let productId = req.body.productId;
+            let varientId = req.body.varientId;
             let sessionId = req.body.sessionId;
             let quantity = parseInt(req.body.quantity);
             let price = parseInt(req.body.price);
             let moveToWishlist = req.body.moveToWishlist;
             let cartCondition = {} ;
-            let cartItemCondition = { productId: mongoose.mongo.ObjectID(productId) } ;
+            let cartItemCondition = { productId: mongoose.mongo.ObjectID(productId), varientId: mongoose.mongo.ObjectID(varientId) } ;
             let userData = {} ;
             let cartId = '' ;
             if(userId){
@@ -43,8 +44,7 @@ module.exports = {
             let cartData = await Cart.find(cartCondition);
             if(moveToWishlist)
             {
-                console.log('coming to move to wishlist')
-                await config.helpers.cart.moveToWishlist(productId, userId, cartData[0], async function (wishlistData) {
+                await config.helpers.cart.moveToWishlist(productId, varientId, userId, cartData[0], async function (wishlistData) {
                     return res.status(200).json({ 
                         data: [], 
                         status: 'success', 
@@ -99,6 +99,7 @@ module.exports = {
                         userId : userId,
                         sessionId : sessionId,
                         productId : productId,
+                        varientId : varientId,
                         price : price,
                         totalPrice : price * quantity,
                         quantity : quantity

@@ -3,13 +3,16 @@ const Schema = mongoose.Schema;
 var ObjectId = mongoose.Schema.Types.ObjectId;
 
 let StockSchema = new Schema({
-    fromStockId: {
+    fromStoreId: {
         type: ObjectId
     },
-    toStockId: {
+    toStoreId: {
         type: ObjectId
     },
     productId: {
+        type: ObjectId
+    },
+    varientId: {
         type: ObjectId
     },
     status: {
