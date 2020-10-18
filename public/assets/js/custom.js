@@ -272,7 +272,7 @@ $(document).on("change", "#fromStoreId", function(){
 	const productId = $('#productId').val();
 	$.ajax({
 		type: 'POST',
-		url: 'getStoreAndVariant',
+		url: 'get_store_variant',
 		data: {id, productId: productId},
 		success: function(response) {
 			if(response){
