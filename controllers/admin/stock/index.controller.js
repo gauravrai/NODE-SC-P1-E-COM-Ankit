@@ -102,155 +102,21 @@ module.exports = {
 			let productData = await Product.find({status:true, deletedAt: 0});
 			let storeData = await Store.find({status:true, deletedAt: 0});
 			res.render('admin/stock/add.ejs',{layout:'admin/layout/layout', pageTitle:pageTitle, moduleName:moduleName, storeData:storeData, productData:productData });
-		}else
-		{
-			let productData = {};
-			productData = {	
-				categoryId : mongoose.mongo.ObjectId(req.body.categoryId),
-				subcategoryId : mongoose.mongo.ObjectId(req.body.subcategoryId),
-				name : req.body.name,
-				brandId : mongoose.mongo.ObjectId(req.body.brandId),
-				offer : req.body.offer,
-				discount: req.body.discount,
-				stock : req.body.stock ? req.body.stock.toUpperCase() : '',
-				description : req.body.description,
-				featured : req.body.featured == 'on' ? true : false,
-				outOfStock : req.body.outOfStock == 'on' ? true : false
-			};
-			let store = req.body.store;
-			let storeId = req.body.storeId;
-			let inventory = [];
-			let price = 0;
-			for (let i = 0; i < store; i++) {
-				let labelArr = req.body['label_'+i];
-				let weightArr = req.body['weight_'+i];
-				let priceArr = req.body['price_'+i];
-				let defaultArr = req.body['default_'+i];
-				let storeData = [];
-				if(labelArr.length > 0)
-				{
-					for (let j = 0; j < labelArr.length; j++) {
-						if(labelArr[j] != '' && weightArr[j] != '' && priceArr[j] != '')
-						{
-							let storeFieldObj = {
-								storeId: mongoose.mongo.ObjectID(storeId[i]),
-								label : labelArr[j],
-								weight : weightArr[j],
-								price : priceArr[j],
-								default : defaultArr == j ? true : false
-							};
-							if(defaultArr == j)
-							{
-								price = priceArr[j];
-							}
-							storeData.push(storeFieldObj);
-						}
-					}
-				}else
-				{
-					let storeFieldObj = {
-						storeId: mongoose.mongo.ObjectID(storeId[i]),
-						label : '',
-						weight : '',
-						price : '',
-						default : false
-					};
-					storeData.push(storeFieldObj);
-				}
-				inventory.push(storeData);
+		} else {
+			const { productId, fromStoreId, toStoreId, variantId } = req.body;
+			const stockData = {
+			    productId: mongoose.mongo.ObjectId(productId),
+				fromStoreId: mongoose.mongo.ObjectId(fromStoreId),
+				toStoreId: mongoose.mongo.ObjectId(toStoreId),
+				variantId: mongoose.mongo.ObjectId(variantId),
 			}
-			productData.inventory = inventory;
-			productData.price = price;
-			let imageLength = req.body.imageLength;
-			let thumbnailArr = req.files.thumbnail;
-			let smallArr = req.files.small;
-			let largeArr = req.files.large;
-			if(imageLength == 1)
-			{
-				thumbnailArr = []; 
-				smallArr = []; 
-				largeArr = []; 
-				thumbnailArr.push(req.files.thumbnail);
-				smallArr.push(req.files.small);
-				largeArr.push(req.files.large);
-			}
-			let  image = {};
-			new Promise(function(resolve, reject) { 
-				let thumbnailImage = [];
-				let i = 0;
-				let thumbnailPath = config.constant.PRODUCTTHUMBNAILUPLOADPATH;
-				async.forEach(thumbnailArr, function(thumbnail, callback) {
-					let thumbnailName = Date.now()+'_'+thumbnail.name;
-					thumbnailImage[i++] = thumbnailName;
-					thumbnail.mv(thumbnailPath+thumbnailName, function(err,data) {
-						if (err) { 
-							console.log(err)
-							reject(err); 
-						} else {  
-							callback();
-						}
-					})
-					
-				}, function (err) {
-					image.thumbnail = thumbnailImage;
-					resolve(); 
-				});
-			}).then(async () => { 
-				new Promise(function(resolve1, reject1) { 
-					let smallImage = [];
-					let i = 0;
-					let smallPath = config.constant.PRODUCTSMALLUPLOADPATH;
-					async.forEach(smallArr, function(small, callback) {
-						let smallName = Date.now()+'_'+small.name;
-						smallImage[i++] = smallName;
-						small.mv(smallPath+smallName, function(err,data) {
-							if (err) { 
-								console.log(err)
-								reject1(err); 
-							} else {  
-								callback();
-							}
-						})
-						
-					}, function (err) {
-						image.small = smallImage;
-						resolve1(); 
-					});
-				}).then(async () => { 
-					new Promise(function(resolve2, reject2) {
-						let largeImage = [];
-						let i = 0;
-						let largePath = config.constant.PRODUCTLARGEUPLOADPATH;
-						async.forEach(largeArr, function(large, callback) {
-							let largeName = Date.now()+'_'+large.name;
-							largeImage[i++] = largeName;
-							large.mv(largePath+largeName, function(err,data) {
-								if (err) { 
-									console.log(err)
-									reject2(err); 
-								} else {  
-									callback();
-								}
-							})
-							
-						}, function (err) {
-							image.large = largeImage;
-							resolve2();
-						});
-					}).then(async () => { 
-						productData.image = image;
-						let product = new Stock(productData);
-						product.save(function(err, data){
-							if(err){console.log(err)}
-							req.flash('msg', {msg:'Stock has been Created Successfully', status:false});	
-							res.redirect(config.constant.ADMINCALLURL+'/manage_stock');
-							req.flash({});	
-						})
-					})
-				})
-			}).catch((err) => {
-				console.log(err);
-			}); 
+			let stock = new Stock(stockData);
+			stock.save(function(err, data){
+			if(err){console.log(err)}
+				req.flash('msg', {msg:'Stock has been Created Successfully', status:false});	
+				res.redirect(config.constant.ADMINCALLURL+'/manage_stock');
+				req.flash({});	
+			})
 		}
 	},
 

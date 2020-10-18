@@ -22,30 +22,12 @@
             <div class="card-header d-flex p-0">
               <h3 class="card-title p-3">Stock Information</h3>
               <ul class="nav nav-pills ml-auto p-2">
-                <li class="nav-item"><a class="btn btn-block btn-secondary" href="<%=APPCONSTANT.ADMINCALLURL%>/manage_product">Back</a></li>
+                <li class="nav-item"><a class="btn btn-block btn-secondary" href="<%=APPCONSTANT.ADMINCALLURL%>/manage_stock">Back</a></li>
               </ul>
             </div>
             <form role="form" id="addStockForm" method="post" enctype="multipart/form-data">
               <div id="tableContent" style="padding: 0 17px 0 10px;">
                 <div class="form-row">
-                  <div class="form-group col-md-3">
-                    <label for="fromStoreId">Select From Store</label>
-                    <select name="fromStoreId" class="form-control" id="fromStoreId">
-                      <option value="">Select From Store</option>
-                      <% for(let i = 0; i < storeData.length; i++){ %>
-                        <option value="<%=storeData[i].id%>"><%=storeData[i].name%></option>
-                      <% } %>
-                    </select>
-                  </div>
-                  <div class="form-group col-md-3">
-                    <label for="toStoreId">Select To Store</label>
-                    <select name="toStoreId" class="form-control" id="toStoreId">
-                      <option value="">Select To Store</option>
-                      <% for(let i = 0; i < storeData.length; i++){ %>
-                        <option value="<%=storeData[i].id%>"><%=storeData[i].name%></option>
-                      <% } %>
-                    </select>
-                  </div>
                   <div class="form-group col-md-3">
                     <label for="productId">Select Product</label>
                     <select name="productId" class="form-control" id="productId">
@@ -55,10 +37,34 @@
                       <% } %>
                     </select>
                   </div>
+                  <div class="form-group col-md-3">
+                    <label for="fromStoreId">Select From Store</label>
+                    <select name="fromStoreId" class="form-control" id="fromStoreId">
+                      <option value="">Select From Store</option>
+                      <% for(let i = 0; i < storeData.length; i++){ %>
+                        <option value="<%=storeData[i].id%>"><%=storeData[i].name%></option>
+                      <% } %>
+                    </select>
+                  </div>
+                  <div id='test'>
+                    <div class="form-group col-md-3">
+                      <label for="toStoreId">Select To Store</label>
+                      <select name="toStoreId" class="form-control" id="toStoreId">
+                        <option value="">Select To Store</option>
+                      </select>
+                    </div>
+                    <div class="form-group col-md-3">
+                      <label for="variantId">Variant</label>
+                      <select name="variantId" class="form-control" id="variantId">
+                        <option value=""> Select Variant</option>
+                      </select>
+                    </div>
+                  </div>
+
                 </div>
               </div>    
               <div class="card-footer">
-                <a href="<%=APPCONSTANT.ADMINCALLURL%>/manage_product" class="btn btn-default">Cancel</a>
+                <a href="<%=APPCONSTANT.ADMINCALLURL%>/manage_stock" class="btn btn-default">Cancel</a>
                 <button type="submit" class="btn btn-primary add_button">Submit</button>
               </div>
             </form>
@@ -72,15 +78,18 @@
   </section>
 </div>
 <script>
-  $(document).on("click",".add_button",function(){
-    var regex = new RegExp(/^[a-z]{2}[0-9]{7}$/i);
-    var textvalue = $("#stock").val();
-    if (regex.test(textvalue)) {
-      
-    } else {
-        alert("Please Enter stock keeping Unit Two Character and Seven Number This Formate(  LB1234567 )");
-        $("#stock").focus();
-        return false;
-    }
-  });
+  $(document).ready(function() {
+     
+     $("#productId").focus();
+     
+      $("#productId").blur(function() {
+          if ($(this).val() != '')
+          {
+              $("#fromStoreId").removeAttr("disabled"); 
+          }
+          else {              
+              $("#fromStoreId").attr("disabled", "disabled");  
+          }
+      });
+ });
   </script>

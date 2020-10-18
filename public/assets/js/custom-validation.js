@@ -537,6 +537,48 @@ $(document).ready(function () {
         }
     });
 
+    $('#addStockForm,#editStockForm').validate({
+        rules: {
+            productId: {
+                required: true,
+            },
+            fromStoreId: {
+                required: true,
+            },
+            toStoreId: {
+                required: true,
+            },
+            variantId: {
+                required: true,
+            },
+        },
+        messages: {
+            productId: {
+                required: 'Please select product',
+            },
+            fromStoreId: {
+                required: 'Please select from store',
+            },
+            toStoreId: {
+                required: 'Please select to store',
+            },
+            variantId: {
+                required: 'Please select variant',
+            },
+        },
+        errorElement: 'span',
+        errorPlacement: function (error, element) {
+            error.addClass('invalid-feedback');
+            element.closest('.form-group').append(error);
+        },
+        highlight: function (element, errorClass, validClass) {
+            $(element).addClass('is-invalid');
+        },
+        unhighlight: function (element, errorClass, validClass) {
+            $(element).removeClass('is-invalid');
+        }
+    });
+
     $('#addDiscountForm,#editDiscountForm').validate({
         rules: {
             couponNo: {

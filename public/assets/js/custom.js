@@ -267,6 +267,25 @@ $(document).on("change", "#categoryId", function(){
 	});
 });
 
+$(document).on("change", "#fromStoreId", function(){
+	let id = $(this).val();
+	const productId = $('#productId').val();
+	$.ajax({
+		type: 'POST',
+		url: 'getStoreAndVariant',
+		data: {id, productId: productId},
+		success: function(response) {
+			if(response){
+			//TODO: remove test with something good
+			$('#test').html(response);	
+			}
+			else{
+			$('#test').html('');	
+			}
+		}
+	});
+});
+
 $(document).on("change", "#subcategoryId", function(){
 	let id = $(this).val();
 	$.ajax({

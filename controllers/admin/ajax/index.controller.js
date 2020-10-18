@@ -7,6 +7,7 @@ const bcrypt = require("bcrypt-nodejs");
 const moment = require('moment');
 const City = model.city;
 const State = model.state;
+const Store = model.store;
 const Pincode = model.pincode;
 const Area = model.area;
 const Society = model.society;
@@ -57,6 +58,7 @@ module.exports = {
 
 	getSubcategory: async function(req,res){
 		let id = mongoose.mongo.ObjectID(req.body.id);
+
 		let data = await SubCategory.find({categoryId: id, status: true, deletedAt: 0 });
 		res.render('admin/ajax/subcategory',{layout:false, data:data} );
 	},
@@ -66,5 +68,22 @@ module.exports = {
 		let data = await Product.find({subcategoryId: id, status: true, deletedAt: 0, offer:"Yes"});
 		console.log(data);
 		res.render('admin/ajax/product',{layout:false, data:data} );
+	},
+
+	getStoreAndVariant: async function(req,res){
+		const { id, productId } = req.body;
+		const storeData = await Store.find({status:true, deletedAt: 0, _id: { $ne:  mongoose.mongo.ObjectID(id)}});
+		let variantData = [];
+		if ( productId) {
+			const productData = await Product.find({_id: mongoose.mongo.ObjectID(productId), status: true, deletedAt: 0 });
+			const { inventory } = productData[0];
+			inventory.forEach((inventoryData) => {
+				inventoryData.forEach((storeData) => {
+					if (storeData.storeId.toString() === id) { 
+						variantData.push(storeData)}
+				})
+			});
+		}
+		res.render('admin/ajax/toStoreAndVariant',{layout:false, data: { storeData, variantData } } );
 	},
 }
