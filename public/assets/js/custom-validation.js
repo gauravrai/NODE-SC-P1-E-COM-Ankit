@@ -551,6 +551,9 @@ $(document).ready(function () {
             variantId: {
                 required: true,
             },
+            count: {
+                required: true,
+            },
         },
         messages: {
             productId: {
@@ -564,6 +567,9 @@ $(document).ready(function () {
             },
             variantId: {
                 required: 'Please select variant',
+            },
+            count: {
+                required: 'Please add count',
             },
         },
         errorElement: 'span',

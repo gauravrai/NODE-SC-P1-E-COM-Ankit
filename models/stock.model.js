@@ -15,6 +15,9 @@ let StockSchema = new Schema({
     varientId: {
         type: ObjectId
     },
+    count: {
+        type: Number,
+    },
     status: {
         type: Boolean,
         default : true

@@ -103,8 +103,9 @@ module.exports = {
 			let storeData = await Store.find({status:true, deletedAt: 0});
 			res.render('admin/stock/add.ejs',{layout:'admin/layout/layout', pageTitle:pageTitle, moduleName:moduleName, storeData:storeData, productData:productData });
 		} else {
-			const { productId, fromStoreId, toStoreId, variantId } = req.body;
+			const { productId, fromStoreId, toStoreId, variantId, count } = req.body;
 			const stockData = {
+				count,
 			    productId: mongoose.mongo.ObjectId(productId),
 				fromStoreId: mongoose.mongo.ObjectId(fromStoreId),
 				toStoreId: mongoose.mongo.ObjectId(toStoreId),
