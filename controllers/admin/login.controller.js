@@ -33,7 +33,7 @@ module.exports = {
 					res.redirect(ADMINCALLURL+'/dashboard');
 				}else{
 					req.flash('msg', {msg:'Please Enter valid password',status:false});						
-					res.redirect(ADMINCALLURL,);
+					res.redirect(ADMINCALLURL);
 				}
 			}else{
 				req.flash('msg', {msg:'Please Enter valid username',status:false});

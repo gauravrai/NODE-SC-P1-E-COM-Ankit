@@ -1,0 +1,66 @@
+<div class="content-wrapper">
+    <section class="content-header">
+      <div class="container-fluid">
+        <div class="row mb-2">
+          <div class="col-sm-6">
+            <h1><%=pageTitle%></h1>
+          </div>
+          <div class="col-sm-6">
+            <ol class="breadcrumb float-sm-right">
+              <li class="breadcrumb-item"><a href="javascript:void(0)"><%=moduleName%></a></li>
+              <li class="breadcrumb-item active"><%=pageTitle%></li>
+            </ol>
+          </div>
+        </div>
+      </div>
+    </section>
+    <section class="content">
+      <div class="container-fluid">
+        <div class="row">
+          <div class="col-md-12">
+            <div class="card card-primary card-outline">
+              <div class="card-header d-flex p-0">
+                <h3 class="card-title p-3">Wallet Information</h3>
+                <ul class="nav nav-pills ml-auto p-2">
+                  <li class="nav-item"><a class="btn btn-block btn-secondary" href="<%=APPCONSTANT.ADMINCALLURL%>/manage_wallet">Back</a></li>
+                </ul>
+              </div>
+              <form role="form" id="editWalletForm" method="post">
+                <div class="card-body">
+                  <input type="hidden" name="id" value="<%=walletData.id?walletData.id:''%>">
+                  <div class="form-group col-md-3">
+                    <label for="customer">Select Customer</label>
+                    <select name="customer" class="form-control select2" id="customer">
+                      <option value="">Select Option</option>
+                    <% for(let i = 0; i < customerData.length; i++){ %>
+                        <option value="<%=customerData[i].id%>" <% if(walletData.customer == customerData[i].id){ %> selected="selected" <% } %> ><%=customerData[i].mobile%></option>
+                      <% } %>
+                    </select>
+                  </div>
+                  <div class="form-group">
+                    <label for="amount">Amount</label>
+                    <input type="text" name="amount" class="form-control" id="amount" placeholder="Amount" value="<%=walletData.amount?walletData.amount:''%>">
+                  </div>
+                  <div class="form-group col-md-3">
+                      <label for="type">Type</label>
+                      <select name="type" class="form-control select2" id="type">
+                        <option value="">Select Option</option>
+                        <option value="Add" <% if(walletData.type == 'Add'){ %> selected="selected" <% } %> >Add</option>
+                        <option value="Subtract" <% if(walletData.type == 'Subtract'){ %> selected="selected" <% } %> >Subtract</option>
+                      </select>
+                  </div>
+                </div>
+                <div class="card-footer">
+                  <a href="<%=APPCONSTANT.ADMINCALLURL%>/manage_wallet" class="btn btn-default">Cancel</a>
+                  <button type="submit" class="btn btn-primary">Submit</button>
+                </div>
+              </form>
+            </div>
+          </div>
+          <div class="col-md-6">
+  
+          </div>
+        </div>
+      </div>
+    </section>
+  </div>

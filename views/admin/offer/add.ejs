@@ -28,86 +28,122 @@
               <form role="form" id="addOfferForm" method="post" enctype="multipart/form-data">
                 <div id="tableContent" style="padding: 0 17px 0 10px;">
                   <div class="form-row">
-                    <!-- <div class="card-body"> -->
-                        <div class="form-group col-md-3">
-                            <label for="name">Offer Name</label>
-                            <input type="text" name="name" class="form-control" id="name" placeholder="Offer Name">
-                        </div>
-                        <div class="form-group col-md-3">
-                            <label for="categoryId">Select Category</label>
-                            <select name="categoryId" class="form-control" id="categoryId">
-                            <option value="">Select Category</option>
-                            <% for(let i = 0; i < categoryData.length; i++){ %>
-                                <option value="<%=categoryData[i].id%>"><%=categoryData[i].name%></option>
-                              <% } %>
-                            </select>
-                        </div>
-                        <!-- <span id="subcategoryData" class="locationFields"> -->
-                          <div id="subcategoryData" class="form-group col-md-3">
-                            <div class="form-group ">
-                                <label for="subcategoryId">Select Sub  Category</label>
-                                <select name="subcategoryId" class="form-control" id="subcategoryId">
-                                <option value="">Select Sub Category</option>
-                                <% for(let i = 0; i < subcategoryData.length; i++){ %>
-                                    <option value="<%=subcategoryData[i].id%>"><%=subcategoryData[i].name%></option>
-                                  <% } %>
-                                </select>
-                            </div>
-                            </div>
-                        <!-- </span> -->
-                        <div id="productData" class="form-group col-md-3">
-                            <label for="productId">Select Product</label>
-                            <select name="productId" class="form-control" id="productId">
-                            <option value="">Select Product</option>
-                            <% for(let i = 0; i < productData.length; i++){ %>
-                                <option value="<%=productData[i].id%>"><%=productData[i].name%></option>
-                              <% } %>
-                            </select>
-                        </div>
-                        
-                        <div class="form-group col-md-3">
-                            <label for="offerType">Select Offer Type</label>
-                            <select name="offerType" class="form-control" id="offerType">
-                            <option value="">Select Offer Type</option>
-                            <option value="percentage">Percentage</option>
-                            <option value="fixed">Fixed</option>
-                            </select>
-                        </div>
-                        <div class="form-group col-md-3" id="percentage_div" style="display:none;">
-                            <label for="percentage">Percentage</label>
-                            <input type="text" name="percentage" class="form-control" id="percentage" placeholder="Percentage">
-                        </div>
-                        <div class="form-group col-md-3" id="fixed_div" style="display:none;">
-                            <label for="fixed">Fixed</label>
-                            <input type="text" name="fixed" class="form-control" id="fixed" placeholder="Fixed">
-                        </div>
-
-                        <div class="form-group col-md-3">
-                            <label for="cartValue">Minimum Cart Value</label>
-                            <input type="text" name="cartValue" class="form-control" id="cartValue" placeholder="Minimum Cart Value">
-                        </div> 
-                        <div class="form-group col-md-3">
-                            <label for="from">From Date</label>
-                            <input type="date" name="from" class="form-control" id="from" placeholder="From Date">
-                        </div>
-                        <div class="form-group col-md-3">
-                            <label for="to">To Date</label>
-                            <input type="date" name="to" class="form-control" id="to" placeholder="To Date">
-                        </div>
-                    
-                        <div class="form-group col-md-3">
-                            <label for="capping">Capping</label>
-                            <input type="text" name="capping" class="form-control" id="capping" placeholder="Capping">
-                        </div>
-                        <div class="form-group col-md-3">
-                            <label for="applyFor">Select Apply For</label>
-                            <select name="applyFor" class="form-control" id="applyFor">
-                                <option value="">Select Apply For</option>
-                                <option value="website">Website</option>
-                                <option value="app">App</option>
-                                <option value="both">Both</option>
-                            </select>
-                        </div>
+                    <div class="form-group col-md-3">
+                        <label for="name">Offer Name</label>
+                        <input type="text" name="name" class="form-control" id="name" placeholder="Offer Name">
+                    </div>
+                    <div class="form-group col-md-3">
+                        <label for="from">From Date</label>
+                        <input type="date" name="from" class="form-control" id="from" placeholder="From Date">
+                    </div>
+                    <div class="form-group col-md-3">
+                        <label for="to">To Date</label>
+                        <input type="date" name="to" class="form-control" id="to" placeholder="To Date">
+                    </div>
+                    <div class="form-group col-md-3">
+                        <label for="to">Multiple of</label>
+                        <input type="text" name="multipleOf" class="form-control" id="multipleOf" placeholder="Multiple of">
+                    </div>
+                    <div class="form-group col-md-3">
+                        <label for="to">Free Items</label>
+                        <input type="text" name="freeItem" class="form-control" id="freeItem" placeholder="Free Items">
+                    </div>
+                    <div class="form-group col-md-3">
+                        <label for="offerType">Select Offer Type</label>
+                        <select name="offerType" class="form-control" id="offerType">
+                        <option value="">Select Offer Type</option>
+                        <option value="percentage">Percentage</option>
+                        <option value="fixed">Fixed</option>
+                        </select>
+                    </div>
+                    <div class="form-group col-md-3" id="percentage_div" style="display:none;">
+                        <label for="percentage">Percentage</label>
+                        <input type="text" name="percentage" class="form-control" id="percentage" placeholder="Percentage">
+                    </div>
+                    <div class="form-group col-md-3" id="fixed_div" style="display:none;">
+                        <label for="fixed">Fixed</label>
+                        <input type="text" name="fixed" class="form-control" id="fixed" placeholder="Fixed">
+                    </div>
+                  </div>
+                  <div class="form-group col-md-3">
+                      <label for="applyFor">Offer Apply For</label>
+                      <select name="applyFor" class="form-control" id="applyFor">
+                      <option value="both">Both</option>
+                      <option value="web">Website</option>
+                      <option value="app">App</option>
+                      </select>
+                  </div>
+                  <div class="card-header">
+                    <h3 class="card-title">Offer Applicable on</h3>
+                  </div>
+                  <div class="form-row">
+                    <div class="form-group col-md-3">
+                        <label for="offerCategoryId">Select Category</label>
+                        <select name="offerCategoryId[]" class="form-control select2" id="offerCategoryId" onchange="getProductByCatsubcat(this, 'categoryId', 'offerSubcategoryId', 'offerProductId');" multiple="multiple">
+                        <% for(let i = 0; i < categoryData.length; i++){ %>
+                            <option value="<%=categoryData[i].id%>"><%=categoryData[i].name%></option>
+                          <% } %>
+                        </select>
+                    </div>
+                    <div class="form-group col-md-3">
+                      <label for="offerSubcategoryId">Select Sub  Category</label>
+                      <select name="offerSubcategoryId[]" class="form-control select2" id="offerSubcategoryId" onchange="getProductByCatsubcat(this, 'subcategoryId', '', 'offerProductId');" multiple="multiple">
+                      <% for(let i = 0; i < subcategoryData.length; i++){ %>
+                          <option value="<%=subcategoryData[i].id%>"><%=subcategoryData[i].name%></option>
+                        <% } %>
+                      </select>
+                    </div>
+                    <div class="form-group col-md-3">
+                      <label for="offerProductId">Select Product</label>
+                      <select name="offerProductId[]" class="form-control select2" id="offerProductId" multiple="multiple">
+                      <% for(let i = 0; i < productData.length; i++){ %>
+                          <option value="<%=productData[i].id%>"><%=productData[i].name%></option>
+                        <% } %>
+                      </select>
+                    </div>
+                    <div class="form-group col-md-3">
+                      <label for="offerProductId">Varient</label><br>
+                      <input type="radio" name="offerVarient" value="default"> Default
+                      <input type="radio" name="offerVarient" value="all"> All
+                    </div>
+                  </div>
+                  <div class="card-header">
+                    <h3 class="card-title">Free Item</h3>
+                  </div>
+                  <div class="form-row">
+                    <div class="form-group col-md-3">
+                        <label for="freeCategoryId">Select Category</label>
+                        <select name="freeCategoryId" class="form-control" id="freeCategoryId" onchange="getProductByCatsubcat(this, 'categoryId', 'freeSubcategoryId', 'freeProductId');">
+                        <option value="">Select Option</option>
+                        <% for(let i = 0; i < categoryData.length; i++){ %>
+                            <option value="<%=categoryData[i].id%>"><%=categoryData[i].name%></option>
+                          <% } %>
+                        </select>
+                    </div>
+                    <div class="form-group col-md-3">
+                      <label for="freeSubcategoryId">Select Option</label>
+                      <select name="freeSubcategoryId" class="form-control" id="freeSubcategoryId" onchange="getProductByCatsubcat(this, 'subcategoryId', '', 'freeProductId');">
+                      <option value="">Select Sub Category</option>
+                      <% for(let i = 0; i < subcategoryData.length; i++){ %>
+                          <option value="<%=subcategoryData[i].id%>"><%=subcategoryData[i].name%></option>
+                        <% } %>
+                      </select>
+                    </div>
+                    <div class="form-group col-md-3">
+                      <label for="freeProductId">Select Option</label>
+                      <select name="freeProductId" class="form-control" id="freeProductId">
+                      <option value="">Select Product</option>
+                      <% for(let i = 0; i < productData.length; i++){ %>
+                          <option value="<%=productData[i].id%>"><%=productData[i].name%></option>
+                        <% } %>
+                      </select>
+                    </div>
+                    <div class="form-group col-md-3">
+                      <label for="freeVarientId">Varient</label>
+                      <select name="freeVarientId" class="form-control" id="freeVarientId">
+                      <option value="">Select Option</option>
+                      </select>
+                    </div>
                   </div>
                 </div>  
                 <div class="card-footer">

@@ -1,3 +1,7 @@
+$('.select2').select2({
+	placeholder : "Select Option"
+});
+
 $(document).ready(function() {
 	get_allmenu();
 });
@@ -258,10 +262,10 @@ $(document).on("change", "#categoryId", function(){
 		data: {id:id},
 		success: function(response) {
 			if(response){
-			$('#subcategoryData').html(response);	
+				$('#subcategoryData').html(response);	
 			}
 			else{
-			$('#subcategoryData').html('');	
+				$('#subcategoryData').html('');	
 			}
 		}
 	});
@@ -275,10 +279,10 @@ $(document).on("change", "#subcategoryId", function(){
 		data: {id:id},
 		success: function(response) {
 			if(response){
-			$('#productData').html(response);	
+				$('#productData').html(response);	
 			}
 			else{
-			$('#productData').html('');	
+				$('#productData').html('');	
 			}
 		}
 	});
@@ -293,4 +297,55 @@ $(document).on("change","#offerType",function(){
 	  $("#fixed_div").show();
 	  $("#percentage_div").hide();
 	}
+});
+
+function getProductByCatsubcat(id, fieldName, subcatDivId, prodDivId){
+	id = id.value;
+	console.log(id);
+	// if(fieldName == 'categoryId')
+	// {
+	// 	$.ajax({
+	// 		type: 'POST',
+	// 		url: 'get_subcat_by_cat',
+	// 		data: {id:id},
+	// 		success: function(response) {
+	// 			if(response){
+	// 				$('#'+subcatDivId).html(response);	
+	// 			}
+	// 			else{
+	// 				$('#'+subcatDivId).html('');	
+	// 			}
+	// 		}
+	// 	});
+	// }
+	// $.ajax({
+	// 	type: 'POST',
+	// 	url: 'get_product_by_cat_subcat',
+	// 	data: {id:id, fieldName:fieldName},
+	// 	success: function(response) {
+	// 		if(response){
+	// 			$('#'+prodDivId).html(response);	
+	// 		}
+	// 		else{
+	// 			$('#'+prodDivId).html('');	
+	// 		}
+	// 	}
+	// });
+};
+
+$(document).on("change", "#freeProductId", function(){
+	let id = $(this).val();
+	$.ajax({
+		type: 'POST',
+		url: 'get_varient',
+		data: {id:id},
+		success: function(response) {
+			if(response){
+				$('#freeVarientId').html(response);	
+			}
+			else{
+				$('#freeVarientId').html('');	
+			}
+		}
+	});
 });

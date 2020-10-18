@@ -38,6 +38,10 @@ let DiscountSchema = new Schema({
     applyFor: {
         type: String
     },
+    firstOrder: {
+        type: Boolean,
+        default : false
+    },
     status: {
         type: Boolean,
         default : true

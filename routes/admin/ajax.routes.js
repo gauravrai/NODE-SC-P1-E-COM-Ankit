@@ -8,4 +8,7 @@ module.exports = function(router) {
     router.all(config.constant.ADMINCALLURL+'/get_society/:id',isloggedin, indexController.getSociety);
     router.all(config.constant.ADMINCALLURL+'/get_subcategory',isloggedin, indexController.getSubcategory);
     router.all(config.constant.ADMINCALLURL+'/get_product',isloggedin, indexController.getProduct);
+    router.all(config.constant.ADMINCALLURL+'/get_subcat_by_cat',isloggedin, indexController.getSubcatByCat);
+    router.all(config.constant.ADMINCALLURL+'/get_product_by_cat_subcat',isloggedin, indexController.getProductByCatsubcat);
+    router.all(config.constant.ADMINCALLURL+'/get_varient',isloggedin, indexController.getVarient);
 }

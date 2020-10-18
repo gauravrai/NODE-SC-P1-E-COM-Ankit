@@ -6,14 +6,17 @@ let OfferSchema = new Schema({
     name: {
         type: String
     },
-    categoryId: {
-        type: ObjectId
+    from: {
+        type: Date
     },
-    subcategoryId: {
-        type: ObjectId
+    to: {
+        type: Date
     },
-    productId: {
-        type: ObjectId
+    multipleOf: {
+        type: Number
+    },
+    freeItem: {
+        type: Number
     },
     offerType: {
         type: String,
@@ -26,20 +29,32 @@ let OfferSchema = new Schema({
         type: String,
         default: 0
     },
-    cartValue: {
-        type: String 
-    },
-    from: {
-        type: Date
-    },
-    to: {
-        type: Date
-    },
-    capping: {
-        type: String
-    },
     applyFor: {
         type: String
+    },
+    offerCategoryId: {
+        type: Array
+    },
+    offerSubcategoryId: {
+        type: Array
+    },
+    offerProductId: {
+        type: Array
+    },
+    offerVarient: {
+        type: String 
+    },
+    freeCategoryId: {
+        type: ObjectId
+    },
+    freeSubcategoryId: {
+        type: ObjectId
+    },
+    freeProductId: {
+        type: ObjectId
+    },
+    freeVarient: {
+        type: String 
     },
     status: {
         type: Boolean,

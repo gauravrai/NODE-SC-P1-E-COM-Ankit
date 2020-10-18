@@ -186,16 +186,16 @@ module.exports = {
         try{
             let userId = req.body.userId;
             let sessionId = req.body.sessionId;
-            let cartItemCondition = { } ;
+            let condition = { } ;
             if(userId){
-                cartItemCondition.userId = mongoose.mongo.ObjectID(userId);
+                condition.userId = mongoose.mongo.ObjectId(userId);
             }else 
             {
-                cartItemCondition.sessionId = sessionId;
+                condition.sessionId = sessionId;
             }  
             let cartItemData = await Cartitem.aggregate([ 
                 {
-                    $match : cartItemCondition
+                    $match : condition
                 },
                 {
                     $lookup:
@@ -207,17 +207,54 @@ module.exports = {
                       }
                 },
                 {
+                    $project: { 
+                        __v:0,
+                        createdAt:0,
+                        updatedAt:0,
+                        status:0,
+                        deletedAt:0,
+                        "productData.__v":0,
+                        "productData.createdAt":0,
+                        "productData.updatedAt":0,
+                        "productData.status":0,
+                        "productData.deletedAt":0
+                    }
+                },
+                {
+                    $unwind: "$productData"
+                },
+                {
+                    $unwind: "$productData.inventory"
+                },
+                {
+                    $group: {
+                        "_id":"$_id",
+                        "cartId": { $first:"$cartId" },
+                        "userId": { $first:"$userId" },
+                        "productId": { $first:"$productId" },
+                        "varientId": { $first:"$varientId" },
+                        "price": { $first:"$price" },
+                        "totalPrice": { $first:"$totalPrice" },
+                        "quantity": { $first:"$quantity" },
+                        "productData": { $first:"$productData" }
+                    }
+                },
+                {
                     $addFields: {
                         "thumbnailPath" : config.constant.PRODUCTTHUMBNAILSHOWPATH,
                         "smallPath" : config.constant.PRODUCTSMALLSHOWPATH,
                         "largePath" : config.constant.PRODUCTLARGESHOWPATH
                     }
-                }
+                },
             ]);
             
             if(cartItemData.length > 0) {
+                let data = {};
+                data.cartItemData = cartItemData;
+                let cartData = await Cart.findOne(condition);
+                data.cartData = cartData;
                 return res.status(200).json({ 
-                    data: cartItemData, 
+                    data: data, 
                     status: 'success', 
                     message: "Cart data found successfully!!" 
                 });	

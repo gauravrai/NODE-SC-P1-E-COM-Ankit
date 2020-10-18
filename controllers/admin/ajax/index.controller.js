@@ -64,7 +64,48 @@ module.exports = {
 	getProduct: async function(req,res){
 		let id = mongoose.mongo.ObjectID(req.body.id);
 		let data = await Product.find({subcategoryId: id, status: true, deletedAt: 0, offer:"Yes"});
-		console.log(data);
 		res.render('admin/ajax/product',{layout:false, data:data} );
+	},
+
+	getSubcatByCat: async function(req,res){
+		let id = mongoose.mongo.ObjectID(req.body.id);
+		let data = await SubCategory.find({categoryId: id, status: true, deletedAt: 0 });
+		res.render('admin/ajax/selectOption',{layout:false, data:data} );
+	},
+
+	getProductByCatsubcat: async function(req,res){
+		let id = mongoose.mongo.ObjectID(req.body.id);
+		let fieldName = req.body.fieldName;
+		let condition = {status: true, deletedAt: 0, offer:"Yes"};
+		if(fieldName == 'categoryId')
+		{
+			condition.categoryId = id;
+		}
+		else
+		{
+			condition.subcategoryId = id;
+		}
+		let data = await Product.find(condition);
+		res.render('admin/ajax/selectOption',{layout:false, data:data} );
+	},
+
+	getVarient: async function(req,res){
+		let id = mongoose.mongo.ObjectID(req.body.id);
+		let data = await Product.aggregate([ 
+			{
+				$match : {_id: id, status: true, deletedAt: 0}
+			},
+			{
+				$unwind: "$inventory"
+			},
+			{
+				$group: {
+					"_id":"$_id",
+					"inventory": { $first:"$inventory" },
+				}
+			}
+		])
+		console.log(data[0].inventory);
+		res.render('admin/ajax/varientOption',{layout:false, data:data[0].inventory} );
 	},
 }

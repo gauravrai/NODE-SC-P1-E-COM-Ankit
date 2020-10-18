@@ -144,6 +144,16 @@ $(document).ready(function() {
             type: "POST",          
         }
     });
+
+    $('#walletTable').DataTable( {
+        "processing": true,
+        "serverSide": true,
+        "ordering": false,
+        "ajax": {
+            url: 'list_wallet',
+            type: "POST",          
+        }
+    });
 });
 
 //Delete data function
