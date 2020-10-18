@@ -17,6 +17,10 @@ let StockSchema = new Schema({
         type: String,
         enum: ['ml', 'gram', 'kg'],
     },
+    transactionType: {
+        type: String,
+        enum: ['in', 'out'],
+    },
     storeId: {
         type: ObjectId,
     },

@@ -105,33 +105,40 @@ module.exports = {
 			res.render('admin/stock/add.ejs',{layout:'admin/layout/layout', pageTitle:pageTitle, moduleName:moduleName, storeData:storeData, productData:productData });
 		}else
 		{
-			const { productId, variant, count, costPrice, storeId } = req.body;
-
-			const stockEntries = new StockEntries({
-				productId: mongoose.mongo.ObjectId(productId), count, variant, costPrice, storeId:mongoose.mongo.ObjectId(storeId),
-			});
-			stockEntries.save(function(err, data){
-			if(err){console.log(err)}	
-			});
+			const { productId, variant, count, costPrice, storeId, transactionType } = req.body;
 
 			const stockData = await Stock.findOne({ status: true, deletedAt: 0, productId: mongoose.mongo.ObjectId(productId), variant });
-			if (stockData) {
-				const stockUpdate = { count: (parseInt(stockData.count) + parseInt(count)) }
-				await Stock.update(
-					{ productId: mongoose.mongo.ObjectId(productId) },
-					stockUpdate, function(err,data){
-					if(err){console.log(err)}
-				})
+			if ((!stockData && transactionType === 'out') || (stockData && transactionType === 'out' && (parseInt(stockData.count) - parseInt(count)) < 0)) {
+				req.flash('msg', {msg:'Not enough stock available', status:false});	
+				res.redirect(config.constant.ADMINCALLURL+'/add_stock');
 			} else {
-				const stock = new Stock({ productId: mongoose.mongo.ObjectId(productId), count, variant });
-				stock.save(function(err, data){
-				if(err){console.log(err)}	
+				if (stockData) {
+					const countToUpdate = transactionType === 'in' 
+						? (parseInt(stockData.count) + parseInt(count))
+						: (parseInt(stockData.count) - parseInt(count))
+					await Stock.updateOne(
+						{ productId: mongoose.mongo.ObjectId(productId) },
+						{ count: countToUpdate },
+						function(err,data){
+							if(err){console.log(err)}
+						})
+				} else {
+					const stock = new Stock({ productId: mongoose.mongo.ObjectId(productId), count, variant });
+					stock.save(function(err, data){
+					if(err){console.log(err)}	
+					});
+				}
+	
+				const stockEntries = new StockEntries({
+					productId: mongoose.mongo.ObjectId(productId), count, variant, costPrice, storeId:mongoose.mongo.ObjectId(storeId), transactionType,
 				});
+				stockEntries.save(function(err, data){
+					if(err){console.log(err)}	
+				});
+				req.flash('msg', {msg:'Stock Added Successfully', status:false});	
+				res.redirect(config.constant.ADMINCALLURL+'/manage_stock');
+				req.flash({});
 			}
-
-			req.flash('msg', {msg:'Stock Added Successfully', status:false});	
-			res.redirect(config.constant.ADMINCALLURL+'/manage_stock');
-			req.flash({});
 		}
 	},
 

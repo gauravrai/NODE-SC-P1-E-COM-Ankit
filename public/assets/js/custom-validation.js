@@ -471,6 +471,61 @@ $(document).ready(function () {
         }
     });
 
+    
+    $('#addStockForm, #editStockForm').validate({
+        rules: {
+            productId: {
+                required: true,
+            },
+            storeId: {
+                required: true,
+            },
+            count: {
+                required: true,
+            },
+            costPrice: {
+                required: true,
+            },
+            variant: {
+                required: true,
+            },
+            transactionType: {
+                required: true,
+            }
+        },
+        messages: {
+            productId: {
+                required: 'Please select product',
+            },
+            storeId: {
+                required: 'Please select store',
+            },
+            count: {
+                required: 'Please enter count',
+            },
+            costPrice: {
+                required: 'Please enter cost price',
+            },
+            variant: {
+                required: 'Please select variant',
+            },
+            transactionType: {
+                required: 'Please select transaction type',
+            }
+        },
+        errorElement: 'span',
+        errorPlacement: function (error, element) {
+            error.addClass('invalid-feedback');
+            element.closest('.form-group').append(error);
+        },
+        highlight: function (element, errorClass, validClass) {
+            $(element).addClass('is-invalid');
+        },
+        unhighlight: function (element, errorClass, validClass) {
+            $(element).removeClass('is-invalid');
+        }
+    });
+
     $('#addProductForm,#editProductForm').validate({
         rules: {
             categoryId: {
