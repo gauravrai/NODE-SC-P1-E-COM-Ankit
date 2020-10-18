@@ -107,9 +107,11 @@ module.exports = {
 		{
 			const { productId, variant, count, costPrice, storeId, transactionType } = req.body;
 
-			const stockData = await Stock.findOne({ status: true, deletedAt: 0, productId: mongoose.mongo.ObjectId(productId), variant });
+			const stockData = await Stock.findOne({
+				status: true, deletedAt: 0, productId: mongoose.mongo.ObjectId(productId), variant, storeId: mongoose.mongo.ObjectId(storeId),
+			});
 			if ((!stockData && transactionType === 'out') || (stockData && transactionType === 'out' && (parseInt(stockData.count) - parseInt(count)) < 0)) {
-				req.flash('msg', {msg:'Not enough stock available', status:false});	
+				req.flash('msg', {msg:'Not enough stock available', status:false});
 				res.redirect(config.constant.ADMINCALLURL+'/add_stock');
 			} else {
 				if (stockData) {
@@ -117,13 +119,13 @@ module.exports = {
 						? (parseInt(stockData.count) + parseInt(count))
 						: (parseInt(stockData.count) - parseInt(count))
 					await Stock.updateOne(
-						{ productId: mongoose.mongo.ObjectId(productId) },
+						{ productId: mongoose.mongo.ObjectId(productId), storeId: mongoose.mongo.ObjectId(storeId), variant },
 						{ count: countToUpdate },
 						function(err,data){
 							if(err){console.log(err)}
 						})
 				} else {
-					const stock = new Stock({ productId: mongoose.mongo.ObjectId(productId), count, variant });
+					const stock = new Stock({ productId: mongoose.mongo.ObjectId(productId), count, variant, storeId: mongoose.mongo.ObjectId(storeId), });
 					stock.save(function(err, data){
 					if(err){console.log(err)}	
 					});

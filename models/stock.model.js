@@ -14,6 +14,9 @@ let StockSchema = new Schema({
         type: String,
         enum: ['ml', 'gram', 'kg'],
     },
+    storeId: {
+        type: ObjectId,
+    },
     status: {
         type: Boolean,
         default : true
