@@ -1,0 +1,84 @@
+<div class="content-wrapper">
+    <section class="content-header">
+      <div class="container-fluid">
+        <div class="row mb-2">
+          <div class="col-sm-6">
+            <h1><%=pageTitle%></h1>
+          </div>
+          <div class="col-sm-6">
+            <ol class="breadcrumb float-sm-right">
+              <li class="breadcrumb-item"><a href="javascript:void(0)"><%=moduleName%></a></li>
+              <li class="breadcrumb-item active"><%=pageTitle%></li>
+            </ol>
+          </div>
+        </div>
+      </div>
+    </section>
+    <section class="content">
+      <div class="container-fluid">
+        <div class="row">
+          <div class="col-md-12">
+            <div class="card card-primary card-outline">
+              <div class="card-header d-flex p-0">
+                <h3 class="card-title p-3">Stock Information</h3>
+                <ul class="nav nav-pills ml-auto p-2">
+                  <li class="nav-item"><a class="btn btn-block btn-secondary" href="<%=APPCONSTANT.ADMINCALLURL%>/manage_stock">Back</a></li>
+                </ul>
+              </div>
+              <form role="form" id="transferStockForm" method="post" enctype="multipart/form-data">
+                <div id="tableContent" style="padding: 0 17px 0 10px;">
+                  <div class="form-row">
+                    <div class="form-group col-md-3">
+                      <label for="productId">Select Product</label>
+                      <select name="productId" class="form-control" id="productId">
+                        <option value="">Select Product</option>
+                        <% for(let i = 0; i < productData.length; i++){ %>
+                          <option value="<%=productData[i].id%>"><%=productData[i].name%></option>
+                        <% } %>
+                      </select>
+                    </div>
+                    <div class="form-group col-md-3">
+                      <label for="count">Count</label>
+                      <input type="text" name="count" class="form-control" id="count" placeholder="Product Count">
+                    </div>
+                    <div class="form-group col-md-3">
+                      <label for="fromStoreId">Select From Store</label>
+                      <select name="fromStoreId" class="form-control" id="fromStoreId">
+                        <option value="">Select From Store</option>
+                        <% for(let i = 0; i < storeData.length; i++){ %>
+                          <option value="<%=storeData[i].id%>"><%=storeData[i].name%></option>
+                        <% } %>
+                      </select>
+                    </div>
+                    <div class="form-group col-md-3">
+                        <label for="toStoreId">Select To Store</label>
+                        <select name="toStoreId" class="form-control" id="toStoreIdData">
+                          <option value="">Select To Store</option>
+                        </select>
+                      </div>
+                      <div class="form-group col-md-3">
+                        <label for="variant" >Variant</label>
+                        <select name="variant" class="form-control" id="variant" >
+                          <option value="">Select Variant</option>
+                          <option value="ml">ML</option>
+                          <option value="gram">Gram</option>
+                          <option value="kg">KG</option>
+                        </select>
+                      </div>
+                  </div>
+                </div>    
+                <div class="card-footer">
+                  <a href="<%=APPCONSTANT.ADMINCALLURL%>/manage_stock" class="btn btn-default">Cancel</a>
+                  <button type="submit" class="btn btn-primary add_button">Submit</button>
+                </div>
+              </form>
+            </div>
+          </div>
+          <div class="col-md-6">
+  
+          </div>
+        </div>
+      </div>
+    </section>
+  </div>
+  

@@ -284,6 +284,23 @@ $(document).on("change", "#subcategoryId", function(){
 	});
 });
 
+$(document).on("change", "#fromStoreId", function(){
+	let id = $(this).val();
+	$.ajax({
+		type: 'POST',
+		url: 'get_filtered_store',
+		data: {id:id},
+		success: function(response) {
+			if(response){
+			$('#toStoreIdData').html(response);	
+			}
+			else{
+			$('#toStoreIdData').html('');	
+			}
+		}
+	});
+});
+
 $(document).on("change","#offerType",function(){
 	var checkvalue = $(this).val();
 	if(checkvalue=="percentage"){
