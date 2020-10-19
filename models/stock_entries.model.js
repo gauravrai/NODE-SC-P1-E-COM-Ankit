@@ -7,12 +7,19 @@ let StockSchema = new Schema({
     count: {
         type: Number,
     },
+    costPrice: {
+        type: Number,
+    },
     productId: {
-        type: ObjectId
+        type: ObjectId,
     },
     variant: {
         type: String,
         enum: ['ml', 'gram', 'kg'],
+    },
+    transactionType: {
+        type: String,
+        enum: ['in', 'out'],
     },
     storeId: {
         type: ObjectId,
@@ -36,4 +43,4 @@ let StockSchema = new Schema({
 });
 
 // Export the model
-module.exports = mongoose.model('stock', StockSchema);
+module.exports = mongoose.model('Stock_Entries', StockSchema);
