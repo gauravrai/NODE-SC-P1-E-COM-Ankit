@@ -16,6 +16,10 @@ let PincodeSchema = new Schema({
         type: Boolean,
         default : true
     },
+    shippingCharges: {
+        type: Number,
+        default: 0,
+    },
     deletedAt: {
         type: Number,
         default : 0

@@ -92,6 +92,7 @@ module.exports = {
 			res.render('admin/pincode/add.ejs',{layout:'admin/layout/layout', pageTitle:pageTitle, moduleName:moduleName, stateData:stateData} );
 		}else{
 			let pincodeData = {
+				shippingCharges: req.body.shippingCharges,
 				pincode : req.body.pincode,
 				stateId : mongoose.mongo.ObjectId(req.body.stateId),
 				cityId : mongoose.mongo.ObjectId(req.body.cityId)
@@ -119,6 +120,7 @@ module.exports = {
 		}
 		if(req.method == "POST"){
 			let pincodeData = {
+				shippingCharges: req.body.shippingCharges,
 				pincode : req.body.pincode,
 				stateId : mongoose.mongo.ObjectId(req.body.stateId),
 				cityId : mongoose.mongo.ObjectId(req.body.cityId)

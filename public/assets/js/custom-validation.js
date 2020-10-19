@@ -256,7 +256,11 @@ $(document).ready(function () {
                 number: true,
                 minlength: 6,
                 maxlength: 6
-            }
+            },
+            shippingCharges: {
+                required: true,
+                number: true,
+            },
         },
         messages: {
             stateId: {
@@ -270,6 +274,10 @@ $(document).ready(function () {
                 number: "Please enter digits only",
                 minlength: "Please enter six digits only",
                 maxlength: "Please enter six digits only"
+            },
+            shippingCharges: {
+                required: "Please enter Shipping Charges",
+                number: 'Please enter digits only',
             }
         },
         errorElement: 'span',
