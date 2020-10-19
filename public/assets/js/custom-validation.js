@@ -484,6 +484,7 @@ $(document).ready(function () {
             },
             count: {
                 required: true,
+                number: true,
             },
             variant: {
                 required: true,
@@ -501,6 +502,7 @@ $(document).ready(function () {
             },
             count: {
                 required: 'Please enter count',
+                number: 'Please enter digits only'
             },
             variant: {
                 required: 'Please select variant',
@@ -529,9 +531,11 @@ $(document).ready(function () {
             },
             count: {
                 required: true,
+                number: true,
             },
             costPrice: {
                 required: true,
+                number: true,
             },
             variant: {
                 required: true,
@@ -549,9 +553,11 @@ $(document).ready(function () {
             },
             count: {
                 required: 'Please enter count',
+                number: 'Please enter digits only'
             },
             costPrice: {
                 required: 'Please enter cost price',
+                number: 'Please enter digits only'
             },
             variant: {
                 required: 'Please select variant',
