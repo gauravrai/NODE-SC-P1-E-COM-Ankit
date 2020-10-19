@@ -138,7 +138,7 @@ module.exports = {
 				res.send('<span class="badge bg-success" style="cursor:pointer;" onclick="'+change_status+'">Active</span>');
 			}
 			else{
-				let change_status = "changeStatus(this,\'1\',\'change_status_brand\',\'list_brand\',\'brabd\');";	
+				let change_status = "changeStatus(this,\'1\',\'change_status_brand\',\'list_brand\',\'brand\');";	
 				res.send('<span class="badge bg-danger" style="cursor:pointer;" onclick="'+change_status+'">Inactive</span>');
 			}
 	    })

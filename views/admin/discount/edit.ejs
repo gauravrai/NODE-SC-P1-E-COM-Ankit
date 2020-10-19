@@ -86,8 +86,10 @@
                             <option value="both"<% if(discountData.applyFor=="both"){%>selected="selected" <%} %> >Both</option>
                         </select>
                     </div>
-                   
-                    
+                    <div class="form-group col-md-3">
+                        <label for="applyFor">Applicable for First Order</label>
+                        <input type="checkbox" name="firstOrder" class="form-control" id="firstOrder" <% if(discountData.firstOrder){ %> checked="checked" <% } %> >
+                    </div>
                   </div>
                 </div>
                 <!-- </div> -->
@@ -106,16 +108,3 @@
       </div>
     </section>
   </div>
-  <script>
-
-    $(document).on("click",".add_button",function(){
-      var regex = new RegExp(/^[a-z]{2}[0-9]{7}$/i);
-      var textvalue = $("#couponNo").val();
-        if (regex.test(textvalue)) {
-        } else {
-            alert("Please Enter  Coupon Number Two Character and Seven Number This Formate(  LB1234567 )");
-            $("#couponNo").focus();
-            return false;
-        }
-    });
-</script>

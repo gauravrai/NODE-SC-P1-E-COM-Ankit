@@ -81,6 +81,7 @@ module.exports = {
 			});
 		});
 	},
+
     addDiscount: async function(req,res){
 		if(req.method == "GET"){
 			let moduleName = 'Discount Management';
@@ -98,9 +99,9 @@ module.exports = {
 				from : moment(req.body.from).format('YYYY-MM-DD'),
 				to : moment(req.body.to).format('YYYY-MM-DD'),
 				capping : req.body.capping,
-				applyFor : req.body.applyFor
+				applyFor : req.body.applyFor,
+				firstOrder : req.body.firstOrder == 'on' ? true : false
 			};
-			//console.log(storeData);
 			let discountobj = new Discount(discountData);
 			discountobj.save(function(err, data){
 				if(err){console.log(err)}
@@ -110,6 +111,7 @@ module.exports = {
 			})
 		}		
 	},
+
 	editDiscount: async function(req,res){
 		if(req.method == "GET"){
 			let moduleName = 'Discount Management';
@@ -130,7 +132,8 @@ module.exports = {
 				from : moment(req.body.from).format('YYYY-MM-DD'),
 				to : moment(req.body.to).format('YYYY-MM-DD'),
 				capping : req.body.capping,
-				applyFor : req.body.applyFor
+				applyFor : req.body.applyFor,
+				firstOrder : req.body.firstOrder == 'on' ? true : false
 			};
 			await Discount.update(
 				{ _id: mongoose.mongo.ObjectId(req.body.id) },
@@ -142,7 +145,8 @@ module.exports = {
 			})
 		}		
 	},
-	changeStatusDiscount : function(req,res){
+
+	changeStatusDiscount: function(req,res){
 		let id = req.param("id");
 		let status = req.param("status");
 		return Discount.updateOne({_id: mongoose.mongo.ObjectId(id)}, {
@@ -158,18 +162,19 @@ module.exports = {
 				res.send('<span class="badge bg-danger" style="cursor:pointer;" onclick="'+change_status+'">Inactive</span>');
 			}
 	    })
-    },
-    deleteDiscount : async function(req,res){
+	},
+	
+    deleteDiscount: async function(req,res){
 		let id = req.param("id");
 		return Discount.updateOne({_id:  mongoose.mongo.ObjectId(id)},{deletedAt:2},function(err,data){        	
 			if(err) console.error(err);
         	res.send('done');
         })
 	},
-	checkCouponNo : async function(req,res){
+
+	checkCouponNo: async function(req,res){
 		let couponNo  = req.body.couponNo;
 		let couponData = await Discount.find({couponNo:couponNo, status:true, deletedAt: 0});
-		//console.log(couponData);
 		if(couponData.length>0){
 			return res.status(200).json({ code:1 , status: 'exists', message: "Coupon Number  Already Inserted !!"});
 		} else {

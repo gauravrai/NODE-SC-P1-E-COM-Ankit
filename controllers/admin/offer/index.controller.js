@@ -50,7 +50,6 @@ module.exports = {
 			var data = results.data?results.data:[];
 			var arr =[];
             var perdata = {add:1,edit:1,delete:1}
-            //console.log(data);
 			await config.helpers.permission('manage_offer', req, async function(err,permissionData) {
 				for(i=0;i<data.length;i++){
                     var arr1 = [];
@@ -117,7 +116,6 @@ module.exports = {
                 capping : req.body.capping,
                 applyFor :req.body.applyFor
 			};
-			//console.log(storeData);
 			let offer = new Offer(offerData);
 			offer.save(function(err, data){
 				if(err){console.log(err)}

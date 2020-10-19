@@ -85,9 +85,10 @@
                                   <option value="both">Both</option>
                               </select>
                           </div>
-                        
-                          
-                          
+                          <div class="form-group col-md-3">
+                              <label for="applyFor">Applicable for First Order</label>
+                              <input type="checkbox" name="firstOrder" class="form-control" id="firstOrder">
+                          </div>
                       <!-- </div> -->
                   </div>
                 </div>
@@ -106,18 +107,7 @@
     </section>
   </div>
   <script>
-    $(document).on("change","#offerType",function(){
-          var checkvalue = $(this).val();
-          if(checkvalue=="percentage"){
-            $("#percentage_div").show();
-            $("#fixed_div").hide();
-          } else {
-            $("#fixed_div").show();
-            $("#percentage_div").hide();
-          }
-    });
-
-    $(document).on("click",".add_button",function(){
+    /*$(document).on("click",".add_button",function(){
       var regex = new RegExp(/^[a-z]{2}[0-9]{7}$/i);
       var textvalue = $("#couponNo").val();
         if (regex.test(textvalue)) {
@@ -126,5 +116,5 @@
             $("#couponNo").focus();
             return false;
         }
-    });
+    });*/
 </script>

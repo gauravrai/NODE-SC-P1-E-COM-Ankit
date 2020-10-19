@@ -812,4 +812,40 @@ $(document).ready(function () {
             $(element).removeClass('is-invalid');
         }
     });
+
+    $('#addWalletForm,#editWalletForm').validate({
+        rules: {
+            userId: {
+                required: true,
+            },
+            amount: {
+                required: true,
+            },
+            type: {
+                required: true,
+            }
+        },
+        messages: {
+            userId: {
+                required: "Please Select Customer"
+            },
+            amount: {
+                required: "Please Enter Amount"
+            },
+            type: {
+                required: "Please Select Type"
+            }
+        },
+        errorElement: 'span',
+        errorPlacement: function (error, element) {
+            error.addClass('invalid-feedback');
+            element.closest('.form-group').append(error);
+        },
+        highlight: function (element, errorClass, validClass) {
+            $(element).addClass('is-invalid');
+        },
+        unhighlight: function (element, errorClass, validClass) {
+            $(element).removeClass('is-invalid');
+        }
+    });
 });
