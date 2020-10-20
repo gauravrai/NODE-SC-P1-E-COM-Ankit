@@ -28,7 +28,7 @@ let CustomerSchema = new Schema({
     cityId: {
         type: ObjectId,
     },
-    pinCodeId: {
+    pincodeId: {
         type: ObjectId,
     },
     areaId: {

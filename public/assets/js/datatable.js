@@ -116,6 +116,15 @@ $(document).ready(function() {
             type: "POST",          
         }
     });
+    $('#customerTable').DataTable( {
+        "processing": true,
+        "serverSide": true,
+        "ordering": false,
+        "ajax": {
+            url: 'list_customer',
+            type: "POST",          
+        }
+    });
     $('#offerTable').DataTable( {
         "processing": true,
         "serverSide": true,
