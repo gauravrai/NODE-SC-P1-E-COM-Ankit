@@ -587,6 +587,84 @@ $(document).ready(function () {
         }
     });
 
+    $('#addCustomerForm, #editCustomerForm').validate({
+        rules: {
+            name: {
+                required: true,
+            },
+            email: {
+                required: true,
+                email: true,
+            },
+            mobile: {
+                required: true,
+                number: true,
+                minlength: 10,
+                maxlength: 10,
+            },
+            address: {
+                required: false,
+            },
+            stateId: {
+                required: true,
+            },
+            cityId: {
+                required: true,
+            },
+            pincodeId: {
+                required: true,
+            },
+            areaId: {
+                required: true,
+            },
+            societyId: {
+                required: true,
+            },
+        },
+        messages: {
+            name: {
+                required: 'Please enter name',
+            },
+            email: {
+                required: 'Please enter email',
+                email: 'Please enter valid email',
+            },
+            mobile: {
+                required: 'Please enter mobile number',
+                number: 'Please enter digits',
+                minlength: "Please enter ten digits only",
+                maxlength: "Please enter ten digits only",
+            },
+            stateId: {
+                required: 'Please select state',
+            },
+            cityId: {
+                required: 'Please select city',
+            },
+            pincodeId: {
+                required: 'Please select pincode',
+            },
+            areaId: {
+                required: 'Please select area',
+            },
+            societyId: {
+                required: 'Please select society',
+            },
+        },
+        errorElement: 'span',
+        errorPlacement: function (error, element) {
+            error.addClass('invalid-feedback');
+            element.closest('.form-group').append(error);
+        },
+        highlight: function (element, errorClass, validClass) {
+            $(element).addClass('is-invalid');
+        },
+        unhighlight: function (element, errorClass, validClass) {
+            $(element).removeClass('is-invalid');
+        }
+    });
+
+
     $('#addProductForm,#editProductForm').validate({
         rules: {
             categoryId: {

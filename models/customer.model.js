@@ -1,5 +1,6 @@
 const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
+var ObjectId = mongoose.Schema.Types.ObjectId;
 
 let CustomerSchema = new Schema({
 
@@ -21,6 +22,25 @@ let CustomerSchema = new Schema({
         type: String,
         default: null
     },
+    stateId: {
+        type: ObjectId,
+    },
+    cityId: {
+        type: ObjectId,
+    },
+    pinCodeId: {
+        type: ObjectId,
+    },
+    areaId: {
+        type: ObjectId,
+    },
+    societyId: {
+        type: ObjectId,
+    },
+    // TODO: Look into this.
+    // towerId: {
+    //     type: ObjectId,
+    // },
     status: {
         type: Boolean,
         default : true
