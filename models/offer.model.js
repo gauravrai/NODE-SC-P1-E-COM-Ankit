@@ -32,6 +32,9 @@ let OfferSchema = new Schema({
     applyFor: {
         type: String
     },
+    capping: {
+        type: String
+    },
     offerCategoryId: {
         type: Array
     },

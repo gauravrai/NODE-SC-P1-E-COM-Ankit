@@ -64,14 +64,18 @@
                         <label for="fixed">Fixed</label>
                         <input type="text" name="fixed" class="form-control" id="fixed" placeholder="Fixed">
                     </div>
-                  </div>
-                  <div class="form-group col-md-3">
-                      <label for="applyFor">Offer Apply For</label>
-                      <select name="applyFor" class="form-control" id="applyFor">
-                      <option value="both">Both</option>
-                      <option value="web">Website</option>
-                      <option value="app">App</option>
-                      </select>
+                    <div class="form-group col-md-3">
+                        <label for="applyFor">Offer Apply For</label>
+                        <select name="applyFor" class="form-control" id="applyFor">
+                        <option value="both">Both</option>
+                        <option value="web">Website</option>
+                        <option value="app">App</option>
+                        </select>
+                    </div>
+                    <div class="form-group col-md-3">
+                      <label for="capping">Capping</label>
+                      <input type="text" name="capping" class="form-control" id="capping" placeholder="Capping">
+                    </div>
                   </div>
                   <div class="card-header">
                     <h3 class="card-title">Offer Applicable on</h3>
@@ -79,7 +83,7 @@
                   <div class="form-row">
                     <div class="form-group col-md-3">
                         <label for="offerCategoryId">Select Category</label>
-                        <select name="offerCategoryId[]" class="form-control select2" id="offerCategoryId" onchange="getProductByCatsubcat(this, 'categoryId', 'offerSubcategoryId', 'offerProductId');" multiple="multiple">
+                        <select name="offerCategoryId" class="form-control select2" id="offerCategoryId" onchange="getProductByCatsubcat(this, 'categoryId', 'offerSubcategoryId', 'offerProductId');" multiple="multiple">
                         <% for(let i = 0; i < categoryData.length; i++){ %>
                             <option value="<%=categoryData[i].id%>"><%=categoryData[i].name%></option>
                           <% } %>
@@ -87,7 +91,7 @@
                     </div>
                     <div class="form-group col-md-3">
                       <label for="offerSubcategoryId">Select Sub  Category</label>
-                      <select name="offerSubcategoryId[]" class="form-control select2" id="offerSubcategoryId" onchange="getProductByCatsubcat(this, 'subcategoryId', '', 'offerProductId');" multiple="multiple">
+                      <select name="offerSubcategoryId" class="form-control select2" id="offerSubcategoryId" onchange="getProductByCatsubcat(this, 'subcategoryId', '', 'offerProductId');" multiple="multiple">
                       <% for(let i = 0; i < subcategoryData.length; i++){ %>
                           <option value="<%=subcategoryData[i].id%>"><%=subcategoryData[i].name%></option>
                         <% } %>
@@ -95,7 +99,7 @@
                     </div>
                     <div class="form-group col-md-3">
                       <label for="offerProductId">Select Product</label>
-                      <select name="offerProductId[]" class="form-control select2" id="offerProductId" multiple="multiple">
+                      <select name="offerProductId" class="form-control select2" id="offerProductId" multiple="multiple">
                       <% for(let i = 0; i < productData.length; i++){ %>
                           <option value="<%=productData[i].id%>"><%=productData[i].name%></option>
                         <% } %>

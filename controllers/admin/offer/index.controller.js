@@ -104,17 +104,23 @@ module.exports = {
 		}else{
 			let offerData = {
                 name : req.body.name,
-				categoryId : mongoose.mongo.ObjectId(req.body.categoryId),
-				subcategoryId : mongoose.mongo.ObjectId(req.body.subcategoryId),
-                productId : mongoose.mongo.ObjectId(req.body.productId),
+                from : moment(req.body.from).format('YYYY-MM-DD'),
+                to : moment(req.body.to).format('YYYY-MM-DD'),
+                multipleOf : parseInt(req.body.multipleOf),
+                freeItem : parseInt(req.body.freeItem),
                 offerType : req.body.offerType,
                 percentage : req.body.percentage,
                 fixed  : req.body.fixed,
-                cartValue : req.body.cartValue,
-                from : moment(req.body.from).format('YYYY-MM-DD'),
-                to : moment(req.body.to).format('YYYY-MM-DD'),
+                applyFor :req.body.applyFor,
                 capping : req.body.capping,
-                applyFor :req.body.applyFor
+				offerCategoryId : req.body.offerCategoryId,
+				offerSubcategoryId : req.body.offerSubcategoryId,
+                offerProductId : req.body.offerProductId,
+                offerVarient : req.body.offerVarient,
+				freeCategoryId : mongoose.mongo.ObjectId(req.body.freeCategoryId),
+				freeSubcategoryId : mongoose.mongo.ObjectId(req.body.freeSubcategoryId),
+                freeProductId : mongoose.mongo.ObjectId(req.body.freeProductId),
+                freeVarientId : mongoose.mongo.ObjectId(req.body.freeVarientId)
 			};
 			let offer = new Offer(offerData);
 			offer.save(function(err, data){
@@ -140,17 +146,23 @@ module.exports = {
 		if(req.method == "POST"){
 			let offerData = {
                 name : req.body.name,
-				categoryId : mongoose.mongo.ObjectId(req.body.categoryId),
-				subcategoryId : mongoose.mongo.ObjectId(req.body.subcategoryId),
-                productId : mongoose.mongo.ObjectId(req.body.productId),
+                from : moment(req.body.from).format('YYYY-MM-DD'),
+                to : moment(req.body.to).format('YYYY-MM-DD'),
+                multipleOf : parseInt(req.body.multipleOf),
+                freeItem : parseInt(req.body.freeItem),
                 offerType : req.body.offerType,
                 percentage : req.body.percentage,
                 fixed  : req.body.fixed,
-                cartValue : req.body.cartValue,
-                from : moment(req.body.from).format('YYYY-MM-DD'),
-                to : moment(req.body.to).format('YYYY-MM-DD'),
+                applyFor :req.body.applyFor,
                 capping : req.body.capping,
-                applyFor :req.body.applyFor
+				offerCategoryId : req.body.offerCategoryId,
+				offerSubcategoryId : req.body.offerSubcategoryId,
+                offerProductId : req.body.offerProductId,
+                offerVarient : req.body.offerVarient,
+				freeCategoryId : mongoose.mongo.ObjectId(req.body.freeCategoryId),
+				freeSubcategoryId : mongoose.mongo.ObjectId(req.body.freeSubcategoryId),
+                freeProductId : mongoose.mongo.ObjectId(req.body.freeProductId),
+                freeVarientId : mongoose.mongo.ObjectId(req.body.freeVarientId)
 			};
 			await Offer.update(
 				{ _id: mongoose.mongo.ObjectId(req.body.id) },

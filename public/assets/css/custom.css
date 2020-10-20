@@ -22,3 +22,6 @@
     margin-top: 25px;
     margin-right: 180px;
 }
+.select2-container .select2-selection--single { 
+    height: calc(2.25rem + 2px) !important; 
+}

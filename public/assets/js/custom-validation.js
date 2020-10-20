@@ -614,52 +614,49 @@ $(document).ready(function () {
             name: {
                 required: true,
             },
-            categoryId: {
-                required: true,
-            },
-            subcategoryId: {
-                required: true,
-            },
-            productId: {
-                required: true,
-            },
-            offerType: {
-                required: true,
-            },
-            cartValue: {
-                required: true, 
-            },
             from: {
                 required: true, 
             },
             to: {
                 required: true,
             },
-            capping: {
+            multipleOf: {
+                required: true, 
+            },
+            freeItem: {
+                required: true,
+            },
+            offerType: {
                 required: true,
             },
             applyFor: {
                 required: true,
+            },
+            capping: {
+                required: true,
+            },
+            offerCategoryId: {
+                required: true,
+            },
+            offerProductId: {
+                required: true,
+            },
+            Varient: {
+                required: true,
+            },
+            freeCategoryId: {
+                required: true,
+            },
+            freeProductId: {
+                required: true,
+            },
+            freeVarientId: {
+                required: true, 
             }
         },
         messages: {
             name: {
                 required: "Please Enter Offer Name"
-            },
-            categoryId: {
-                required: "Please select Category Name"
-            },
-            subcategoryId: {
-                required: "Please select Sub Category Name"
-            },
-            productId: {
-                required: "Please select Product Name"
-            },
-            offerType: {
-                required: "Please enter Offer Type"
-            },
-            cartValue: {
-                required: "Please Enter Minimum Cart Value"
             },
             from: {
                 required: "Please Enter From Date"
@@ -667,12 +664,39 @@ $(document).ready(function () {
             to: {
                 required: "Please Enter to Date"
             },
-            capping: {
-                required: "Please Enter Capping"
+            multipleOf: {
+                required: "Please Enter Multiple Of"
+            },
+            freeItem: {
+                required: "Please Enter Free Item"
+            },
+            offerType: {
+                required: "Please enter Offer Type"
             },
             applyFor: {
                 required: "Please Enter Apply For"
-            }
+            },
+            capping: {
+                required: "Please Enter Capping"
+            },
+            offerCategoryId: {
+                required: "Please Select Offer Category Name"
+            },
+            offerProductId: {
+                required: "Please Select Offer Product Name"
+            },
+            offerVarient: {
+                required: "Please Select Offer Varient"
+            },
+            freeCategoryId: {
+                required: "Please Select Free Category Name"
+            },
+            freeProductId: {
+                required: "Please Select Free Product Name"
+            },
+            freeVarientId: {
+                required: "Please Select Free Varient"
+            },
         },
         errorElement: 'span',
         errorPlacement: function (error, element) {

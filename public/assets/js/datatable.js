@@ -154,6 +154,16 @@ $(document).ready(function() {
             type: "POST",          
         }
     });
+
+    $('#varientTable').DataTable( {
+        "processing": true,
+        "serverSide": true,
+        "ordering": false,
+        "ajax": {
+            url: 'list_varient',
+            type: "POST",          
+        }
+    });
 });
 
 //Delete data function
