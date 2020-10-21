@@ -61,21 +61,22 @@ module.exports = {
 			await config.helpers.permission('manage_stock', req, async function(err,permissionData) {
 				for(i=0;i<data.length;i++){
 					var arr1 = [];
-					await config.helpers.category.getNameById(data[i].categoryId, async function (categoryName) {
-						var cat_name = categoryName ? categoryName.name : 'N/A';
-						arr1.push(cat_name);
+					await config.helpers.product.getNameById(data[i].productId, async function (productName) {
+						var product_name = productName ? productName.name : 'N/A';
+						arr1.push(product_name);
 					})
-					await config.helpers.subcategory.getNameById(data[i].subcategoryId, async function (subcategoryName) {
-						var subcat_name = subcategoryName ? subcategoryName.name : 'N/A';
-						arr1.push(subcat_name);
-					})
-                    arr1.push(data[i].name);
+					arr1.push(data[i].count);
+					await config.helpers.store.getNameById(data[i].storeId, async function (storeName) {
+						var store_name = storeName ? storeName.name : 'N/A';
+						arr1.push(store_name);
+					});
+					arr1.push(data[i].variant);
 					arr1.push(moment(data[i].createdAt).format('DD-MM-YYYY'));
 					if(!data[i].status){
-						let change_status = "changeStatus(this,\'1\',\'change_status_stock\',\'list_stock\',\'product\');";	
+						let change_status = "changeStatus(this,\'1\',\'change_status_stock\',\'list_stock\',\'stock\');";	
 						arr1.push('<span class="badge bg-danger" style="cursor:pointer;" onclick="'+change_status+'" id="'+data[i]._id+'">Inactive</span>');
 					}else{
-						let change_status = "changeStatus(this,\'0\',\'change_status_stock\',\'list_stock\',\'product\');";
+						let change_status = "changeStatus(this,\'0\',\'change_status_stock\',\'list_stock\',\'stock\');";
 						arr1.push('<span class="badge bg-success" style="cursor:pointer;" onclick="'+change_status+'" id="'+data[i]._id+'">Active</span>');
 					}
 					let $but_edit = '-';
@@ -84,7 +85,7 @@ module.exports = {
 					}
 					let $but_delete = ' - ';
 					if(permissionData.delete =='1'){
-						let remove = "deleteData(this,\'delete_stock\',\'list_stock\',\'product\');";
+						let remove = "deleteData(this,\'delete_stock\',\'list_stock\',\'stock\');";
 						$but_delete = '&nbsp;&nbsp;<span><a href="javascript:void(0)" class="btn btn-flat btn-info btn-outline-danger" title="Delete" onclick="'+remove+'" id="'+data[i]._id+'"><i class="fas fa fa-trash" ></i></a></span>';
 					}
 					arr1.push($but_edit+$but_delete);

@@ -116,6 +116,15 @@ $(document).ready(function() {
             type: "POST",          
         }
     });
+    $('#stockTable').DataTable( {
+        "processing": true,
+        "serverSide": true,
+        "ordering": false,
+        "ajax": {
+            url: 'list_stock',
+            type: "POST",          
+        }
+    });
     $('#customerTable').DataTable( {
         "processing": true,
         "serverSide": true,
