@@ -13,6 +13,10 @@ const Category = model.category;
 const SubCategory = model.sub_category;
 const Store = model.store;
 const State = model.state;
+const City = model.city;
+const Pincode = model.pincode;
+const Area = model.area;
+const Society = model.society;
 const Product = model.product;
 const Brand   = model.brand;
 const ADMINCALLURL = config.constant.ADMINCALLURL;
@@ -148,6 +152,51 @@ module.exports = {
 				res.send('<span class="badge bg-danger" style="cursor:pointer;" onclick="'+change_status+'">Inactive</span>');
 			}
 	    })
+	},
+	deleteCustomer : async function(req,res){
+		const id = req.param("id");
+		return Customer.updateOne({_id:  mongoose.mongo.ObjectId(id)},{deletedAt:2},function(err,data){        	
+			if(err) console.error(err);
+        	res.send('done');
+        })
+	},
+	
+	editCustomer: async function(req,res){
+		if(req.method == "GET"){
+			let moduleName = 'Customer Management';
+			let pageTitle = 'Edit Customer';
+			let id = req.body.id;
+			let customerData = await Customer.findOne({_id: mongoose.mongo.ObjectId(id), deletedAt: 0 });		
+			let stateData = await State.find({status: true, deletedAt: 0});	
+			let cityData = await City.find({stateId: mongoose.mongo.ObjectId(customerData.stateId), status: true, deletedAt: 0});	
+			let pincodeData = await Pincode.find({cityId: mongoose.mongo.ObjectId(customerData.cityId), status: true, deletedAt: 0});	
+			let areaData = await Area.find({pincodeId: mongoose.mongo.ObjectId(customerData.pincodeId), status: true, deletedAt: 0});	
+			let societyData = await Society.find({areaId: mongoose.mongo.ObjectId(customerData.areaId), status: true, deletedAt: 0});		
+			res.render('admin/customer/edit',{layout:'admin/layout/layout', pageTitle, moduleName, stateData, cityData, pincodeData, areaData, customerData, societyData } );
+		}
+		if(req.method == "POST"){
+			const { name, email, mobile, stateId, cityId, pincodeId, areaId, societyId, address } = req.body;
+			// TODO: look for the tower id.
+			const customerData = {
+				name,
+				email,
+				mobile,
+				address,
+				stateId : mongoose.mongo.ObjectId(stateId),
+				cityId : mongoose.mongo.ObjectId(cityId),
+				pincodeId : mongoose.mongo.ObjectId(pincodeId),
+				areaId : mongoose.mongo.ObjectId(areaId),
+				societyId : mongoose.mongo.ObjectId(societyId),
+			};
+			await Customer.updateOne(
+				{ _id: mongoose.mongo.ObjectId(req.body.id) },
+				customerData, function(err,data){
+					if(err){console.log(err)}
+					req.flash('msg', {msg:'Customer has been Updated Successfully', status:false});	
+					res.redirect(config.constant.ADMINCALLURL+'/manage_customer');
+					req.flash({});	name
+			})
+		}		
 	},
 };
 
