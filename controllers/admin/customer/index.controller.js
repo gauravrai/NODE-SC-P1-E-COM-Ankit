@@ -93,12 +93,13 @@ module.exports = {
 					if(permissionData.edit=='1'){
 					$but_edit = '<span><a href="'+ADMINCALLURL+'/edit_customer?id='+data[i]._id+'" class="btn btn-flat btn-info btn-outline-primary" title="Edit"><i class="fas fa-edit"></i></a></span>';
 					}
-					let $but_delete = ' - ';
-					if(permissionData.delete =='1'){
-						let remove = "deleteData(this,\'delete_customer\',\'list_customer\',\'customer\');";
-						$but_delete = '&nbsp;&nbsp;<span><a href="javascript:void(0)" class="btn btn-flat btn-info btn-outline-danger" title="Delete" onclick="'+remove+'" id="'+data[i]._id+'"><i class="fas fa fa-trash" ></i></a></span>';
-					}
-					arr1.push($but_edit+$but_delete);
+					// ** delete customer functionality removed for now.
+					// let $but_delete = ' - ';
+					// if(permissionData.delete =='1'){
+					// 	let remove = "deleteData(this,\'delete_customer\',\'list_customer\',\'customer\');";
+					// 	$but_delete = '&nbsp;&nbsp;<span><a href="javascript:void(0)" class="btn btn-flat btn-info btn-outline-danger" title="Delete" onclick="'+remove+'" id="'+data[i]._id+'"><i class="fas fa fa-trash" ></i></a></span>';
+					// }
+					arr1.push($but_edit);
 					arr.push(arr1);
 				}
 				obj.data = arr;

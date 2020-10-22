@@ -28,6 +28,10 @@ let orderSchema = new Schema({
         type: String,
         enum: [ 'NEW', 'IN_PROCESS', 'IN_TRANSIT', 'DELIVERED', 'CANCELED']
     },
+    orderFrom: {
+        type: String,
+        enum: [ 'WEB', 'APP', 'ADMIN' ],
+    },
     status: {
         type: Boolean,
         default : true
