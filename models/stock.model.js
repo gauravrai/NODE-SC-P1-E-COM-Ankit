@@ -3,17 +3,19 @@ const Schema = mongoose.Schema;
 var ObjectId = mongoose.Schema.Types.ObjectId;
 
 let StockSchema = new Schema({
-    fromStoreId: {
-        type: ObjectId
-    },
-    toStoreId: {
-        type: ObjectId
+
+    count: {
+        type: Number,
     },
     productId: {
         type: ObjectId
     },
-    varientId: {
-        type: ObjectId
+    variant: {
+        type: String,
+        enum: ['ml', 'gram', 'kg'],
+    },
+    storeId: {
+        type: ObjectId,
     },
     status: {
         type: Boolean,

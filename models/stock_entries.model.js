@@ -2,23 +2,31 @@ const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 var ObjectId = mongoose.Schema.Types.ObjectId;
 
-let PincodeSchema = new Schema({
-    pincode: {
-        type: String
+let StockSchema = new Schema({
+
+    count: {
+        type: Number,
     },
-    stateId: {
-        type: ObjectId
+    costPrice: {
+        type: Number,
     },
-    cityId: {
-        type: ObjectId
+    productId: {
+        type: ObjectId,
+    },
+    variant: {
+        type: String,
+        enum: ['ml', 'gram', 'kg'],
+    },
+    transactionType: {
+        type: String,
+        enum: ['in', 'out'],
+    },
+    storeId: {
+        type: ObjectId,
     },
     status: {
         type: Boolean,
         default : true
-    },
-    shippingCharges: {
-        type: Number,
-        default: 0,
     },
     deletedAt: {
         type: Number,
@@ -35,4 +43,4 @@ let PincodeSchema = new Schema({
 });
 
 // Export the model
-module.exports = mongoose.model('Pincode', PincodeSchema);
+module.exports = mongoose.model('Stock_Entries', StockSchema);

@@ -12,6 +12,7 @@ const Area = model.area;
 const Society = model.society;
 const SubCategory = model.sub_category;
 const Product = model.product;
+const Store = model.store;
 const ADMINCALLURL = config.constant.ADMINCALLURL;
 
 module.exports = {
@@ -65,6 +66,12 @@ module.exports = {
 		let id = mongoose.mongo.ObjectID(req.body.id);
 		let data = await Product.find({subcategoryId: id, status: true, deletedAt: 0, offer:"Yes"});
 		res.render('admin/ajax/product',{layout:false, data:data} );
+	},
+
+	getFilteredStore: async function(req,res){
+		const { id } = req.body;
+		const data = await Store.find({status:true, deletedAt: 0, _id: { $ne:  mongoose.mongo.ObjectID(id)}});
+		res.render('admin/ajax/filteredStore',{layout:false, data } );
 	},
 
 	getSubcatByCat: async function(req,res){

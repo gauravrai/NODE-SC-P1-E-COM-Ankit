@@ -1,0 +1,11 @@
+<div class="form-group">
+    <label for="toStoreId">Select To Store</label>
+    <select name="toStoreId" class="form-control" id="toStoreId">
+      <option value="">Select To Store</option>
+      <% if(data && data.length>0){ %>
+          <% for(let i = 0; i < data.length; i++){ %>
+        <option value="<%=data[i]._id%>"><%= data[i].name%></option>
+        <% 	} %>
+      <% } %>
+    </select>
+</div>

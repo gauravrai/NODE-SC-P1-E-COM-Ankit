@@ -256,7 +256,11 @@ $(document).ready(function () {
                 number: true,
                 minlength: 6,
                 maxlength: 6
-            }
+            },
+            shippingCharges: {
+                required: true,
+                number: true,
+            },
         },
         messages: {
             stateId: {
@@ -270,6 +274,10 @@ $(document).ready(function () {
                 number: "Please enter digits only",
                 minlength: "Please enter six digits only",
                 maxlength: "Please enter six digits only"
+            },
+            shippingCharges: {
+                required: "Please enter Shipping Charges",
+                number: 'Please enter digits only',
             }
         },
         errorElement: 'span',
@@ -470,6 +478,192 @@ $(document).ready(function () {
             $(element).removeClass('is-invalid');
         }
     });
+
+    $('#transferStockForm').validate({
+        rules: {
+            productId: {
+                required: true,
+            },
+            fromStoreId: {
+                required: true,
+            },
+            toStoreId: {
+                required: true,
+            },
+            count: {
+                required: true,
+                number: true,
+            },
+            variant: {
+                required: true,
+            },
+        },
+        messages: {
+            productId: {
+                required: 'Please select product',
+            },
+            fromStoreId: {
+                required: 'Please select from store',
+            },
+            toStoreId: {
+                required: 'Please select to store',
+            },
+            count: {
+                required: 'Please enter count',
+                number: 'Please enter digits only'
+            },
+            variant: {
+                required: 'Please select variant',
+            },
+        },
+        errorElement: 'span',
+        errorPlacement: function (error, element) {
+            error.addClass('invalid-feedback');
+            element.closest('.form-group').append(error);
+        },
+        highlight: function (element, errorClass, validClass) {
+            $(element).addClass('is-invalid');
+        },
+        unhighlight: function (element, errorClass, validClass) {
+            $(element).removeClass('is-invalid');
+        }
+    });
+
+    $('#addStockForm, #editStockForm').validate({
+        rules: {
+            productId: {
+                required: true,
+            },
+            storeId: {
+                required: true,
+            },
+            count: {
+                required: true,
+                number: true,
+            },
+            costPrice: {
+                required: true,
+                number: true,
+            },
+            variant: {
+                required: true,
+            },
+            transactionType: {
+                required: true,
+            }
+        },
+        messages: {
+            productId: {
+                required: 'Please select product',
+            },
+            storeId: {
+                required: 'Please select store',
+            },
+            count: {
+                required: 'Please enter count',
+                number: 'Please enter digits only'
+            },
+            costPrice: {
+                required: 'Please enter cost price',
+                number: 'Please enter digits only'
+            },
+            variant: {
+                required: 'Please select variant',
+            },
+            transactionType: {
+                required: 'Please select transaction type',
+            }
+        },
+        errorElement: 'span',
+        errorPlacement: function (error, element) {
+            error.addClass('invalid-feedback');
+            element.closest('.form-group').append(error);
+        },
+        highlight: function (element, errorClass, validClass) {
+            $(element).addClass('is-invalid');
+        },
+        unhighlight: function (element, errorClass, validClass) {
+            $(element).removeClass('is-invalid');
+        }
+    });
+
+    $('#addCustomerForm, #editCustomerForm').validate({
+        rules: {
+            name: {
+                required: true,
+            },
+            email: {
+                required: true,
+                email: true,
+            },
+            mobile: {
+                required: true,
+                number: true,
+                minlength: 10,
+                maxlength: 10,
+            },
+            address: {
+                required: false,
+            },
+            stateId: {
+                required: true,
+            },
+            cityId: {
+                required: true,
+            },
+            pincodeId: {
+                required: true,
+            },
+            areaId: {
+                required: true,
+            },
+            societyId: {
+                required: true,
+            },
+        },
+        messages: {
+            name: {
+                required: 'Please enter name',
+            },
+            email: {
+                required: 'Please enter email',
+                email: 'Please enter valid email',
+            },
+            mobile: {
+                required: 'Please enter mobile number',
+                number: 'Please enter digits',
+                minlength: "Please enter ten digits only",
+                maxlength: "Please enter ten digits only",
+            },
+            stateId: {
+                required: 'Please select state',
+            },
+            cityId: {
+                required: 'Please select city',
+            },
+            pincodeId: {
+                required: 'Please select pincode',
+            },
+            areaId: {
+                required: 'Please select area',
+            },
+            societyId: {
+                required: 'Please select society',
+            },
+        },
+        errorElement: 'span',
+        errorPlacement: function (error, element) {
+            error.addClass('invalid-feedback');
+            element.closest('.form-group').append(error);
+        },
+        highlight: function (element, errorClass, validClass) {
+            $(element).addClass('is-invalid');
+        },
+        unhighlight: function (element, errorClass, validClass) {
+            $(element).removeClass('is-invalid');
+        }
+    });
+
 
     $('#addProductForm,#editProductForm').validate({
         rules: {
@@ -756,6 +950,38 @@ $(document).ready(function () {
             },
             type: {
                 required: "Please Select Type"
+            }
+        },
+        errorElement: 'span',
+        errorPlacement: function (error, element) {
+            error.addClass('invalid-feedback');
+            element.closest('.form-group').append(error);
+        },
+        highlight: function (element, errorClass, validClass) {
+            $(element).addClass('is-invalid');
+        },
+        unhighlight: function (element, errorClass, validClass) {
+            $(element).removeClass('is-invalid');
+        }
+    });
+
+    $('#addVarientForm,#editVarientForm').validate({
+        rules: {
+            label: {
+                required: true,
+                number: true
+            },
+            measurementUnit: {
+                required: true,
+            }
+        },
+        messages: {
+            label: {
+                required: "Please Enter Label",
+                number: "Please Enter digits only"
+            },
+            measurementUnit: {
+                required: "Please Select Measurement Unit"
             }
         },
         errorElement: 'span',
