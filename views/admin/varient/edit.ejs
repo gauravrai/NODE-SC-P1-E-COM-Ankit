@@ -34,9 +34,9 @@
                   </div>
                   <div class="form-group">
                     <label for="measurementUnit">Measurement Unit</label>
-                    <select class="form-control" name="measurementUnit" id="measurementUnit">
+                    <select class="form-control select2" name="measurementUnit" id="measurementUnit">
                       <% for(let i = 0; i < measurementUnitData.length; i++){ %>
-                        <option value="<%=measurementUnitData[i].shorName%>" <% if(measurementUnitData[i].shorName == varientData.measurementUnit){ %> selected="selected" <% } %> ><%=measurementUnitData[i].name%></option>
+                        <option value="<%=measurementUnitData[i].shortName%>" <% if(measurementUnitData[i].shorName == varientData.measurementUnit){ %> selected="selected" <% } %> ><%=measurementUnitData[i].name%></option>
                       <% } %>
                     </select>
                   </div>
