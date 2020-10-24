@@ -318,37 +318,73 @@ $(document).on("change","#offerType",function(){
 
 function getProductByCatsubcat(id, fieldName, subcatDivId, prodDivId){
 	id = id.value;
-	console.log(id);
-	// if(fieldName == 'categoryId')
-	// {
-	// 	$.ajax({
-	// 		type: 'POST',
-	// 		url: 'get_subcat_by_cat',
-	// 		data: {id:id},
-	// 		success: function(response) {
-	// 			if(response){
-	// 				$('#'+subcatDivId).html(response);	
-	// 			}
-	// 			else{
-	// 				$('#'+subcatDivId).html('');	
-	// 			}
-	// 		}
-	// 	});
-	// }
-	// $.ajax({
-	// 	type: 'POST',
-	// 	url: 'get_product_by_cat_subcat',
-	// 	data: {id:id, fieldName:fieldName},
-	// 	success: function(response) {
-	// 		if(response){
-	// 			$('#'+prodDivId).html(response);	
-	// 		}
-	// 		else{
-	// 			$('#'+prodDivId).html('');	
-	// 		}
-	// 	}
-	// });
+	if(fieldName == 'categoryId')
+	{
+		$.ajax({
+			type: 'POST',
+			url: 'get_subcat_by_cat',
+			data: {id:id},
+			success: function(response) {
+				if(response){
+					$('#'+subcatDivId).html(response);	
+				}
+				else{
+					$('#'+subcatDivId).html('');	
+				}
+			}
+		});
+	}
+	$.ajax({
+		type: 'POST',
+		url: 'get_product_by_cat_subcat',
+		data: {id:id, fieldName:fieldName},
+		success: function(response) {
+			if(response){
+				$('#'+prodDivId).html(response);	
+			}
+			else{
+				$('#'+prodDivId).html('');	
+			}
+		}
+	});
 };
+
+function getProductByMulCatsubcat(id, fieldName, subcatDivId, prodDivId){
+	var fieldId = $(id).attr('id');
+	var selectedValues = [];    
+    $("#"+fieldId+" :selected").each(function(){
+        selectedValues.push($(this).val()); 
+	});
+	if(fieldName == 'categoryId')
+	{
+		$.ajax({
+			type: 'POST',
+			url: 'get_subcat_by_mul_cat',
+			data: {id:selectedValues},
+			success: function(response) {
+				if(response){
+					$('#'+subcatDivId).html(response);	
+				}
+				else{
+					$('#'+subcatDivId).html('');	
+				}
+			}
+		});
+	}
+	$.ajax({
+		type: 'POST',
+		url: 'get_product_by_mul_cat_subcat',
+		data: {id:selectedValues, fieldName:fieldName},
+		success: function(response) {
+			if(response){
+				$('#'+prodDivId).html(response);	
+			}
+			else{
+				$('#'+prodDivId).html('');	
+			}
+		}
+	});
+}
 
 $(document).on("change", "#freeProductId", function(){
 	let id = $(this).val();

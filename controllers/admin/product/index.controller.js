@@ -143,7 +143,6 @@ module.exports = {
 						if(varientArr[j] != '' && priceArr[j] != '')
 						{
 							let varientData = await Varient.findOne({_id : mongoose.mongo.ObjectID(varientArr[j])});
-							console.log(varientData);
 							let storeFieldObj = {
 								varientId: mongoose.mongo.ObjectID(varientArr[j]),
 								storeId: mongoose.mongo.ObjectID(storeId[i]),
@@ -276,7 +275,8 @@ module.exports = {
 			let subcategoryData = await SubCategory.find({status:true, deletedAt: 0});
 			let brandData       = await Brand.find({status:true, deletedAt: 0});
 			let productData = await Product.findOne({_id: mongoose.mongo.ObjectId(id), deletedAt: 0});
-			res.render('admin/product/edit',{layout:'admin/layout/layout', pageTitle:pageTitle, moduleName:moduleName, categoryData:categoryData, subcategoryData:subcategoryData, storeData:storeData, brandData:brandData, productData:productData} );
+			let varientData = await Varient.find({status:true, deletedAt: 0});
+			res.render('admin/product/edit',{layout:'admin/layout/layout', pageTitle:pageTitle, moduleName:moduleName, categoryData:categoryData, subcategoryData:subcategoryData, storeData:storeData, brandData:brandData, productData:productData, varientData:varientData} );
 		}
 		if(req.method == "POST"){
 			let productData = {};
@@ -302,16 +302,6 @@ module.exports = {
 				{
 					varientArr = Array.isArray(req.body['varient_'+i]) ? req.body['varient_'+i] : req.body['varient_'+i].split();
 				}
-				let labelArr = req.body['label_'+i];
-				if(labelArr != '')
-				{
-					labelArr = Array.isArray(req.body['label_'+i]) ? req.body['label_'+i] : req.body['label_'+i].split();
-				}
-				let weightArr = req.body['weight_'+i];
-				if(weightArr != '')
-				{
-					weightArr = Array.isArray(req.body['weight_'+i]) ? req.body['weight_'+i] : req.body['weight_'+i].split();
-				}
 				let priceArr = req.body['price_'+i];
 				if(priceArr != '')
 				{
@@ -319,16 +309,16 @@ module.exports = {
 				}
 				let defaultArr = req.body['default_'+i];
 				let storeData = [];
-				if(labelArr.length > 0)
+				if(varientArr.length > 0)
 				{
-					for (let j = 0; j < labelArr.length; j++) {
-						if(labelArr[j] != '' && weightArr[j] != '' && priceArr[j] != '')
+					for (let j = 0; j < varientArr.length; j++) {
+						if(varientArr[j] != '' && priceArr[j] != '')
 						{
+							let varientData = await Varient.findOne({_id : mongoose.mongo.ObjectID(varientArr[j])});
 							let storeFieldObj = {
+								varientId: mongoose.mongo.ObjectID(varientArr[j]),
 								storeId: mongoose.mongo.ObjectID(storeId[i]),
-								id: varientArr[j] ? mongoose.mongo.ObjectID(varientArr[j]) : mongoose.mongo.ObjectID(),
-								label : labelArr[j],
-								weight : weightArr[j],
+								varient : varientData.label+' '+varientData.measurementUnit,
 								price : priceArr[j],
 								default : defaultArr == j ? true : false
 							};
@@ -342,10 +332,9 @@ module.exports = {
 				}else
 				{
 					let storeFieldObj = {
+						varientId: '',
 						storeId: mongoose.mongo.ObjectID(storeId[i]),
-						id: varientArr[0] ? mongoose.mongo.ObjectID(varientArr[0]) : mongoose.mongo.ObjectID(),
-						label : '',
-						weight : '',
+						varient : '',
 						price : '',
 						default : false
 					};

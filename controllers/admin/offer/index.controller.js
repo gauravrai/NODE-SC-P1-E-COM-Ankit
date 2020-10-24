@@ -54,18 +54,18 @@ module.exports = {
 				for(i=0;i<data.length;i++){
                     var arr1 = [];
                     arr1.push(data[i].name);
-                    await config.helpers.product.getNameById(data[i].productId, async function (productName) {
-						var product_name = productName ? productName.name : 'N/A';
-						arr1.push(product_name);
-					})
-                    await config.helpers.category.getNameById(data[i].categoryId, async function (categoryName) {
-						var cat_name = categoryName ? categoryName.name : 'N/A';
-						arr1.push(cat_name);
-					})
-					await config.helpers.subcategory.getNameById(data[i].subcategoryId, async function (subcategoryName) {
-						var subcat_name = subcategoryName ? subcategoryName.name : 'N/A';
-						arr1.push(subcat_name);
-					})
+                    // await config.helpers.product.getNameById(data[i].productId, async function (productName) {
+					// 	var product_name = productName ? productName.name : 'N/A';
+					// 	arr1.push(product_name);
+					// })
+                    // await config.helpers.category.getNameById(data[i].categoryId, async function (categoryName) {
+					// 	var cat_name = categoryName ? categoryName.name : 'N/A';
+					// 	arr1.push(cat_name);
+					// })
+					// await config.helpers.subcategory.getNameById(data[i].subcategoryId, async function (subcategoryName) {
+					// 	var subcat_name = subcategoryName ? subcategoryName.name : 'N/A';
+					// 	arr1.push(subcat_name);
+					// })
 					
 					//arr1.push(data[i].store);
 					arr1.push(moment(data[i].createdAt).format('DD-MM-YYYY'));
@@ -108,9 +108,6 @@ module.exports = {
                 to : moment(req.body.to).format('YYYY-MM-DD'),
                 multipleOf : parseInt(req.body.multipleOf),
                 freeItem : parseInt(req.body.freeItem),
-                offerType : req.body.offerType,
-                percentage : req.body.percentage,
-                fixed  : req.body.fixed,
                 applyFor :req.body.applyFor,
                 capping : req.body.capping,
 				offerCategoryId : req.body.offerCategoryId,
@@ -120,7 +117,7 @@ module.exports = {
 				freeCategoryId : mongoose.mongo.ObjectId(req.body.freeCategoryId),
 				freeSubcategoryId : mongoose.mongo.ObjectId(req.body.freeSubcategoryId),
                 freeProductId : mongoose.mongo.ObjectId(req.body.freeProductId),
-                freeVarientId : mongoose.mongo.ObjectId(req.body.freeVarientId)
+                freeVarient : mongoose.mongo.ObjectId(req.body.freeVarient)
 			};
 			let offer = new Offer(offerData);
 			offer.save(function(err, data){
@@ -140,7 +137,7 @@ module.exports = {
             let offerData = await Offer.findOne({_id: mongoose.mongo.ObjectId(id), status: true, deletedAt: 0});
 			let categoryData = await Category.find({status: true, deletedAt: 0});
             let subcategoryData = await Subcategory.find({status: true, deletedAt: 0});
-            let productData     = await Product.find({status: true,offer:"Y",deletedAt: 0});
+            let productData = await Product.find({status: true,offer:"Yes",deletedAt: 0});
 			res.render('admin/offer/edit.ejs',{layout:'admin/layout/layout', pageTitle:pageTitle, moduleName:moduleName, categoryData:categoryData,subcategoryData:subcategoryData,productData:productData,offerData:offerData,moment:moment} );
 		}
 		if(req.method == "POST"){
@@ -150,9 +147,6 @@ module.exports = {
                 to : moment(req.body.to).format('YYYY-MM-DD'),
                 multipleOf : parseInt(req.body.multipleOf),
                 freeItem : parseInt(req.body.freeItem),
-                offerType : req.body.offerType,
-                percentage : req.body.percentage,
-                fixed  : req.body.fixed,
                 applyFor :req.body.applyFor,
                 capping : req.body.capping,
 				offerCategoryId : req.body.offerCategoryId,
@@ -162,7 +156,7 @@ module.exports = {
 				freeCategoryId : mongoose.mongo.ObjectId(req.body.freeCategoryId),
 				freeSubcategoryId : mongoose.mongo.ObjectId(req.body.freeSubcategoryId),
                 freeProductId : mongoose.mongo.ObjectId(req.body.freeProductId),
-                freeVarientId : mongoose.mongo.ObjectId(req.body.freeVarientId)
+                freeVarient : mongoose.mongo.ObjectId(req.body.freeVarient)
 			};
 			await Offer.update(
 				{ _id: mongoose.mongo.ObjectId(req.body.id) },

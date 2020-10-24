@@ -820,9 +820,6 @@ $(document).ready(function () {
             freeItem: {
                 required: true,
             },
-            offerType: {
-                required: true,
-            },
             applyFor: {
                 required: true,
             },
@@ -835,7 +832,7 @@ $(document).ready(function () {
             offerProductId: {
                 required: true,
             },
-            Varient: {
+            offerVarient: {
                 required: true,
             },
             freeCategoryId: {
@@ -844,7 +841,7 @@ $(document).ready(function () {
             freeProductId: {
                 required: true,
             },
-            freeVarientId: {
+            freeVarient: {
                 required: true, 
             }
         },
