@@ -24,6 +24,7 @@ module.exports = function(app) {
 	var walletRoutes      =  require('./admin/wallet.routes');
 	var varientRoutes      =  require('./admin/varient.routes');
 	var customerRoutes      =  require('./admin/customer.routes');
+	var orderRoutes = require('./admin/order.routes');
 
 	var ajaxRoutes = require('./admin/ajax.routes');
 	var router = express.Router();
@@ -51,7 +52,7 @@ module.exports = function(app) {
     walletRoutes(router);
     varientRoutes(router);
     customerRoutes(router);
-
+	orderRoutes(router);
 	
 	ajaxRoutes(router);
 }

@@ -1,0 +1,75 @@
+<div class="content-wrapper">
+    <section class="content-header">
+      <div class="container-fluid">
+        <div class="row mb-2">
+          <div class="col-sm-6">
+            <h1><%=pageTitle%></h1>
+          </div>
+          <div class="col-sm-6">
+            <ol class="breadcrumb float-sm-right">
+              <li class="breadcrumb-item"><a href="javascript:void(0)"><%=moduleName%></a></li>
+              <li class="breadcrumb-item active"><%=pageTitle%></li>
+            </ol>
+          </div>
+        </div>
+      </div>
+    </section>
+    <section class="content">
+      <div class="container-fluid">
+        <div class="row">
+          <div class="col-md-12">
+            <div class="card card-primary card-outline">
+              <div class="card-header d-flex p-0">
+                <h3 class="card-title p-3">Order Information</h3>
+                <ul class="nav nav-pills ml-auto p-2">
+                  <li class="nav-item"><a class="btn btn-block btn-secondary" href="/admin/view_order">Back</a></li>
+                </ul>
+              </div>
+              <div class="card-body">
+                <div class="card card-widget widget-user">
+                  <div class="widget-user-header bg-info">
+                    <h3 class="widget-user-username"><%=customerName%></h3>
+                    <h5 class="widget-user-desc">Order ID - <%=orderId%></h5>
+                  </div>
+                  <div class="widget-user-image">
+                    <img class="img-circle elevation-2" src="/assets/media/user/avatar5.png" alt="Customer Avatar">
+                  </div>
+                  <div class="card-footer">
+                    <div class="row">
+                      <%- include ('../message/message') -%>
+                      <table class="table table-bordered">
+                        <thead>                  
+                          <tr>
+                            <th style="width: 10px">#</th>
+                            <th>Product</th>
+                            <th>Variant</th>
+                            <th>Price</th>
+                            <th>Quantity</th>
+                          </tr>
+                        </thead>
+                        <tbody>
+                          <% let x = 1; 
+                          for(let i = orderDetailData.length-1; i >= 0; i--){ %>
+                          <tr>
+                            <td><%= x++; %></td>
+                            <td><%= orderDetailData[i].productData.name; %></td>
+                            <td><%= orderDetailData[i].variantData.label %> <%=orderDetailData[i].variantData.measurementUnit %></td>
+                            <td><%= orderDetailData[i].price; %> </td>
+                            <td><%= orderDetailData[i].quantity; %> </td>
+                          </tr>
+                          <% } %>
+                        </tbody>
+                      </table>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="col-md-6">
+  
+          </div>
+        </div>
+      </div>
+    </section>
+  </div>
