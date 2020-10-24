@@ -89,7 +89,7 @@ module.exports = {
 
             const orderDetailData = await OrderDetail.aggregate([
 				{
-					$match: { orderId, deletedAt: 0, status: true}
+					$match: { orderId, deletedAt: 0 }
 				},
                 {
                     $lookup:
@@ -137,4 +137,23 @@ module.exports = {
 			res.render('admin/order/orderDetail',{layout:'admin/layout/layout', pageTitle, moduleName, orderData, orderDetailData, orderStatus: constant.ORDER_STATUS  } );
 		}else{
 		}
-	}};
+	},
+	changeStatusOrderDetail: function(req,res){
+		let id = req.param("id");
+		let status = req.param("status");
+		console.log('----id----status', id, status)
+		return OrderDetail.updateOne({_id: mongoose.mongo.ObjectId(id)}, {
+			status: parseInt(status)?true:false
+		},function(err,data){
+			if(err) console.error(err);
+			if(status == '1'){
+				let change_status = "changeStatus(this,\'0\',\'change_status_orderk\',\'view_order\',\'orderDetail\');";
+				res.send('<span class="badge bg-success" style="cursor:pointer;" onclick="'+change_status+'">Active</span>');
+			}
+			else{
+				let change_status = "changeStatus(this,\'1\',\'change_status_orderk\',\'view_order\',\'orderDetail\');";	
+				res.send('<span class="badge bg-danger" style="cursor:pointer;" onclick="'+change_status+'">Inactive</span>');
+			}
+	    })
+	},
+};

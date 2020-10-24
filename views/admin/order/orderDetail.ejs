@@ -34,37 +34,51 @@
                     <h5 class="widget-user-desc">Order ID - <%=orderData.orderId%></h5>
                     <h5 class="widget-user-desc ">Created At - <%=orderData.createdAt %></h5>
                   </div>
-                  <!-- <div class="widget-user-image">
-                    <img class="img-circle elevation-2" src="/assets/media/user/avatar5.png" alt="Customer Avatar">
-                  </div> -->
                   <div class="card-footer">
                     <div class="row">
                       <%- include ('../message/message') -%>
-                      <table class="table table-bordered">
-                        <thead>                  
+                      <table class="table table-bordered" id="orderDetailTable">
+                        <thead>      
+                          <tr>
+                              <label for="bulkOperationId" >Bulk Operation: </label>
+                              <select name="bulkOperationId" class="form-control" id="bulkOperationId" >
+                                <option value="">Select Bulk Opearation</option>
+                                <option value="1">Active</option>
+                                <option value="0">Inactive</option>
+                              </select>
+                              <button id="bulkOperationButton" class="btn btn-primary">Submit</button>
+                          </tr>            
                           <tr>
                             <th style="width: 10px">#</th>
                             <th>Product</th>
                             <th>Variant</th>
                             <th>Price</th>
                             <th>Quantity</th>
+                            <th>Status</th>
                           </tr>
                         </thead>
                         <tbody>
-                          <% let x = 1; 
-                          for(let i = orderDetailData.length-1; i >= 0; i--){ %>
+                          <% for(let i = orderDetailData.length-1; i >= 0; i--){ %>
                           <tr>
-                            <td><%= x++; %></td>
+                            <td><input value="<%= orderDetailData[i]._id %>" class="bulkOperationStatus" type="checkbox" /></td>
                             <td><%= orderDetailData[i].productData.name; %></td>
                             <td><%= orderDetailData[i].variantData.label %> <%=orderDetailData[i].variantData.measurementUnit %></td>
                             <td><%= orderDetailData[i].price; %> </td>
                             <td><%= orderDetailData[i].quantity; %> </td>
+                              <td>
+                                <% if (orderDetailData[i].status) { %>
+                                  <span class="badge bg-danger" style="cursor:pointer;" onclick="changeStatus(this, 1, 'change_status_order_detail', 'order_detail', 'orderDetail')" id="<%= orderDetailData._id %>" >Inactive</span>
+                                <% } else { %>
+                                  <span class="badge bg-success" style="cursor:pointer;" onclick="changeStatus(this, 0, 'change_status_order_detail', 'order_detail', 'orderDetail')" id="<%= orderDetailData._id %>" >Active</span>
+                                <% } %>
+                              </td>
                           </tr>
                           <% } %>
                         </tbody>
                       </table>
                     </div>
                     <div>
+                      <input type="hidden" id="orderId" value="<%=orderData.orderId%>">
                       <label for="state">Order Status</label>
                       <select name="orderStatusId" id="orderStatusId">
                         <option value="">Select Order Status</option>
@@ -92,3 +106,18 @@
       </div>
     </section>
   </div>
+  <script>
+    $(document).on("click",'#bulkOperationButton', function(){
+      const status = $('#bulkOperationId').val();
+      const ids = [];
+       $('.bulkOperationStatus:checked').each(function(){
+         ids.push($(this).val());
+      });
+      const orderId = $("#orderId").val();
+      $.ajax({
+              url: 'change_order_detail_status_bulk',
+              type: 'POST',
+              data: { ids, status, orderId }
+      });        
+    });
+</script>

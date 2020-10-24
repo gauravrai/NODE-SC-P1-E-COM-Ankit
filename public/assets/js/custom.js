@@ -306,20 +306,12 @@ $(document).on("change", "#fromStoreId", function(){
 });
 
 $(document).on("click", "#statusChange", function(){
-	const id = $("#orderStatusId").val();
-	const data = $(this);
+	const orderStatus = $("#orderStatusId").val();
+	const orderId = $("#orderId").val();
 	$.ajax({
 		type: 'POST',
 		url: 'change_order_status',
-		data: {id:id, data },
-		// success: function(response) {
-		// 	if(response){
-		// 	$('#toStoreIdData').html(response);	
-		// 	}
-		// 	else{
-		// 	$('#toStoreIdData').html('');	
-		// 	}
-		// }
+		data: {orderId, orderStatus },
 	});
 });
 

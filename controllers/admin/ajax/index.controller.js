@@ -13,6 +13,8 @@ const Society = model.society;
 const SubCategory = model.sub_category;
 const Product = model.product;
 const Store = model.store;
+const Order = model.order;
+const OrderDetail = model.order_detail;
 const ADMINCALLURL = config.constant.ADMINCALLURL;
 
 module.exports = {
@@ -117,10 +119,19 @@ module.exports = {
 	},
 
 	changeOrderStatus: async function(req,res){
-		console.log('----id-----', req.body.id);
-		// let id = mongoose.mongo.ObjectID(req.body.id);
-		// let data = await SubCategory.find({categoryId: id, status: true, deletedAt: 0 });
-		// res.render('admin/ajax/selectOption',{layout:false, data:data} );
+		const { orderId, orderStatus } = req.body;
+		await Order.updateOne({ orderId, status: true, deletedAt: 0 }, { orderStatus });
+		req.flash('msg', {msg:'Order Status Changed Successfully', status:false});	
+		res.redirect(`${config.constant.ADMINCALLURL}/order_detail?id=${orderId}`);
+		req.flash({});
+	},
+
+	changeOrderDetailStatusBulk: async function(req,res){
+		const { ids, status, orderId } = req.body;
+		const result = await OrderDetail.update({ _id: { $in: ids.map((id) => mongoose.mongo.ObjectID(id))},	deletedAt: 0}, { status: status === '1' ? true : false });
+		req.flash('msg', {msg:'Order Detail Status Changed Successfully', status:false});	
+		res.redirect(`${config.constant.ADMINCALLURL}/order_detail?id=${orderId}`);
+		req.flash({});
 	},
 
 }
