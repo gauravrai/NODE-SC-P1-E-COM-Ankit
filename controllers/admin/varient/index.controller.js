@@ -86,7 +86,7 @@ module.exports = {
 		}else{
 			let varientData = {
 				label : req.body.label,
-				masurementUnit : req.body.masurementUnit
+				measurementUnit : req.body.measurementUnit
 			};
 			let varient = new Varient(varientData);
 			varient.save(function(err, data){
@@ -110,7 +110,7 @@ module.exports = {
 		if(req.method == "POST"){
 			let varientData = {
 				label : req.body.label,
-				masurementUnit : req.body.masurementUnit
+				measurementUnit : req.body.measurementUnit
 			};
 			await Varient.update(
 				{ _id: mongoose.mongo.ObjectId(req.body.id) },

@@ -82,26 +82,25 @@
                         </select>
                     </div>
 
-                    <div class="form-group col-md-3">
+                    <div class="form-group col-md-2">
                       <label for="stock">Stock Keeping Unit</label>
                       <input type="text" name="stock" class="form-control" id="stock" placeholder="Please Enter Value This formate (      LB1234567 ) " value="<%=productData.stock%>">
                     </div> 
+
+                    <div class="form-group col-md-2">
+                      <label for="featured">Featured Product</label>
+                      <input type="checkbox" name="featured" class="form-control" id="featured" <% if(productData.featured == true){ %> checked="checked" <% } %> >
+                    </div>
+
+                    <div class="form-group col-md-2">
+                      <label for="outOfStock">Out Of Stock</label>
+                      <input type="checkbox" name="outOfStock" class="form-control" id="outOfStock" <% if(productData.outOfStock == true){ %> checked="checked" <% } %> >
+                    </div>
 
                     <div class="form-group col-md-12">
                         <label for="description">Description</label>
                         <textarea name="description" class="form-control" id="description" placeholder="Description"><%=productData.description%></textarea>
                     </div> 
-
-                    <div class="form-group col-md-12">
-                      <label class="col-md-3" for="featured">Featured Product</label>
-                      <div class="col-md-3" style="margin-top: -30px; margin-left: 120px;">
-                        <input type="checkbox" name="featured" class="form-control" id="featured" <% if(productData.featured == true){ %> checked="checked" <% } %> >
-                      </div>
-                      <label class="col-md-3" for="outOfStock">Out Of Stock</label>
-                      <div class="col-md-3" style="margin-top: -30px; margin-left: 120px;">
-                        <input type="checkbox" name="outOfStock" class="form-control" id="outOfStock" <% if(productData.outOfStock == true){ %> checked="checked" <% } %> >
-                      </div>
-                    </div>
                 </div>
                 <div class="card-header">
                   <h3 class="card-title">Inventory</h3>
@@ -115,21 +114,16 @@
                   </div>  
                   <div class="form-row" id="storeField_<%=i%>">
                   <% for(let k = 0; k < productData.inventory[i].length; k++){ %>
-                    <div class="form-group col-md-3 store-div-<%=i%>-<%=k%>">
-                      <label for="label_<%=i%>">Label</label>
-                      <input type="hidden" name="varient_<%=i%>" id="varient_<%=i%>" placeholder="Label" value="<%=productData.inventory[i][k].id%>">
-                      <input type="text" name="label_<%=i%>" class="form-control" id="label_<%=i%>" placeholder="Label" value="<%=productData.inventory[i][k].label%>">
-                    </div>  
-                    <div class="form-group col-md-3 store-div-<%=i%>-<%=k%>">
-                      <label for="weight_<%=i%>" >Weight Unit</label>
-                      <select name="weight_<%=i%>" class="form-control" id="weight_<%=i%>" >
-                        <option value="">Select Weight Unit</option>
-                        <option value="ml" <% if(productData.inventory[i][k].weight == 'ml'){ %> selected="selected" <% } %> >ML</option>
-                        <option value="gram" <% if(productData.inventory[i][k].weight == 'gram'){ %> selected="selected" <% } %> >Gram</option>
-                        <option value="kg" <% if(productData.inventory[i][k].weight == 'kg'){ %> selected="selected" <% } %> >KG</option>
+                    <div class="form-group col-md-4 store-div-<%=i%>-<%=k%>">
+                      <label for="varient_<%=i%>">Select Varient</label>
+                      <select class="form-control select2" name="varient_<%=i%>" id="varient_<%=i%>">
+                        <option value="">Select Varient</option>
+                        <% for(let m = 0; m < varientData.length; m++){ %>
+                          <option value="<%=varientData[m].id%>" <% if(productData.inventory[i][k].varientId == varientData[m].id){ %> selected="selected" <% } %> ><%= varientData[m].label+' '+varientData[m].measurementUnit %></option>
+                        <% } %>
                       </select>
-                    </div>
-                    <div class="form-group col-md-3 store-div-<%=i%>-<%=k%>">
+                    </div>  
+                    <div class="form-group col-md-4 store-div-<%=i%>-<%=k%>">
                       <label for="price">Price</label>
                       <input type="text" name="price_<%=i%>" class="form-control" id="price_<%=i%>" placeholder="Price" value="<%=productData.inventory[i][k].price%>">
                     </div>  
@@ -138,7 +132,7 @@
                       <input type="radio" name="default_<%=i%>" id="default_<%=i%>" class="form-control" value="<%=j++%>"  <% if(productData.inventory[i][k].default == true){ %> checked="checked" <% } %> >
                     </div>  
                     <% if(k != 0){ %>
-                    <div class="form-group col-md-1 store-div-<%=i%>-<%=k%>">
+                    <div class="form-group col-md-2 store-div-<%=i%>-<%=k%>">
                       <a class="deleteStoreField" href="javascript:void(0);"" data-storeno="<%=i%>" data-index="<%=k%>">Remove</a>
                     </div>
                     <% } %>
@@ -191,19 +185,20 @@
     $('.addMoreStoreFields').click(function(){
       var storeno = $(this).data('storeno');
       var index = $(this).data('index');
-      var html = `<div class="form-group col-md-3 store-div-`+storeno+`-`+index+`">
-                    <label for="label_`+storeno+`">Label</label>
-                    <input type="text" name="label_`+storeno+`" class="form-control" id="label_`+storeno+`" placeholder="Label">
-                  </div>  
-                  <div class="form-group col-md-3 store-div-`+storeno+`-`+index+`">
-                    <label for="weight" >Weight Unit</label>
-                    <select name="weight_`+storeno+`" class="form-control" id="weight_`+storeno+`" >
-                      <option value="">Select Weight Unit</option>
-                      <option value="ml">ML</option>
-                      <option value="gram">Gram</option>
-                      <option value="kg">KG</option>
-                    </select>
-                  </div>
+    var varientData = '<%- JSON.stringify(varientData) %>';
+    varientData = JSON.parse(varientData);
+      var html = `<div class="form-group col-md-4 store-div-`+storeno+`-`+index+`">
+                  <label for="varient_`+storeno+`">Select Varient</label>
+                  <select class="form-control select2" name="varient_`+storeno+`" id="varient_`+storeno+`">
+                    <option value="">Select Varient</option>`;
+                        
+                    for(var i = 0; i < varientData.length; i++){
+                      let optionValue = varientData[i]._id;
+                      let optionName = varientData[i].label+` `+varientData[i].measurementUnit;
+                      html += `<option value="`+optionValue+`">`+optionName+`</option>`;
+                    }
+        html += `</select>
+                </div>
                   <div class="form-group col-md-3 store-div-`+storeno+`-`+index+`">
                     <label for="price">Price</label>
                     <input type="text" name="price_`+storeno+`" class="form-control" id="price_`+storeno+`" placeholder="Price">

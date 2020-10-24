@@ -9,6 +9,10 @@ let VarientSchema = new Schema({
     measurementUnit: {
         type: String
     },
+    status: {
+        type: Boolean,
+        default : true
+    },
     deletedAt: {
         type: Number,
         default : 0

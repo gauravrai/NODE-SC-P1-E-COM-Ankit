@@ -60,7 +60,7 @@
                       </select>
                     </div>
                     
-                    <div class="form-group col-md-2">
+                    <div class="form-group col-md-3">
                         <label for="offer">Select Offer applicable</label>
                         <select name="offer" class="form-control" id="offer" >
                         <option value="">Select Offer</option>
@@ -69,7 +69,7 @@
                         </select>
                     </div>
                     
-                    <div class="form-group col-md-2">
+                    <div class="form-group col-md-3">
                         <label for="discount">Select Discount applicable</label>
                         <select name="discount" class="form-control" id="discount" >
                         <option value="">Select Discount</option>
@@ -83,11 +83,11 @@
                       <input type="text" name="stock" class="form-control" id="stock" placeholder="Formate (LB1234567) ">
                     </div> 
                     <div class="form-group col-md-2">
-                        <label for="featured">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Featured Product</label>
+                        <label for="featured">Featured Product</label>
                       <input type="checkbox" name="featured" class="form-control" id="featured">
                     </div> 
                     <div class="form-group col-md-2">
-                        <label for="outOfStock">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Out Of Stock</label>
+                        <label for="outOfStock">Out Of Stock</label>
                       <input type="checkbox" name="outOfStock" class="form-control" id="outOfStock">
                     </div>                      
                     <div class="form-group col-md-12">
@@ -118,27 +118,24 @@
                     <input type="hidden" value="<%=storeData[i].id%>" name="storeId">
                   </div>  
                   <div class="form-row" id="storeField_<%=i%>">
-                    <div class="form-group col-md-3">
-                      <label for="label_<%=i%>">Label</label>
-                      <input type="text" name="label_<%=i%>" class="form-control" id="label_<%=i%>" placeholder="Label">
-                    </div>  
-                    <div class="form-group col-md-3">
-                      <label for="weight_<%=i%>" >Weight Unit</label>
-                      <select name="weight_<%=i%>" class="form-control" id="weight_<%=i%>" >
-                        <option value="">Select Weight Unit</option>
-                        <option value="ml">ML</option>
-                        <option value="gram">Gram</option>
-                        <option value="kg">KG</option>
+                    <div class="form-group col-md-4">
+                      <label for="varient_<%=i%>">Select Varient</label>
+                      <select class="form-control select2" name="varient_<%=i%>" id="varient_<%=i%>">
+                        <option value="">Select Varient</option>
+                        <% for(let i = 0; i < varientData.length; i++){ %>
+                          <option value="<%=varientData[i].id%>"><%= varientData[i].label+' '+varientData[i].measurementUnit %></option>
+                        <% } %>
                       </select>
                     </div>
-                    <div class="form-group col-md-3">
+                    <div class="form-group col-md-4">
                       <label for="price">Price</label>
                       <input type="text" name="price_<%=i%>" class="form-control" id="price_<%=i%>" placeholder="Price">
                     </div>  
                     <div class="form-group col-md-2">
                       <label for="default">Default</label>
                       <input type="radio" name="default_<%=i%>" id="default_<%=i%>" class="form-control" value="<%=j++%>">
-                    </div>  
+                    </div> 
+                    <div class="form-group col-md-2"></div>   
                   </div>
                   <div class="col-md-12"> 
                     <button type="button" class="btn btn-primary pull-right addMoreStoreFields" data-storeno="<%=i%>" data-index="<%=j%>">Add More</button>
@@ -184,20 +181,21 @@
   $('.addMoreStoreFields').click(function(){
     var storeno = $(this).data('storeno');
     var index = $(this).data('index');
-    var html = `<div class="form-group col-md-3 store-div-`+storeno+`-`+index+`">
-                  <label for="label_`+storeno+`">Label</label>
-                  <input type="text" name="label_`+storeno+`" class="form-control" id="label_`+storeno+`" placeholder="Label">
-                </div>  
-                <div class="form-group col-md-3 store-div-`+storeno+`-`+index+`">
-                  <label for="weight" >Weight Unit</label>
-                  <select name="weight_`+storeno+`" class="form-control" id="weight_`+storeno+`" >
-                    <option value="">Select Weight Unit</option>
-                    <option value="ml">ML</option>
-                    <option value="gram">Gram</option>
-                    <option value="kg">KG</option>
-                  </select>
+    var varientData = '<%- JSON.stringify(varientData) %>';
+    varientData = JSON.parse(varientData);
+    var html = `<div class="form-group col-md-4 store-div-`+storeno+`-`+index+`">
+                  <label for="varient_`+storeno+`">Select Varient</label>
+                  <select class="form-control select2" name="varient_`+storeno+`" id="varient_`+storeno+`">
+                    <option value="">Select Varient</option>`;
+                        
+                    for(var i = 0; i < varientData.length; i++){
+                      let optionValue = varientData[i]._id;
+                      let optionName = varientData[i].label+` `+varientData[i].measurementUnit;
+                      html += `<option value="`+optionValue+`">`+optionName+`</option>`;
+                    }
+        html += `</select>
                 </div>
-                <div class="form-group col-md-3 store-div-`+storeno+`-`+index+`">
+                <div class="form-group col-md-4 store-div-`+storeno+`-`+index+`">
                   <label for="price">Price</label>
                   <input type="text" name="price_`+storeno+`" class="form-control" id="price_`+storeno+`" placeholder="Price">
                 </div>  
@@ -205,7 +203,7 @@
                   <label for="default">Default</label>
                   <input type="radio" name="default_`+storeno+`" id="default_`+storeno+`" class="form-control" value="`+index+`">
                 </div>
-                <div class="form-group col-md-1 store-div-`+storeno+`-`+index+`">
+                <div class="form-group col-md-2 store-div-`+storeno+`-`+index+`">
                   <a class="deleteStoreField" href="javascript:void(0);"" data-storeno="`+storeno+`" data-index="`+index+`">Remove</a>
                 </div>`;
     $('#storeField_'+storeno+':last').append(html);

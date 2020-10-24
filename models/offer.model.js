@@ -18,17 +18,6 @@ let OfferSchema = new Schema({
     freeItem: {
         type: Number
     },
-    offerType: {
-        type: String,
-    },
-    percentage: {
-        type: String,
-        default: 0
-    },
-    fixed: {
-        type: String,
-        default: 0
-    },
     applyFor: {
         type: String
     },
@@ -56,7 +45,7 @@ let OfferSchema = new Schema({
     freeProductId: {
         type: ObjectId
     },
-    freeVarient: {
+    freeVarientId: {
         type: String 
     },
     status: {

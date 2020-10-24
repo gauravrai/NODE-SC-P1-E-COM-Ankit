@@ -98,6 +98,28 @@ module.exports = {
 		res.render('admin/ajax/selectOption',{layout:false, data:data} );
 	},
 
+	getSubcatByMulCat: async function(req,res){
+		let id = req.body.id;
+		let data = await SubCategory.find({categoryId: { $in: id }, status: true, deletedAt: 0 });
+		res.render('admin/ajax/selectOption',{layout:false, data:data} );
+	},
+
+	getProductByMulCatsubcat: async function(req,res){
+		let id = req.body.id;
+		let fieldName = req.body.fieldName;
+		let condition = {status: true, deletedAt: 0, offer:"Yes"};
+		if(fieldName == 'categoryId')
+		{
+			condition.categoryId = { $in: id };
+		}
+		else
+		{
+			condition.subcategoryId = { $in: id };
+		}
+		let data = await Product.find(condition);
+		res.render('admin/ajax/selectOption',{layout:false, data:data} );
+	},
+
 	getVarient: async function(req,res){
 		let id = mongoose.mongo.ObjectID(req.body.id);
 		let data = await Product.aggregate([ 
@@ -114,7 +136,6 @@ module.exports = {
 				}
 			}
 		])
-		console.log(data[0].inventory);
 		res.render('admin/ajax/varientOption',{layout:false, data:data[0].inventory} );
 	},
 
