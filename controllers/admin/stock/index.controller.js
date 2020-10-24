@@ -57,7 +57,7 @@ module.exports = {
 			var data = results.data?results.data:[];
 			var arr =[];
             var perdata = {add:1,edit:1,delete:1}
-            //console.log(data);return false;
+
 			await config.helpers.permission('manage_stock', req, async function(err,permissionData) {
 				for(i=0;i<data.length;i++){
 					var arr1 = [];

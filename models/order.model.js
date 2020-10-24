@@ -7,7 +7,7 @@ let orderSchema = new Schema({
         type: ObjectId,
     },
     orderId: {
-        type: ObjectId,
+        type: String,
     },
     subTotal: {
         type: Number,
