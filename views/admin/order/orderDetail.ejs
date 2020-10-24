@@ -26,14 +26,17 @@
                 </ul>
               </div>
               <div class="card-body">
-                <div class="card card-widget widget-user">
+                <div class="card card-widget widget-user" style="height: 15%">
                   <div class="widget-user-header bg-info">
-                    <h3 class="widget-user-username"><%=customerName%></h3>
-                    <h5 class="widget-user-desc">Order ID - <%=orderId%></h5>
+                    <h5 class="widget-user-username"><%=orderData.customerData.name %></h5>
+                    <h5 class="widget-user-desc"><%=orderData.customerData.mobile %></h5>
+                    <h5 class="widget-user-desc"><%=orderData.customerData.address %></h5>
+                    <h5 class="widget-user-desc">Order ID - <%=orderData.orderId%></h5>
+                    <h5 class="widget-user-desc ">Created At - <%=orderData.createdAt %></h5>
                   </div>
-                  <div class="widget-user-image">
+                  <!-- <div class="widget-user-image">
                     <img class="img-circle elevation-2" src="/assets/media/user/avatar5.png" alt="Customer Avatar">
-                  </div>
+                  </div> -->
                   <div class="card-footer">
                     <div class="row">
                       <%- include ('../message/message') -%>
@@ -60,6 +63,22 @@
                           <% } %>
                         </tbody>
                       </table>
+                    </div>
+                    <div>
+                      <label for="state">Order Status</label>
+                      <select name="orderStatusId" id="orderStatusId">
+                        <option value="">Select Order Status</option>
+                        <% for(let i = 0; i < orderStatus.length; i++){ %>
+                          <option value="<%=orderStatus[i]%>"
+                            <% if(orderStatus[i] == orderData.orderStatus){ %> selected="selected" <% } %> ><%=orderStatus[i]%></option>
+                        <% } %>
+                      </select>
+                      <button id="statusChange" class="btn btn-primary">Submit</button>
+                    </div>
+                    <div>
+                      <div>Sub Total : <%= orderData.subTotal %> </div>
+                      <div>Taxes : <%= orderData.sgst + orderData.cgst + orderData.igst %></div>
+                      <div>Total : <%= orderData.grandTotal %></div>
                     </div>
                   </div>
                 </div>

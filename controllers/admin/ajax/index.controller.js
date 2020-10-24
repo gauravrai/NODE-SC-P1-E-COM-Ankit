@@ -136,4 +136,12 @@ module.exports = {
 		])
 		res.render('admin/ajax/varientOption',{layout:false, data:data[0].inventory} );
 	},
+
+	changeOrderStatus: async function(req,res){
+		console.log('----id-----', req.body.id);
+		// let id = mongoose.mongo.ObjectID(req.body.id);
+		// let data = await SubCategory.find({categoryId: id, status: true, deletedAt: 0 });
+		// res.render('admin/ajax/selectOption',{layout:false, data:data} );
+	},
+
 }

@@ -14,4 +14,5 @@ module.exports = function(router) {
     router.all(config.constant.ADMINCALLURL+'/get_varient',isloggedin, indexController.getVarient);
     router.all(config.constant.ADMINCALLURL+'/get_subcat_by_mul_cat',isloggedin, indexController.getSubcatByMulCat);
     router.all(config.constant.ADMINCALLURL+'/get_product_by_mul_cat_subcat',isloggedin, indexController.getProductByMulCatsubcat);
+    router.all(config.constant.ADMINCALLURL+'/change_order_status',isloggedin, indexController.changeOrderStatus);
 }

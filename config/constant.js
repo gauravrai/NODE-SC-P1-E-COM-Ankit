@@ -36,4 +36,6 @@ module.exports = {
 	SUBCATEGORYTHUMBNAILSHOWPATH: SITEURL+'uploads/subcategory/thumbnail/',	  
 	SUBCATEGORYSMALLSHOWPATH:  SITEURL+'uploads/subcategory/small/', 
 	SUBCATEGORYLARGESHOWPATH:  SITEURL+'uploads/subcategory/large/',
+
+	ORDER_STATUS: [ 'NEW', 'IN_PROCESS', 'IN_TRANSIT', 'DELIVERED', 'CANCELED']
 }
