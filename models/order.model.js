@@ -1,6 +1,9 @@
 const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 var ObjectId = mongoose.Schema.Types.ObjectId;
+const constant = '../config/constant';
+
+const { ORDER_STATUS } = constant;
 
 let orderSchema = new Schema({
     customerId: {
@@ -26,7 +29,7 @@ let orderSchema = new Schema({
     },
     orderStatus: {
         type: String,
-        enum: [ 'NEW', 'IN_PROCESS', 'IN_TRANSIT', 'DELIVERED', 'CANCELED']
+        enum: ORDER_STATUS
     },
     orderFrom: {
         type: String,

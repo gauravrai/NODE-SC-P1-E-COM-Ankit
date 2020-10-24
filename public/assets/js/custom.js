@@ -305,6 +305,24 @@ $(document).on("change", "#fromStoreId", function(){
 	});
 });
 
+$(document).on("click", "#statusChange", function(){
+	const id = $("#orderStatusId").val();
+	const data = $(this);
+	$.ajax({
+		type: 'POST',
+		url: 'change_order_status',
+		data: {id:id, data },
+		// success: function(response) {
+		// 	if(response){
+		// 	$('#toStoreIdData').html(response);	
+		// 	}
+		// 	else{
+		// 	$('#toStoreIdData').html('');	
+		// 	}
+		// }
+	});
+});
+
 $(document).on("change","#offerType",function(){
 	var checkvalue = $(this).val();
 	if(checkvalue=="percentage"){

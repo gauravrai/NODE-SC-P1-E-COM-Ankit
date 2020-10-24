@@ -19,6 +19,7 @@ const StockEntries = model.stock_entries;
 const ADMINCALLURL = config.constant.ADMINCALLURL;
 const Order = model.order;
 const OrderDetail = model.order_detail;
+const constant = require('../../../config/constant');
 
 module.exports = {
 
@@ -63,9 +64,9 @@ module.exports = {
                 for(i=0;i<data.length;i++){
                     var arr1 = [];
                     arr1.push(data[i].orderId);
-					await config.helpers.customer.getNameById(data[i].customerId, async function (customerName) {
-						const customer_name = customerName ? customerName.name : 'N/A';
-						arr1.push(customer_name);
+					await config.helpers.customer.getMobileById(data[i].customerId, async function (customerMobile) {
+						const customer_mobile = customerMobile ? customerMobile.mobile : 'N/A';
+						arr1.push(customer_mobile);
 					})
                     arr1.push(data[i].orderStatus);
 					arr1.push(data[i].orderFrom);
@@ -115,7 +116,7 @@ module.exports = {
                     $unwind: "$variantData"
                 },
             ]);
-            const [orderData] = await Order.aggregate([
+            const [ orderData ] = await Order.aggregate([
 				{
 					$match: { orderId, deletedAt: 0, status: true}
 				},
@@ -131,9 +132,9 @@ module.exports = {
                 {
                     $unwind: "$customerData"
                 },
-            ]);
-            const { name: customerName } = orderData.customerData;
-			res.render('admin/order/orderDetail',{layout:'admin/layout/layout', pageTitle, moduleName, customerName, orderId, orderDetailData } );
+			]);
+			
+			res.render('admin/order/orderDetail',{layout:'admin/layout/layout', pageTitle, moduleName, orderData, orderDetailData, orderStatus: constant.ORDER_STATUS  } );
 		}else{
 		}
 	}};
