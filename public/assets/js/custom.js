@@ -307,11 +307,11 @@ $(document).on("change", "#fromStoreId", function(){
 
 $(document).on("click", "#statusChange", function(){
 	const orderStatus = $("#orderStatusId").val();
-	const orderId = $("#orderId").val();
+	const odid = $("#odid").val();
 	$.ajax({
 		type: 'POST',
 		url: 'change_order_status',
-		data: {orderId, orderStatus },
+		data: {odid, orderStatus },
 	});
 });
 
