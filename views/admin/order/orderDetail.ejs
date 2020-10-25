@@ -31,7 +31,7 @@
                     <h5 class="widget-user-username"><%=orderData.customerData.name %></h5>
                     <h5 class="widget-user-desc"><%=orderData.customerData.mobile %></h5>
                     <h5 class="widget-user-desc"><%=orderData.customerData.address %></h5>
-                    <h5 class="widget-user-desc">Order ID - <%=orderData.orderId%></h5>
+                    <h5 class="widget-user-desc">Order ID - <%=orderData.odid%></h5>
                     <h5 class="widget-user-desc ">Created At - <%=orderData.createdAt %></h5>
                   </div>
                   <div class="card-footer">
@@ -78,7 +78,7 @@
                       </table>￼
                     </div>
                     <div>
-                      <input type="hidden" id="orderId" value="<%=orderData.orderId%>">
+                      <input type="hidden" id="odid" value="<%=orderData.odid%>">
                       <label for="state">Order Status</label>
                       <select name="orderStatusId" id="orderStatusId">
                         <option value="">Select Order Status</option>
@@ -113,11 +113,11 @@
        $('.bulkOperationStatus:checked').each(function(){
          ids.push($(this).val());
       });
-      const orderId = $("#orderId").val();
+      const odid = $("#odid").val();
       $.ajax({
               url: 'change_order_detail_status_bulk',
               type: 'POST',
-              data: { ids, status, orderId }
+              data: { ids, status, odid }
       });        
     });
 </script>

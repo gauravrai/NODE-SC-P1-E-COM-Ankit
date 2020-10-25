@@ -63,8 +63,8 @@ module.exports = {
 			await config.helpers.permission('view_order', req, async function(err,permissionData) {
                 for(i=0;i<data.length;i++){
                     var arr1 = [];
-                    arr1.push(data[i].orderId);
-					await config.helpers.customer.getMobileById(data[i].customerId, async function (customerMobile) {
+                    arr1.push(data[i].odid);
+					await config.helpers.customer.getMobileById(data[i].userId, async function (customerMobile) {
 						const customer_mobile = customerMobile ? customerMobile.mobile : 'N/A';
 						arr1.push(customer_mobile);
 					})
@@ -72,7 +72,7 @@ module.exports = {
 					arr1.push(data[i].orderFrom);
                     
 					arr1.push(moment(data[i].createdAt).format('DD-MM-YYYY'));
-					$but_view = '<span><a href="'+ADMINCALLURL+'/order_detail?id='+data[i].orderId+'" class="btn btn-flat btn-info btn-outline-primary" title="View"><i class="fas fa-eye"></i></a></span>';
+					$but_view = '<span><a href="'+ADMINCALLURL+'/order_detail?id='+data[i].odid+'" class="btn btn-flat btn-info btn-outline-primary" title="View"><i class="fas fa-eye"></i></a></span>';
 					arr1.push($but_view);
 					arr.push(arr1);
 				}
@@ -85,11 +85,11 @@ module.exports = {
 		if(req.method == "GET"){
 			let moduleName = 'Order Management';
 			let pageTitle = 'View Order Details';
-            let orderId = req.body.id;
+            let odid = req.body.id;
 
             const orderDetailData = await OrderDetail.aggregate([
 				{
-					$match: { orderId, deletedAt: 0 }
+					$match: { odid, deletedAt: 0 }
 				},
                 {
                     $lookup:
@@ -118,13 +118,13 @@ module.exports = {
             ]);
             const [ orderData ] = await Order.aggregate([
 				{
-					$match: { orderId, deletedAt: 0, status: true}
+					$match: { odid, deletedAt: 0, status: true}
 				},
                 {
                     $lookup:
                       {
                         from: "customers",
-                        localField: "customerId",
+                        localField: "userId",
                         foreignField: "_id",
                         as: "customerData"
                       }
@@ -141,17 +141,16 @@ module.exports = {
 	changeStatusOrderDetail: function(req,res){
 		let id = req.param("id");
 		let status = req.param("status");
-		console.log('----id----status', id, status)
 		return OrderDetail.updateOne({_id: mongoose.mongo.ObjectId(id)}, {
 			status: parseInt(status)?true:false
 		},function(err,data){
 			if(err) console.error(err);
 			if(status == '1'){
-				let change_status = "changeStatus(this,\'0\',\'change_status_orderk\',\'view_order\',\'orderDetail\');";
+				let change_status = "changeStatus(this,\'0\',\'change_status_order\',\'view_order\',\'orderDetail\');";
 				res.send('<span class="badge bg-success" style="cursor:pointer;" onclick="'+change_status+'">Active</span>');
 			}
 			else{
-				let change_status = "changeStatus(this,\'1\',\'change_status_orderk\',\'view_order\',\'orderDetail\');";	
+				let change_status = "changeStatus(this,\'1\',\'change_status_order\',\'view_order\',\'orderDetail\');";	
 				res.send('<span class="badge bg-danger" style="cursor:pointer;" onclick="'+change_status+'">Inactive</span>');
 			}
 	    })
