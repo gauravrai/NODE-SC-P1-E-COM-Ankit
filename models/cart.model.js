@@ -27,6 +27,15 @@ let CartSchema = new Schema({
     pincode:{
         type: Number
     },
+    couponId: {
+        type: ObjectId,
+    },
+    couponNo: {
+        type: String,
+    },
+    couponAmount: {
+        type: Number,
+    },
     status: {
         type: Boolean,
         default : true

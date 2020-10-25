@@ -2,30 +2,15 @@ const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 var ObjectId = mongoose.Schema.Types.ObjectId;
 
-let orderSchema = new Schema({
-    odid: {
-        type: String,
-    },
-    productId: {
+let CouponUsesSchema = new Schema({
+    couponId: {
         type: ObjectId
     },
-    varientId: {
+    couponNo: {
+        type: String
+    },
+    userId: {
         type: ObjectId
-    },
-    price:{
-        type: Number
-    },
-    totalPrice:{
-        type: Number
-    },
-    offerId:{
-        type: ObjectId
-    },
-    offerProduct:{
-        type: Object
-    },
-    quantity:{
-        type: Number
     },
     status: {
         type: Boolean,
@@ -46,4 +31,4 @@ let orderSchema = new Schema({
 });
 
 // Export the model
-module.exports = mongoose.model('Order_Detail', orderSchema);
+module.exports = mongoose.model('Coupon_Uses', CouponUsesSchema);
