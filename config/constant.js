@@ -37,5 +37,6 @@ module.exports = {
 	SUBCATEGORYSMALLSHOWPATH:  SITEURL+'uploads/subcategory/small/', 
 	SUBCATEGORYLARGESHOWPATH:  SITEURL+'uploads/subcategory/large/',
 
-	ORDER_STATUS: [ 'NEW', 'IN_PROCESS', 'IN_TRANSIT', 'DELIVERED', 'CANCELED']
+	ORDER_STATUS: [ 'NEW', 'IN_PROCESS', 'IN_TRANSIT', 'DELIVERED', 'CANCELED'],
+	paymentStatus: [ 'PENDING', 'FAILED', 'COMPLETED']
 }

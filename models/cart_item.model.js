@@ -24,14 +24,8 @@ let CartItemSchema = new Schema({
     totalPrice:{
         type: Number
     },
-    discountId:{
-        type: ObjectId
-    },
     offerId:{
         type: ObjectId
-    },
-    coupon:{
-        type: String
     },
     quantity:{
         type: Number

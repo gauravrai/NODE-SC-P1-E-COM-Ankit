@@ -4,16 +4,35 @@ var ObjectId = mongoose.Schema.Types.ObjectId;
 const constant = '../config/constant';
 
 const { ORDER_STATUS } = constant;
+const { PAYMENT_STATUS } = constant;
 
 let orderSchema = new Schema({
-    customerId: {
+    userId: {
         type: ObjectId,
     },
-    orderId: {
+    odid: {
         type: String,
     },
+    grandTotal: {
+        type: Number
+    },
     subTotal: {
+        type: Number
+    },
+    shippingPrice: {
         type: Number,
+    },
+    quantity:{
+        type: Number
+    },
+    customerDetail:{
+        type: Object
+    },
+    address: {
+        type: String
+    },
+    pincode:{
+        type: Number
     },
     cgst: {
         type: Number
@@ -24,9 +43,6 @@ let orderSchema = new Schema({
     igst: {
         type: Number
     },
-    grandTotal: {
-        type: Number
-    },
     orderStatus: {
         type: String,
         enum: ORDER_STATUS
@@ -34,6 +50,23 @@ let orderSchema = new Schema({
     orderFrom: {
         type: String,
         enum: [ 'WEB', 'APP', 'ADMIN' ],
+    },
+    paymentStatus: {
+        type: String,
+        enum: PAYMENT_STATUS
+    },
+    paymentType: {
+        type: String,
+        enum: [ 'COD', '' ],
+    },
+    couponId: {
+        type: ObjectId,
+    },
+    couponNo: {
+        type: String,
+    },
+    couponAmount: {
+        type: Number,
     },
     status: {
         type: Boolean,
