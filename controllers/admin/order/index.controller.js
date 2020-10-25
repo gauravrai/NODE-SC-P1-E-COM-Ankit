@@ -144,14 +144,15 @@ module.exports = {
 		return OrderDetail.updateOne({_id: mongoose.mongo.ObjectId(id)}, {
 			status: parseInt(status)?true:false
 		},function(err,data){
+
 			if(err) console.error(err);
 			if(status == '1'){
-				let change_status = "changeStatus(this,\'0\',\'change_status_order\',\'view_order\',\'orderDetail\');";
-				res.send('<span class="badge bg-success" style="cursor:pointer;" onclick="'+change_status+'">Active</span>');
+				let change_status = "changeStatusOrderDetail($(this),\'0\',\'change_status_order_detail\',\'view_order\',\'orderDetail\');";
+				res.send('<span class="badge bg-success" style="cursor:pointer;" id="'+id+'" onclick="'+change_status+'">Active</span>');
 			}
 			else{
-				let change_status = "changeStatus(this,\'1\',\'change_status_order\',\'view_order\',\'orderDetail\');";	
-				res.send('<span class="badge bg-danger" style="cursor:pointer;" onclick="'+change_status+'">Inactive</span>');
+				let change_status = "changeStatusOrderDetail($(this),\'1\',\'change_status_order_detail\',\'view_order\',\'orderDetail\');";	
+				res.send('<span class="badge bg-danger" style="cursor:pointer;" id="'+id+'" onclick="'+change_status+'">Inactive</span>');
 			}
 	    })
 	},

@@ -359,6 +359,46 @@ function getProductByCatsubcat(id, fieldName, subcatDivId, prodDivId){
 	});
 };
 
+//Change status function
+function changeStatusOrderDetail(obj, status, controller, returnFunction, tableId){
+    let statusId = obj.attr('id');
+    const swalWithBootstrapButtons = Swal.mixin({
+        customClass: {
+          confirmButton: 'btn btn-success',
+          cancelButton: 'btn btn-danger'
+        },
+        buttonsStyling: false
+    })
+    swalWithBootstrapButtons.fire({
+        title: 'Are you sure?',
+        text: "You want to change status?",
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonText: 'Yes, change it!',
+        cancelButtonText: 'No, cancel!',
+        reverseButtons: true
+    }).then((result) => {
+        if (result.value) {
+            $.ajax({
+                type: 'POST',
+                url: controller+'/'+statusId,
+                data: {status:status},
+                success: function(response) {
+                    if(response){
+						$(`#${statusId}`).parent().html(response);
+                    }
+                }
+              });
+        } else if (result.dismiss === Swal.DismissReason.cancel) {
+            swalWithBootstrapButtons.fire(
+                'Cancelled',
+                'Your data is safe :)',
+                'error'
+            )
+        }
+    })
+}
+
 function getProductByMulCatsubcat(id, fieldName, subcatDivId, prodDivId){
 	var fieldId = $(id).attr('id');
 	var selectedValues = [];    
