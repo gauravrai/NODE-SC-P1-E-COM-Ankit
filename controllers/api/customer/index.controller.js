@@ -265,5 +265,41 @@ module.exports = {
         }
         
     },
+
+	updateAddress: async function(req,res) {
+        const errors = validationResult(req)
+        if(!errors.isEmpty()){
+            return res.status(400).json({errors: errors.array()})
+        }
+        try{
+            let userId = req.body.userId;
+            let userData = {
+                address : req.body.address ? req.body.address : '',
+                country : req.body.country ? req.body.country : '',
+                stateId : req.body.stateId ? mongoose.mongo.ObjectID(req.body.stateId) : '',
+                cityId : req.body.cityId ? mongoose.mongo.ObjectID(req.body.cityId) : '',
+                pincodeId : req.body.pincodeId ? mongoose.mongo.ObjectID(req.body.pincodeId) : '',
+                areaId: req.body.areaId ? mongoose.mongo.ObjectID(req.body.areaId) : '',
+                societyId : req.body.societyId ? mongoose.mongo.ObjectID(req.body.societyId) : '',
+                towerId : req.body.towerId ? mongoose.mongo.ObjectID(req.body.towerId) : ''
+            };
+            let updateUserData = await Customer.update({_id:mongoose.mongo.ObjectID(userId)},userData);
+            return res.status(200).json({ 
+                data: [], 
+                status: 'success', 
+                message: "Customer Address been updated successfully!!" 
+            });	
+        }
+        catch (e){
+            console.log(e)
+            return res.status(500).json({ 
+                                    data: [],  
+                                    status: 'error', 
+                                    errors: [{
+                                        msg: "Internal server error"
+                                    }]
+                                });
+        }
+	},
 	
 }

@@ -39,6 +39,18 @@ module.exports = function(router) {
 		], 
 		indexController.updateCustomer
 	);
+	
+	router.post(
+		config.constant.APIURL+'/updateAddress', 
+		[
+			// auth,
+			// [
+				check('userId', 'User Id is required').not().isEmpty().trim().escape()
+			// ]
+		], 
+		indexController.updateAddress
+		
+	);
 
     
 }

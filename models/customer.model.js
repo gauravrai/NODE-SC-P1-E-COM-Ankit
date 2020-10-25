@@ -22,6 +22,9 @@ let CustomerSchema = new Schema({
         type: String,
         default: null
     },
+    country : {
+        type: String,
+    },
     stateId: {
         type: ObjectId,
     },
@@ -37,10 +40,9 @@ let CustomerSchema = new Schema({
     societyId: {
         type: ObjectId,
     },
-    // TODO: Look into this.
-    // towerId: {
-    //     type: ObjectId,
-    // },
+    towerId: {
+        type: ObjectId,
+    },
     status: {
         type: Boolean,
         default : true
