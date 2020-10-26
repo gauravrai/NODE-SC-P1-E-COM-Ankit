@@ -52,7 +52,7 @@
                         <label for="applyFor">Offer Apply For</label>
                         <select name="applyFor" class="form-control" id="applyFor">
                         <option value="both">Both</option>
-                        <option value="web">Website</option>
+                        <option value="website">Website</option>
                         <option value="app">App</option>
                         </select>
                     </div>
@@ -74,8 +74,8 @@
                         </select>
                     </div>
                     <div class="form-group col-md-3">
-                      <label for="offerSubcategoryId">Select Sub  Category</label>
-                      <select name="offerSubcategoryId" class="form-control select2" id="offerSubcategoryId" onchange="getProductBMulCatsubcat(this, 'subcategoryId', '', 'offerProductId');" multiple="multiple">
+                      <label for="offerSubcategoryId">Select Sub Category</label>
+                      <select name="offerSubcategoryId" class="form-control select2" id="offerSubcategoryId" onchange="getProductByMulCatsubcat(this, 'subcategoryId', '', 'offerProductId');" multiple="multiple">
                       <% for(let i = 0; i < subcategoryData.length; i++){ %>
                           <option value="<%=subcategoryData[i].id%>"><%=subcategoryData[i].name%></option>
                         <% } %>
@@ -109,18 +109,18 @@
                         </select>
                     </div>
                     <div class="form-group col-md-3">
-                      <label for="freeSubcategoryId">Select Option</label>
+                      <label for="freeSubcategoryId">Select Sub Category</label>
                       <select name="freeSubcategoryId" class="form-control" id="freeSubcategoryId" onchange="getProductByCatsubcat(this, 'subcategoryId', '', 'freeProductId');">
-                      <option value="">Select Sub Category</option>
+                      <option value="">Select Option</option>
                       <% for(let i = 0; i < subcategoryData.length; i++){ %>
                           <option value="<%=subcategoryData[i].id%>"><%=subcategoryData[i].name%></option>
                         <% } %>
                       </select>
                     </div>
                     <div class="form-group col-md-3">
-                      <label for="freeProductId">Select Option</label>
+                      <label for="freeProductId">Select Product</label>
                       <select name="freeProductId" class="form-control" id="freeProductId">
-                      <option value="">Select Product</option>
+                      <option value="">Select Option</option>
                       <% for(let i = 0; i < productData.length; i++){ %>
                           <option value="<%=productData[i].id%>"><%=productData[i].name%></option>
                         <% } %>

@@ -397,6 +397,7 @@ function getProductByMulCatsubcat(id, fieldName, subcatDivId, prodDivId){
 }
 
 $(document).on("change", "#freeProductId", function(){
+	console.log('coming');
 	let id = $(this).val();
 	$.ajax({
 		type: 'POST',

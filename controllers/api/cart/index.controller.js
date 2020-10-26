@@ -75,10 +75,7 @@ module.exports = {
                         userId : userId,
                         sessionId : sessionId,
                         grandTotal : price * quantity,
-                        quantity : quantity,
-                        customerDetail : userData ? userData : {},
-                        address : userData.address ? userData.address : '',
-                        pincode : userData.pincode ? userData.pincode : '',
+                        quantity : quantity
                     };
                     let cart = new Cart(cartInsertData);
                     cart.save();

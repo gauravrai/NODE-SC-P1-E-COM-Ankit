@@ -28,12 +28,6 @@ let orderSchema = new Schema({
     customerDetail:{
         type: Object
     },
-    address: {
-        type: String
-    },
-    pincode:{
-        type: Number
-    },
     cgst: {
         type: Number
     },

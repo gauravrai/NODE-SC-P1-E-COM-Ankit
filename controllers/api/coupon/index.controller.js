@@ -26,29 +26,18 @@ module.exports = {
             let couponNo = req.body.couponNo;
             let userId = req.body.userId;
             let cartId = req.body.cartId;
-            let requestFrom = req.body.requestFrom;
+            let orderFrom = req.body.orderFrom; //app, website, both
             let couponData = await Discount.findOne({couponNo: couponNo,deletedAt:0,status:true,from: { '$lte': new Date() },to: { '$gte':  new Date()}});
             let cartData = await Cart.findOne({_id: mongoose.mongo.ObjectID(cartId)});
             if(couponData)
             {
-                if(couponData.applyFor == requestFrom || couponData.applyFor == 'both')
+                if(couponData.applyFor == orderFrom || couponData.applyFor == 'both')
                 {
                     let couponUsesData = await Couponuses.find({userId: mongoose.mongo.ObjectID(userId),couponId: mongoose.mongo.ObjectID(couponData.id)});
                     if(couponUsesData.length < couponData.noOfUses)
                     {
                         if(couponData.firstOrder == true)
                         {
-                            console.log({userId: mongoose.mongo.ObjectID(userId), $or : [
-                                { 
-                                    $and : [ 
-                                          { payementType: "COD"},
-                                          { orderStatus : "IN_PROCESS"}
-                                        ]
-                                },
-                                { 
-                                  payementStatus: "COMPLETED"
-                                }
-                              ] } );
                             let orderData = await Order.findOne( {userId: mongoose.mongo.ObjectID(userId), $or : [
                                 { 
                                     $and : [ 

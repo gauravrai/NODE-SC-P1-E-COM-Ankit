@@ -80,10 +80,9 @@
                     <div class="form-group col-md-3">
                         <label for="applyFor">Select Apply For</label>
                         <select name="applyFor" class="form-control" id="applyFor">
-                            <option value="">Select Apply For</option>
+                            <option value="both"<% if(discountData.applyFor=="both"){%>selected="selected" <%} %> >Both</option>
                             <option value="website"<% if(discountData.applyFor=="website"){%>selected="selected" <%} %> >Website</option>
                             <option value="app"<% if(discountData.applyFor=="app"){%>selected="selected" <%} %> >App</option>
-                            <option value="both"<% if(discountData.applyFor=="both"){%>selected="selected" <%} %> >Both</option>
                         </select>
                     </div>
                     <div class="form-group col-md-3">

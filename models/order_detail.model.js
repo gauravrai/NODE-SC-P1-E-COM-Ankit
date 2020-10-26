@@ -2,7 +2,10 @@ const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 var ObjectId = mongoose.Schema.Types.ObjectId;
 
-let orderSchema = new Schema({
+let OrderDetailSchema = new Schema({
+    userId: {
+        type: ObjectId,
+    },
     odid: {
         type: String,
     },
@@ -46,4 +49,4 @@ let orderSchema = new Schema({
 });
 
 // Export the model
-module.exports = mongoose.model('Order_Detail', orderSchema);
+module.exports = mongoose.model('Order_Detail', OrderDetailSchema);

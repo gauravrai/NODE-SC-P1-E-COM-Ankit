@@ -5,6 +5,10 @@ const moment = require('moment');
 const Cart = model.cart;
 const Cartitem = model.cart_item;
 const Customer = model.customer;
+const Offer = model.offer;
+const Pincode = model.pincode;
+const Order = model.order;
+const Orderdetail = model.order_detail;
 const { validationResult } = require('express-validator');
 
 module.exports = {
@@ -12,20 +16,111 @@ module.exports = {
     // @description Place order
     // @access      Public
     placeOrder : async function(req,res){
+        console.log('coming');
         const errors = validationResult(req)
         if(!errors.isEmpty()){
             return res.status(400).json({errors: errors.array()})
         }
         try{
             let userId = req.body.userId;
-            let cartId = req.body.cartId;
             let paymentType = req.body.paymentType;
             let orderFrom = req.body.orderFrom;
-            // return res.status(200).json({ 
-            //     data: [], 
-            //     status: 'success', 
-            //     message: "Cart has been added successfully!!" 
-            // });	
+            let userData = await Customer.findOne({_id: mongoose.mongo.ObjectID(userId)});
+            let cartData = await Cart.findOne({userId: mongoose.mongo.ObjectID(userId)});
+            let data = {};
+            if(cartData)
+            {
+                let shippingPrice = await Pincode.findOne({_id: mongoose.mongo.ObjectID(userData.pincodeId)});
+                let odid = 'OD'+moment().format('YMDhms');
+                let customerDetail = {
+                    name : userData.name ? userData.name : '',
+                    mobile : userData.mobile ? userData.mobile : '',
+                    email : userData.email ? userData.email : '',
+                    address : userData.address ? userData.address : '',
+                    country : userData.country ? userData.country : '',
+                    stateId : userData.stateId ? mongoose.mongo.ObjectID(userData.stateId) : '',
+                    cityId : userData.cityId ? mongoose.mongo.ObjectID(userData.cityId) : '',
+                    pincodeId : userData.pincodeId ? mongoose.mongo.ObjectID(userData.pincodeId) : '',
+                    areaId : userData.areaId ? mongoose.mongo.ObjectID(userData.userId) : '',
+                    societyId : userData.societyId ? mongoose.mongo.ObjectID(userData.areaId) : '',
+                    towerId : userData.towerId ? mongoose.mongo.ObjectID(userData.towerId) : ''
+                }
+                let orderInsertData = {
+                    odid: odid,
+                    userId: mongoose.mongo.ObjectID(cartData.userId),
+                    customerDetail : customerDetail,
+                    sessionId: cartData.sessionId,
+                    grandTotal: ( cartData.grandTotal + shippingPrice.shippingCharges ),
+                    subTotal: ( cartData.grandTotal  + shippingPrice.shippingCharges - cartData.couponAmount ),
+                    shippingPrice: shippingPrice.shippingCharges,
+                    quantity: cartData.quantity,
+                    couponId: mongoose.mongo.ObjectID(cartData.couponId),
+                    couponNo: cartData.couponNo,
+                    couponAmount: cartData.couponAmount,
+                    orderStatus: 'NEW',
+                    orderFrom: orderFrom == 'app' ? 'APP' : 'WEB',
+                    paymentStatus: 'PENDING',
+                    paymentType: paymentType
+                }
+                let order = new Order(orderInsertData);
+                order.save();
+                data.order = order;
+                
+                let cartItemData = await Cartitem.find({userId: mongoose.mongo.ObjectID(userId)});
+                let dataOrderDetail = [];
+                for (let i = 0; i < cartItemData.length; i++) {
+                    let orderDetailInsertData = {
+                        userId: mongoose.mongo.ObjectID(cartItemData[i].userId),
+                        odid: odid,
+                        productId: mongoose.mongo.ObjectID(cartItemData[i].productId),
+                        varientId: mongoose.mongo.ObjectID(cartItemData[i].varientId), 
+                        price: cartItemData[i].price,
+                        totalPrice: cartItemData[i].totalPrice,
+                        quantity: cartItemData[i].quantity,
+                        customerDetail : customerDetail,
+                    }
+                    let orderDetail = new Orderdetail(orderDetailInsertData);
+                    orderDetail.save();
+                    dataOrderDetail.push(orderDetail);
+                }
+                data.orderdetail = dataOrderDetail;
+
+                let offerData = await Offer.find({deletedAt:0, status:true, from: { '$lte': new Date() }, to: { '$gte':  new Date()}, $or : [
+                    { 
+                        applyFor : "both"
+                    },
+                    { 
+                        applyFor: orderFrom
+                    }
+                ]});
+                await Cart.deleteOne({ userId : mongoose.mongo.ObjectId(userId)});
+                await Cartitem.delete({ userId : mongoose.mongo.ObjectId(userId)});
+                if(paymentType == 'COD')
+                {
+                    return res.status(200).json({ 
+                        data: [], 
+                        status: 'success', 
+                        message: "Order placed successfully!!" 
+                    });	
+                }
+                else
+                {
+                    //code for online payment
+                    return res.status(200).json({ 
+                        data: [], 
+                        status: 'success', 
+                        message: "Order placed successfully!!" 
+                    });	
+                }
+            }
+            else
+            {
+                return res.status(200).json({ 
+                    data: [], 
+                    status: 'error', 
+                    message: "Your cart is empty!!" 
+                });	
+            }
         }
         catch (e){
             console.log(e)

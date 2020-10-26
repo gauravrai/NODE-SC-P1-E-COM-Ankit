@@ -2,27 +2,33 @@ const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 var ObjectId = mongoose.Schema.Types.ObjectId;
 
-let CartSchema = new Schema({
+let FreeItemSchema = new Schema({
+    odid: {
+        type: String,
+    },
+    orderId: {
+        type: ObjectId,
+    },
     userId: {
         type: ObjectId
     },
-    sessionId: {
-        type: String
+    categoryId: {
+        type: ObjectId
     },
-    grandTotal: {
+    subcategoryId: {
+        type: ObjectId
+    },
+    productId: {
+        type: ObjectId
+    },
+    VarientId: {
+        type: ObjectId,
+    },
+    price:{
         type: Number
     },
     quantity:{
         type: Number
-    },
-    couponId: {
-        type: ObjectId,
-    },
-    couponNo: {
-        type: String,
-    },
-    couponAmount: {
-        type: Number,
     },
     status: {
         type: Boolean,
@@ -43,4 +49,4 @@ let CartSchema = new Schema({
 });
 
 // Export the model
-module.exports = mongoose.model('cart', CartSchema);
+module.exports = mongoose.model('Free_Item', FreeItemSchema);

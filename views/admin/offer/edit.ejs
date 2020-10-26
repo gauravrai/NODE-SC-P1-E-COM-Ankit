@@ -51,9 +51,9 @@
                     <div class="form-group col-md-3">
                         <label for="applyFor">Offer Apply For</label>
                         <select name="applyFor" class="form-control" id="applyFor">
-                        <option value="both">Both</option>
-                        <option value="web">Website</option>
-                        <option value="app">App</option>
+                          <option value="both"<% if(offerData.applyFor=="both"){%>selected="selected" <%} %> >Both</option>
+                          <option value="website"<% if(offerData.applyFor=="website"){%>selected="selected" <%} %> >Website</option>
+                          <option value="app"<% if(offerData.applyFor=="app"){%>selected="selected" <%} %> >App</option>
                         </select>
                     </div>
                     <div class="form-group col-md-3">
