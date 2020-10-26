@@ -98,7 +98,7 @@ module.exports = {
                 if(paymentType == 'COD')
                 {
                     return res.status(200).json({ 
-                        data: [], 
+                        data: data, 
                         status: 'success', 
                         message: "Order placed successfully!!" 
                     });	
@@ -107,7 +107,7 @@ module.exports = {
                 {
                     //code for online payment
                     return res.status(200).json({ 
-                        data: [], 
+                        data: data, 
                         status: 'success', 
                         message: "Order placed successfully!!" 
                     });	
