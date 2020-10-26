@@ -54,7 +54,7 @@
                             <th>Variant</th>
                             <th>Price</th>
                             <th>Quantity</th>
-                            <th>Status</th>
+                            <th>Action</th>
                           </tr>
                         </thead>
                         <tbody>
@@ -66,12 +66,14 @@
                             <td><%= orderDetailData[i].price; %> </td>
                             <td><%= orderDetailData[i].quantity; %> </td>
                               <td>
+                                  
                                 <% if (orderDetailData[i].status) { %>
-                                  <span class="badge bg-success" style="cursor:pointer;" onclick="changeStatus(this, 0, 'change_status_order_detail', 'order_detail', 'orderDetail')" id="<%= orderDetailData._id %>" >Active</span>
+                                  <span class="badge bg-success" style="cursor:pointer;" onclick="changeStatusOrderDetail($(this), 0, 'change_status_order_detail', 'order_detail', 'orderDetail')" id="<%= orderDetailData[i]._id %>" >Active</span>
                                 <% } else { %>
-                                  <span class="badge bg-danger" style="cursor:pointer;" onclick="changeStatus(this, 1, 'change_status_order_detail', 'order_detail', 'orderDetail')" id="<%= orderDetailData._id %>" >Inactive</span>
+                                  <span class="badge bg-danger" style="cursor:pointer;" onclick="changeStatusOrderDetail($(this), 1, 'change_status_order_detail', 'order_detail', 'orderDetail')" id="<%= orderDetailData[i]._id %>" >Inactive</span>
                                 <% } %>
                               </td>
+
                           </tr>
                           <% } %>
                         </tbody>

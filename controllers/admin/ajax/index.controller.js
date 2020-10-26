@@ -148,13 +148,13 @@ module.exports = {
 	},
 
 	changeOrderDetailStatusBulk: async function(req,res){
-		const { ids, status, orderId } = req.body;
+		const { ids, status, odid } = req.body;
 		await OrderDetail.updateMany({
 			_id: { $in: ids.map((id) => mongoose.mongo.ObjectID(id))}, deletedAt: 0
-		}, { status: ((status === '1') ? true : false) });
+		},  {status: ((status === '1') ? true : false)});
 
 		req.flash('msg', {msg:'Order Detail Status Changed Successfully', status:false});	
-		res.redirect(`${config.constant.ADMINCALLURL}/order_detail?id=${orderId}`);
+		res.redirect(`${config.constant.ADMINCALLURL}/order_detail?id=${odid}`);
 		req.flash({});
 	},
 
