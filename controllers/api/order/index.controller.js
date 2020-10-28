@@ -9,6 +9,8 @@ const Offer = model.offer;
 const Pincode = model.pincode;
 const Order = model.order;
 const Orderdetail = model.order_detail;
+const Freeitem = model.free_item;
+const Product = model.product;
 const { validationResult } = require('express-validator');
 
 module.exports = {
@@ -16,7 +18,6 @@ module.exports = {
     // @description Place order
     // @access      Public
     placeOrder : async function(req,res){
-        console.log('coming');
         const errors = validationResult(req)
         if(!errors.isEmpty()){
             return res.status(400).json({errors: errors.array()})
@@ -65,7 +66,16 @@ module.exports = {
                 let order = new Order(orderInsertData);
                 order.save();
                 data.order = order;
-                
+
+                let offerData = await Offer.find({deletedAt:0, status:true, from: { '$lte': new Date() }, to: { '$gte':  new Date()}, $or : [
+                    { 
+                        applyFor : "both"
+                    },
+                    { 
+                        applyFor: orderFrom
+                    }
+                ]});
+
                 let cartItemData = await Cartitem.find({userId: mongoose.mongo.ObjectID(userId)});
                 let dataOrderDetail = [];
                 for (let i = 0; i < cartItemData.length; i++) {
@@ -79,22 +89,60 @@ module.exports = {
                         quantity: cartItemData[i].quantity,
                         customerDetail : customerDetail,
                     }
-                    let orderDetail = new Orderdetail(orderDetailInsertData);
-                    orderDetail.save();
-                    dataOrderDetail.push(orderDetail);
+                    let orderdetail = new Orderdetail(orderDetailInsertData);
+                    orderdetail.save();
+                    dataOrderDetail.push(orderdetail);
+                    for (let j = 0; j < offerData.length; j++) {
+                        let productFound = offerData[j].offerProductId.includes(cartItemData[i].productId);
+                        if(productFound)
+                        {
+                            if(offerData[j].multipleOf == cartItemData[i].quantity)
+                            {
+                                let offerProductData = await Product.findOne({ _id: mongoose.mongo.ObjectID(cartItemData[i].productId) });
+                                let inventory = offerProductData.inventory[0];
+                                let freeProductData = await Product.findOne({ _id: mongoose.mongo.ObjectID(offerData[j].freeProductId) });
+                                
+                                let freeItemInsertData = {
+                                    odid: odid,
+                                    orderId: mongoose.mongo.ObjectID(order.id),
+                                    orderDetailId: mongoose.mongo.ObjectID(orderdetail.id),
+                                    userId: mongoose.mongo.ObjectID(cartItemData[i].userId),
+                                    categoryId: mongoose.mongo.ObjectID(offerData[j].freeCategoryId), 
+                                    subcategoryId: mongoose.mongo.ObjectID(offerData[j].freeSubcategoryId),
+                                    productId: mongoose.mongo.ObjectID(offerData[j].freeProductId),
+                                    varientId: mongoose.mongo.ObjectID(offerData[j].freeVarientId),
+                                    price : freeProductData.price,
+                                    quantity : offerData[j].freeItem
+                                }
+                                if(offerData[j].offerVarient == 'default')
+                                {
+                                    function search(nameKey, myArray){
+                                        for (var i=0; i < myArray.length; i++) {
+                                            if (String(myArray[i].id) === nameKey) {
+                                                return myArray[i];
+                                            }
+                                        }
+                                    }
+                                    var resultObject = search(cartItemData[i].varientId, inventory);
+                                    if(typeof resultObject != 'undefined' && resultObject.default == true)
+                                    {
+                                        let freeitem = new Freeitem(freeItemInsertData);
+                                        freeitem.save();
+                                    }
+                                }
+                                else
+                                {
+                                    let freeitem = new Freeitem(freeItemInsertData);
+                                    freeitem.save();
+                                }
+                            }
+                        }
+                        
+                    }
                 }
                 data.orderdetail = dataOrderDetail;
-
-                let offerData = await Offer.find({deletedAt:0, status:true, from: { '$lte': new Date() }, to: { '$gte':  new Date()}, $or : [
-                    { 
-                        applyFor : "both"
-                    },
-                    { 
-                        applyFor: orderFrom
-                    }
-                ]});
-                // await Cart.deleteOne({ userId : mongoose.mongo.ObjectId(userId)});
-                // await Cartitem.delete({ userId : mongoose.mongo.ObjectId(userId)});
+                await Cart.deleteOne({ userId : mongoose.mongo.ObjectId(userId)});
+                await Cartitem.delete({ userId : mongoose.mongo.ObjectId(userId)});
                 if(paymentType == 'COD')
                 {
                     return res.status(200).json({ 

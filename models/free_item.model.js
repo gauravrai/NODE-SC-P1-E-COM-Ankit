@@ -9,6 +9,9 @@ let FreeItemSchema = new Schema({
     orderId: {
         type: ObjectId,
     },
+    orderDetailId: {
+        type: ObjectId,
+    },
     userId: {
         type: ObjectId
     },
