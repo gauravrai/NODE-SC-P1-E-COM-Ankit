@@ -444,10 +444,10 @@ $(document).on("change", "#freeProductId", function(){
 		data: {id:id},
 		success: function(response) {
 			if(response){
-				$('#freeVarientId').html(response);	
+				$('#freeVarient').html(response);	
 			}
 			else{
-				$('#freeVarientId').html('');	
+				$('#freeVarient').html('');	
 			}
 		}
 	});

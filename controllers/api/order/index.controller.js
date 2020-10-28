@@ -93,8 +93,8 @@ module.exports = {
                         applyFor: orderFrom
                     }
                 ]});
-                await Cart.deleteOne({ userId : mongoose.mongo.ObjectId(userId)});
-                await Cartitem.delete({ userId : mongoose.mongo.ObjectId(userId)});
+                // await Cart.deleteOne({ userId : mongoose.mongo.ObjectId(userId)});
+                // await Cartitem.delete({ userId : mongoose.mongo.ObjectId(userId)});
                 if(paymentType == 'COD')
                 {
                     return res.status(200).json({ 
