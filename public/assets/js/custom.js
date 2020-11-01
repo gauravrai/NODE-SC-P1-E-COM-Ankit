@@ -1,6 +1,11 @@
 $('.select2').select2({
 	placeholder : "Select Option"
 });
+function initailizeSelect2(){
+  $('.select2').select2({
+	placeholder : "Select Option"
+  });
+}
 
 $(document).ready(function() {
 	get_allmenu();
@@ -451,4 +456,21 @@ $(document).on("change", "#freeProductId", function(){
 			}
 		}
 	});
+});
+
+
+$(document).on("change", ".productId", function(){
+	let id = $(this).val();
+	var target = $(this);
+    $.ajax({
+		type: 'POST',
+		url: 'get_varient',
+		data: {id:id},
+		success: function(response) {
+			console.log(response);
+			console.log(target);
+			// target.nextAll('.varientId').html(response);
+			$('.varientId').html(response);
+		}
+    });
 });

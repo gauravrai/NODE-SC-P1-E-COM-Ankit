@@ -118,7 +118,7 @@ module.exports = {
                                 {
                                     function search(nameKey, myArray){
                                         for (var i=0; i < myArray.length; i++) {
-                                            if (String(myArray[i].id) === nameKey) {
+                                            if (String(myArray[i].varientId) === nameKey) {
                                                 return myArray[i];
                                             }
                                         }

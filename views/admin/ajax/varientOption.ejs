@@ -1,6 +1,6 @@
 <% if(data && data.length>0){ %>
 	<% for(let i = 0; i < data.length; i++){ %>
-  		<option value="<%=data[i].id%>"><%= data[i].label%> <%= data[i].weight%></option>
+  		<option value="<%=data[i].varientId%>"><%= data[i].varient%></option>
   	<% 	} %>
 <% } else{ %>
 	<option value="">No data found</option>
