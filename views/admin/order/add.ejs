@@ -44,7 +44,7 @@
                 <div class="form-row cartField">
                   <div class="form-group col-md-4">
                     <label for="productId">Select Product</label>
-                    <select name="productId" class="form-control select2 productId">
+                    <select name="productId" class="form-control select2 productId"  id="productId_0">
                       <option value="">Select Option</option>
                       <% for(let i = 0; i < productData.length; i++){ %>
                       <option value="<%=productData[i].id%>"><%=productData[i].name%></option>
@@ -53,7 +53,7 @@
                   </div>
                   <div class="form-group col-md-4">
                     <label for="varientId">Select Varient</label>
-                    <select name="varientId" class="form-control select2 varientId">
+                    <select name="varientId" class="form-control select2 varientId"  id="varientId_0">
                       <option value="">Select Option</option>
                     </select>
                   </div>
@@ -67,7 +67,7 @@
                   </div>
                 </div>
                 <div class="col-md-12"> 
-                  <button type="button" class="btn btn-primary pull-right addMoreProducts">Add More</button>
+                  <button type="button" class="btn btn-primary pull-right addMoreProducts"  data-index="0">Add More</button>
                 </div><br><br><br>
               </div>    
               <div class="card-footer">
@@ -86,12 +86,15 @@
 </div>
 <script>
   $('.addMoreProducts').click(function(){
+    var index = $(this).data('index');
     var productData = `<%- JSON.stringify(productData) %>`;
     productData = JSON.parse(productData);
+    index++;
+    $(this).data('index', index);
     var html = `<div class="form-row cartField">
                   <div class="form-group col-md-4">
                     <label for="productId">Select Product</label>
-                    <select name="productId" class="form-control select2 productId">
+                    <select name="productId" class="form-control select2 productId" id="productId_`+index+`">
                       <option value="">Select Option</option>`;
                         
                     for(var i = 0; i < productData.length; i++){
@@ -103,7 +106,7 @@
                 </div>
                 <div class="form-group col-md-4">
                   <label for="varientId">Select Varient</label>
-                  <select name="varientId" class="form-control select2 varientId">
+                  <select name="varientId" class="form-control select2 varientId" id="varientId_`+index+`">
                     <option value="">Select Option</option>
                   </select>
                 </div>

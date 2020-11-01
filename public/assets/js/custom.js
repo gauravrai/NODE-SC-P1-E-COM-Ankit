@@ -461,16 +461,15 @@ $(document).on("change", "#freeProductId", function(){
 
 $(document).on("change", ".productId", function(){
 	let id = $(this).val();
+	let index = $(this).attr('id').split('_');
+	index = index[1];
 	var target = $(this);
     $.ajax({
 		type: 'POST',
 		url: 'get_varient',
 		data: {id:id},
 		success: function(response) {
-			console.log(response);
-			console.log(target);
-			// target.nextAll('.varientId').html(response);
-			$('.varientId').html(response);
+			$('#varientId_'+index).html(response);
 		}
     });
 });
