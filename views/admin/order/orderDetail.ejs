@@ -20,84 +20,143 @@
           <div class="col-md-12">
             <div class="card card-primary card-outline">
               <div class="card-header d-flex p-0">
-                <h3 class="card-title p-3">Order Information</h3>
+                <h3 class="card-title p-3">Customer Details</h3>
                 <ul class="nav nav-pills ml-auto p-2">
-                  <li class="nav-item"><a class="btn btn-block btn-secondary" href="/admin/view_order">Back</a></li>
+                  <li class="nav-item"><a class="btn btn-block btn-secondary" href="/admin/manage_order">Back</a></li>
                 </ul>
               </div>
               <div class="card-body">
-                <div class="card card-widget widget-user" style="height: 15%">
-                  <div class="widget-user-header bg-info">
-                    <h5 class="widget-user-username"><%=orderData.customerData.name %></h5>
-                    <h5 class="widget-user-desc"><%=orderData.customerData.mobile %></h5>
-                    <h5 class="widget-user-desc"><%=orderData.customerData.address %></h5>
-                    <h5 class="widget-user-desc">Order ID - <%=orderData.odid%></h5>
-                    <h5 class="widget-user-desc ">Created At - <%=orderData.createdAt %></h5>
-                  </div>
-                  <div class="card-footer">
-                    <div class="row">
-                      <%- include ('../message/message') -%>
-                      <table class="table table-bordered" id="orderDetailTable">
-                        <thead>      
-                          <tr>
-                              <label for="bulkOperationId" >Bulk Operation: </label>
-                              <select name="bulkOperationId" class="form-control" id="bulkOperationId" >
-                                <option value="">Select Bulk Operation</option>
-                                <option value="1">Active</option>
-                                <option value="0">Inactive</option>
-                              </select>
-                              <button id="bulkOperationButton" class="btn btn-primary">Submit</button>
-                          </tr>            
-                          <tr>
-                            <th style="width: 10px">#</th>
-                            <th>Product</th>
-                            <th>Variant</th>
-                            <th>Price</th>
-                            <th>Quantity</th>
-                            <th>Action</th>
-                          </tr>
-                        </thead>
-                        <tbody>
-                          <% for(let i = orderDetailData.length-1; i >= 0; i--){ %>
-                          <tr>
-                            <td><input value="<%= orderDetailData[i]._id %>" class="bulkOperationStatus" type="checkbox" /></td>
-                            <td><%= orderDetailData[i].productData.name; %></td>
-                            <td><%= orderDetailData[i].variantData.label %> <%=orderDetailData[i].variantData.measurementUnit %></td>
-                            <td><%= orderDetailData[i].price; %> </td>
-                            <td><%= orderDetailData[i].quantity; %> </td>
-                              <td>
-                                  
-                                <% if (orderDetailData[i].status) { %>
-                                  <span class="badge bg-success" style="cursor:pointer;" onclick="changeStatusOrderDetail($(this), 0, 'change_status_order_detail', 'order_detail', 'orderDetail')" id="<%= orderDetailData[i]._id %>" >Active</span>
-                                <% } else { %>
-                                  <span class="badge bg-danger" style="cursor:pointer;" onclick="changeStatusOrderDetail($(this), 1, 'change_status_order_detail', 'order_detail', 'orderDetail')" id="<%= orderDetailData[i]._id %>" >Inactive</span>
-                                <% } %>
-                              </td>
-
-                          </tr>
-                          <% } %>
-                        </tbody>
-                      </table>￼
-                    </div>
-                    <div>
-                      <input type="hidden" id="odid" value="<%=orderData.odid%>">
-                      <label for="state">Order Status</label>
-                      <select name="orderStatusId" id="orderStatusId">
-                        <option value="">Select Order Status</option>
-                        <% for(let i = 0; i < orderStatus.length; i++){ %>
-                          <option value="<%=orderStatus[i]%>"
-                            <% if(orderStatus[i] == orderData.orderStatus){ %> selected="selected" <% } %> ><%=orderStatus[i]%></option>
-                        <% } %>
-                      </select>
-                      <button id="statusChange" class="btn btn-primary">Submit</button>
-                    </div>
-                    <div>
-                      <div>Sub Total : <%= orderData.subTotal %> </div>
-                      <div>Taxes : <%= orderData.sgst + orderData.cgst + orderData.igst %></div>
-                      <div>Total : <%= orderData.grandTotal %></div>
-                    </div>
-                  </div>
+                <input type="hidden" id="odid" value="<%=orderData.odid%>">
+                <table style="width: 100%;">
+                  <tr>
+                    <td><b>Order Id:</b> <%=orderData.odid %></td>
+                    <td><b>Address:</b> <%=orderData.customerDetail.address %></td>
+                  </tr>
+                  <tr>
+                    <td><b>Order Date:</b> <%=moment(orderData.createdAt).format('DD-MM-YYYY'); %></td>
+                    <td><%=orderData.customerDetail.society %> <%=orderData.customerDetail.area %></td>
+                  </tr>
+                  <tr>
+                    <td><b>Customer Name:</b> <%=orderData.customerDetail.name %></td>
+                    <td><%=orderData.customerDetail.city %> <%=orderData.customerDetail.state %></td>
+                  </tr>
+                  <tr>
+                    <td><b>Mobile:</b> <%=orderData.customerDetail.mobile %></td>
+                    <td><%=orderData.customerDetail.pincode %> <%=orderData.customerDetail.country %></td>
+                  </tr>
+                </table>
+                <div class="card-header d-flex p-0">
+                  <h3 class="card-title p-3">Order Details</h3>
                 </div>
+                <h4>Available Products</h4>
+                <div class="col-md-12"> 
+                  <button type="button" class="btn btn-primary pull-right" id="markAsNotAvailable">Mark as not available</button><br>
+                </div>
+                <table class="table table-bordered" id="availableTable">
+                  <thead>           
+                    <tr>
+                      <th style="width: 10px">#</th>
+                      <th>Product</th>
+                      <th>Varient</th>
+                      <th>Unit Price</th>
+                      <th>Quantity</th>
+                      <th>Total Price</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <% for(let i = 0; i < orderDetailData.length; i++){ %>
+                    <tr>
+                      <td><input value="<%= orderDetailData[i]._id %>" class="orderDetailId" type="checkbox" /></td>
+                      <td><%= orderDetailData[i].productData[0].name; %></td>
+                      <td><%= orderDetailData[i].varientData[0].label %> <%=orderDetailData[i].varientData[0].measurementUnit %></td>
+                      <td><%= orderDetailData[i].price; %> </td>
+                      <td><%= orderDetailData[i].quantity; %> </td>
+                      <td><%= orderDetailData[i].price*orderDetailData[i].quantity; %></td>
+                    </tr>
+                    <% } %>
+                  </tbody>
+                </table>
+                
+                <% if(rejectOrderData.length > 0){ %>
+                <h4>Not Available Products</h4>
+                <table class="table table-bordered" id="notAvailableTable">
+                  <thead>           
+                    <tr>
+                      <th>Product</th>
+                      <th>Varient</th>
+                      <th>Unit Price</th>
+                      <th>Quantity</th>
+                      <th>Total Price</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <% for(let i = 0; i < rejectOrderData.length; i++){ %>
+                    <tr>
+                      <td><%= rejectOrderData[i].productData[0].name; %></td>
+                      <td><%= rejectOrderData[i].varientData[0].label %> <%=rejectOrderData[i].varientData[0].measurementUnit %></td>
+                      <td><%= rejectOrderData[i].price; %> </td>
+                      <td><%= rejectOrderData[i].quantity; %> </td>
+                      <td><%= rejectOrderData[i].price*rejectOrderData[i].quantity; %></td>
+                    </tr>
+                    <% } %>
+                  </tbody>
+                </table>
+                <% } %>
+
+                <h4>Free Items</h4>
+                <table class="table table-bordered" id="freeItemTable">
+                  <thead>           
+                    <tr>
+                      <th>Product</th>
+                      <th>Varient</th>
+                      <th>Quantity</th>
+                      <th>Price</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <% if(freeItemData.length > 0){ %>
+                    <% for(let i = 0; i < freeItemData.length; i++){ %>
+                    <tr>
+                      <td><%= freeItemData[i].productData[0].name; %></td>
+                      <td><%= freeItemData[i].varientData[0].label %> <%=freeItemData[i].varientData[0].measurementUnit %></td>
+                      <td><%= freeItemData[i].quantity; %> </td>
+                      <td><%= freeItemData[i].price; %> </td>
+                    </tr>
+                    <% } %>
+                    <% }else{ %>
+                      <tr>
+                        <td colspan="3">No Free Items</td>
+                      </tr>
+                    <% } %>
+                  </tbody>
+                </table>
+                
+                <table style="width: 100%;">
+                    <tr>
+                      <td style="width: 70%;"><br><br></td>
+                      <td style="width: 30%;"><b>Sub Total:</b> <%= orderData.subTotal %></td>
+                    </tr>
+                    <tr>
+                      <td style="width: 70%;">
+                        <label for="state">Order Status</label>
+                          <select name="orderStatusId" id="orderStatusId" data-orderid="<%= orderData.id %>">
+                            <option value="">Select Order Status</option>
+                            <% for(let i = 0; i < orderStatus.length; i++){ %>
+                              <option value="<%=orderStatus[i]%>"
+                                <% if(orderStatus[i] == orderData.orderStatus){ %> selected="selected" <% } %> ><%=orderStatus[i]%></option>
+                            <% } %>
+                          </select></td>
+                      <td style="width: 30%;"><b>Taxes:</b> <%= 0 %></td>
+                    </tr>
+                    <tr>
+                      <td style="width: 70%;"><br><br></td>
+                      <td style="width: 30%;"><b>Shipping Charges:</b> <%= orderData.shipping ? orderData.shipping : 'Free' %></td>
+                    </tr>
+                    <tr>
+                      <td style="width: 70%;"><br><br></td>
+                      <td style="width: 30%;"><b>Grand Total: </b> <%= orderData.grandTotal %></td>
+                    </tr>
+                </table>
               </div>
             </div>
           </div>
@@ -109,17 +168,84 @@
     </section>
   </div>
   <script>
-    $(document).on("click",'#bulkOperationButton', function(){
-      const status = $('#bulkOperationId').val();
-      const ids = [];
-       $('.bulkOperationStatus:checked').each(function(){
-         ids.push($(this).val());
+    $(document).on("click",'#markAsNotAvailable', function(){
+      const swalWithBootstrapButtons = Swal.mixin({
+        customClass: {
+          confirmButton: 'btn btn-success',
+          cancelButton: 'btn btn-danger'
+        },
+        buttonsStyling: false
+      })
+      let odid = $("#odid").val();
+      let id = [];
+      $('.orderDetailId').each(function () {
+        if (this.checked == true) {
+          id.push($(this).val());
+        }
       });
-      const odid = $("#odid").val();
-      $.ajax({
-              url: 'change_order_detail_status_bulk',
-              type: 'POST',
-              data: { ids, status, odid }
-      });        
+      if(id.length > 0)
+      {
+        $.ajax({
+          type: 'POST',
+          url: 'mark_as_not_available',
+          data: {id:id, odid:odid},
+          success: function(response) {
+            console.log(response);
+            location.reload();
+          }
+        }); 
+      }
+      else
+      {
+        swalWithBootstrapButtons.fire(
+            'Cancelled',
+            'Please select Products :)',
+            'error'
+        )
+      }      
     });
+
+    
+    $('#orderStatusId').change(function(){
+      let orderId = $(this).data('orderid');
+      let orderStatus = $(this).val();
+      const swalWithBootstrapButtons = Swal.mixin({
+        customClass: {
+          confirmButton: 'btn btn-success',
+          cancelButton: 'btn btn-danger'
+        },
+        buttonsStyling: false
+      })
+      swalWithBootstrapButtons.fire({
+        title: 'Are you sure to change status?',
+        text: "You won't be able to revert this!",
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonText: 'Yes, change it!',
+        cancelButtonText: 'No, cancel!',
+        reverseButtons: true
+      }).then((result) => {
+        if (result.value) {
+            $.ajax({
+                type: 'POST',
+                url: 'change_order_status',
+                data: {orderId:orderId, orderStatus:orderStatus},
+                success: function(response) {
+                  swalWithBootstrapButtons.fire(
+                      'Chnaged!',
+                      'Your order status has been changed succesfully.',
+                      'success'
+                  )
+                }
+            });
+        } else if (result.dismiss === Swal.DismissReason.cancel) {
+            swalWithBootstrapButtons.fire(
+                'Cancelled',
+                'Your data is safe :)',
+                'error'
+            )
+        }
+      })
+    });
+
 </script>

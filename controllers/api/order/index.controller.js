@@ -96,7 +96,7 @@ module.exports = {
                         let productFound = offerData[j].offerProductId.includes(cartItemData[i].productId);
                         if(productFound)
                         {
-                            if(offerData[j].multipleOf == cartItemData[i].quantity)
+                            if(cartItemData[i].quantity >= offerData[j].multipleOf)
                             {
                                 let offerProductData = await Product.findOne({ _id: mongoose.mongo.ObjectID(cartItemData[i].productId) });
                                 let inventory = offerProductData.inventory[0];

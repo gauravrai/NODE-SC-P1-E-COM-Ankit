@@ -235,7 +235,7 @@ function deleteData(id, controller, returnFunction, tableId){
                         )
                     }
                 }
-              });
+            });
         } else if (result.dismiss === Swal.DismissReason.cancel) {
             swalWithBootstrapButtons.fire(
                 'Cancelled',

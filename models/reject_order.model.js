@@ -2,33 +2,30 @@ const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 var ObjectId = mongoose.Schema.Types.ObjectId;
 
-let FreeItemSchema = new Schema({
+let RejectOrderSchema = new Schema({
+    userId: {
+        type: ObjectId,
+    },
     odid: {
         type: String,
-    },
-    orderId: {
-        type: ObjectId,
-    },
-    orderDetailId: {
-        type: ObjectId,
-    },
-    userId: {
-        type: ObjectId
-    },
-    categoryId: {
-        type: ObjectId
-    },
-    subcategoryId: {
-        type: ObjectId
     },
     productId: {
         type: ObjectId
     },
     varientId: {
-        type: ObjectId,
+        type: ObjectId
     },
     price:{
         type: Number
+    },
+    totalPrice:{
+        type: Number
+    },
+    offerId:{
+        type: ObjectId
+    },
+    offerProduct:{
+        type: Object
     },
     quantity:{
         type: Number
@@ -52,4 +49,4 @@ let FreeItemSchema = new Schema({
 });
 
 // Export the model
-module.exports = mongoose.model('Free_Item', FreeItemSchema);
+module.exports = mongoose.model('Reject_Order', RejectOrderSchema);

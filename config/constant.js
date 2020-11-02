@@ -40,5 +40,9 @@ module.exports = {
 	SUBCATEGORYLARGESHOWPATH:  SITEURL+'uploads/subcategory/large/',
 
 	ORDER_STATUS: [ 'NEW', 'IN_PROCESS', 'IN_TRANSIT', 'DELIVERED', 'CANCELED'],
-	paymentStatus: [ 'PENDING', 'FAILED', 'COMPLETED']
+	paymentStatus: [ 'PENDING', 'FAILED', 'COMPLETED'],
+	
+	SMS_API_USERNAME: 'evamastuT',
+	SMS_API_KEY: 'F46C7-CF479',
+	SMS_API_SID: 'EVMSTU',
 }

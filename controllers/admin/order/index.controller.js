@@ -21,6 +21,14 @@ const Pincode = model.pincode;
 const ADMINCALLURL = config.constant.ADMINCALLURL;
 const Order = model.order;
 const Orderdetail = model.order_detail;
+const Offer = model.offer;
+const Freeitem = model.free_item;
+const State = model.state;
+const City = model.city;
+const Area = model.area;
+const Society = model.society;
+const Tower = model.tower;
+const Rejectorder = model.reject_order;
 const constant = require('../../../config/constant');
 
 module.exports = {
@@ -84,64 +92,6 @@ module.exports = {
 			});
 		});
 	},
-	
-	orderDetail: async function(req,res){
-		if(req.method == "GET"){
-			let moduleName = 'Order Management';
-			let pageTitle = 'View Order Details';
-            let odid = req.body.id;
-
-            const orderDetailData = await OrderDetail.aggregate([
-				{
-					$match: { odid, deletedAt: 0 }
-				},
-                {
-                    $lookup:
-                      {
-                        from: "products",
-                        localField: "productId",
-                        foreignField: "_id",
-                        as: "productData"
-                      }
-                },
-                {
-                    $unwind: "$productData"
-                },
-                {
-                    $lookup:
-                      {
-                        from: "varients",
-                        localField: "variantId",
-                        foreignField: "_id",
-                        as: "variantData"
-                      }
-                },
-                {
-                    $unwind: "$variantData"
-                },
-            ]);
-            const [ orderData ] = await Order.aggregate([
-				{
-					$match: { odid, deletedAt: 0, status: true}
-				},
-                {
-                    $lookup:
-                      {
-                        from: "customers",
-                        localField: "userId",
-                        foreignField: "_id",
-                        as: "customerData"
-                      }
-                },
-                {
-                    $unwind: "$customerData"
-                },
-			]);
-			
-			res.render('admin/order/orderDetail',{layout:'admin/layout/layout', pageTitle, moduleName, orderData, orderDetailData, orderStatus: constant.ORDER_STATUS  } );
-		}else{
-		}
-	},
     
     addOrder: async function(req,res){
 		if(req.method == "GET"){
@@ -152,12 +102,16 @@ module.exports = {
 			res.render('admin/order/add',{layout:'admin/layout/layout', pageTitle:pageTitle, moduleName:moduleName, productData:productData, customerData:customerData });
 		}else
 		{
+			await config.helpers.sms.sendSMS('', async function (smsData) {
+				console.log('sms------',smsData);
+			})
+			return 0;
 			let userId = req.body.userId;
 			let productId = Array.isArray(req.body.productId) ? req.body.productId : req.body.productId.split();
 			let varientId = Array.isArray(req.body.varientId) ? req.body.varientId : req.body.varientId.split();
 			let quantity = Array.isArray(req.body.quantity) ? req.body.quantity : req.body.quantity.split();
             let paymentType = 'COD';
-			let orderFrom = 'WEB';
+			let orderFrom = 'ADMIN';
 			let grandTotal = 0;
 			let subTotal = 0;
 			let grandQuantity = 0;
@@ -211,21 +165,22 @@ module.exports = {
 				grandQuantity = grandQuantity + orderDetailInsertData.quantity;
 				let orderdetail = new Orderdetail(orderDetailInsertData);
 				orderdetail.save();
-				/*for (let j = 0; j < offerData.length; j++) {
-					let productFound = offerData[j].offerProductId.includes(cartItemData[i].productId);
+
+                let offerData = await Offer.find({deletedAt:0, status:true, from: { '$lte': new Date() }, to: { '$gte':  new Date()} });
+				for (let j = 0; j < offerData.length; j++) {
+					let productFound = offerData[j].offerProductId.includes(productId[i]);
 					if(productFound)
 					{
-						if(offerData[j].multipleOf == cartItemData[i].quantity)
+						if(quantity[i] >= offerData[j].multipleOf)
 						{
-							let offerProductData = await Product.findOne({ _id: mongoose.mongo.ObjectID(cartItemData[i].productId) });
+							let offerProductData = await Product.findOne({ _id: mongoose.mongo.ObjectID(productId[i]) });
 							let inventory = offerProductData.inventory[0];
 							let freeProductData = await Product.findOne({ _id: mongoose.mongo.ObjectID(offerData[j].freeProductId) });
 							
 							let freeItemInsertData = {
 								odid: odid,
-								orderId: mongoose.mongo.ObjectID(order.id),
 								orderDetailId: mongoose.mongo.ObjectID(orderdetail.id),
-								userId: mongoose.mongo.ObjectID(cartItemData[i].userId),
+								userId: mongoose.mongo.ObjectID(userId),
 								categoryId: mongoose.mongo.ObjectID(offerData[j].freeCategoryId), 
 								subcategoryId: mongoose.mongo.ObjectID(offerData[j].freeSubcategoryId),
 								productId: mongoose.mongo.ObjectID(offerData[j].freeProductId),
@@ -237,12 +192,12 @@ module.exports = {
 							{
 								function search(nameKey, myArray){
 									for (var i=0; i < myArray.length; i++) {
-										if (String(myArray[i].id) === nameKey) {
+										if (String(myArray[i].varientId) === nameKey) {
 											return myArray[i];
 										}
 									}
 								}
-								var resultObject = search(cartItemData[i].varientId, inventory);
+								var resultObject = search(varientId[i], inventory);
 								if(typeof resultObject != 'undefined' && resultObject.default == true)
 								{
 									let freeitem = new Freeitem(freeItemInsertData);
@@ -257,7 +212,7 @@ module.exports = {
 						}
 					}
 					
-				}*/
+				}
 			}
 			
 			let orderInsertData = {
@@ -282,23 +237,145 @@ module.exports = {
 			});
 		}
 	},
+	
+	orderDetail: async function(req,res){
+		if(req.method == "GET"){
+			let moduleName = 'Order Management';
+			let pageTitle = 'View Order Details';
+			let odid = req.body.id;
 
-	changeStatusOrderDetail: function(req,res){
-		let id = req.param("id");
-		let status = req.param("status");
-		return OrderDetail.updateOne({_id: mongoose.mongo.ObjectId(id)}, {
-			status: parseInt(status)?true:false
+            let orderData = await Order.findOne({ odid:odid });
+			let stateData = await State.findOne({ _id : mongoose.mongo.ObjectId(orderData.customerDetail.stateId) });
+			orderData.customerDetail.state = stateData? stateData.name : '';
+            let cityData = await City.findOne({ _id : mongoose.mongo.ObjectId(orderData.customerDetail.cityId) });
+			orderData.customerDetail.city =  cityData? cityData.name : '';
+            let pincodeData = await Pincode.findOne({ _id : mongoose.mongo.ObjectId(orderData.customerDetail.pincodeId) });
+			orderData.customerDetail.pincode =  pincodeData? pincodeData.name : '';
+            let areaData = await Area.findOne({ _id : mongoose.mongo.ObjectId(orderData.customerDetail.areaId) });
+			orderData.customerDetail.area =  areaData? areaData.name : '';
+            let societyData = await Society.findOne({ _id : mongoose.mongo.ObjectId(orderData.customerDetail.societyId) });
+			orderData.customerDetail.society =  societyData? societyData.name : '';
+            let towerData = await Tower.findOne({ _id : mongoose.mongo.ObjectId(orderData.customerDetail.towerId) });
+			orderData.customerDetail.tower =  towerData? towerData.name : '';
+
+            let orderDetailData = await Orderdetail.aggregate([
+				{
+					$match: { odid:odid }
+				},
+                {
+                    $lookup:
+                      {
+                        from: "products",
+                        localField: "productId",
+                        foreignField: "_id",
+                        as: "productData"
+                      }
+                },
+                {
+                    $lookup:
+                      {
+                        from: "varients",
+                        localField: "varientId",
+                        foreignField: "_id",
+                        as: "varientData"
+                      }
+                },
+            ]);
+			
+			let rejectOrderData = await Rejectorder.aggregate([
+				{
+					$match: { odid:odid }
+				},
+                {
+                    $lookup:
+                      {
+                        from: "products",
+                        localField: "productId",
+                        foreignField: "_id",
+                        as: "productData"
+                      }
+                },
+                {
+                    $lookup:
+                      {
+                        from: "varients",
+                        localField: "varientId",
+                        foreignField: "_id",
+                        as: "varientData"
+                      }
+                }
+            ]);
+			
+            let freeItemData = await Freeitem.aggregate([
+            	{
+					$match: { odid:odid }
+				},
+                {
+                    $lookup:
+                      {
+                        from: "products",
+                        localField: "productId",
+                        foreignField: "_id",
+                        as: "productData"
+                      }
+                },
+                {
+                    $lookup:
+                      {
+                        from: "varients",
+                        localField: "varientId",
+                        foreignField: "_id",
+                        as: "varientData"
+                      }
+                }
+            ]);
+			res.render('admin/order/orderDetail',{layout:'admin/layout/layout', pageTitle:pageTitle, moduleName:moduleName, orderData:orderData, orderDetailData:orderDetailData, rejectOrderData:rejectOrderData, freeItemData:freeItemData, orderStatus: constant.ORDER_STATUS, moment:moment  } );
+		}else{
+		}
+	},
+
+	markAsNotAvailable: async function(req,res){
+		if(req.method == "POST"){
+			let id = req.body.id;
+			let odid = req.body.odid;
+			let grandTotal = 0;
+			let subTotal = 0;
+			let quantity = 0;
+			for(i=0; i < id.length; i++){
+				let orderDetailData = await Orderdetail.findOne({_id: mongoose.mongo.ObjectId(id[i]) },{createdAt: 0, updatedAt: 0, __v: 0, _id: 0, status: 0, deletedAt: 0} );
+				grandTotal = ( grandTotal + orderDetailData.totalPrice );
+				subTotal = ( subTotal + orderDetailData.totalPrice );
+				quantity = ( quantity + orderDetailData.quantity );
+				orderDetailData.orderDetailId = mongoose.mongo.ObjectId(orderDetailData.id);
+				console.log(orderDetailData);
+				let rejectOrder = new Rejectorder(orderDetailData);
+				rejectOrder.save();
+
+				// let freeItemData = await Freeitem.findOne({orderDetailId: mongoose.mongo.ObjectId(id[i]) });
+
+				// await Orderdetail.deleteOne({_id: mongoose.mongo.ObjectId(id[i]) });
+			}
+
+			let orderData = await Order.findOne({odid: odid});
+
+			let orderUpdateData = {
+				grandTotal : orderData.grandTotal - grandTotal,
+				subTotal : orderData.subTotal - subTotal,
+				quantity : orderData.quantity - quantity
+			}
+			let updateOrder = await Order.updateOne({odid: odid},orderUpdateData);
+			res.send('OK');
+		}
+	},
+
+	changeOrderStatus: function(req,res){
+		let orderId = req.param("orderId");
+		let orderStatus = req.param("orderStatus");
+		return Order.updateOne({_id: mongoose.mongo.ObjectId(orderId)}, {
+			orderStatus: orderStatus
 		},function(err,data){
-
 			if(err) console.error(err);
-			if(status == '1'){
-				let change_status = "changeStatusOrderDetail($(this),\'0\',\'change_status_order_detail\',\'list_order\',\'orderDetail\');";
-				res.send('<span class="badge bg-success" style="cursor:pointer;" id="'+id+'" onclick="'+change_status+'">Active</span>');
-			}
-			else{
-				let change_status = "changeStatusOrderDetail($(this),\'1\',\'change_status_order_detail\',\'list_order\',\'orderDetail\');";	
-				res.send('<span class="badge bg-danger" style="cursor:pointer;" id="'+id+'" onclick="'+change_status+'">Inactive</span>');
-			}
+			res.send('OK');
 	    })
 	},
 };
