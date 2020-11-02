@@ -7,6 +7,7 @@ const whitelist = [
   "http://localhost:3001",
   "http://localhost:3000",
   "http://localhost:5000",
+  "http://localhost:4200",
   "http://127.0.0.1:2001",
   "http://164.52.200.120:3001",
   // Dev env
