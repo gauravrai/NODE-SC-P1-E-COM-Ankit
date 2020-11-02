@@ -102,10 +102,10 @@ module.exports = {
 			res.render('admin/order/add',{layout:'admin/layout/layout', pageTitle:pageTitle, moduleName:moduleName, productData:productData, customerData:customerData });
 		}else
 		{
-			await config.helpers.sms.sendSMS('', async function (smsData) {
-				console.log('sms------',smsData);
-			})
-			return 0;
+			// await config.helpers.sms.sendSMS('', async function (smsData) {
+			// 	console.log('sms------',smsData);
+			// })
+			// return 0;
 			let userId = req.body.userId;
 			let productId = Array.isArray(req.body.productId) ? req.body.productId : req.body.productId.split();
 			let varientId = Array.isArray(req.body.varientId) ? req.body.varientId : req.body.varientId.split();
