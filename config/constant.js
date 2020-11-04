@@ -1,5 +1,4 @@
-const path = require('path')
-const dotenv = require('dotenv').config({path: path.resolve(__dirname, '../../../.env')});
+const dotenv = require('dotenv').config({path: './public_html/.env'});
 console.log(path.resolve(__dirname, '../../../.env'))
 var SITEURL = process.env.SITEURL+":"+process.env.PORT+'/';
 var ABSOLUTEPATH = process.env.ABSOLUTEPATH;
