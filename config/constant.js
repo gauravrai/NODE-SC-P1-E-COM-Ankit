@@ -1,5 +1,4 @@
 const dotenv = require('dotenv').config({path: './public_html/.env'});
-console.log(path.resolve(__dirname, '../../../.env'))
 var SITEURL = process.env.SITEURL+":"+process.env.PORT+'/';
 var ABSOLUTEPATH = process.env.ABSOLUTEPATH;
 var basic_path='C:/Users/sonali/Desktop/softchilli/backend/'
