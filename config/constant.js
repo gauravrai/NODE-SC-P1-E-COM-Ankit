@@ -1,3 +1,4 @@
+
 const dotenv = require('dotenv').config({path: '../../.env'});
 var SITEURL = process.env.SITEURL+":"+process.env.PORT+'/';
 var ABSOLUTEPATH = process.env.ABSOLUTEPATH;
@@ -41,7 +42,6 @@ module.exports = {
 	ORDER_STATUS: [ 'NEW', 'IN_PROCESS', 'IN_TRANSIT', 'DELIVERED', 'CANCELED'],
 	paymentStatus: [ 'PENDING', 'FAILED', 'COMPLETED'],
 	
-	SMS_API_USERNAME: 'evamastuT',
 	SMS_API_KEY: 'F46C7-CF479',
 	SMS_API_SID: 'EVMSTU',
 }

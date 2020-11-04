@@ -7,6 +7,7 @@ const bcrypt = require("bcrypt-nodejs");
 const moment = require('moment');
 const Subcategory = model.sub_category;
 const ADMINCALLURL = config.constant.ADMINCALLURL;
+const { validationResult } = require('express-validator');
 
 module.exports = {
 	
@@ -49,20 +50,57 @@ module.exports = {
     // @description Get all subcategories By Category Id
     // @access      Public
     subCategoriesByCatId:async function(req,res){
-        
-        var catId =  req.body.cat_id;
-        var subcategoryDataByCat = [];
-        if(catId){
-            var subcategoryDataByCat = await Subcategory.find({categoryId:catId,status:true, deletedAt: 0},{name:1,slug:1,_id:1,categoryId:1}).sort( { name : 1} );
-            if(subcategoryDataByCat.length > 0) {
-                return res.status(200).json({ data: subcategoryDataByCat, status: 'success', message: "Data fetched successfully!!"});
+        const errors = validationResult(req)
+        if(!errors.isEmpty()){
+            return res.status(400).json({errors: errors.array()})
+        }
+        try{
+            var catId =  req.body.cat_id;
+            
+            let subcategoryData = await Subcategory.aggregate([ 
+                {
+                    $match : {categoryId:mongoose.mongo.ObjectId(catId),status:true, deletedAt: 0}
+                },
+                {
+                    $addFields: {
+                        "thumbnailPath" : config.constant.SUBCATEGORYTHUMBNAILSHOWPATH,
+                        "smallPath" : config.constant.SUBCATEGORYSMALLSHOWPATH,
+                        "largePath" : config.constant.SUBCATEGORYLARGESHOWPATH
+                    }
+                },
+                {
+                    $project: { 
+                        __v:0,
+                        createdAt:0,
+                        updatedAt:0
+                    }
+                }
+            ]).sort( { name : 1} );
+            if(subcategoryData.length>0) {
+                return res.status(200).json({ 
+                                            data: subcategoryData, 
+                                            status: 'success', 
+                                            message: "Data fetched successfully!!" 
+                                        });
             } else {
-                return res.status(200).json({ data: subcategoryDataByCat, status: 'success', message: "No Data Found!!"});
-            }
-        } else {
-            return res.status(200).json({ data: subcategoryDataByCat, status: 'success', message: "Please send category Id!!"}); 
-        }return false;
+                return res.status(400).json({ 
+                                            data: [], 
+                                            status: 'error', 
+                                            message: "No Data Found!!" 
+                                        });
+            } 
         
+        }
+        catch (e){
+            console.log(e)
+            return res.status(500).json({ 
+                                    data: [],  
+                                    status: 'error', 
+                                    errors: [{
+                                        msg: "Internal server error"
+                                    }]
+                                });
+        }
     },
     
     

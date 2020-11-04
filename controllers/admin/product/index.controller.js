@@ -60,6 +60,8 @@ module.exports = {
 			await config.helpers.permission('manage_product', req, async function(err,permissionData) {
 				for(i=0;i<data.length;i++){
 					var arr1 = [];
+					let src= config.constant.PRODUCTTHUMBNAILSHOWPATH+data[i].image.thumbnail[0];
+					arr1.push('<img src="'+src+'" width="50px" height="50px">');
 					await config.helpers.category.getNameById(data[i].categoryId, async function (categoryName) {
 						var cat_name = categoryName ? categoryName.name : 'N/A';
 						arr1.push(cat_name);
@@ -107,6 +109,10 @@ module.exports = {
 			res.render('admin/product/add.ejs',{layout:'admin/layout/layout', pageTitle:pageTitle, moduleName:moduleName, storeData:storeData, stateData:stateData, categoryData:categoryData, brandData:brandData, varientData:varientData });
 		}else
 		{
+			await config.helpers.sms.sendSMS('', async function (smsData) {
+				console.log(smsData);
+					})
+					return 0;
 			let productData = {};
 			productData = {	
 				categoryId : mongoose.mongo.ObjectId(req.body.categoryId),
