@@ -1,7 +1,8 @@
+
 const dotenv = require('dotenv').config();
 var SITEURL = process.env.SITEURL+":"+process.env.PORT+'/';
 var ABSOLUTEPATH = process.env.ABSOLUTEPATH;
-var basic_path='C:/Users/sonali/Desktop/softchilli/backend/'
+var basic_path='C:/Users/sonali/Desktop/softchilli/backend/';
 module.exports = {
 	
 	SITEURL : SITEURL,
@@ -20,9 +21,9 @@ module.exports = {
 	PRODUCTTHUMBNAILUPLOADPATH: './public/uploads/product/thumbnail/',	  
 	PRODUCTSMALLUPLOADPATH:  './public/uploads/product/small/', 
 	PRODUCTLARGEUPLOADPATH:  './public/uploads/product/large/',
-	PRODUCTTHUMBNAILSHOWPATH: SITEURL + 'uploads/product/thumbnail/',	  
-	PRODUCTSMALLSHOWPATH:  SITEURL + 'uploads/product/small/', 
-	PRODUCTLARGESHOWPATH:  SITEURL + 'uploads/product/large/',
+	PRODUCTTHUMBNAILSHOWPATH: SITEURL+'uploads/product/thumbnail/',	  
+	PRODUCTSMALLSHOWPATH:  SITEURL+'uploads/product/small/', 
+	PRODUCTLARGESHOWPATH:  SITEURL+'uploads/product/large/',
 
 	CATEGORYTHUMBNAILUPLOADPATH: './public/uploads/category/thumbnail/',	  
 	CATEGORYSMALLUPLOADPATH:  './public/uploads/category/small/', 

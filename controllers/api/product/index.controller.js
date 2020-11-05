@@ -141,6 +141,101 @@ module.exports = {
         
 		
     },
+
+    // @route       GET api/v1/featuredProductList
+    // @description Get all featured product
+    // @access      Public
+	featuredProductList:async function(req,res){
+        const errors = validationResult(req)
+        if(!errors.isEmpty()){
+            return res.status(400).json({errors: errors.array()})
+        }
+        try{
+            let condition = {featured: true, status:true, deletedAt: 0};
+            
+            let productData = await Product.aggregate([ 
+                {
+                    $match : condition
+                },
+                {
+                    $unwind: "$inventory"
+                },
+                {
+                    $group: {
+                        "_id":"$_id",
+                        "inventory": { $first:"$inventory" },
+                        "status": { $first:"$status" },
+                        "deletedAt": { $first:"$deletedAt" },
+                        "categoryId": { $first:"$categoryId" },
+                        "subcategoryId": { $first:"$subcategoryId" },
+                        "name": { $first:"$name" },
+                        "brandId": { $first:"$brandId" },
+                        "price": { $first:"$price" },
+                        "offer": { $first:"$offer" },
+                        "discount": { $first:"$discount" },
+                        "stock": { $first:"$stock" },
+                        "description": { $first:"$description" },
+                        "featured": { $first:"$featured" },
+                        "outOfStock": { $first:"$outOfStock" },
+                        "image": { $first:"$image" }
+                    }
+                },
+                {
+                    $addFields: {
+                        "thumbnailPath" : config.constant.PRODUCTTHUMBNAILSHOWPATH,
+                        "smallPath" : config.constant.PRODUCTSMALLSHOWPATH,
+                        "largePath" : config.constant.PRODUCTLARGESHOWPATH,
+                        "wishlist" : false
+                    }
+                },
+                {
+                    $project: { 
+                        __v:0,
+                        createdAt:0,
+                        updatedAt:0
+                    }
+                }
+            ]).sort({createdAt: 1});
+            if(productData.length>0) {
+                let userId = req.query.userId;
+                if(userId) {
+                    for (let i = 0; i < productData.length; i++) {
+                    let wishlistData = await Wishlist.findOne({userId : mongoose.mongo.ObjectID(userId), productId: mongoose.mongo.ObjectID(productData[i]._id)});
+                        let wishlist = false;
+                        if(wishlistData)
+                        {
+                            wishlist = true;
+                        }
+                        productData[i].wishlist = wishlist;
+                    }
+                }
+                return res.status(200).json({ 
+                                            data: productData, 
+                                            status: 'success', 
+                                            message: "Data fetched successfully!!" 
+                                        });
+            } else {
+                return res.status(400).json({ 
+                                            data: [], 
+                                            status: 'error', 
+                                            message: "No Data Found!!" 
+                                        });
+            } 
+        }
+        catch (e){
+            console.log(e)
+            return res.status(500).json({ 
+                                    data: [],  
+                                    status: 'error', 
+                                    errors: [{
+                                        msg: "Internal server error"
+                                    }]
+                                });
+        }
+        
+		
+    },
+
     // @route       GET api/v1/productDetail
     // @description Get all productDetail
     // @access      Public
