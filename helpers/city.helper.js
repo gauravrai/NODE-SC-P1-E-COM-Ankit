@@ -6,8 +6,14 @@ var City = model.city;
 
 module.exports = {
 	getNameById: async function(cityId, cb) {
-		let data = await City.findOne({_id: mongoose.mongo.ObjectId(cityId)},{name: 1, _id:0});
-		cb(data);
+		if(cityId && typeof cityId != 'undefined')
+		{
+			let data = await City.findOne({_id: mongoose.mongo.ObjectId(cityId)},{name: 1, _id:0});
+			cb(data);
+		}else
+		{
+			cb('');
+		}
 	}
 };
 

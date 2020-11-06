@@ -6,8 +6,14 @@ var pincode = model.pincode;
 
 module.exports = {
 	getNameById: async function(pincodeId, cb) {
-		let data = await pincode.findOne({_id: mongoose.mongo.ObjectId(pincodeId)},{pincode: 1, _id:0});
-		cb(data);
+		if(pincodeId && typeof pincodeId != 'undefined')
+		{
+			let data = await pincode.findOne({_id: mongoose.mongo.ObjectId(pincodeId)},{pincode: 1, _id:0});
+			cb(data);
+		}else
+		{
+			cb('');
+		}
 	}
 };
 

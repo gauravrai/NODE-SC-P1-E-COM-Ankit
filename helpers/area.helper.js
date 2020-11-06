@@ -6,8 +6,14 @@ var Area = model.area;
 
 module.exports = {
 	getNameById: async function(areaId, cb) {
-		let data = await Area.findOne({_id: mongoose.mongo.ObjectId(areaId)},{name: 1, _id:0});
-		cb(data);
+		if(areaId && typeof areaId != 'undefined')
+		{
+			let data = await Area.findOne({_id: mongoose.mongo.ObjectId(areaId)},{name: 1, _id:0});
+			cb(data);
+		}else
+		{
+			cb('');
+		}
 	}
 };
 

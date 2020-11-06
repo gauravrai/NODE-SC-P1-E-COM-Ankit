@@ -9,6 +9,12 @@ let StoreSchema = new Schema({
     address: {
         type: String
     },
+    contactName: {
+        type: String
+    },
+    contactNumber: {
+        type: Number
+    },
     stateId: {
         type: ObjectId
     },

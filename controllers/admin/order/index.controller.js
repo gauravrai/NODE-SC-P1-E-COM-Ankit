@@ -75,10 +75,16 @@ module.exports = {
                 for(i=0;i<data.length;i++){
                     var arr1 = [];
                     arr1.push(data[i].odid);
+					await config.helpers.customer.getNameById(data[i].userId, async function (customerName) {
+						const customer_name = customerName ? customerName.name : 'N/A';
+						arr1.push(customer_name);
+					})
 					await config.helpers.customer.getMobileById(data[i].userId, async function (customerMobile) {
 						const customer_mobile = customerMobile ? customerMobile.mobile : 'N/A';
 						arr1.push(customer_mobile);
 					})
+                    arr1.push(data[i].customerDetail.address ? data[i].customerDetail.address: '');
+                    arr1.push(data[i].grandTotal);
                     arr1.push(data[i].orderStatus);
 					arr1.push(data[i].orderFrom);
                     

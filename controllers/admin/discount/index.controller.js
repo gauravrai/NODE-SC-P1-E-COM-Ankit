@@ -11,8 +11,8 @@ const ADMINCALLURL = config.constant.ADMINCALLURL;
 module.exports = {
     
     manageDiscount: async function(req,res){
-		let moduleName = 'Discount Management';
-		let pageTitle = 'Manage Discount';
+		let moduleName = 'Discount & Coupon Management';
+		let pageTitle = 'Manage Discount & Coupon';
 		await config.helpers.permission('manage_discount', req, (err,permissionData)=>{
 			res.render('admin/discount/view.ejs',{layout:'admin/layout/layout', pageTitle:pageTitle, moduleName:moduleName, permissionData:permissionData});
 		});
@@ -84,9 +84,15 @@ module.exports = {
 
     addDiscount: async function(req,res){
 		if(req.method == "GET"){
-			let moduleName = 'Discount Management';
-			let pageTitle = 'Add Discount';
-			res.render('admin/discount/add.ejs',{layout:'admin/layout/layout', pageTitle:pageTitle, moduleName:moduleName} );
+			let moduleName = 'Discount & Coupon Management';
+			let pageTitle = 'Add Discount & Coupon';
+			let characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789';
+			let charactersLength = characters.length;
+			let couponNo = '';
+			for (var i = 0; i < 6; i++) {
+				couponNo += characters.charAt(Math.floor(Math.random() * charactersLength));
+			}
+			res.render('admin/discount/add.ejs',{layout:'admin/layout/layout', pageTitle:pageTitle, moduleName:moduleName, couponNo:couponNo} );
 		}else{
 			let discountData = {
 				couponNo : req.body.couponNo.toUpperCase(),
@@ -114,11 +120,17 @@ module.exports = {
 
 	editDiscount: async function(req,res){
 		if(req.method == "GET"){
-			let moduleName = 'Discount Management';
-			let pageTitle = 'Edit Discount';
+			let moduleName = 'Discount & Coupon Management';
+			let pageTitle = 'Edit Discount & Coupon';
             let id = req.body.id;
             let discountData = await Discount.findOne({_id: mongoose.mongo.ObjectId(id), status: true, deletedAt: 0});
-			res.render('admin/discount/edit.ejs',{layout:'admin/layout/layout', pageTitle:pageTitle, moduleName:moduleName, discountData:discountData,moment:moment} );
+			let characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789';
+			let charactersLength = characters.length;
+			let couponNo = '';
+			for (var i = 0; i < 6; i++) {
+				couponNo += characters.charAt(Math.floor(Math.random() * charactersLength));
+			}
+			res.render('admin/discount/edit.ejs',{layout:'admin/layout/layout', pageTitle:pageTitle, moduleName:moduleName, discountData:discountData,moment:moment, couponNo:couponNo} );
 		}
 		if(req.method == "POST"){
 			let discountData = {

@@ -442,28 +442,42 @@ $(document).ready(function () {
             name: {
                 required: true,
             },
-            stateId: {
-                required: true,
-            },
+            // stateId: {
+            //     required: true,
+            // },
             cityId: {
                 required: true,
             },
             address: {
                 required: true,
+            },
+            contactName: {
+                required: true,
+            },
+            contactNumber: {
+                required: true,
+                number: true,
             }
         },
         messages: {
             name: {
                 required: "Please select Store Name"
             },
-            stateId: {
-                required: "Please select State"
-            },
+            // stateId: {
+            //     required: "Please select State"
+            // },
             cityId: {
                 required: "Please select City"
             },
             address: {
                 required: "Please enter a Store Address"
+            },
+            contactName: {
+                required: "Please enter a Contact name"
+            },
+            contactNumber: {
+                required: "Please enter a Contact Number",
+                number: 'Please enter digits only'
             }
         },
         errorElement: 'span',

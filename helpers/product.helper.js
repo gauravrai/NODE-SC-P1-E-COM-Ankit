@@ -6,7 +6,13 @@ var Product = model.product;
 
 module.exports = {
 	getNameById: async function(productId, cb) {
-		let data = await Product.findOne({_id: mongoose.mongo.ObjectId(productId)},{name: 1, _id:0});
-		cb(data);
+		if(productId && typeof productId != 'undefined')
+		{
+			let data = await Product.findOne({_id: mongoose.mongo.ObjectId(productId)},{name: 1, _id:0});
+			cb(data);
+		}else
+		{
+			cb('');
+		}
 	}
 };

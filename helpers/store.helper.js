@@ -6,7 +6,13 @@ var Store = model.store;
 
 module.exports = {
 	getNameById: async function(storeId, cb) {
-		let data = await Store.findOne({_id: mongoose.mongo.ObjectId(storeId)},{name: 1, _id:0});
-		cb(data);
+		if(storeId && typeof storeId != 'undefined')
+		{
+			let data = await Store.findOne({_id: mongoose.mongo.ObjectId(storeId)},{name: 1, _id:0});
+			cb(data);
+		}
+		else{
+			cb('');
+		}
 	}
 };

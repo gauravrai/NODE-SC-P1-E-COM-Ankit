@@ -6,13 +6,25 @@ var Customer = model.customer;
 
 module.exports = {
 	getNameById: async function(id, cb) {
-		let data = await Customer.findOne({_id: mongoose.mongo.ObjectId(id)},{name: 1, _id:0});
-		cb(data);
+		if(id && typeof id != 'undefined')
+		{
+			let data = await Customer.findOne({_id: mongoose.mongo.ObjectId(id)},{name: 1, _id:0});
+			cb(data);
+		}else
+		{
+			cb('');
+		}
 	},
 	
 	getMobileById: async function(id, cb) {
-		let data = await Customer.findOne({_id: mongoose.mongo.ObjectId(id)},{mobile: 1, _id:0});
-		cb(data);
+		if(id && typeof id != 'undefined')
+		{
+			let data = await Customer.findOne({_id: mongoose.mongo.ObjectId(id)},{mobile: 1, _id:0});
+			cb(data);
+		}else
+		{
+			cb('');
+		}
 	}
 };
 

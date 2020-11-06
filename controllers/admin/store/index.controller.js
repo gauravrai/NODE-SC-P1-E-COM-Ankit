@@ -55,13 +55,14 @@ module.exports = {
                     var arr1 = [];
                     arr1.push(data[i].name);
                     arr1.push(data[i].address);
+                    arr1.push(data[i].contactName);
+                    arr1.push(data[i].contactNumber);
 					await config.helpers.state.getNameById(data[i].stateId, async function (stateName) {
 						arr1.push(stateName.name);
 					})
 					await config.helpers.city.getNameById(data[i].cityId, async function (cityName) {
 						arr1.push(cityName.name);
 					})
-					//arr1.push(data[i].store);
 					arr1.push(moment(data[i].createdAt).format('DD-MM-YYYY'));
 					if(!data[i].status){
 						let change_status = "changeStatus(this,\'1\',\'change_status_store\',\'list_store\',\'store\');";	
@@ -99,7 +100,9 @@ module.exports = {
                 name : req.body.name,
 				address : req.body.address,
 				stateId : mongoose.mongo.ObjectId(req.body.stateId),
-				cityId : mongoose.mongo.ObjectId(req.body.cityId)
+				cityId : mongoose.mongo.ObjectId(req.body.cityId),
+				contactName : req.body.contactName,
+				contactNumber : req.body.contactNumber
 			};
 			//console.log(storeData);
 			let store = new Store(storeData);
@@ -127,7 +130,9 @@ module.exports = {
 				name : req.body.name,
                 address:req.body.address,
 				stateId : mongoose.mongo.ObjectId(req.body.stateId),
-                cityId : mongoose.mongo.ObjectId(req.body.cityId)
+                cityId : mongoose.mongo.ObjectId(req.body.cityId),
+				contactName : req.body.contactName,
+				contactNumber : req.body.contactNumber
 			};
 			await Store.update(
 				{ _id: mongoose.mongo.ObjectId(req.body.id) },

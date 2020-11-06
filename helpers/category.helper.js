@@ -6,7 +6,14 @@ var Category = model.category;
 
 module.exports = {
 	getNameById: async function(categoryId, cb) {
-		let data = await Category.findOne({_id: mongoose.mongo.ObjectId(categoryId)},{name: 1, _id:0});
-		cb(data);
+		if(categoryId && typeof categoryId != 'undefined')
+		{
+			let data = await Category.findOne({_id: mongoose.mongo.ObjectId(categoryId)},{name: 1, _id:0});
+			cb(data);
+		}
+		else
+		{
+			cb('');
+		}
 	}
 };

@@ -1,5 +1,6 @@
 $(document).ready(function() {
     $('#roleTable').DataTable( {
+        "scrollX": true,
         "processing": true,
         "serverSide": true,
         "ordering": false,
@@ -10,6 +11,7 @@ $(document).ready(function() {
     });
 
     $('#administratorTable').DataTable( {
+        "scrollX": true,
         "processing": true,
         "serverSide": true,
         "ordering": false,
@@ -20,6 +22,7 @@ $(document).ready(function() {
     });
 
     $('#categoryTable').DataTable( {
+        "scrollX": true,
         "processing": true,
         "serverSide": true,
         "ordering": false,
@@ -30,6 +33,7 @@ $(document).ready(function() {
     });
     
     $('#subcategoryTable').DataTable( {
+        "scrollX": true,
         "processing": true,
         "serverSide": true,
         "ordering": false,
@@ -40,6 +44,7 @@ $(document).ready(function() {
     });
 
     $('#stateTable').DataTable( {
+        "scrollX": true,
         "processing": true,
         "serverSide": true,
         "ordering": false,
@@ -50,6 +55,7 @@ $(document).ready(function() {
     });
 
     $('#cityTable').DataTable( {
+        "scrollX": true,
         "processing": true,
         "serverSide": true,
         "ordering": false,
@@ -60,6 +66,7 @@ $(document).ready(function() {
     });
 
     $('#pincodeTable').DataTable( {
+        "scrollX": true,
         "processing": true,
         "serverSide": true,
         "ordering": false,
@@ -70,6 +77,7 @@ $(document).ready(function() {
     });
 
     $('#areaTable').DataTable( {
+        "scrollX": true,
         "processing": true,
         "serverSide": true,
         "ordering": false,
@@ -80,6 +88,7 @@ $(document).ready(function() {
     });
 
     $('#societyTable').DataTable( {
+        "scrollX": true,
         "processing": true,
         "serverSide": true,
         "ordering": false,
@@ -90,6 +99,7 @@ $(document).ready(function() {
     });
 
     $('#towerTable').DataTable( {
+        "scrollX": true,
         "processing": true,
         "serverSide": true,
         "ordering": false,
@@ -99,6 +109,7 @@ $(document).ready(function() {
         }
     });
     $('#storeTable').DataTable( {
+        "scrollX": true,
         "processing": true,
         "serverSide": true,
         "ordering": false,
@@ -108,6 +119,7 @@ $(document).ready(function() {
         }
     });
     $('#productTable').DataTable( {
+        "scrollX": true,
         "processing": true,
         "serverSide": true,
         "ordering": false,
@@ -117,6 +129,7 @@ $(document).ready(function() {
         }
     });
     $('#stockTable').DataTable( {
+        "scrollX": true,
         "processing": true,
         "serverSide": true,
         "ordering": false,
@@ -126,6 +139,7 @@ $(document).ready(function() {
         }
     });
     $('#orderTable').DataTable( {
+        "scrollX": true,
         "processing": true,
         "serverSide": true,
         "ordering": false,
@@ -135,6 +149,7 @@ $(document).ready(function() {
         }
     });
     $('#customerTable').DataTable( {
+        "scrollX": true,
         "processing": true,
         "serverSide": true,
         "ordering": false,
@@ -144,6 +159,7 @@ $(document).ready(function() {
         }
     });
     $('#offerTable').DataTable( {
+        "scrollX": true,
         "processing": true,
         "serverSide": true,
         "ordering": false,
@@ -153,6 +169,7 @@ $(document).ready(function() {
         }
     });
     $('#discountTable').DataTable( {
+        "scrollX": true,
         "processing": true,
         "serverSide": true,
         "ordering": false,
@@ -163,6 +180,7 @@ $(document).ready(function() {
     });
 
     $('#brandTable').DataTable( {
+        "scrollX": true,
         "processing": true,
         "serverSide": true,
         "ordering": false,
@@ -173,6 +191,7 @@ $(document).ready(function() {
     });
 
     $('#walletTable').DataTable( {
+        "scrollX": true,
         "processing": true,
         "serverSide": true,
         "ordering": false,
@@ -183,6 +202,7 @@ $(document).ready(function() {
     });
 
     $('#varientTable').DataTable( {
+        "scrollX": true,
         "processing": true,
         "serverSide": true,
         "ordering": false,

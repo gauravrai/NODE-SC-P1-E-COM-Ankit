@@ -6,7 +6,7 @@ var basic_path='C:/Users/sonali/Desktop/softchilli/backend/';
 module.exports = {
 	
 	SITEURL : SITEURL,
-	SITENAME : "LocalBaniya",
+	SITENAME : "Local Baniyaa",
 	ADMINSITEURL:SITEURL+'admin/',
 	ADMINCALLURL:'/admin',
 	APIURL:'/api/v1',
