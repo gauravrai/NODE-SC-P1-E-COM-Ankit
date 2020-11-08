@@ -9,6 +9,7 @@ const Cart = model.cart;
 const Cartitem = model.cart_item;
 const Customer = model.customer;
 const Wishlist = model.wishlist;
+const Pincode = model.pincode;
 const { validationResult } = require('express-validator');
 
 module.exports = {
@@ -260,6 +261,77 @@ module.exports = {
                     data: [], 
                     status: 'success', 
                     message: "Cart has been empty!!" 
+                });	
+            }
+        }
+        catch (e){
+            console.log(e)
+            return res.status(500).json({ 
+                                    data: [],  
+                                    status: 'error', 
+                                    errors: [{
+                                        msg: "Internal server error"
+                                    }]
+                                });
+        }
+	},
+    
+	getCheckoutData: async function(req,res) {
+        const errors = validationResult(req)
+        if(!errors.isEmpty()){
+            return res.status(400).json({errors: errors.array()})
+        }
+        try{
+            let data = {};
+            let userId = req.body.userId;
+            let condition = {_id: mongoose.mongo.ObjectId(userId)};
+            let userData = await Customer.findOne(condition);
+            data.name = userData.name ? userData.name : '';
+            data.address = userData.address ? userData.address : '';
+            data.country = userData.country ? userData.country : '';
+            await config.helpers.state.getNameById(userData.stateId, async function (stateName) {
+                data.state = stateName.name;
+            })
+            await config.helpers.city.getNameById(userData.cityId, async function (cityName) {
+                data.city = cityName.name;
+            })
+            await config.helpers.pincode.getNameById(userData.pincodeId, async function (pincode) {
+                if(pincode.pincode)
+                {
+                    let shippingPrice = await Pincode.findOne({_id: mongoose.mongo.ObjectID(userData.pincodeId)});
+                    data.shippingPrice = shippingPrice.shippingCharges ? shippingPrice.shippingCharges : 0;
+                }
+                else
+                {
+                    data.shippingPrice = 0;
+                }
+                data.pincode = pincode.pincode;
+            })
+            await config.helpers.area.getNameById(userData.areaId, async function (areaName) {
+                data.area = areaName.name;
+            })
+            await config.helpers.society.getNameById(userData.societyId, async function (societyName) {
+                data.society = societyName.name;
+            })
+            await config.helpers.tower.getNameById(userData.towerId, async function (towerName) {
+                data.tower = towerName.name;
+            })
+            
+            let cartData = await Cart.findOne({userId: mongoose.mongo.ObjectId(userId)});
+            data.grandTotal = cartData.grandTotal ? cartData.grandTotal : '';
+            data.couponAmount = cartData.couponAmount ? cartData.couponAmount : '';
+            data.tax = 0;
+            if(data) {
+                return res.status(200).json({ 
+                    data: data, 
+                    status: 'success', 
+                    message: "checkout data found successfully!!" 
+                });	
+            }else {
+                return res.status(400).json({ 
+                    data: [], 
+                    status: 'success', 
+                    message: "checkout data not found!!" 
                 });	
             }
         }

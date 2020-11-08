@@ -16,11 +16,18 @@ module.exports = function(router) {
 	router.post(
 		config.constant.APIURL+'/removeFromCart', 
 		[
-			check('cartItemId', 'cart Item Id is required').not().isEmpty()
+			check('cartItemId', 'Cart Item Id is required').not().isEmpty()
 		], 
 		indexController.removeFromCart
 	);
 	router.get(
 		config.constant.APIURL+'/getCartData', indexController.getCartData
 	); 
+	router.get(
+		config.constant.APIURL+'/getCheckoutData', 
+		[
+			check('userId', 'User Id is required').not().isEmpty()
+		], 
+		indexController.getCheckoutData
+	);
 }
