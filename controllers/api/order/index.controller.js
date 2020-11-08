@@ -183,4 +183,42 @@ module.exports = {
                                 });
         }
     },
+
+    // @route       GET api/v1/getOrderData
+    // @description Get Order list of user
+    // @access      Public
+	getOrderData: async function(req,res) {
+        const errors = validationResult(req)
+        if(!errors.isEmpty()){
+            return res.status(400).json({errors: errors.array()})
+        }
+        try{
+            let userId = req.body.userId;
+            let condition = {userId: mongoose.mongo.ObjectId(userId)};
+            let orderData = await Order.find(condition);
+            if(orderData.length > 0) {
+                return res.status(200).json({ 
+                    data: orderData, 
+                    status: 'success', 
+                    message: "Order data found successfully!!" 
+                });	
+            }else {
+                return res.status(400).json({ 
+                    data: [], 
+                    status: 'success', 
+                    message: "Order has been empty!!" 
+                });	
+            }
+        }
+        catch (e){
+            console.log(e)
+            return res.status(500).json({ 
+                                    data: [],  
+                                    status: 'error', 
+                                    errors: [{
+                                        msg: "Internal server error"
+                                    }]
+                                });
+        }
+	}
 }

@@ -16,4 +16,14 @@ module.exports = function(router) {
 		],
 		indexController.placeOrder
 	); 
+	router.get(
+		config.constant.APIURL+'/getOrderData', 
+		[
+			// auth,
+			// [
+				check('userId', 'User Id is required').not().isEmpty(),
+			// ]
+		],
+		indexController.getOrderData
+	); 
 }
