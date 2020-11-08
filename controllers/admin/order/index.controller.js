@@ -36,14 +36,18 @@ module.exports = {
     manageOrder: async function(req,res){
 		let moduleName = 'Order Management';
 		let pageTitle = 'View Order';
+		console.log('body--'+req.body.search_data);
+		console.log('body--'+req.body.order_status);
+		console.log('body--'+req.body.date_from);
+		console.log('body--'+req.body.date_to);
 		await config.helpers.permission('manage_order', req, async (err,permissionData)=>{
-			await config.helpers.filter.orderFilter(req, async function (filterData) {
-				console.log(filterData);
-				if (filterData != "" && req.method == 'POST') {
-					return res.redirect('manage_order' + filterData);
-				}
-				res.render('admin/order/view.ejs',{layout:'admin/layout/layout', pageTitle:pageTitle, moduleName:moduleName, permissionData:permissionData, orderStatus: constant.ORDER_STATUS, req:req});
-			});
+			// await config.helpers.filter.orderFilter(req, async function (filterData) {
+			// 	console.log(filterData);
+			// 	if (filterData != "" && req.method == 'POST') {
+			// 		return res.redirect('manage_order' + filterData);
+			// 	}
+				res.render('admin/order/view.ejs',{layout:'admin/layout/layout', pageTitle:pageTitle, moduleName:moduleName, permissionData:permissionData, orderStatus: constant.ORDER_STATUS, req: req});
+			// });
 		});
 	},
 	
@@ -58,7 +62,7 @@ module.exports = {
 			];
 		}
 		if (req.param('order_status')) {
-			search.orderStatus = new ObjectId(req.param("order_status"));
+			search.orderStatus = req.param("order_status");
 		}
 		if (req.param('date_from') && req.param('date_to')) {
 			var today = new Date(req.param('date_to'));
@@ -67,7 +71,6 @@ module.exports = {
 			var tomorrow = tomorrow.toLocaleDateString();
 			search.createdAt = { '$gte': new Date(req.param('date_from')), '$lte': new Date(tomorrow) }
 		}
-		console.log(search);
 		let skip = req.input('start') ? parseInt(req.input('start')) : 0;
 		let limit= req.input('length') ? parseInt(req.input('length')) : config.constant.LIMIT;
 		async.parallel({

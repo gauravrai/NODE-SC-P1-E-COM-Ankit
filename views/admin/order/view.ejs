@@ -34,11 +34,11 @@
                 </ul>
               </div>
               <div  class="card-header" id="searchBox" style="display: none !important;">
-                <form method="post">
+                <form method="GET">
                   <div class="row">
                     <div class="col-sm-9">
                       <div class="form-group">
-                        <input type="text" class="form-control" placeholder="Search for order id, customer name, customer mobile number or address" name="search_data" id="search_data" value="<%= req.param('search_data') ? req.param('search_data') : ''%>" />
+                        <input type="text" class="form-control" placeholder="Search for order id, customer name, customer mobile number or address" name="search_data" id="search_data" value="<%= req.param("search_data") ? req.param("search_data") : ''%>" />
                       </div>
                     </div>
                     <div class="col-sm-3">
@@ -63,7 +63,6 @@
                       </div>
                     </div>
                     <div class="col-sm-3">
-                      <label></label><br>
                       <a href="<%=APPCONSTANT.ADMINCALLURL%>/manage_order" class="btn btn-default">Cancel</a>
                       <button type="submit" class="btn btn-primary">Submit</button>
                     </div>

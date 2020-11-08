@@ -150,8 +150,8 @@ $(document).ready(function() {
               "search_option": $("#search_option").val(),
               "search_data": $("#search_data").val(),
               "order_status": $("#order_status").val(),
-              "date_from": $("#datepicker").val(),
-              "date_to": $("#datepicker2").val(),
+              "date_from": $("#date_from").val(),
+              "date_to": $("#date_to").val(),
             },
             type: "POST",          
         }
