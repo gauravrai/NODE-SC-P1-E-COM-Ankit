@@ -9,7 +9,10 @@ module.exports = {
 		if(subcategoryId && typeof subcategoryId != 'undefined')
 		{
 			let data = await SubCategory.findOne({_id: mongoose.mongo.ObjectId(subcategoryId)},{name:1, _id:0});
-			cb(data);
+			if(data)
+				cb(data);
+			else
+				cb('');
 		}else
 		{
 			cb('');

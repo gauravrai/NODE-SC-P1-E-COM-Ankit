@@ -9,7 +9,10 @@ module.exports = {
 		if(productId && typeof productId != 'undefined')
 		{
 			let data = await Product.findOne({_id: mongoose.mongo.ObjectId(productId)},{name: 1, _id:0});
-			cb(data);
+			if(data)
+				cb(data);
+			else
+				cb('');
 		}else
 		{
 			cb('');

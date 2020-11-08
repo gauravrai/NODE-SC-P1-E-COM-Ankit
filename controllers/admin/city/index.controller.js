@@ -135,7 +135,7 @@ module.exports = {
         })
 	},
 
-	changeStatusCity: function(req,res){
+	changeStatusCity: async function(req,res){
 		let id = req.param("id");
 		let status = req.param("status");
 		return City.updateOne({_id: mongoose.mongo.ObjectId(id)}, {

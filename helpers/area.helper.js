@@ -9,7 +9,10 @@ module.exports = {
 		if(areaId && typeof areaId != 'undefined')
 		{
 			let data = await Area.findOne({_id: mongoose.mongo.ObjectId(areaId)},{name: 1, _id:0});
-			cb(data);
+			if(data)
+				cb(data);
+			else
+				cb('');
 		}else
 		{
 			cb('');

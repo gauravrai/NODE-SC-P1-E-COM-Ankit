@@ -9,7 +9,10 @@ module.exports = {
 		if(stateId && typeof stateId != 'undefined')
 		{
 			let data = await State.findOne({_id: mongoose.mongo.ObjectId(stateId)},{name: 1, _id:0});
-			cb(data);
+			if(data)
+				cb(data);
+			else
+				cb('');
 		}
 		else{
 			cb('');

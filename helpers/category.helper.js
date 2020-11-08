@@ -9,7 +9,10 @@ module.exports = {
 		if(categoryId && typeof categoryId != 'undefined')
 		{
 			let data = await Category.findOne({_id: mongoose.mongo.ObjectId(categoryId)},{name: 1, _id:0});
-			cb(data);
+			if(data)
+				cb(data);
+			else
+				cb('');
 		}
 		else
 		{

@@ -6,6 +6,7 @@ const mongoose = require('mongoose');
 const bcrypt = require("bcrypt-nodejs");
 const moment = require('moment');
 const State = model.state;
+const City = model.city;
 const ADMINCALLURL = config.constant.ADMINCALLURL;
 
 module.exports = {
@@ -120,10 +121,18 @@ module.exports = {
 
 	deleteState: async function(req,res){
 		let id = req.param("id");
-		return State.updateOne({_id:  mongoose.mongo.ObjectId(id)},{deletedAt:2},function(err,data){        	
-			if(err) console.error(err);
-        	res.send('done');
-        })
+		let cityData = await City.find({stateId: mongoose.mongo.ObjectId(id)});
+		if(cityData.length > 0)
+		{
+			res.send('error');
+		}
+		else
+		{
+			return State.updateOne({_id:  mongoose.mongo.ObjectId(id)},{deletedAt:2},function(err,data){        	
+				if(err) console.error(err);
+				res.send('done');
+			})
+		}
 	},
 
 	changeStatusState: function(req,res){

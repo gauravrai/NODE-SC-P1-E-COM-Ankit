@@ -27,6 +27,49 @@
                   <% } %>
                 </ul>
               </div>
+              <div class="card-header d-flex" id="searchHead">
+                <h4> Search...</h4>
+                <ul class="nav nav-pills ml-auto p-2">
+                  <li class="nav-item"><i class="fas fa-search" id="global_search"> </i></li>
+                </ul>
+              </div>
+              <div  class="card-header" id="searchBox" style="display: none !important;">
+                <form method="post">
+                  <div class="row">
+                    <div class="col-sm-9">
+                      <div class="form-group">
+                        <input type="text" class="form-control" placeholder="Search for order id, customer name, customer mobile number or address" name="search_data" id="search_data" value="<%= req.param('search_data') ? req.param('search_data') : ''%>" />
+                      </div>
+                    </div>
+                    <div class="col-sm-3">
+                      <div class="form-group">
+                          <select name="order_status" id="order_status" class="form-control" onchange="this.form.submit()">
+                            <option value="">Select Order Status</option>
+                            <% for(let i = 0; i < orderStatus.length; i++){ %>
+                              <option value="<%=orderStatus[i]%>" <% if(req.param("order_status")== orderStatus[i]){ %>
+                                selected="selected" <% } %>><%=orderStatus[i]%></option>
+                            <% } %>
+                          </select>
+                      </div>
+                    </div>
+                    <div class="col-sm-3">
+                      <div class="form-group">
+                        <input type="date" name="date_from" class="form-control" id="date_from" placeholder="(YYYY-MM-DD) From Date" value="<%= req.param("date_from") ? req.param("date_from") : ''%>">
+                      </div>
+                    </div>
+                    <div class="col-sm-3">
+                      <div class="form-group">
+                        <input type="date" name="date_to" class="form-control" id="date_to" placeholder="(YYYY-MM-DD) To Date" value="<%= req.param("date_to") ? req.param("date_to") : ''%>">
+                      </div>
+                    </div>
+                    <div class="col-sm-3">
+                      <label></label><br>
+                      <a href="<%=APPCONSTANT.ADMINCALLURL%>/manage_order" class="btn btn-default">Cancel</a>
+                      <button type="submit" class="btn btn-primary">Submit</button>
+                    </div>
+                  </div>
+                </form>
+              </div>
               <div class="card-body">
                 <%- include ('../message/message') -%>
                 <table id="orderTable" class="table table-striped table-bordered" style="width:100%">

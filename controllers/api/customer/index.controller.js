@@ -134,8 +134,7 @@ module.exports = {
                                                 mobile,
                                                 status: true, 
                                                 deletedAt: 0
-                                            })
-                                            .select('-deletedAt');
+                                            });
                 let profileUpdated = false
                 if(customer)
                     profileUpdated = true

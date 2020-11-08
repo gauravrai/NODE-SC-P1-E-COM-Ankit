@@ -9,7 +9,10 @@ module.exports = {
 		if(roleId && typeof roleId != 'undefined')
 		{
 			let data = await Role.findOne({_id: mongoose.mongo.ObjectId(roleId)},{name: 1, _id:0});
-			cb(data);
+			if(data)
+				cb(data);
+			else
+				cb('');
 		}else{
 			cb('');
 		}

@@ -442,9 +442,9 @@ $(document).ready(function () {
             name: {
                 required: true,
             },
-            // stateId: {
-            //     required: true,
-            // },
+            stateId: {
+                required: true,
+            },
             cityId: {
                 required: true,
             },
@@ -463,9 +463,9 @@ $(document).ready(function () {
             name: {
                 required: "Please select Store Name"
             },
-            // stateId: {
-            //     required: "Please select State"
-            // },
+            stateId: {
+                required: "Please select State"
+            },
             cityId: {
                 required: "Please select City"
             },

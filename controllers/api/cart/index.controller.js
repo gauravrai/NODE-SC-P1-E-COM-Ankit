@@ -256,7 +256,7 @@ module.exports = {
                     message: "Cart data found successfully!!" 
                 });	
             }else {
-                return res.status(200).json({ 
+                return res.status(400).json({ 
                     data: [], 
                     status: 'success', 
                     message: "Cart has been empty!!" 

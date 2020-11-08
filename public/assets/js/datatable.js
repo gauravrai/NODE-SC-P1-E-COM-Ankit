@@ -139,12 +139,20 @@ $(document).ready(function() {
         }
     });
     $('#orderTable').DataTable( {
+        "searching": false,
         "scrollX": true,
         "processing": true,
         "serverSide": true,
         "ordering": false,
         "ajax": {
             url: 'list_order',
+            data: {
+              "search_option": $("#search_option").val(),
+              "search_data": $("#search_data").val(),
+              "order_status": $("#order_status").val(),
+              "date_from": $("#datepicker").val(),
+              "date_to": $("#datepicker2").val(),
+            },
             type: "POST",          
         }
     });
@@ -234,11 +242,12 @@ function deleteData(id, controller, returnFunction, tableId){
         reverseButtons: true
     }).then((result) => {
         if (result.value) {
+            console.log('coming');
             $.ajax({
                 type: 'POST',
                 url: controller+'/'+deleteId,
                 success: function(response) {
-                    if(response){
+                    if(response == 'done'){
                         $('#'+tableId+'Table').DataTable().destroy();
                         $('#'+tableId+'Table').DataTable( {
                             "processing": true,
@@ -252,6 +261,13 @@ function deleteData(id, controller, returnFunction, tableId){
                             'Deleted!',
                             'Your file has been deleted.',
                             'success'
+                        )
+                    }else
+                    {
+                        swalWithBootstrapButtons.fire(
+                            'Warning!',
+                            'There are some active city in this state.',
+                            'warning'
                         )
                     }
                 }

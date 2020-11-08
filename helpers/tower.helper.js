@@ -2,19 +2,19 @@ const model  = require('../models/index.model');
 const config = require('../config/index');
 const mongoose = require('mongoose');
 const async = require("async");
-var City = model.city;
+var Tower = model.tower;
 
 module.exports = {
-	getNameById: async function(cityId, cb) {
-		if(cityId && typeof cityId != 'undefined')
+	getNameById: async function(towerId, cb) {
+		if(towerId && typeof towerId != 'undefined')
 		{
-			let data = await City.findOne({_id: mongoose.mongo.ObjectId(cityId)},{name: 1, _id:0});
+			let data = await Tower.findOne({_id: mongoose.mongo.ObjectId(towerId)},{name: 1, _id:0});
 			if(data)
 				cb(data);
 			else
 				cb('');
-		}else
-		{
+		}
+		else{
 			cb('');
 		}
 	}

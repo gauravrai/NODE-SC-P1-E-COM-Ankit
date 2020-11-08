@@ -46,18 +46,20 @@ module.exports = {
                     societyId : userData.societyId ? mongoose.mongo.ObjectID(userData.areaId) : '',
                     towerId : userData.towerId ? mongoose.mongo.ObjectID(userData.towerId) : ''
                 }
+                let couponAmount = cartData.couponAmount ? cartData.couponAmount : 0;
+                let shippingCharges = shippingPrice.shippingCharges ? shippingPrice.shippingCharges : 0;
                 let orderInsertData = {
                     odid: odid,
                     userId: mongoose.mongo.ObjectID(cartData.userId),
                     customerDetail : customerDetail,
                     sessionId: cartData.sessionId,
-                    grandTotal: ( cartData.grandTotal + shippingPrice.shippingCharges ),
-                    subTotal: ( cartData.grandTotal  + shippingPrice.shippingCharges - cartData.couponAmount ),
-                    shippingPrice: shippingPrice.shippingCharges,
+                    grandTotal: ( cartData.grandTotal + shippingCharges ),
+                    subTotal: ( cartData.grandTotal  + shippingCharges - couponAmount ),
+                    shippingPrice: shippingCharges,
                     quantity: cartData.quantity,
                     couponId: mongoose.mongo.ObjectID(cartData.couponId),
                     couponNo: cartData.couponNo,
-                    couponAmount: cartData.couponAmount,
+                    couponAmount: couponAmount,
                     orderStatus: 'NEW',
                     orderFrom: orderFrom == 'app' ? 'APP' : 'WEB',
                     paymentStatus: 'PENDING',

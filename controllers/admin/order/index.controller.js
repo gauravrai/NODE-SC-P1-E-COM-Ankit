@@ -36,18 +36,37 @@ module.exports = {
     manageOrder: async function(req,res){
 		let moduleName = 'Order Management';
 		let pageTitle = 'View Order';
-		await config.helpers.permission('manage_order', req, (err,permissionData)=>{
-			res.render('admin/order/view.ejs',{layout:'admin/layout/layout', pageTitle:pageTitle, moduleName:moduleName, permissionData:permissionData});
+		await config.helpers.permission('manage_order', req, async (err,permissionData)=>{
+			await config.helpers.filter.orderFilter(req, async function (filterData) {
+				console.log(filterData);
+				if (filterData != "" && req.method == 'POST') {
+					return res.redirect('manage_order' + filterData);
+				}
+				res.render('admin/order/view.ejs',{layout:'admin/layout/layout', pageTitle:pageTitle, moduleName:moduleName, permissionData:permissionData, orderStatus: constant.ORDER_STATUS, req:req});
+			});
 		});
 	},
 	
     listOrder:function(req,res){
-		var search = {deletedAt:0}
-		let searchValue = req.body.search.value;
-		if(searchValue){			
-            search.name = { $regex: '.*' + searchValue + '.*',$options:'i' };
+		var search = {deletedAt:0};
+		if (req.param('search_data')) {
+			search.$or = [
+				{ odid: { $regex: req.param('search_data') } },
+				{ "customerDetail.name": { $regex: '.*' + req.param('search_data') + '.*', $options: 'i' } },
+				{ "customerDetail.mobile": { $regex: req.param('search_data') } },
+			];
 		}
-		
+		if (req.param('order_status')) {
+			search.orderStatus = new ObjectId(req.param("order_status"));
+		}
+		if (req.param('date_from') && req.param('date_to')) {
+			var today = new Date(req.param('date_to'));
+			var tomorrow = new Date(req.param('date_to'));
+			tomorrow.setDate(today.getDate() + 1);
+			var tomorrow = tomorrow.toLocaleDateString();
+			search.createdAt = { '$gte': new Date(req.param('date_from')), '$lte': new Date(tomorrow) }
+		}
+		console.log(search);
 		let skip = req.input('start') ? parseInt(req.input('start')) : 0;
 		let limit= req.input('length') ? parseInt(req.input('length')) : config.constant.LIMIT;
 		async.parallel({
@@ -250,19 +269,32 @@ module.exports = {
 			let pageTitle = 'View Order Details';
 			let odid = req.body.id;
 
-            let orderData = await Order.findOne({ odid:odid });
-			let stateData = await State.findOne({ _id : mongoose.mongo.ObjectId(orderData.customerDetail.stateId) });
-			orderData.customerDetail.state = stateData? stateData.name : '';
-            let cityData = await City.findOne({ _id : mongoose.mongo.ObjectId(orderData.customerDetail.cityId) });
-			orderData.customerDetail.city =  cityData? cityData.name : '';
-            let pincodeData = await Pincode.findOne({ _id : mongoose.mongo.ObjectId(orderData.customerDetail.pincodeId) });
-			orderData.customerDetail.pincode =  pincodeData? pincodeData.name : '';
-            let areaData = await Area.findOne({ _id : mongoose.mongo.ObjectId(orderData.customerDetail.areaId) });
-			orderData.customerDetail.area =  areaData? areaData.name : '';
-            let societyData = await Society.findOne({ _id : mongoose.mongo.ObjectId(orderData.customerDetail.societyId) });
-			orderData.customerDetail.society =  societyData? societyData.name : '';
-            let towerData = await Tower.findOne({ _id : mongoose.mongo.ObjectId(orderData.customerDetail.towerId) });
-			orderData.customerDetail.tower =  towerData? towerData.name : '';
+			let orderData = await Order.findOne({ odid:odid });
+			
+			await config.helpers.state.getNameById(orderData.customerDetail.stateId, async function (stateName) {
+				orderData.customerDetail.state = stateName.name;
+			})
+			
+			await config.helpers.city.getNameById(orderData.customerDetail.cityId, async function (cityName) {
+				orderData.customerDetail.city = cityName.name;
+			})
+			
+			await config.helpers.pincode.getNameById(orderData.customerDetail.pincodeId, async function (pincodeName) {
+				orderData.customerDetail.pincode = pincodeName.name;
+			})
+			
+			await config.helpers.area.getNameById(orderData.customerDetail.areaId, async function (areaName) {
+				console.log(areaName);
+				orderData.customerDetail.area = areaName.name;
+			})
+			
+			await config.helpers.society.getNameById(orderData.customerDetail.societyId, async function (societyName) {
+				orderData.customerDetail.society = societyName.name;
+			})
+			
+			await config.helpers.tower.getNameById(orderData.customerDetail.towerId, async function (towerName) {
+				orderData.customerDetail.tower = towerName.name;
+			})
 
             let orderDetailData = await Orderdetail.aggregate([
 				{
