@@ -54,6 +54,7 @@ module.exports = {
 				{ odid: { $regex: req.param('search_data') } },
 				{ "customerDetail.name": { $regex: '.*' + req.param('search_data') + '.*', $options: 'i' } },
 				{ "customerDetail.mobile": { $regex: req.param('search_data') } },
+				{ "customerDetail.address": { $regex: req.param('search_data') } },
 			];
 		}
 		if (req.param('order_status')) {
