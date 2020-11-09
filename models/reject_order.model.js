@@ -2,7 +2,10 @@ const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 var ObjectId = mongoose.Schema.Types.ObjectId;
 
-let RejectOrderSchema = new Schema({
+let RejectSchema = new Schema({
+    orderDetailId: {
+        type: ObjectId,
+    },
     userId: {
         type: ObjectId,
     },
@@ -49,4 +52,4 @@ let RejectOrderSchema = new Schema({
 });
 
 // Export the model
-module.exports = mongoose.model('Reject_Order', RejectOrderSchema);
+module.exports = mongoose.model('Reject', RejectSchema);

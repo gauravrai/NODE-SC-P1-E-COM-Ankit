@@ -48,6 +48,7 @@
                 <div class="card-header d-flex p-0">
                   <h3 class="card-title p-3">Order Details</h3>
                 </div>
+                <br>
                 <h4>Available Products</h4>
                 <div class="col-md-12"> 
                   <button type="button" class="btn btn-primary pull-right" id="markAsNotAvailable">Mark as not available</button><br>
@@ -78,7 +79,9 @@
                 </table>
                 
                 <% if(rejectOrderData.length > 0){ %>
+                  <br>
                 <h4>Not Available Products</h4>
+                <br>
                 <table class="table table-bordered" id="notAvailableTable">
                   <thead>           
                     <tr>
@@ -86,7 +89,7 @@
                       <th>Varient</th>
                       <th>Unit Price</th>
                       <th>Quantity</th>
-                      <th>Total Price</th>
+                      <th>Total Price <%=rejectOrderData.length%></th>
                     </tr>
                   </thead>
                   <tbody>
@@ -103,7 +106,9 @@
                 </table>
                 <% } %>
 
+                <br>
                 <h4>Free Items</h4>
+                <br>
                 <table class="table table-bordered" id="freeItemTable">
                   <thead>           
                     <tr>
@@ -125,36 +130,52 @@
                     <% } %>
                     <% }else{ %>
                       <tr>
-                        <td colspan="3">No Free Items</td>
+                        <td colspan="4" style="text-align: center;">No Free Items</td>
                       </tr>
                     <% } %>
                   </tbody>
                 </table>
                 
+                <br>
                 <table style="width: 100%;">
                     <tr>
-                      <td style="width: 70%;"><br><br></td>
-                      <td style="width: 30%;"><b>Sub Total:</b> <%= orderData.subTotal %></td>
-                    </tr>
-                    <tr>
-                      <td style="width: 70%;">
+                      <td style="width: 25%;">
+                        <label for="state">Select Store</label>
+                        <select name="storeId" id="storeId" class="form-control">
+                          <option value="">Select Store</option>
+                          <% for(let i = 0; i < storeData.length; i++){ %>
+                            <option value="<%=storeData[i].id%>"
+                              <% if(storeData[i].id == orderData.storeId){ %> selected="selected" <% } %> ><%=storeData[i].name%></option>
+                          <% } %>
+                        </select>
+                        <span class="customError" id="storeErr"></span>
+                      </td>
+                      <td style="width: 25%;">
+                        <label for="state">Payment Status</label>
+                        <select name="paymentStatus" id="paymentStatus" class="form-control">
+                          <option value="">Select Payment Status</option>
+                          <% for(let i = 0; i < paymentStatus.length; i++){ %>
+                            <option value="<%=paymentStatus[i]%>"
+                              <% if(paymentStatus[i] == orderData.paymentStatus){ %> selected="selected" <% } %> ><%=paymentStatus[i]%></option>
+                          <% } %>
+                        </select>
+                      </td>
+                      <td style="width: 25%;">
                         <label for="state">Order Status</label>
-                          <select name="orderStatusId" id="orderStatusId" data-orderid="<%= orderData.id %>">
-                            <option value="">Select Order Status</option>
-                            <% for(let i = 0; i < orderStatus.length; i++){ %>
-                              <option value="<%=orderStatus[i]%>"
-                                <% if(orderStatus[i] == orderData.orderStatus){ %> selected="selected" <% } %> ><%=orderStatus[i]%></option>
-                            <% } %>
-                          </select></td>
-                      <td style="width: 30%;"><b>Taxes:</b> <%= 0 %></td>
-                    </tr>
-                    <tr>
-                      <td style="width: 70%;"><br><br></td>
-                      <td style="width: 30%;"><b>Shipping Charges:</b> <%= orderData.shipping ? orderData.shipping : 'Free' %></td>
-                    </tr>
-                    <tr>
-                      <td style="width: 70%;"><br><br></td>
-                      <td style="width: 30%;"><b>Grand Total: </b> <%= orderData.grandTotal %></td>
+                        <select name="orderStatusId" id="orderStatusId" data-orderid="<%= orderData.id %>" class="form-control">
+                          <option value="">Select Order Status</option>
+                          <% for(let i = 0; i < orderStatus.length; i++){ %>
+                            <option value="<%=orderStatus[i]%>"
+                              <% if(orderStatus[i] == orderData.orderStatus){ %> selected="selected" <% } %> ><%=orderStatus[i]%></option>
+                          <% } %>
+                        </select>
+                      </td>
+                      <td style="width: 25%;text-align:right;">
+                        <b>Sub Total:</b> <%= orderData.subTotal %><br>
+                        <b>Taxes:</b> <%= 0 %><br>
+                        <b>Shipping Charges:</b> <%= orderData.shipping ? orderData.shipping : 'Free' %><br>
+                        <b>Grand Total: </b> <%= orderData.grandTotal %>
+                      </td>
                     </tr>
                 </table>
               </div>
@@ -209,43 +230,55 @@
     $('#orderStatusId').change(function(){
       let orderId = $(this).data('orderid');
       let orderStatus = $(this).val();
-      const swalWithBootstrapButtons = Swal.mixin({
-        customClass: {
-          confirmButton: 'btn btn-success',
-          cancelButton: 'btn btn-danger'
-        },
-        buttonsStyling: false
-      })
-      swalWithBootstrapButtons.fire({
-        title: 'Are you sure to change status?',
-        text: "You won't be able to revert this!",
-        icon: 'warning',
-        showCancelButton: true,
-        confirmButtonText: 'Yes, change it!',
-        cancelButtonText: 'No, cancel!',
-        reverseButtons: true
-      }).then((result) => {
-        if (result.value) {
-            $.ajax({
-                type: 'POST',
-                url: 'change_order_status',
-                data: {orderId:orderId, orderStatus:orderStatus},
-                success: function(response) {
-                  swalWithBootstrapButtons.fire(
-                      'Chnaged!',
-                      'Your order status has been changed succesfully.',
-                      'success'
-                  )
-                }
-            });
-        } else if (result.dismiss === Swal.DismissReason.cancel) {
-            swalWithBootstrapButtons.fire(
-                'Cancelled',
-                'Your data is safe :)',
-                'error'
-            )
-        }
-      })
+      let storeId = $('#storeId').val();
+      let paymentStatus = $('#paymentStatus').val();
+      if(storeId == '')
+      {
+        
+        $(this).val('');
+        $('#storeErr').html('Please select store to proceed');
+      }
+      else
+      {
+        $('#storeErr').html('');
+        const swalWithBootstrapButtons = Swal.mixin({
+          customClass: {
+            confirmButton: 'btn btn-success',
+            cancelButton: 'btn btn-danger'
+          },
+          buttonsStyling: false
+        })
+        swalWithBootstrapButtons.fire({
+          title: 'Are you sure to change status?',
+          text: "You won't be able to revert this!",
+          icon: 'warning',
+          showCancelButton: true,
+          confirmButtonText: 'Yes, change it!',
+          cancelButtonText: 'No, cancel!',
+          reverseButtons: true
+        }).then((result) => {
+          if (result.value) {
+              $.ajax({
+                  type: 'POST',
+                  url: 'change_order_status',
+                  data: {orderId:orderId, orderStatus:orderStatus, storeId:storeId, paymentStatus:paymentStatus},
+                  success: function(response) {
+                    swalWithBootstrapButtons.fire(
+                        'Chnaged!',
+                        'Your order status has been changed succesfully.',
+                        'success'
+                    )
+                  }
+              });
+          } else if (result.dismiss === Swal.DismissReason.cancel) {
+              swalWithBootstrapButtons.fire(
+                  'Cancelled',
+                  'Your data is safe :)',
+                  'error'
+              )
+          }
+        })
+      }
     });
 
 </script>

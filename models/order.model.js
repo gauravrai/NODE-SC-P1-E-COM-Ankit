@@ -62,6 +62,9 @@ let orderSchema = new Schema({
     couponAmount: {
         type: Number,
     },
+    storeId: {
+        type: ObjectId,
+    },
     status: {
         type: Boolean,
         default : true

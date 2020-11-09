@@ -36,18 +36,14 @@ module.exports = {
     manageOrder: async function(req,res){
 		let moduleName = 'Order Management';
 		let pageTitle = 'View Order';
-		console.log('body--'+req.body.search_data);
-		console.log('body--'+req.body.order_status);
-		console.log('body--'+req.body.date_from);
-		console.log('body--'+req.body.date_to);
 		await config.helpers.permission('manage_order', req, async (err,permissionData)=>{
-			// await config.helpers.filter.orderFilter(req, async function (filterData) {
-			// 	console.log(filterData);
-			// 	if (filterData != "" && req.method == 'POST') {
-			// 		return res.redirect('manage_order' + filterData);
-			// 	}
+			await config.helpers.filter.orderFilter(req, async function (filterData) {
+				console.log(filterData);
+				if (filterData != "" && req.method == 'POST') {
+					return res.redirect('manage_order' + filterData);
+				}
 				res.render('admin/order/view.ejs',{layout:'admin/layout/layout', pageTitle:pageTitle, moduleName:moduleName, permissionData:permissionData, orderStatus: constant.ORDER_STATUS, req: req});
-			// });
+			});
 		});
 	},
 	
@@ -323,7 +319,6 @@ module.exports = {
                       }
                 },
             ]);
-			
 			let rejectOrderData = await Rejectorder.aggregate([
 				{
 					$match: { odid:odid }
@@ -370,8 +365,9 @@ module.exports = {
                         as: "varientData"
                       }
                 }
-            ]);
-			res.render('admin/order/orderDetail',{layout:'admin/layout/layout', pageTitle:pageTitle, moduleName:moduleName, orderData:orderData, orderDetailData:orderDetailData, rejectOrderData:rejectOrderData, freeItemData:freeItemData, orderStatus: constant.ORDER_STATUS, moment:moment  } );
+			]);
+			let storeData = await Store.find({deletedAt: 0, status: true});
+			res.render('admin/order/orderDetail',{layout:'admin/layout/layout', pageTitle:pageTitle, moduleName:moduleName, orderData:orderData, orderDetailData:orderDetailData, rejectOrderData:rejectOrderData, freeItemData:freeItemData, orderStatus: constant.ORDER_STATUS, paymentStatus: constant.PAYMENT_STATUS, moment:moment, storeData:storeData  } );
 		}else{
 		}
 	},
@@ -384,18 +380,26 @@ module.exports = {
 			let subTotal = 0;
 			let quantity = 0;
 			for(i=0; i < id.length; i++){
+				let rejectOrderInsertData = {};
 				let orderDetailData = await Orderdetail.findOne({_id: mongoose.mongo.ObjectId(id[i]) },{createdAt: 0, updatedAt: 0, __v: 0, _id: 0, status: 0, deletedAt: 0} );
+				rejectOrderInsertData.orderDetailId = mongoose.mongo.ObjectId(orderDetailData.id);
+				rejectOrderInsertData.userId = orderDetailData.userId;
+				rejectOrderInsertData.odid = orderDetailData.odid;
+				rejectOrderInsertData.productId = orderDetailData.productId;
+				rejectOrderInsertData.varientId = orderDetailData.varientId;
+				rejectOrderInsertData.price = orderDetailData.price;
+				rejectOrderInsertData.totalPrice = orderDetailData.totalPrice;
+				rejectOrderInsertData.quantity = orderDetailData.quantity;
+				console.log(rejectOrderInsertData);
+				let rejectOrder = new Rejectorder(rejectOrderInsertData);
+				rejectOrder.save();
 				grandTotal = ( grandTotal + orderDetailData.totalPrice );
 				subTotal = ( subTotal + orderDetailData.totalPrice );
 				quantity = ( quantity + orderDetailData.quantity );
-				orderDetailData.orderDetailId = mongoose.mongo.ObjectId(orderDetailData.id);
-				console.log(orderDetailData);
-				let rejectOrder = new Rejectorder(orderDetailData);
-				rejectOrder.save();
 
-				// let freeItemData = await Freeitem.findOne({orderDetailId: mongoose.mongo.ObjectId(id[i]) });
-
-				// await Orderdetail.deleteOne({_id: mongoose.mongo.ObjectId(id[i]) });
+				let freeItemData = await Freeitem.findOne({orderDetailId: mongoose.mongo.ObjectId(id[i]) });
+				console.log(freeItemData);
+				await Orderdetail.deleteOne({_id: mongoose.mongo.ObjectId(id[i]) });
 			}
 
 			let orderData = await Order.findOne({odid: odid});
@@ -410,14 +414,34 @@ module.exports = {
 		}
 	},
 
-	changeOrderStatus: function(req,res){
+	changeOrderStatus: async function(req,res){
 		let orderId = req.param("orderId");
 		let orderStatus = req.param("orderStatus");
-		return Order.updateOne({_id: mongoose.mongo.ObjectId(orderId)}, {
-			orderStatus: orderStatus
-		},function(err,data){
-			if(err) console.error(err);
-			res.send('OK');
-	    })
+		let paymentStatus = req.param("paymentStatus");
+		let storeId = req.param("storeId");
+		if(orderStatus == 'DELIVERED')
+		{
+			let orderData = await Order.find({_id: mongoose.mongo.ObjectId(orderId)});
+			let orderUpdateData = {
+				orderStatus: orderStatus,
+				paymentStatus: paymentStatus,
+				storeId: mongoose.mongo.ObjectId(storeId),
+			};
+			return Order.updateOne(orderUpdateData, function(err,data){
+				if(err) console.error(err);
+				res.send('OK');
+			})
+		}
+		else
+		{
+			return Order.updateOne({_id: mongoose.mongo.ObjectId(orderId)}, {
+				orderStatus: orderStatus,
+				paymentStatus: paymentStatus,
+				storeId: mongoose.mongo.ObjectId(storeId),
+			},function(err,data){
+				if(err) console.error(err);
+				res.send('OK');
+			})
+		}
 	},
 };
