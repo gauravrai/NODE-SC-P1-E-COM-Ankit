@@ -424,6 +424,8 @@ module.exports = {
 					}
 					Stock.updateOne({_id: mongoose.mongo.ObjectId(availableProduct.id)}, {
 						count: quantity
+					},function(err,data){
+						if(err) console.error(err);
 					});
 				}
 			}
