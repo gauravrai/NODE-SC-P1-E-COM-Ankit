@@ -11,6 +11,7 @@ const Order = model.order;
 const Orderdetail = model.order_detail;
 const Freeitem = model.free_item;
 const Product = model.product;
+const Messagetemplate = model.message_template;
 const { validationResult } = require('express-validator');
 
 module.exports = {
@@ -147,11 +148,18 @@ module.exports = {
                 await Cartitem.deleteMany({ userId : mongoose.mongo.ObjectId(userId)});
                 if(paymentType == 'COD')
                 {
-                    return res.status(200).json({ 
-                        data: data, 
-                        status: 'success', 
-                        message: "Order placed successfully!!" 
-                    });	
+                    let messageData = await Messagetemplate.findOne({slug: 'ORDER-SUCCESSFUL'});
+                    let slug = messageData.slug;
+                    let message = messageData.message;
+                    message = message.replace('[USERNAME]', userData.name);
+                    message = message.replace('[ODID]', odid);
+                    await config.helpers.sms.sendSMS(userData, slug, message, async function (smsData) {
+                        return res.status(200).json({ 
+                            data: data, 
+                            status: 'success', 
+                            message: "Order placed successfully!!" 
+                        });	
+                    });
                 }
                 else
                 {

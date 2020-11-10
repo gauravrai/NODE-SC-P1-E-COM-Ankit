@@ -2,19 +2,15 @@ const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 var ObjectId = mongoose.Schema.Types.ObjectId;
 
-let StockSchema = new Schema({
-
-    count: {
-        type: Number,
-    },
-    productId: {
+let MessageSchema = new Schema({
+    userId: {
         type: ObjectId
     },
-    varientId: {
-        type: ObjectId,
+    slug: {
+        type: String
     },
-    storeId: {
-        type: ObjectId,
+    message: {
+        type: String
     },
     status: {
         type: Boolean,
@@ -35,4 +31,4 @@ let StockSchema = new Schema({
 });
 
 // Export the model
-module.exports = mongoose.model('stock', StockSchema);
+module.exports = mongoose.model('Message', MessageSchema);

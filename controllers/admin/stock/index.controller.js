@@ -16,6 +16,7 @@ const Product = model.product;
 const Stock = model.stock;
 const Brand   = model.brand;
 const StockEntries = model.stock_entries;
+const Varient   = model.varient;
 const ADMINCALLURL = config.constant.ADMINCALLURL;
 
 module.exports = {
@@ -65,12 +66,15 @@ module.exports = {
 						var product_name = productName ? productName.name : 'N/A';
 						arr1.push(product_name);
 					})
+					await config.helpers.varient.getNameById(data[i].varientId, async function (varientName) {
+						var varient_name = varientName ? varientName.label+' '+varientName.measurementUnit : 'N/A';
+						arr1.push(varient_name);
+					})
 					arr1.push(data[i].count);
 					await config.helpers.store.getNameById(data[i].storeId, async function (storeName) {
 						var store_name = storeName ? storeName.name : 'N/A';
 						arr1.push(store_name);
 					});
-					arr1.push(data[i].variant);
 					arr1.push(moment(data[i].createdAt).format('DD-MM-YYYY'));
 					if(!data[i].status){
 						let change_status = "changeStatus(this,\'1\',\'change_status_stock\',\'list_stock\',\'stock\');";	
@@ -103,13 +107,14 @@ module.exports = {
 			let pageTitle = 'Add Stock';
 			let productData = await Product.find({status:true, deletedAt: 0});
 			let storeData = await Store.find({status:true, deletedAt: 0});
-			res.render('admin/stock/add.ejs',{layout:'admin/layout/layout', pageTitle:pageTitle, moduleName:moduleName, storeData:storeData, productData:productData });
+			let varientData = await Varient.find({status:true, deletedAt: 0});
+			res.render('admin/stock/add.ejs',{layout:'admin/layout/layout', pageTitle:pageTitle, moduleName:moduleName, storeData:storeData, productData:productData, varientData:varientData });
 		}else
 		{
-			const { productId, variant, count, costPrice, storeId, transactionType } = req.body;
+			const { productId, varient, count, costPrice, storeId, transactionType } = req.body;
 
 			const stockData = await Stock.findOne({
-				status: true, deletedAt: 0, productId: mongoose.mongo.ObjectId(productId), variant, storeId: mongoose.mongo.ObjectId(storeId),
+				status: true, deletedAt: 0, productId: mongoose.mongo.ObjectId(productId), varient, storeId: mongoose.mongo.ObjectId(storeId),
 			});
 			if ((!stockData && transactionType === 'out') || (stockData && transactionType === 'out' && (parseInt(stockData.count) - parseInt(count)) < 0)) {
 				req.flash('msg', {msg:'Not enough stock available', status:false});
@@ -120,20 +125,20 @@ module.exports = {
 						? (parseInt(stockData.count) + parseInt(count))
 						: (parseInt(stockData.count) - parseInt(count))
 					await Stock.updateOne(
-						{ productId: mongoose.mongo.ObjectId(productId), storeId: mongoose.mongo.ObjectId(storeId), variant, status: true, deletedAt: 0, },
+						{ productId: mongoose.mongo.ObjectId(productId), storeId: mongoose.mongo.ObjectId(storeId), varientId, status: true, deletedAt: 0, },
 						{ count: countToUpdate },
 						function(err,data){
 							if(err){console.log(err)}
 						})
 				} else {
-					const stock = new Stock({ productId: mongoose.mongo.ObjectId(productId), count, variant, storeId: mongoose.mongo.ObjectId(storeId), });
+					const stock = new Stock({ productId: mongoose.mongo.ObjectId(productId), count, varientId, storeId: mongoose.mongo.ObjectId(storeId), });
 					stock.save(function(err, data){
 					if(err){console.log(err)}	
 					});
 				}
 	
 				const stockEntries = new StockEntries({
-					productId: mongoose.mongo.ObjectId(productId), count, variant, costPrice, storeId:mongoose.mongo.ObjectId(storeId), transactionType,
+					productId: mongoose.mongo.ObjectId(productId), count, varientId, costPrice, storeId:mongoose.mongo.ObjectId(storeId), transactionType,
 				});
 				stockEntries.save(function(err, data){
 					if(err){console.log(err)}	
@@ -360,34 +365,34 @@ module.exports = {
 			res.render('admin/stock/transfer.ejs',{layout:'admin/layout/layout', pageTitle:pageTitle, moduleName:moduleName, storeData:storeData, productData:productData });
 		}
 		if (req.method === 'POST') {
-			const { productId, variant, count, toStoreId, fromStoreId } = req.body;
+			const { productId, varient, count, toStoreId, fromStoreId } = req.body;
 			const fromStoreData = await Stock.findOne({
-				status: true, deletedAt: 0, productId: mongoose.mongo.ObjectId(productId), variant, storeId: mongoose.mongo.ObjectId(fromStoreId),
+				status: true, deletedAt: 0, productId: mongoose.mongo.ObjectId(productId), varient, storeId: mongoose.mongo.ObjectId(fromStoreId),
 			});
 			if (!fromStoreData || (fromStoreData && (parseInt(fromStoreData.count) - parseInt(count)) < 0) ) {
 				req.flash('msg', {msg:'Not enough stock available', status:false});
 				res.redirect(config.constant.ADMINCALLURL+'/transfer_stock');
 			} else {
 				const toStoreData = await Stock.findOne({
-					status: true, deletedAt: 0, productId: mongoose.mongo.ObjectId(productId), variant, storeId: mongoose.mongo.ObjectId(toStoreId),
+					status: true, deletedAt: 0, productId: mongoose.mongo.ObjectId(productId), varient, storeId: mongoose.mongo.ObjectId(toStoreId),
 				});
 				const updatedStockFromStore = Stock.updateOne(
-					{ productId: mongoose.mongo.ObjectId(productId), storeId: mongoose.mongo.ObjectId(fromStoreId), variant, status: true, deletedAt: 0, },
+					{ productId: mongoose.mongo.ObjectId(productId), storeId: mongoose.mongo.ObjectId(fromStoreId), varient, status: true, deletedAt: 0, },
 					{ count: parseInt(fromStoreData.count) - parseInt(count) });
 				const updatedStockToStore = Stock.updateOne(
-					{ productId: mongoose.mongo.ObjectId(productId), storeId: mongoose.mongo.ObjectId(toStoreId), variant, status: true, deletedAt: 0, },
+					{ productId: mongoose.mongo.ObjectId(productId), storeId: mongoose.mongo.ObjectId(toStoreId), varient, status: true, deletedAt: 0, },
 					{ count: toStoreData ? (parseInt(toStoreData.count) + parseInt(count)) : parseInt(count) },
 					{ upsert: true },
 				);
-				const stockEntriesData = StockEntries.findOne({ productId: mongoose.mongo.ObjectId(productId), storeId: mongoose.mongo.ObjectId(fromStoreId), variant, status: true, deletedAt: 0, },)
+				const stockEntriesData = StockEntries.findOne({ productId: mongoose.mongo.ObjectId(productId), storeId: mongoose.mongo.ObjectId(fromStoreId), varient, status: true, deletedAt: 0, },)
 
 				const [stockEntryData] = await Promise.all([stockEntriesData, updatedStockFromStore, updatedStockToStore]);
 				await StockEntries.insertMany([
 					{
-						productId: mongoose.mongo.ObjectId(productId), count: (parseInt(fromStoreData.count) - parseInt(count)), variant, costPrice: stockEntryData.costPrice, storeId:mongoose.mongo.ObjectId(fromStoreId), transactionType: 'out',
+						productId: mongoose.mongo.ObjectId(productId), count: (parseInt(fromStoreData.count) - parseInt(count)), varient, costPrice: stockEntryData.costPrice, storeId:mongoose.mongo.ObjectId(fromStoreId), transactionType: 'out',
 					},
 					{
-						productId: mongoose.mongo.ObjectId(productId), count: (toStoreData ? (parseInt(toStoreData.count) + parseInt(count)) : parseInt(count) ), variant, costPricricee: stockEntryData.costPrice, storeId:mongoose.mongo.ObjectId(toStoreId), transactionType: 'in',
+						productId: mongoose.mongo.ObjectId(productId), count: (toStoreData ? (parseInt(toStoreData.count) + parseInt(count)) : parseInt(count) ), varient, costPricricee: stockEntryData.costPrice, storeId:mongoose.mongo.ObjectId(toStoreId), transactionType: 'in',
 					},
 				]);
 				req.flash('msg', {msg:'Stock transferred successfully', status:false});	

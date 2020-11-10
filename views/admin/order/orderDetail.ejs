@@ -67,7 +67,7 @@
                   <tbody>
                     <% for(let i = 0; i < orderDetailData.length; i++){ %>
                     <tr>
-                      <td><input value="<%= orderDetailData[i]._id %>" class="orderDetailId" type="checkbox" /></td>
+                      <td><input value="<%= orderDetailData[i]._id %>" class="orderDetailId" type="checkbox" data-productid="<%= orderDetailData[i].productId; %>" data-varientid="<%= orderDetailData[i].varientId; %>" data-quantity="<%= orderDetailData[i].quantity; %>" /></td>
                       <td><%= orderDetailData[i].productData[0].name; %></td>
                       <td><%= orderDetailData[i].varientData[0].label %> <%=orderDetailData[i].varientData[0].measurementUnit %></td>
                       <td><%= orderDetailData[i].price; %> </td>
@@ -228,56 +228,74 @@
 
     
     $('#orderStatusId').change(function(){
+      const swalWithBootstrapButtons = Swal.mixin({
+        customClass: {
+          confirmButton: 'btn btn-success',
+          cancelButton: 'btn btn-danger'
+        },
+        buttonsStyling: false
+      })
       let orderId = $(this).data('orderid');
       let orderStatus = $(this).val();
       let storeId = $('#storeId').val();
       let paymentStatus = $('#paymentStatus').val();
       if(storeId == '')
       {
-        
         $(this).val('');
         $('#storeErr').html('Please select store to proceed');
       }
       else
       {
         $('#storeErr').html('');
-        const swalWithBootstrapButtons = Swal.mixin({
-          customClass: {
-            confirmButton: 'btn btn-success',
-            cancelButton: 'btn btn-danger'
-          },
-          buttonsStyling: false
-        })
-        swalWithBootstrapButtons.fire({
-          title: 'Are you sure to change status?',
-          text: "You won't be able to revert this!",
-          icon: 'warning',
-          showCancelButton: true,
-          confirmButtonText: 'Yes, change it!',
-          cancelButtonText: 'No, cancel!',
-          reverseButtons: true
-        }).then((result) => {
-          if (result.value) {
-              $.ajax({
-                  type: 'POST',
-                  url: 'change_order_status',
-                  data: {orderId:orderId, orderStatus:orderStatus, storeId:storeId, paymentStatus:paymentStatus},
-                  success: function(response) {
-                    swalWithBootstrapButtons.fire(
-                        'Chnaged!',
-                        'Your order status has been changed succesfully.',
-                        'success'
-                    )
-                  }
-              });
-          } else if (result.dismiss === Swal.DismissReason.cancel) {
-              swalWithBootstrapButtons.fire(
-                  'Cancelled',
-                  'Your data is safe :)',
-                  'error'
-              )
+        let productIdArr = [];
+        let varientIdArr = [];
+        let quantityArr = [];
+        $('#availableTable > tbody > tr').each(function(index, tr) { 
+          productIdArr.push($(this).find("input").data('productid'));
+          varientIdArr.push($(this).find("input").data('varientid'));          
+          quantityArr.push($(this).find("input").data('quantity'));          
+        });
+        $.ajax({
+          type: 'POST',
+          url: 'check_available_product',
+          data: {productIdArr:productIdArr, varientIdArr:varientIdArr},
+          success: function(response) { 
+            if(response != 'OK')
+            {
+              $('#storeErr').html(response);
+            }
+            swalWithBootstrapButtons.fire({
+              title: 'Are you sure to change status?',
+              text: "You won't be able to revert this!",
+              icon: 'warning',
+              showCancelButton: true,
+              confirmButtonText: 'Yes, change it!',
+              cancelButtonText: 'No, cancel!',
+              reverseButtons: true
+            }).then((result) => {
+              if (result.value) {
+                  $.ajax({
+                      type: 'POST',
+                      url: 'change_order_status',
+                      data: {orderId:orderId, orderStatus:orderStatus, storeId:storeId, paymentStatus:paymentStatus, productIdArr:productIdArr, varientIdArr:varientIdArr, quantityArr:quantityArr},
+                      success: function(response) {
+                        swalWithBootstrapButtons.fire(
+                            'Chnaged!',
+                            'Your order status has been changed succesfully.',
+                            'success'
+                        )
+                      }
+                  });
+              } else if (result.dismiss === Swal.DismissReason.cancel) {
+                  swalWithBootstrapButtons.fire(
+                      'Cancelled',
+                      'Your data is safe :)',
+                      'error'
+                  )
+              }
+            })
           }
-        })
+        });
       }
     });
 

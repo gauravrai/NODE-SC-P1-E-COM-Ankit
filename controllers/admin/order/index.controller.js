@@ -1,21 +1,10 @@
 const model  = require('../../../models/index.model');
 const config = require('../../../config/index');
-const db 	   = config.connection;
 const async = require("async");
 const mongoose = require('mongoose');
-const bcrypt = require("bcrypt-nodejs");
 const moment = require('moment');
-const multer = require('multer');
-const path = require('path');
-const fs = require('fs');
-const Admin = model.admin;
-const Category = model.category;
-const SubCategory = model.sub_category;
 const Store = model.store;
 const Product = model.product;
-const Stock = model.stock;
-const Brand   = model.brand;
-const StockEntries = model.stock_entries;
 const Customer = model.customer;
 const Pincode = model.pincode;
 const ADMINCALLURL = config.constant.ADMINCALLURL;
@@ -23,12 +12,9 @@ const Order = model.order;
 const Orderdetail = model.order_detail;
 const Offer = model.offer;
 const Freeitem = model.free_item;
-const State = model.state;
-const City = model.city;
-const Area = model.area;
-const Society = model.society;
-const Tower = model.tower;
 const Rejectorder = model.reject_order;
+const Messagetemplate = model.message_template;
+const Stock = model.stock;
 const constant = require('../../../config/constant');
 
 module.exports = {
@@ -38,7 +24,6 @@ module.exports = {
 		let pageTitle = 'View Order';
 		await config.helpers.permission('manage_order', req, async (err,permissionData)=>{
 			await config.helpers.filter.orderFilter(req, async function (filterData) {
-				console.log(filterData);
 				if (filterData != "" && req.method == 'POST') {
 					return res.redirect('manage_order' + filterData);
 				}
@@ -127,10 +112,6 @@ module.exports = {
 			res.render('admin/order/add',{layout:'admin/layout/layout', pageTitle:pageTitle, moduleName:moduleName, productData:productData, customerData:customerData });
 		}else
 		{
-			// await config.helpers.sms.sendSMS('', async function (smsData) {
-			// 	console.log('sms------',smsData);
-			// })
-			// return 0;
 			let userId = req.body.userId;
 			let productId = Array.isArray(req.body.productId) ? req.body.productId : req.body.productId.split();
 			let varientId = Array.isArray(req.body.varientId) ? req.body.varientId : req.body.varientId.split();
@@ -254,11 +235,18 @@ module.exports = {
 				paymentType: paymentType
 			}
 			let order = new Order(orderInsertData);
-			order.save(function(err, data){
+			order.save(async function(err, data){
 				if(err){console.log(err)}
-				req.flash('msg', {msg:'Order has been Created Successfully', status:false});	
-				res.redirect(config.constant.ADMINCALLURL+'/manage_order');
-				req.flash({});
+				let messageData = await Messagetemplate.findOne({slug: 'ORDER-SUCCESSFUL'});
+				let slug = messageData.slug;
+				let message = messageData.message;
+				message = message.replace('[USERNAME]', userData.name);
+				message = message.replace('[ODID]', odid);
+				await config.helpers.sms.sendSMS(userData, slug, message, async function (smsData) {
+					req.flash('msg', {msg:'Order has been Created Successfully', status:false});	
+					res.redirect(config.constant.ADMINCALLURL+'/manage_order');
+					req.flash({});
+				});
 			});
 		}
 	},
@@ -284,7 +272,6 @@ module.exports = {
 			})
 			
 			await config.helpers.area.getNameById(orderData.customerDetail.areaId, async function (areaName) {
-				console.log(areaName);
 				orderData.customerDetail.area = areaName.name;
 			})
 			
@@ -390,7 +377,6 @@ module.exports = {
 				rejectOrderInsertData.price = orderDetailData.price;
 				rejectOrderInsertData.totalPrice = orderDetailData.totalPrice;
 				rejectOrderInsertData.quantity = orderDetailData.quantity;
-				console.log(rejectOrderInsertData);
 				let rejectOrder = new Rejectorder(rejectOrderInsertData);
 				rejectOrder.save();
 				grandTotal = ( grandTotal + orderDetailData.totalPrice );
@@ -398,7 +384,6 @@ module.exports = {
 				quantity = ( quantity + orderDetailData.quantity );
 
 				let freeItemData = await Freeitem.findOne({orderDetailId: mongoose.mongo.ObjectId(id[i]) });
-				console.log(freeItemData);
 				await Orderdetail.deleteOne({_id: mongoose.mongo.ObjectId(id[i]) });
 			}
 
@@ -419,18 +404,30 @@ module.exports = {
 		let orderStatus = req.param("orderStatus");
 		let paymentStatus = req.param("paymentStatus");
 		let storeId = req.param("storeId");
-		if(orderStatus == 'DELIVERED')
+		if(orderStatus == 'IN_TRANSIT')
 		{
-			let orderData = await Order.find({_id: mongoose.mongo.ObjectId(orderId)});
-			let orderUpdateData = {
-				orderStatus: orderStatus,
-				paymentStatus: paymentStatus,
-				storeId: mongoose.mongo.ObjectId(storeId),
-			};
-			return Order.updateOne(orderUpdateData, function(err,data){
-				if(err) console.error(err);
-				res.send('OK');
-			})
+			let productIdArr = req.body.productIdArr;
+			let varientIdArr = req.body.varientIdArr;
+			let quantityArr = req.body.quantityArr;
+			for (let i = 0; i < productIdArr.length; i++) {
+				let availableProduct = await Stock.findOne({ productId: mongoose.mongo.ObjectId(productIdArr[i]), varientId: mongoose.mongo.ObjectId(varientIdArr[i]), status: true, deletedAt: 0 });
+				let quantity = 0;
+				if(availableProduct)
+				{
+					if(availableProduct.count >= quantityArr[i])
+					{
+						quantity = availableProduct.count - quantityArr[i];
+					}
+					else
+					{
+						quantity = availableProduct.count - availableProduct.count;
+					}
+					Stock.updateOne({_id: mongoose.mongo.ObjectId(availableProduct.id)}, {
+						count: quantity
+					});
+				}
+			}
+			res.send('OK');
 		}
 		else
 		{
@@ -444,4 +441,22 @@ module.exports = {
 			})
 		}
 	},
+	
+	checkAvailableProduct: async function(req,res){
+		let productIdArr = req.body.productIdArr;
+		let varientIdArr = req.body.varientIdArr;
+		let available = 0;
+		for (let i = 0; i < productIdArr.length; i++) {
+			let availableProduct = await Stock.find({ productId: mongoose.mongo.ObjectId(productIdArr[i]), varientId: mongoose.mongo.ObjectId(varientIdArr[i]), status: true, deletedAt: 0 });
+			if(availableProduct.length == 0)
+			{
+				available = 1;
+				res.send('Some Products are not available in selected store.');
+			}
+		}
+		if(available == 0)
+		{
+			res.send('OK');
+		}
+	}
 };
