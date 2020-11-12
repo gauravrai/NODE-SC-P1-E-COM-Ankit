@@ -288,6 +288,7 @@ module.exports = {
             let userData = await Customer.findOne(condition);
             data.name = userData.name ? userData.name : '';
             data.address = userData.address ? userData.address : '';
+            data.mobile = userData.mobile ? userData.mobile : '';
             data.country = userData.country ? userData.country : '';
             await config.helpers.state.getNameById(userData.stateId, async function (stateName) {
                 data.state = stateName.name;
@@ -319,6 +320,7 @@ module.exports = {
             
             let cartData = await Cart.findOne({userId: mongoose.mongo.ObjectId(userId)});
             data.grandTotal = cartData.grandTotal ? cartData.grandTotal : '';
+            data.subTotal = cartData.grandTotal ? cartData.grandTotal - cartData.couponAmount: '';
             data.couponAmount = cartData.couponAmount ? cartData.couponAmount : '';
             data.tax = 0;
             if(data) {
