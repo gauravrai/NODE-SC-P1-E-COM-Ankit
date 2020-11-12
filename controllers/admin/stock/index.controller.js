@@ -111,10 +111,10 @@ module.exports = {
 			res.render('admin/stock/add.ejs',{layout:'admin/layout/layout', pageTitle:pageTitle, moduleName:moduleName, storeData:storeData, productData:productData, varientData:varientData });
 		}else
 		{
-			const { productId, varient, count, costPrice, storeId, transactionType } = req.body;
+			const { productId, varientId, count, costPrice, storeId, transactionType } = req.body;
 
 			const stockData = await Stock.findOne({
-				status: true, deletedAt: 0, productId: mongoose.mongo.ObjectId(productId), varient, storeId: mongoose.mongo.ObjectId(storeId),
+				status: true, deletedAt: 0, productId: mongoose.mongo.ObjectId(productId), varientId, storeId: mongoose.mongo.ObjectId(storeId),
 			});
 			if ((!stockData && transactionType === 'out') || (stockData && transactionType === 'out' && (parseInt(stockData.count) - parseInt(count)) < 0)) {
 				req.flash('msg', {msg:'Not enough stock available', status:false});
