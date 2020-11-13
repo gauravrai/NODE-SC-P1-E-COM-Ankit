@@ -1,6 +1,8 @@
 const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
+var SchemaTypes = mongoose.Schema.Types;
 var ObjectId = mongoose.Schema.Types.ObjectId;
+require('mongoose-double')(mongoose);
 
 let ProductSchema = new Schema({
     name: {
@@ -41,6 +43,9 @@ let ProductSchema = new Schema({
     },
     image:{
         type:  Object
+    },
+    tax:{
+        type:  SchemaTypes.Double
     },
     status: {
         type: Boolean,

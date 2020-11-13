@@ -120,7 +120,8 @@ module.exports = {
 				stock : req.body.stock ? req.body.stock.toUpperCase() : '',
 				description : req.body.description,
 				featured : req.body.featured == 'on' ? true : false,
-				outOfStock : req.body.outOfStock == 'on' ? true : false
+				outOfStock : req.body.outOfStock == 'on' ? true : false,
+				tax : tax
 			};
 			let store = req.body.store;
 			let storeId = req.body.storeId;
@@ -292,7 +293,8 @@ module.exports = {
 				stock : req.body.stock ? req.body.stock.toUpperCase() : '',
 				description : req.body.description,
 				featured : req.body.featured == 'on' ? true : false,
-				outOfStock : req.body.outOfStock == 'on' ? true : false
+				outOfStock : req.body.outOfStock == 'on' ? true : false,
+				tax : tax
 			};
 			let store = req.body.store;
 			let storeId = req.body.storeId;

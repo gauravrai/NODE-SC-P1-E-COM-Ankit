@@ -27,6 +27,7 @@
               </div>
               <div class="card-body">
                 <input type="hidden" id="odid" value="<%=orderData.odid%>">
+                <input type="hidden" id="userId" value="<%=orderData.userId%>">
                 <table style="width: 100%;">
                   <tr>
                     <td><b>Order Id:</b> <%=orderData.odid %></td>
@@ -236,8 +237,10 @@
         buttonsStyling: false
       })
       let orderId = $(this).data('orderid');
+      let userId = $('#userId').val();
       let orderStatus = $(this).val();
       let storeId = $('#storeId').val();
+      let odid = $('#odid').val();
       let paymentStatus = $('#paymentStatus').val();
       if(storeId == '')
       {
@@ -277,10 +280,10 @@
                   $.ajax({
                       type: 'POST',
                       url: 'change_order_status',
-                      data: {orderId:orderId, orderStatus:orderStatus, storeId:storeId, paymentStatus:paymentStatus, productIdArr:productIdArr, varientIdArr:varientIdArr, quantityArr:quantityArr},
+                      data: {orderId:orderId, orderStatus:orderStatus, storeId:storeId, paymentStatus:paymentStatus, productIdArr:productIdArr, varientIdArr:varientIdArr, quantityArr:quantityArr, userId:userId, odid:odid},
                       success: function(response) {
                         swalWithBootstrapButtons.fire(
-                            'Chnaged!',
+                            'Changed!',
                             'Your order status has been changed succesfully.',
                             'success'
                         )

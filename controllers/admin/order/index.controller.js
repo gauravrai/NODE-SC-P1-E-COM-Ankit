@@ -400,10 +400,29 @@ module.exports = {
 	},
 
 	changeOrderStatus: async function(req,res){
+		let userId = req.param("userId");
 		let orderId = req.param("orderId");
+		let odid = req.param("odid");
 		let orderStatus = req.param("orderStatus");
 		let paymentStatus = req.param("paymentStatus");
 		let storeId = req.param("storeId");
+		let messageSlug;
+		if(orderStatus == 'IN_PROCESS'){
+			messageSlug = 'IN-PROCESS-ORDER';
+		}else if(orderStatus == 'IN_TRANSIT'){
+			messageSlug = 'IN-TRANSIT-ORDER';
+		}else if(orderStatus == 'DELIVERED'){
+			messageSlug = 'DELIVERED-ORDER';
+		}else if(orderStatus == 'CANCELED'){
+			messageSlug = 'CANCELED-ORDER';
+		}
+		let userData = await Customer.findOne({_id: mongoose.mongo.ObjectID(userId)});
+		let messageData = await Messagetemplate.findOne({slug: messageSlug});
+		let slug = messageData.slug;
+		let message = messageData.message;
+		message = message.replace('[USERNAME]', userData.name);
+		message = message.replace('[ODID]', odid);
+
 		if(orderStatus == 'IN_TRANSIT')
 		{
 			let productIdArr = req.body.productIdArr;
@@ -429,23 +448,20 @@ module.exports = {
 					});
 				}
 			}
-			res.send('OK');
+			await config.helpers.sms.sendSMS(userData, slug, message, async function (smsData) {
+				res.send('OK');
+			});
 		}
 		else if(orderStatus == 'DELIVERED')
 		{	
-            let userData = await Customer.findOne({_id: mongoose.mongo.ObjectID(userId)});
-			let messageData = await Messagetemplate.findOne({slug: 'DELIVERED-ORDER'});
-			let slug = messageData.slug;
-			let message = messageData.message;
-			message = message.replace('[USERNAME]', userData.name);
-			message = message.replace('[ODID]', odid);
-			await config.helpers.sms.sendSMS(userData, slug, message, async function (smsData) {
-				return Order.updateOne({_id: mongoose.mongo.ObjectId(orderId)}, {
-					orderStatus: orderStatus,
-					paymentStatus: paymentStatus,
-					storeId: mongoose.mongo.ObjectId(storeId),
-				},function(err,data){
-					if(err) console.error(err);
+			
+			return Order.updateOne({_id: mongoose.mongo.ObjectId(orderId)}, {
+				orderStatus: orderStatus,
+				paymentStatus: paymentStatus,
+				storeId: mongoose.mongo.ObjectId(storeId),
+			},async function(err,data){
+				if(err) console.error(err);
+				await config.helpers.sms.sendSMS(userData, slug, message, async function (smsData) {
 					res.send('OK');
 				})
 			})
@@ -456,9 +472,11 @@ module.exports = {
 				orderStatus: orderStatus,
 				paymentStatus: paymentStatus,
 				storeId: mongoose.mongo.ObjectId(storeId),
-			},function(err,data){
+			},async function(err,data){
 				if(err) console.error(err);
-				res.send('OK');
+				await config.helpers.sms.sendSMS(userData, slug, message, async function (smsData) {
+					res.send('OK');
+				});
 			})
 		}
 	},
