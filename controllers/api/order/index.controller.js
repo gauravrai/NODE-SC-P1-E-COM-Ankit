@@ -148,7 +148,7 @@ module.exports = {
                 await Cartitem.deleteMany({ userId : mongoose.mongo.ObjectId(userId)});
                 if(paymentType == 'COD')
                 {
-                    let messageData = await Messagetemplate.findOne({slug: 'ORDER-SUCCESSFUL'});
+                    let messageData = await Messagetemplate.findOne({slug: 'NEW-ORDER'});
                     let slug = messageData.slug;
                     let message = messageData.message;
                     message = message.replace('[USERNAME]', userData.name);

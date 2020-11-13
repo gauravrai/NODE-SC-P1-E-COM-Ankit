@@ -237,7 +237,7 @@ module.exports = {
 			let order = new Order(orderInsertData);
 			order.save(async function(err, data){
 				if(err){console.log(err)}
-				let messageData = await Messagetemplate.findOne({slug: 'ORDER-SUCCESSFUL'});
+				let messageData = await Messagetemplate.findOne({slug: 'NEW-ORDER'});
 				let slug = messageData.slug;
 				let message = messageData.message;
 				message = message.replace('[USERNAME]', userData.name);
@@ -430,6 +430,25 @@ module.exports = {
 				}
 			}
 			res.send('OK');
+		}
+		else if(orderStatus == 'DELIVERED')
+		{	
+            let userData = await Customer.findOne({_id: mongoose.mongo.ObjectID(userId)});
+			let messageData = await Messagetemplate.findOne({slug: 'DELIVERED-ORDER'});
+			let slug = messageData.slug;
+			let message = messageData.message;
+			message = message.replace('[USERNAME]', userData.name);
+			message = message.replace('[ODID]', odid);
+			await config.helpers.sms.sendSMS(userData, slug, message, async function (smsData) {
+				return Order.updateOne({_id: mongoose.mongo.ObjectId(orderId)}, {
+					orderStatus: orderStatus,
+					paymentStatus: paymentStatus,
+					storeId: mongoose.mongo.ObjectId(storeId),
+				},function(err,data){
+					if(err) console.error(err);
+					res.send('OK');
+				})
+			})
 		}
 		else
 		{

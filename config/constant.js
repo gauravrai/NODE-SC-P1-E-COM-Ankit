@@ -39,6 +39,9 @@ module.exports = {
 	SUBCATEGORYSMALLSHOWPATH:  SITEURL+'uploads/subcategory/small/', 
 	SUBCATEGORYLARGESHOWPATH:  SITEURL+'uploads/subcategory/large/',
 
+	OFFERBANNERUPLOADPATH: './public/uploads/offerbanner/',
+	OFFERBANNERSHOWPATH: SITEURL+'uploads/offerbanner/',	
+
 	ORDER_STATUS: [ 'NEW', 'IN_PROCESS', 'IN_TRANSIT', 'DELIVERED', 'CANCELED'],
 	PAYMENT_STATUS: [ 'PENDING', 'FAILED', 'COMPLETED'],
 	

@@ -19,6 +19,7 @@ module.exports = function(app) {
 	var couponRoutes = require('./api/coupon.routes');
 	var orderRoutes = require('./api/order.routes');
 	var walletRoutes = require('./api/wallet.routes');
+	var offerRoutes = require('./api/offer.routes');
 	
 	var router = express.Router();
 	app.use('',router);
@@ -40,5 +41,6 @@ module.exports = function(app) {
 	couponRoutes(router);
 	orderRoutes(router);
 	walletRoutes(router);
+	offerRoutes(router);
 	
 }

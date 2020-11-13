@@ -53,6 +53,8 @@ module.exports = {
 			await config.helpers.permission('manage_offer', req, async function(err,permissionData) {
 				for(i=0;i<data.length;i++){
                     var arr1 = [];
+					let src= config.constant.OFFERBANNERSHOWPATH+data[i].bannerImage;
+					arr1.push('<img src="'+src+'" width="50px" height="50px">');
                     arr1.push(data[i].name);
                     // await config.helpers.product.getNameById(data[i].productId, async function (productName) {
 					// 	var product_name = productName ? productName.name : 'N/A';
@@ -102,30 +104,46 @@ module.exports = {
             let productData = await Product.find({status: true, offer:"Yes", deletedAt: 0});
 			res.render('admin/offer/add.ejs',{layout:'admin/layout/layout', pageTitle:pageTitle, moduleName:moduleName, categoryData:categoryData,subcategoryData:subcategoryData,productData:productData} );
 		}else{
-			let offerData = {
-                name : req.body.name,
-                from : moment(req.body.from).format('YYYY-MM-DD'),
-                to : moment(req.body.to).format('YYYY-MM-DD'),
-                multipleOf : parseInt(req.body.multipleOf),
-                freeItem : parseInt(req.body.freeItem),
-                applyFor :req.body.applyFor,
-                capping : req.body.capping,
-				offerCategoryId : req.body.offerCategoryId,
-				offerSubcategoryId : req.body.offerSubcategoryId,
-                offerProductId : req.body.offerProductId,
-                offerVarient : req.body.offerVarient,
-				freeCategoryId : mongoose.mongo.ObjectId(req.body.freeCategoryId),
-				freeSubcategoryId : mongoose.mongo.ObjectId(req.body.freeSubcategoryId),
-                freeProductId : mongoose.mongo.ObjectId(req.body.freeProductId),
-                freeVarient : mongoose.mongo.ObjectId(req.body.freeVarient)
-			};
-			let offer = new Offer(offerData);
-			offer.save(function(err, data){
-				if(err){console.log(err)}
-				req.flash('msg', {msg:'Offer has been Created Successfully', status:false});	
-				res.redirect(config.constant.ADMINCALLURL+'/manage_offer');
-				req.flash({});	
-			})
+			new Promise(function(resolve, reject) { 
+				let path = config.constant.OFFERBANNERUPLOADPATH;
+				let name = Date.now()+'_'+req.files.bannerImage.name;
+                req.files.bannerImage.mv(path+name, function(err,data) { 
+                    if (err) { 
+                        console.log(err)
+                        reject(err); 
+                    } else {  
+                        resolve(name);
+                    }
+                })
+			}).then(async (bannerImage) => { 
+				let offerData = {
+					name : req.body.name,
+					from : moment(req.body.from).format('YYYY-MM-DD'),
+					to : moment(req.body.to).format('YYYY-MM-DD'),
+					multipleOf : parseInt(req.body.multipleOf),
+					freeItem : parseInt(req.body.freeItem),
+					applyFor :req.body.applyFor,
+					capping : req.body.capping,
+					offerCategoryId : req.body.offerCategoryId,
+					offerSubcategoryId : req.body.offerSubcategoryId,
+					offerProductId : req.body.offerProductId,
+					offerVarient : req.body.offerVarient,
+					freeCategoryId : mongoose.mongo.ObjectId(req.body.freeCategoryId),
+					freeSubcategoryId : mongoose.mongo.ObjectId(req.body.freeSubcategoryId),
+					freeProductId : mongoose.mongo.ObjectId(req.body.freeProductId),
+					freeVarient : mongoose.mongo.ObjectId(req.body.freeVarient),
+					bannerImage : bannerImage
+				};
+				let offer = new Offer(offerData);
+				offer.save(function(err, data){
+					if(err){console.log(err)}
+					req.flash('msg', {msg:'Offer has been Created Successfully', status:false});	
+					res.redirect(config.constant.ADMINCALLURL+'/manage_offer');
+					req.flash({});	
+				})
+			}).catch((err) => {
+				console.log(err);
+			});
 		}		
 	},
 	
@@ -158,7 +176,27 @@ module.exports = {
                 freeProductId : mongoose.mongo.ObjectId(req.body.freeProductId),
                 freeVarient : mongoose.mongo.ObjectId(req.body.freeVarient)
 			};
-			await Offer.update(
+			
+			if(req.files)
+			{
+				new Promise(function(resolve, reject) { 
+					let path = config.constant.OFFERBANNERUPLOADPATH;
+					let name = Date.now()+'_'+req.files.bannerImage.name;
+					req.files.bannerImage.mv(path+name, function(err,data) { 
+						if (err) { 
+							console.log(err)
+							reject(err); 
+						} else {  
+							resolve(name);
+						}
+					})
+				}).then(async (bannerImage) => { 
+					offerData.bannerImage = bannerImage;
+				}).catch((err) => {
+					console.log(err);
+				});
+			}
+			await Offer.updateOne(
 				{ _id: mongoose.mongo.ObjectId(req.body.id) },
 				offerData, function(err,data){
 					if(err){console.log(err)}

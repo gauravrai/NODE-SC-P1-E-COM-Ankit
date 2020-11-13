@@ -48,6 +48,9 @@ let OfferSchema = new Schema({
     freeVarientId: {
         type: String 
     },
+    bannerImage: {
+        type: String 
+    },
     status: {
         type: Boolean,
         default : true

@@ -53,6 +53,8 @@ module.exports = {
 			await config.helpers.permission('manage_subcategory', req, async function(err,permissionData) {
 				for(i=0;i<data.length;i++){
                     var arr1 = [];
+					let src= config.constant.SUBCATEGORYTHUMBNAILSHOWPATH+data[i].image.thumbnail;
+					arr1.push('<img src="'+src+'" width="50px" height="50px">');
                     arr1.push(data[i].name);
 					await config.helpers.category.getNameById(data[i].categoryId, async function (categoryName) {
 						var cat_name = categoryName ? categoryName.name : 'N/A';

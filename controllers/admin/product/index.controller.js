@@ -109,10 +109,6 @@ module.exports = {
 			res.render('admin/product/add.ejs',{layout:'admin/layout/layout', pageTitle:pageTitle, moduleName:moduleName, storeData:storeData, stateData:stateData, categoryData:categoryData, brandData:brandData, varientData:varientData });
 		}else
 		{
-			await config.helpers.sms.sendSMS('', async function (smsData) {
-				console.log(smsData);
-					})
-					return 0;
 			let productData = {};
 			productData = {	
 				categoryId : mongoose.mongo.ObjectId(req.body.categoryId),

@@ -52,6 +52,8 @@ module.exports = {
 			await config.helpers.permission('manage_category', req, async function(err,permissionData) {
 				for(i=0;i<data.length;i++){
 					var arr1 = [];
+					let src= config.constant.CATEGORYTHUMBNAILSHOWPATH+data[i].image.thumbnail;
+					arr1.push('<img src="'+src+'" width="50px" height="50px">');
 					arr1.push(data[i].name);
 					arr1.push(data[i].slug);
 					arr1.push(moment(data[i].createdAt).format('DD-MM-YYYY'));
