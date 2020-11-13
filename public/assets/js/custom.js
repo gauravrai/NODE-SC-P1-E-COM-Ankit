@@ -449,10 +449,10 @@ $(document).on("change", "#freeProductId", function(){
 		data: {id:id},
 		success: function(response) {
 			if(response){
-				$('#freeVarient').html(response);	
+				$('#freeVarientId').html(response);	
 			}
 			else{
-				$('#freeVarient').html('');	
+				$('#freeVarientId').html('');	
 			}
 		}
 	});

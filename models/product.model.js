@@ -45,7 +45,8 @@ let ProductSchema = new Schema({
         type:  Object
     },
     tax:{
-        type:  SchemaTypes.Double
+        type:  SchemaTypes.Double,
+        default : 0
     },
     status: {
         type: Boolean,

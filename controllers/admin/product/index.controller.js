@@ -121,7 +121,7 @@ module.exports = {
 				description : req.body.description,
 				featured : req.body.featured == 'on' ? true : false,
 				outOfStock : req.body.outOfStock == 'on' ? true : false,
-				tax : tax
+				tax : req.body.tax
 			};
 			let store = req.body.store;
 			let storeId = req.body.storeId;
@@ -294,7 +294,7 @@ module.exports = {
 				description : req.body.description,
 				featured : req.body.featured == 'on' ? true : false,
 				outOfStock : req.body.outOfStock == 'on' ? true : false,
-				tax : tax
+				tax : req.body.tax
 			};
 			let store = req.body.store;
 			let storeId = req.body.storeId;
@@ -440,7 +440,7 @@ module.exports = {
 					});
 				}
 			}
-			await Product.update(
+			await Product.updateOne(
 				{ _id: mongoose.mongo.ObjectId(req.body.id) },
 				productData, function(err,data){
 					if(err){console.log(err)}

@@ -27,10 +27,10 @@ let DiscountSchema = new Schema({
         default: 0
     },
     from: {
-        type: Date
+        type: String
     },
     to: {
-        type: Date
+        type: String
     },
     capping: {
         type: String

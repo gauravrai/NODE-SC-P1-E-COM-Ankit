@@ -9,6 +9,7 @@ const Category = model.category;
 const Subcategory = model.sub_category;
 const Product = model.product;
 const Offer   = model.offer;
+const Varient   = model.varient;
 const ADMINCALLURL = config.constant.ADMINCALLURL;
 
 module.exports = {
@@ -131,7 +132,7 @@ module.exports = {
 					freeCategoryId : mongoose.mongo.ObjectId(req.body.freeCategoryId),
 					freeSubcategoryId : mongoose.mongo.ObjectId(req.body.freeSubcategoryId),
 					freeProductId : mongoose.mongo.ObjectId(req.body.freeProductId),
-					freeVarient : mongoose.mongo.ObjectId(req.body.freeVarient),
+					freeVarientId : mongoose.mongo.ObjectId(req.body.freeVarientId),
 					bannerImage : bannerImage
 				};
 				let offer = new Offer(offerData);
@@ -155,8 +156,12 @@ module.exports = {
             let offerData = await Offer.findOne({_id: mongoose.mongo.ObjectId(id), status: true, deletedAt: 0});
 			let categoryData = await Category.find({status: true, deletedAt: 0});
             let subcategoryData = await Subcategory.find({status: true, deletedAt: 0});
-            let productData = await Product.find({status: true,offer:"Yes",deletedAt: 0});
-			res.render('admin/offer/edit.ejs',{layout:'admin/layout/layout', pageTitle:pageTitle, moduleName:moduleName, categoryData:categoryData,subcategoryData:subcategoryData,productData:productData,offerData:offerData,moment:moment} );
+			let productData = await Product.find({status: true,offer:"Yes",deletedAt: 0});
+			let freeVarient = '';
+			await config.helpers.varient.getNameById(offerData.freeVarientId, async function (varientData) {
+				freeVarient = varientData ? varientData.label+' '+varientData.measurementUnit : '';
+			})
+			res.render('admin/offer/edit.ejs',{layout:'admin/layout/layout', pageTitle:pageTitle, moduleName:moduleName, categoryData:categoryData,subcategoryData:subcategoryData,productData:productData,offerData:offerData,moment:moment, freeVarient:freeVarient} );
 		}
 		if(req.method == "POST"){
 			let offerData = {
@@ -174,14 +179,15 @@ module.exports = {
 				freeCategoryId : mongoose.mongo.ObjectId(req.body.freeCategoryId),
 				freeSubcategoryId : mongoose.mongo.ObjectId(req.body.freeSubcategoryId),
                 freeProductId : mongoose.mongo.ObjectId(req.body.freeProductId),
-                freeVarient : mongoose.mongo.ObjectId(req.body.freeVarient)
+                freeVarientId : mongoose.mongo.ObjectId(req.body.freeVarientId)
 			};
 			
-			if(req.files)
+			if(Object.keys(req.files).length)
 			{
 				new Promise(function(resolve, reject) { 
 					let path = config.constant.OFFERBANNERUPLOADPATH;
 					let name = Date.now()+'_'+req.files.bannerImage.name;
+					offerData.bannerImage = name;
 					req.files.bannerImage.mv(path+name, function(err,data) { 
 						if (err) { 
 							console.log(err)
@@ -191,7 +197,6 @@ module.exports = {
 						}
 					})
 				}).then(async (bannerImage) => { 
-					offerData.bannerImage = bannerImage;
 				}).catch((err) => {
 					console.log(err);
 				});

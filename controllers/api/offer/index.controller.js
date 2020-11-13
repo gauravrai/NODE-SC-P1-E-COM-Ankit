@@ -72,6 +72,13 @@ module.exports = {
                     $unwind: "$offerProductId"
                 },
                 {
+                    "$project": {
+                        "offerProductId": {
+                            "$toObjectId": "$offerProductId"
+                        }
+                    }
+                },
+                {
                     $lookup:
                       {
                         from: "products",

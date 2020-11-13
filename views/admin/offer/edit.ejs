@@ -75,7 +75,7 @@
                     </div>
                     <div class="form-group col-md-3">
                       <label for="offerSubcategoryId">Select Sub  Category</label>
-                      <select name="offerSubcategoryId" class="form-control select2" id="offerSubcategoryId" onchange="getProductBMulCatsubcat(this, 'subcategoryId', '', 'offerProductId');" multiple="multiple">
+                      <select name="offerSubcategoryId" class="form-control select2" id="offerSubcategoryId" onchange="getProductByMulCatsubcat(this, 'subcategoryId', '', 'offerProductId');" multiple="multiple">
                       <% for(let i = 0; i < subcategoryData.length; i++){ %>
                           <option value="<%=subcategoryData[i].id%>" <% if(offerData.offerSubcategoryId == subcategoryData[i].id){ %> selected="selected" <% } %> ><%=subcategoryData[i].name%></option>
                         <% } %>
@@ -127,10 +127,9 @@
                       </select>
                     </div>
                     <div class="form-group col-md-3">
-                      <label for="freeVarient">Varient</label>
-                      <select name="freeVarient" class="form-control" id="freeVarient">
-                        <option value="">Select Option</option>
-                        <option></option>
+                      <label for="freeVarientId">Varient</label>
+                      <select name="freeVarientId" class="form-control" id="freeVarientId">
+                        <option value="<%=offerData.freeVarientId%>"><%=freeVarient%></option>
                       </select>
                     </div>
                   </div>

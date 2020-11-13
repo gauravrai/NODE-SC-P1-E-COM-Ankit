@@ -7,10 +7,10 @@ let OfferSchema = new Schema({
         type: String
     },
     from: {
-        type: Date
+        type: String
     },
     to: {
-        type: Date
+        type: String
     },
     multipleOf: {
         type: Number
