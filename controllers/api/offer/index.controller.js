@@ -20,14 +20,30 @@ module.exports = {
         }
         try{
             let requestFrom = req.query.requestFrom;
-            let offerData = await Offer.find( {deletedAt:0,status:true,from: { '$lte': new Date() },to: { '$gte':  new Date()}, $or : [
-                { 
-                    applyFor : "both"
+            let offerData = await Offer.aggregate([
+                {
+                    $match: {deletedAt:0,status:true,from: { '$lte': new Date() },to: { '$gte':  new Date()}, $or : [
+                        { 
+                            applyFor : "both"
+                        },
+                        { 
+                            applyFor: requestFrom
+                        }]
+                    }
                 },
-                { 
-                    applyFor: requestFrom
+                {
+                    $addFields : {path: config.constant.OFFERBANNERSHOWPATH}
+                },
+                {
+                    $project: {
+                        name: 1, 
+                        from: 1, 
+                        to: 1, 
+                        bannerImage: 1,
+                        path: 1
+                    }
                 }
-            ]}, {name: 1, from: 1, to: 1, bannerImage: 1 });
+            ]);
             if(offerData.length > 0)
             {
                 return res.status(200).json({ 
