@@ -105,7 +105,9 @@ module.exports = {
                 },
                 {
                     $addFields: {
-                        "path" : config.constant.OFFERBANNERSHOWPATH
+                        "thumbnailPath" : config.constant.PRODUCTTHUMBNAILSHOWPATH,
+                        "smallPath" : config.constant.PRODUCTSMALLSHOWPATH,
+                        "largePath" : config.constant.PRODUCTLARGESHOWPATH
                     }
                 },
             ]);

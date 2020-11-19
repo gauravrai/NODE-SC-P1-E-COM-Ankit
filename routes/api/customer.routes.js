@@ -51,6 +51,13 @@ module.exports = function(router) {
 		indexController.updateAddress
 		
 	);
+	router.get(
+		config.constant.APIURL+'/getUserData', 
+		[
+			check('userId', 'User Id is required').not().isEmpty()
+		], 
+		indexController.getUserData
+	);
 
     
 }
