@@ -219,6 +219,17 @@ $(document).ready(function() {
             type: "POST",          
         }
     });
+
+    $('#requestProductTable').DataTable( {
+        "scrollX": true,
+        "processing": true,
+        "serverSide": true,
+        "ordering": false,
+        "ajax": {
+            url: 'list_product_request',
+            type: "POST",          
+        }
+    });
 });
 
 //Delete data function

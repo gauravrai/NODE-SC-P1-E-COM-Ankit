@@ -20,6 +20,7 @@ module.exports = function(app) {
 	var orderRoutes = require('./api/order.routes');
 	var walletRoutes = require('./api/wallet.routes');
 	var offerRoutes = require('./api/offer.routes');
+	var staticpageRoutes = require('./api/staticpage.routes');
 	
 	var router = express.Router();
 	app.use('',router);
@@ -42,5 +43,6 @@ module.exports = function(app) {
 	orderRoutes(router);
 	walletRoutes(router);
 	offerRoutes(router);
+	staticpageRoutes(router);
 	
 }

@@ -140,8 +140,8 @@
                 <br>
                 <table style="width: 100%;">
                     <tr>
-                      <td style="width: 25%;">
-                        <label for="state">Select Store</label>
+                      <td style="width: 16%;">
+                        <label for="storeId">Select Store</label>
                         <select name="storeId" id="storeId" class="form-control">
                           <option value="">Select Store</option>
                           <% for(let i = 0; i < storeData.length; i++){ %>
@@ -151,8 +151,8 @@
                         </select>
                         <span class="customError" id="storeErr"></span>
                       </td>
-                      <td style="width: 25%;">
-                        <label for="state">Payment Status</label>
+                      <td style="width: 16%;">
+                        <label for="paymentStatus">Payment Status</label>
                         <select name="paymentStatus" id="paymentStatus" class="form-control">
                           <option value="">Select Payment Status</option>
                           <% for(let i = 0; i < paymentStatus.length; i++){ %>
@@ -161,8 +161,29 @@
                           <% } %>
                         </select>
                       </td>
-                      <td style="width: 25%;">
-                        <label for="state">Order Status</label>
+                      <td style="width: 16%;">
+                        <label for="timeSlot">Time Slot</label>
+                        <select name="timeSlot" id="timeSlot" class="form-control">
+                          <option value="">Select Time Slot</option>
+                          <% for(let i = 0; i < timeSlot.length; i++){ %>
+                            <option value="<%=timeSlot[i]%>"
+                              <% if(timeSlot[i] == orderData.timeSlot){ %> selected="selected" <% } %> ><%=timeSlot[i]%></option>
+                          <% } %>
+                        </select>
+                        <span class="customError" id="timeSlotErr"></span>
+                      </td>
+                      <!--<td style="width: 16%;">
+                        <label for="deliveryDate">Delivery Date</label>
+                        <input type="date" name="deliveryDate" class="form-control" id="deliveryDate" placeholder="Delivery Date">
+                        <span class="customError" id="deliveryDateErr"></span>
+                      </td>-->
+                      <td style="width: 16%;">
+                        <label for="receiverName">Receiver Name</label>
+                        <input type="text" name="receiverName" class="form-control" id="receiverName" placeholder="Receiver Name" value="<%=orderData.receiverName ? orderData.receiverName : ''%>">
+                        <span class="customError" id="receiverNameErr"></span>
+                      </td>
+                      <td style="width: 16%;">
+                        <label for="orderStatusId">Order Status</label>
                         <select name="orderStatusId" id="orderStatusId" data-orderid="<%= orderData.id %>" class="form-control">
                           <option value="">Select Order Status</option>
                           <% for(let i = 0; i < orderStatus.length; i++){ %>
@@ -171,7 +192,7 @@
                           <% } %>
                         </select>
                       </td>
-                      <td style="width: 25%;text-align:right;">
+                      <td style="width: 20%;text-align:right;">
                         <b>Sub Total:</b> <%= orderData.subTotal %><br>
                         <b>Taxes:</b> <%= 0 %><br>
                         <b>Shipping Charges:</b> <%= orderData.shipping ? orderData.shipping : 'Free' %><br>
@@ -240,6 +261,8 @@
       let userId = $('#userId').val();
       let orderStatus = $(this).val();
       let storeId = $('#storeId').val();
+      let timeSlot = $('#timeSlot').val();
+      let receiverName = $('#receiverName').val();
       let odid = $('#odid').val();
       let paymentStatus = $('#paymentStatus').val();
       if(storeId == '')
@@ -249,56 +272,71 @@
       }
       else
       {
-        $('#storeErr').html('');
-        let productIdArr = [];
-        let varientIdArr = [];
-        let quantityArr = [];
-        $('#availableTable > tbody > tr').each(function(index, tr) { 
-          productIdArr.push($(this).find("input").data('productid'));
-          varientIdArr.push($(this).find("input").data('varientid'));          
-          quantityArr.push($(this).find("input").data('quantity'));          
-        });
-        $.ajax({
-          type: 'POST',
-          url: 'check_available_product',
-          data: {productIdArr:productIdArr, varientIdArr:varientIdArr},
-          success: function(response) { 
-            if(response != 'OK')
-            {
-              $('#storeErr').html(response);
-            }
-            swalWithBootstrapButtons.fire({
-              title: 'Are you sure to change status?',
-              text: "You won't be able to revert this!",
-              icon: 'warning',
-              showCancelButton: true,
-              confirmButtonText: 'Yes, change it!',
-              cancelButtonText: 'No, cancel!',
-              reverseButtons: true
-            }).then((result) => {
-              if (result.value) {
-                  $.ajax({
-                      type: 'POST',
-                      url: 'change_order_status',
-                      data: {orderId:orderId, orderStatus:orderStatus, storeId:storeId, paymentStatus:paymentStatus, productIdArr:productIdArr, varientIdArr:varientIdArr, quantityArr:quantityArr, userId:userId, odid:odid},
-                      success: function(response) {
-                        swalWithBootstrapButtons.fire(
-                            'Changed!',
-                            'Your order status has been changed succesfully.',
-                            'success'
-                        )
-                      }
-                  });
-              } else if (result.dismiss === Swal.DismissReason.cancel) {
-                  swalWithBootstrapButtons.fire(
-                      'Cancelled',
-                      'Your data is safe :)',
-                      'error'
-                  )
+        if(orderStatus == 'IN_TRANSIT' && timeSlot == '')
+        {
+          $(this).val('');
+          $('#timeSlotErr').html('Please select time slot proceed');
+        }
+        else if(orderStatus == 'DELIVERED' && receiverName == '')
+        {
+          $(this).val('');
+          $('#receiverNameErr').html('Please enter receiver name proceed');
+        }
+        else 
+        {
+          $('#storeErr').html('');
+          $('#timeSlotErr').html('');
+          $('#receiverNameErr').html('');
+          let productIdArr = [];
+          let varientIdArr = [];
+          let quantityArr = [];
+          $('#availableTable > tbody > tr').each(function(index, tr) { 
+            productIdArr.push($(this).find("input").data('productid'));
+            varientIdArr.push($(this).find("input").data('varientid'));          
+            quantityArr.push($(this).find("input").data('quantity'));          
+          });
+          $.ajax({
+            type: 'POST',
+            url: 'check_available_product',
+            data: {productIdArr:productIdArr, varientIdArr:varientIdArr},
+            success: function(response) { 
+              if(response != 'OK')
+              {
+                $('#storeErr').html(response);
               }
-            })
-          }
-        });
+              swalWithBootstrapButtons.fire({
+                title: 'Are you sure to change status?',
+                text: "You won't be able to revert this!",
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonText: 'Yes, change it!',
+                cancelButtonText: 'No, cancel!',
+                reverseButtons: true
+              }).then((result) => {
+                if (result.value) {
+                    $.ajax({
+                        type: 'POST',
+                        url: 'change_order_status',
+                        data: {orderId:orderId, orderStatus:orderStatus, storeId:storeId, paymentStatus:paymentStatus, productIdArr:productIdArr, varientIdArr:varientIdArr, quantityArr:quantityArr, userId:userId, odid:odid, timeSlot:timeSlot, receiverName:receiverName},
+                        success: function(response) {
+                          swalWithBootstrapButtons.fire(
+                              'Changed!',
+                              'Your order status has been changed succesfully.',
+                              'success'
+                          )
+                        }
+                    });
+                } else if (result.dismiss === Swal.DismissReason.cancel) {
+                    swalWithBootstrapButtons.fire(
+                        'Cancelled',
+                        'Your data is safe :)',
+                        'error'
+                    )
+                }
+              })
+            }
+          });
+        }
       }
     });
 

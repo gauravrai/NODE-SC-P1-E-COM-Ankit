@@ -25,6 +25,7 @@ module.exports = function(app) {
 	var varientRoutes      =  require('./admin/varient.routes');
 	var customerRoutes      =  require('./admin/customer.routes');
 	var orderRoutes = require('./admin/order.routes');
+	var productRequestRoutes = require('./admin/productrequest.routes');
 
 	var ajaxRoutes = require('./admin/ajax.routes');
 	var router = express.Router();
@@ -53,6 +54,7 @@ module.exports = function(app) {
     varientRoutes(router);
     customerRoutes(router);
 	orderRoutes(router);
+	productRequestRoutes(router);
 	
 	ajaxRoutes(router);
 }

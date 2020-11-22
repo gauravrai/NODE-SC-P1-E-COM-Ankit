@@ -65,6 +65,12 @@ let orderSchema = new Schema({
     storeId: {
         type: ObjectId,
     },
+    timeSlot: {
+        type: String,
+    },
+    receiverName: {
+        type: String,
+    },
     status: {
         type: Boolean,
         default : true

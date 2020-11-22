@@ -26,4 +26,7 @@ module.exports = function(router) {
 		],
 		indexController.getOrderData
 	); 
+	router.post(
+	  config.constant.APIURL+'/checkPayment', indexController.checkPayment
+ 	); 
 }

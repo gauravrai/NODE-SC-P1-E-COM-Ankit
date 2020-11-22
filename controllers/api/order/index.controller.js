@@ -13,6 +13,7 @@ const Freeitem = model.free_item;
 const Product = model.product;
 const Messagetemplate = model.message_template;
 const { validationResult } = require('express-validator');
+const Razorpay = require('razorpay');
 
 module.exports = {
     // @route       GET api/v1/placeOrder
@@ -151,7 +152,7 @@ module.exports = {
                     let messageData = await Messagetemplate.findOne({slug: 'NEW-ORDER'});
                     let slug = messageData.slug;
                     let message = messageData.message;
-                    message = message.replace('[USERNAME]', userData.name);
+                    message = message.replace('[CUSTOMER]', userData.name);
                     message = message.replace('[ODID]', odid);
                     await config.helpers.sms.sendSMS(userData, slug, message, async function (smsData) {
                         return res.status(200).json({ 
@@ -228,5 +229,47 @@ module.exports = {
                                     }]
                                 });
         }
-	}
+    },
+    
+    checkPayment : async function(req,res){
+        var instance = new Razorpay({ key_id: config.constant.RAZORPAY_KEY_ID, key_secret: config.constant.RAZORPAY_KEY_SECRET })
+
+        var options = {
+          amount: 50000,  // amount in the smallest currency unit
+          currency: "INR",
+          receipt: "order_rcptid_11"
+        };
+        instance.orders.create(options, function(err, order) {
+            if(err)
+            {
+                console.log('Error-----------------',err);
+            }
+            console.log(order);
+            return res.status(400).json({ 
+                data: order, 
+                status: 'success', 
+                message: "Order has been empty!!" 
+            });	
+        });
+        // var request = require('request');
+        // request({
+        // method: 'POST',
+        // url: 'https://'+config.constant.RAZORPAY_KEY_ID+':'+config.constant.RAZORPAY_KEY_SECRET+'@api.razorpay.com/v1/payments/pay_29QQoUBi66xm2f/capture',
+        // form: {
+        //     amount: 100,
+        //     currency: "INR"
+        // }
+        // }, function (error, response, body) {
+        //     if(error)
+        //     {
+        //         console.log('Error-----------------',error);
+        //     }
+        //     console.log('Status:', response.statusCode);
+        //     console.log('Headers:', JSON.stringify(response.headers));
+        //     console.log('Response:', body);
+        //         return res.status(response.statusCode).json({ 
+        //             data: response, 
+        //         });	
+        // });
+    }
 }

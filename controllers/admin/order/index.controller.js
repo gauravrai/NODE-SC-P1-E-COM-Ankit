@@ -108,7 +108,7 @@ module.exports = {
 			let moduleName = 'Order Management';
 			let pageTitle = 'Add New Order';
 			let productData = await Product.find({status:true, deletedAt: 0},{name: 1});
-			let customerData = await Customer.find({status:true, deletedAt: 0},{mobile: 1});
+			let customerData = await Customer.find({status:true, deletedAt: 0},{mobile: 1, name:1});
 			res.render('admin/order/add',{layout:'admin/layout/layout', pageTitle:pageTitle, moduleName:moduleName, productData:productData, customerData:customerData });
 		}else
 		{
@@ -240,7 +240,7 @@ module.exports = {
 				let messageData = await Messagetemplate.findOne({slug: 'NEW-ORDER'});
 				let slug = messageData.slug;
 				let message = messageData.message;
-				message = message.replace('[USERNAME]', userData.name);
+				message = message.replace('[CUSTOMER]', userData.name);
 				message = message.replace('[ODID]', odid);
 				await config.helpers.sms.sendSMS(userData, slug, message, async function (smsData) {
 					req.flash('msg', {msg:'Order has been Created Successfully', status:false});	
@@ -282,7 +282,7 @@ module.exports = {
 			await config.helpers.tower.getNameById(orderData.customerDetail.towerId, async function (towerName) {
 				orderData.customerDetail.tower = towerName.name;
 			})
-
+			
             let orderDetailData = await Orderdetail.aggregate([
 				{
 					$match: { odid:odid }
@@ -354,7 +354,7 @@ module.exports = {
                 }
 			]);
 			let storeData = await Store.find({deletedAt: 0, status: true});
-			res.render('admin/order/orderDetail',{layout:'admin/layout/layout', pageTitle:pageTitle, moduleName:moduleName, orderData:orderData, orderDetailData:orderDetailData, rejectOrderData:rejectOrderData, freeItemData:freeItemData, orderStatus: constant.ORDER_STATUS, paymentStatus: constant.PAYMENT_STATUS, moment:moment, storeData:storeData  } );
+			res.render('admin/order/orderDetail',{layout:'admin/layout/layout', pageTitle:pageTitle, moduleName:moduleName, orderData:orderData, orderDetailData:orderDetailData, rejectOrderData:rejectOrderData, freeItemData:freeItemData, orderStatus: constant.ORDER_STATUS, paymentStatus: constant.PAYMENT_STATUS, timeSlot: constant.TIME_SLOT, moment:moment, storeData:storeData  } );
 		}else{
 		}
 	},
@@ -406,6 +406,8 @@ module.exports = {
 		let orderStatus = req.param("orderStatus");
 		let paymentStatus = req.param("paymentStatus");
 		let storeId = req.param("storeId");
+		let timeSlot = req.param("timeSlot");
+		let receiverName = req.param('receiverName');
 		let messageSlug;
 		if(orderStatus == 'IN_PROCESS'){
 			messageSlug = 'IN-PROCESS-ORDER';
@@ -420,8 +422,14 @@ module.exports = {
 		let messageData = await Messagetemplate.findOne({slug: messageSlug});
 		let slug = messageData.slug;
 		let message = messageData.message;
-		message = message.replace('[USERNAME]', userData.name);
+		message = message.replace('[CUSTOMER]', userData.name);
 		message = message.replace('[ODID]', odid);
+		if(orderStatus == 'IN_TRANSIT'){
+			message = message.replace('[TIMESLOT]', timeSlot ? timeSlot : config.constant.DEFAULTTIMESLOT);
+		}
+		if(orderStatus == 'DELIVERED'){
+			message = message.replace('[RECEIVERNAME]', receiverName);
+		}
 
 		if(orderStatus == 'IN_TRANSIT')
 		{
@@ -448,8 +456,15 @@ module.exports = {
 					});
 				}
 			}
-			await config.helpers.sms.sendSMS(userData, slug, message, async function (smsData) {
-				res.send('OK');
+			return Order.updateOne({_id: mongoose.mongo.ObjectId(orderId)}, {
+				orderStatus: orderStatus,
+				storeId: mongoose.mongo.ObjectId(storeId),
+				timeSlot: timeSlot,
+			},async function(err,data){
+				if(err) console.error(err);
+				await config.helpers.sms.sendSMS(userData, slug, message, async function (smsData) {
+					res.send('OK');
+				});
 			});
 		}
 		else if(orderStatus == 'DELIVERED')
@@ -459,6 +474,7 @@ module.exports = {
 				orderStatus: orderStatus,
 				paymentStatus: paymentStatus,
 				storeId: mongoose.mongo.ObjectId(storeId),
+				receiverName: receiverName,
 			},async function(err,data){
 				if(err) console.error(err);
 				await config.helpers.sms.sendSMS(userData, slug, message, async function (smsData) {

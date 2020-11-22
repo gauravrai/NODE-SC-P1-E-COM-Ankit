@@ -32,7 +32,7 @@
                       <select name="userId" class="form-control select2" id="userId">
                         <option value="">Select Option</option>
                       <% for(let i = 0; i < customerData.length; i++){ %>
-                          <option value="<%=customerData[i].id%>"><%=customerData[i].mobile%></option>
+                          <option value="<%=customerData[i].id%>"><%=customerData[i].mobile%> (<%=customerData[i].name%>)</option>
                         <% } %>
                       </select>
                   </div>

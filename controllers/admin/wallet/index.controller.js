@@ -8,6 +8,7 @@ const moment = require('moment');
 const Wallet = model.wallet;
 const Walletentry = model.wallet_entry;
 const Customer = model.customer;
+const Messagetemplate = model.message_template;
 const ADMINCALLURL = config.constant.ADMINCALLURL;
 
 module.exports = {
@@ -87,48 +88,74 @@ module.exports = {
 				amount : amount,
 				type : type,
 			};
-			let walletentry = new Walletentry(walletEntryData);
-			walletentry.save();
+			let userData = await Customer.findOne({_id: mongoose.mongo.ObjectID(userId)});
 			
 			let wallet = await Wallet.findOne({userId: mongoose.mongo.ObjectID(userId)});
+			let messageSlug;
+			if(type == 'Add')
+			{
+				messageSlug = 'WALLET-CREDIT';
+			}
+			else{
+				messageSlug = 'WALLET-DEBIT';
+			}
+			let messageData = await Messagetemplate.findOne({slug: messageSlug});
+			let slug = messageData.slug;
+			let message = messageData.message;
+			message = message.replace('[CUSTOMER]', userData.name);
+			message = message.replace('[AMOUNT]', amount);
+			message = message.replace('[DATETIME]', moment().format('D-M-YYYY hh-mm A'));
+			message = message.replace('[DATETIME]', moment().format('D-M-YYYY hh-mm A'));
 			if(wallet)
 			{
+			
+				let walletentry = new Walletentry(walletEntryData);
+				walletentry.save();
 				let walletData = {};
 				let totalAmount = wallet.totalAmount;
 				if(type == 'Add')
 				{
 					amount = ( totalAmount + amount );
 					walletData.totalAmount = amount;
+					message = message.replace('[TOTALBALANCE]', amount);
 				}
 				else{
 					amount = totalAmount - amount;
 					walletData.totalAmount = amount;
+					message = message.replace('[TOTALBALANCE]', amount);
 				}
-				await Wallet.update(
+				await Wallet.updateOne(
 					{ userId: mongoose.mongo.ObjectId(userId) },
-					walletData, function(err,data){
+					walletData, async function(err,data){
 						if(err){console.log(err)}
-						req.flash('msg', {msg:'Wallet has been Updated Successfully', status:false});	
-						res.redirect(config.constant.ADMINCALLURL+'/manage_wallet');
-						req.flash({});	
+						await config.helpers.sms.sendSMS(userData, slug, message, async function (smsData) {
+							req.flash('msg', {msg:'Wallet has been Updated Successfully', status:false});	
+							res.redirect(config.constant.ADMINCALLURL+'/manage_wallet');
+							req.flash({});	
+						});
 				})
 			}
 			else{
 				if(type == 'Add') {
+					let walletentry = new Walletentry(walletEntryData);
+					walletentry.save();
 					let walletData = {
 						userId : userId,
 						totalAmount : amount
 					};
+					message = message.replace('[TOTALBALANCE]', amount);
 					let wallet = new Wallet(walletData);
-					wallet.save(function(err, data){
+					wallet.save(async function(err, data){
 						if(err){console.log(err)}
-						req.flash('msg', {msg:'Wallet has been Added Successfully', status:false});	
-						res.redirect(config.constant.ADMINCALLURL+'/manage_wallet');
-						req.flash({});	
+						await config.helpers.sms.sendSMS(userData, slug, message, async function (smsData) {
+							req.flash('msg', {msg:'Wallet has been Added Successfully', status:false});	
+							res.redirect(config.constant.ADMINCALLURL+'/manage_wallet');
+							req.flash({});	
+						});
 					})
 				}
 				else {
-					req.flash('msg', {msg:'Add amount in wallet first Successfully', status:false});
+					req.flash('msg', {msg:'Add amount in wallet first', status:false});
 					res.redirect(config.constant.ADMINCALLURL+'/add_wallet');
 					req.flash({});
 				}

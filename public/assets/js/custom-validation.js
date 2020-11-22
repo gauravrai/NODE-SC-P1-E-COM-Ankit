@@ -953,6 +953,7 @@ $(document).ready(function () {
             },
             amount: {
                 required: true,
+                number: true,
             },
             type: {
                 required: true,
@@ -963,7 +964,8 @@ $(document).ready(function () {
                 required: "Please Select Customer"
             },
             amount: {
-                required: "Please Enter Amount"
+                required: "Please Enter Amount",
+                number: "Please Enter digits only"
             },
             type: {
                 required: "Please Select Type"
