@@ -57,7 +57,7 @@
                 <table class="table table-bordered" id="availableTable">
                   <thead>           
                     <tr>
-                      <th style="width: 10px">#</th>
+                      <th style="width: 10px"><input type="checkbox" id="select_all"></th>
                       <th>Product</th>
                       <th>Varient</th>
                       <th>Unit Price</th>
@@ -68,7 +68,7 @@
                   <tbody>
                     <% for(let i = 0; i < orderDetailData.length; i++){ %>
                     <tr>
-                      <td><input value="<%= orderDetailData[i]._id %>" class="orderDetailId" type="checkbox" data-productid="<%= orderDetailData[i].productId; %>" data-varientid="<%= orderDetailData[i].varientId; %>" data-quantity="<%= orderDetailData[i].quantity; %>" /></td>
+                      <td><input value="<%= orderDetailData[i]._id %>" class="all_check orderDetailId" type="checkbox" data-productid="<%= orderDetailData[i].productId; %>" data-varientid="<%= orderDetailData[i].varientId; %>" data-quantity="<%= orderDetailData[i].quantity; %>" /></td>
                       <td><%= orderDetailData[i].productData[0].name; %></td>
                       <td><%= orderDetailData[i].varientData[0].label %> <%=orderDetailData[i].varientData[0].measurementUnit %></td>
                       <td><%= orderDetailData[i].price; %> </td>
@@ -90,7 +90,7 @@
                       <th>Varient</th>
                       <th>Unit Price</th>
                       <th>Quantity</th>
-                      <th>Total Price <%=rejectOrderData.length%></th>
+                      <th>Total Price</th>
                     </tr>
                   </thead>
                   <tbody>
@@ -140,7 +140,7 @@
                 <br>
                 <table style="width: 100%;">
                     <tr>
-                      <td style="width: 16%;">
+                      <td style="width: 12%;">
                         <label for="storeId">Select Store</label>
                         <select name="storeId" id="storeId" class="form-control">
                           <option value="">Select Store</option>
@@ -151,7 +151,7 @@
                         </select>
                         <span class="customError" id="storeErr"></span>
                       </td>
-                      <td style="width: 16%;">
+                      <td style="width: 12%;">
                         <label for="paymentStatus">Payment Status</label>
                         <select name="paymentStatus" id="paymentStatus" class="form-control">
                           <option value="">Select Payment Status</option>
@@ -161,7 +161,7 @@
                           <% } %>
                         </select>
                       </td>
-                      <td style="width: 16%;">
+                      <td style="width: 12%;">
                         <label for="timeSlot">Time Slot</label>
                         <select name="timeSlot" id="timeSlot" class="form-control">
                           <option value="">Select Time Slot</option>
@@ -172,17 +172,17 @@
                         </select>
                         <span class="customError" id="timeSlotErr"></span>
                       </td>
-                      <!--<td style="width: 16%;">
+                      <td style="width: 12%;">
                         <label for="deliveryDate">Delivery Date</label>
                         <input type="date" name="deliveryDate" class="form-control" id="deliveryDate" placeholder="Delivery Date">
                         <span class="customError" id="deliveryDateErr"></span>
-                      </td>-->
-                      <td style="width: 16%;">
+                      </td>
+                      <td style="width: 12%;">
                         <label for="receiverName">Receiver Name</label>
                         <input type="text" name="receiverName" class="form-control" id="receiverName" placeholder="Receiver Name" value="<%=orderData.receiverName ? orderData.receiverName : ''%>">
                         <span class="customError" id="receiverNameErr"></span>
                       </td>
-                      <td style="width: 16%;">
+                      <td style="width: 12%;">
                         <label for="orderStatusId">Order Status</label>
                         <select name="orderStatusId" id="orderStatusId" data-orderid="<%= orderData.id %>" class="form-control">
                           <option value="">Select Order Status</option>
@@ -262,6 +262,7 @@
       let orderStatus = $(this).val();
       let storeId = $('#storeId').val();
       let timeSlot = $('#timeSlot').val();
+      let deliveryDate = $('#deliveryDate').val();
       let receiverName = $('#receiverName').val();
       let odid = $('#odid').val();
       let paymentStatus = $('#paymentStatus').val();
@@ -277,16 +278,24 @@
           $(this).val('');
           $('#timeSlotErr').html('Please select time slot proceed');
         }
-        else if(orderStatus == 'DELIVERED' && receiverName == '')
+        else if(orderStatus == 'DELIVERED' && ( receiverName == '' || deliveryDate == '') )
         {
           $(this).val('');
+          if(receiverName == '')
           $('#receiverNameErr').html('Please enter receiver name proceed');
+          else
+          $('#receiverNameErr').html('');
+          if(deliveryDate == '')
+          $('#deliveryDateErr').html('Please select delivery date proceed');
+          else
+          $('#deliveryDateErr').html('');
         }
         else 
         {
           $('#storeErr').html('');
           $('#timeSlotErr').html('');
           $('#receiverNameErr').html('');
+          $('#deliveryDateErr').html('');
           let productIdArr = [];
           let varientIdArr = [];
           let quantityArr = [];
@@ -317,7 +326,7 @@
                     $.ajax({
                         type: 'POST',
                         url: 'change_order_status',
-                        data: {orderId:orderId, orderStatus:orderStatus, storeId:storeId, paymentStatus:paymentStatus, productIdArr:productIdArr, varientIdArr:varientIdArr, quantityArr:quantityArr, userId:userId, odid:odid, timeSlot:timeSlot, receiverName:receiverName},
+                        data: {orderId:orderId, orderStatus:orderStatus, storeId:storeId, paymentStatus:paymentStatus, productIdArr:productIdArr, varientIdArr:varientIdArr, quantityArr:quantityArr, userId:userId, odid:odid, timeSlot:timeSlot, receiverName:receiverName, deliveryDate:deliveryDate},
                         success: function(response) {
                           swalWithBootstrapButtons.fire(
                               'Changed!',
@@ -339,5 +348,4 @@
         }
       }
     });
-
 </script>

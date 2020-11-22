@@ -232,44 +232,44 @@ module.exports = {
     },
     
     checkPayment : async function(req,res){
-        var instance = new Razorpay({ key_id: config.constant.RAZORPAY_KEY_ID, key_secret: config.constant.RAZORPAY_KEY_SECRET })
+        // var instance = new Razorpay({ key_id: config.constant.RAZORPAY_KEY_ID, key_secret: config.constant.RAZORPAY_KEY_SECRET })
 
-        var options = {
-          amount: 50000,  // amount in the smallest currency unit
-          currency: "INR",
-          receipt: "order_rcptid_11"
-        };
-        instance.orders.create(options, function(err, order) {
-            if(err)
-            {
-                console.log('Error-----------------',err);
-            }
-            console.log(order);
-            return res.status(400).json({ 
-                data: order, 
-                status: 'success', 
-                message: "Order has been empty!!" 
-            });	
-        });
-        // var request = require('request');
-        // request({
-        // method: 'POST',
-        // url: 'https://'+config.constant.RAZORPAY_KEY_ID+':'+config.constant.RAZORPAY_KEY_SECRET+'@api.razorpay.com/v1/payments/pay_29QQoUBi66xm2f/capture',
-        // form: {
-        //     amount: 100,
-        //     currency: "INR"
-        // }
-        // }, function (error, response, body) {
-        //     if(error)
+        // var options = {
+        //   amount: 50000,  // amount in the smallest currency unit
+        //   currency: "INR",
+        //   receipt: "order_rcptid_11"
+        // };
+        // instance.orders.create(options, function(err, order) {
+        //     if(err)
         //     {
-        //         console.log('Error-----------------',error);
+        //         console.log('Error-----------------',err);
         //     }
-        //     console.log('Status:', response.statusCode);
-        //     console.log('Headers:', JSON.stringify(response.headers));
-        //     console.log('Response:', body);
-        //         return res.status(response.statusCode).json({ 
-        //             data: response, 
-        //         });	
+        //     console.log(order);
+        //     return res.status(400).json({ 
+        //         data: order, 
+        //         status: 'success', 
+        //         message: "Order has been empty!!" 
+        //     });	
         // });
+        var request = require('request');
+        request({
+        method: 'POST',
+        url: 'https://'+config.constant.RAZORPAY_KEY_ID+':'+config.constant.RAZORPAY_KEY_SECRET+'@api.razorpay.com/v1/payments/pay_G4EGqgABQ2c14J/capture',
+        form: {
+            amount: 100,
+            currency: "INR"
+        }
+        }, function (error, response, body) {
+            if(error)
+            {
+                console.log('Error-----------------',error);
+            }
+            console.log('Status:', response.statusCode);
+            console.log('Headers:', JSON.stringify(response.headers));
+            console.log('Response:', body);
+                return res.status(response.statusCode).json({ 
+                    data: response, 
+                });	
+        });
     }
 }

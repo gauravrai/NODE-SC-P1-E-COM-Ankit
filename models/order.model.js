@@ -71,6 +71,9 @@ let orderSchema = new Schema({
     receiverName: {
         type: String,
     },
+    deliveryData: {
+        type: String,
+    },
     status: {
         type: Boolean,
         default : true

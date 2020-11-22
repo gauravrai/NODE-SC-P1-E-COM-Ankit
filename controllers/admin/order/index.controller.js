@@ -52,6 +52,9 @@ module.exports = {
 			var tomorrow = tomorrow.toLocaleDateString();
 			search.createdAt = { '$gte': new Date(req.param('date_from')), '$lte': new Date(tomorrow) }
 		}
+		if (req.param('order_from')) {
+			search.orderFrom = req.param("order_from");
+		}
 		let skip = req.input('start') ? parseInt(req.input('start')) : 0;
 		let limit= req.input('length') ? parseInt(req.input('length')) : config.constant.LIMIT;
 		async.parallel({
@@ -475,6 +478,7 @@ module.exports = {
 				paymentStatus: paymentStatus,
 				storeId: mongoose.mongo.ObjectId(storeId),
 				receiverName: receiverName,
+				deliveryDate: deliveryDate
 			},async function(err,data){
 				if(err) console.error(err);
 				await config.helpers.sms.sendSMS(userData, slug, message, async function (smsData) {

@@ -182,7 +182,7 @@ module.exports = {
 				description : req.body.description,
 				permission : arrayData
 			};
-			await Role.update(
+			await Role.updateOne(
 				{ _id: mongoose.mongo.ObjectId(req.body.id) },
 				roleData, function(err,data){
 					if(err){console.log(err)}

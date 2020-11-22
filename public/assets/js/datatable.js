@@ -152,6 +152,7 @@ $(document).ready(function() {
               "order_status": $("#order_status").val(),
               "date_from": $("#date_from").val(),
               "date_to": $("#date_to").val(),
+              "order_from": $("#order_from").val(),
             },
             type: "POST",          
         }
@@ -227,6 +228,17 @@ $(document).ready(function() {
         "ordering": false,
         "ajax": {
             url: 'list_product_request',
+            type: "POST",          
+        }
+    });
+
+    $('#contactTable').DataTable( {
+        "scrollX": true,
+        "processing": true,
+        "serverSide": true,
+        "ordering": false,
+        "ajax": {
+            url: 'list_contact',
             type: "POST",          
         }
     });

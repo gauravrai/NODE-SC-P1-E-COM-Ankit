@@ -38,7 +38,7 @@
                   <div class="row">
                     <div class="col-sm-9">
                       <div class="form-group">
-                        <input type="text" class="form-control" placeholder="Search for order id, customer name, customer mobile number or address" name="search_data" id="search_data" value="<%= req.param("search_data") ? req.param("search_data") : ''%>" />
+                        <input type="text" class="form-control" placeholder="Search for order id, customer name, customer mobile number or address" name="search_data" id="search_data" value="<%= req.query.search_data ? req.query.search_data : ''%>" />
                       </div>
                     </div>
                     <div class="col-sm-3">
@@ -46,7 +46,7 @@
                           <select name="order_status" id="order_status" class="form-control" onchange="this.form.submit()">
                             <option value="">Select Order Status</option>
                             <% for(let i = 0; i < orderStatus.length; i++){ %>
-                              <option value="<%=orderStatus[i]%>" <% if(req.param("order_status")== orderStatus[i]){ %>
+                              <option value="<%=orderStatus[i]%>" <% if(req.query.order_status== orderStatus[i]){ %>
                                 selected="selected" <% } %>><%=orderStatus[i]%></option>
                             <% } %>
                           </select>
@@ -54,12 +54,22 @@
                     </div>
                     <div class="col-sm-3">
                       <div class="form-group">
-                        <input type="date" name="date_from" class="form-control" id="date_from" placeholder="(YYYY-MM-DD) From Date" value="<%= req.param("date_from") ? req.param("date_from") : ''%>">
+                        <input type="date" name="date_from" class="form-control" id="date_from" placeholder="(YYYY-MM-DD) From Date" value="<%= req.query.date_from ? req.query.date_from : ''%>">
                       </div>
                     </div>
                     <div class="col-sm-3">
                       <div class="form-group">
-                        <input type="date" name="date_to" class="form-control" id="date_to" placeholder="(YYYY-MM-DD) To Date" value="<%= req.param("date_to") ? req.param("date_to") : ''%>">
+                        <input type="date" name="date_to" class="form-control" id="date_to" placeholder="(YYYY-MM-DD) To Date" value="<%= req.query.date_to ? req.query.date_to : ''%>">
+                      </div>
+                    </div>
+                    <div class="col-sm-3">
+                      <div class="form-group">
+                          <select name="order_from" id="order_from" class="form-control" onchange="this.form.submit()">
+                            <option value="">Select Order From</option>
+                            <option value="ADMIN"<% if(req.param("order_from")=="ADMIN"){%>selected="selected" <%} %> >ADMIN</option>
+                            <option value="APP"<% if(req.param("order_from")=="APP"){%>selected="selected" <%} %> >APP</option>
+                            <option value="WEBSITE"<% if(req.param("order_from")=="WEBSITE"){%>selected="selected" <%} %> >WEBSITE</option>
+                          </select>
                       </div>
                     </div>
                     <div class="col-sm-3">

@@ -473,3 +473,24 @@ $(document).on("change", ".productId", function(){
 		}
     });
 });
+
+
+
+$('#select_all').on('click', function () {
+	if (this.checked) {
+		$('.all_check').each(function () {
+			this.checked = true;
+		});
+	} else {
+		$('.all_check').each(function () {
+			this.checked = false;
+		});
+	}
+});
+$('body').on("click", ".all_check", function () {
+	if ($('.all_check:checked').length == $('.all_check').length) {
+		$('#select_all').prop('checked', true);
+	} else {
+		$('#select_all').prop('checked', false);
+	}
+});
