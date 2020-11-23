@@ -61,7 +61,7 @@
                     </div>
                     
                     <div class="form-group col-md-2">
-                        <label for="offer">Select Offer applicable</label>
+                        <label for="offer">Offer applicable</label>
                         <select name="offer" class="form-control" id="offer" >
                         <option value="">Select Offer</option>
                         <option value="Yes">Yes</option>
@@ -70,7 +70,7 @@
                     </div>
                     
                     <div class="form-group col-md-2">
-                        <label for="discount">Select Discount applicable</label>
+                        <label for="discount">Discount applicable</label>
                         <select name="discount" class="form-control" id="discount" >
                         <option value="">Select Discount</option>
                         <option value="Yes">Yes</option>
@@ -233,5 +233,13 @@
             $("#stock").focus();
             return false;
         }
+    });
+    $('#name, #description').on('keypress', function (event) {
+      var regex = new RegExp("^[a-zA-Z0-9]+$");
+      var key = String.fromCharCode(!event.charCode ? event.which : event.charCode);
+      if (!regex.test(key)) {
+        event.preventDefault();
+        return false;
+      }
     });
   </script>

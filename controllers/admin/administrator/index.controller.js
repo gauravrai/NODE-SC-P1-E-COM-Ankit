@@ -22,11 +22,11 @@ module.exports = {
 	listAdministrator:function(req,res){
 		var search = {deletedAt:0}
 		let searchValue = req.body.search.value;
-		if(searchValue){			
+		if(searchValue){		
             search.$or = [
-				{ name: { $regex: '.*' + searchValue + '.*',$options:'i' }},
-				{ username: { $regex: '.*' + searchValue + '.*',$options:'i' }},
-				{ email: { $regex: '.*' + searchValue + '.*',$options:'i' }},
+				{ name: { $regex: '.*' + searchValue + '.*',$options:'i' } },
+				{ email: { $regex: '.*' + searchValue + '.*',$options:'i' } },
+				{ username: { $regex: '.*' + searchValue + '.*',$options:'i' } },
 			];
 		}
 		

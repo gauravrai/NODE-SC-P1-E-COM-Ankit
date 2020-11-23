@@ -291,10 +291,10 @@ module.exports = {
             data.mobile = userData.mobile ? userData.mobile : '';
             data.country = userData.country ? userData.country : '';
             await config.helpers.state.getNameById(userData.stateId, async function (stateName) {
-                data.state = stateName.name;
+                data.state = stateName.name ? stateName.name : '';
             })
             await config.helpers.city.getNameById(userData.cityId, async function (cityName) {
-                data.city = cityName.name;
+                data.city = cityName.name ? cityName.name : '';
             })
             await config.helpers.pincode.getNameById(userData.pincodeId, async function (pincode) {
                 if(pincode.pincode)
@@ -306,16 +306,16 @@ module.exports = {
                 {
                     data.shippingPrice = 0;
                 }
-                data.pincode = pincode.pincode;
+                data.pincode = pincode.pincode ? pincode.pincode : '';
             })
             await config.helpers.area.getNameById(userData.areaId, async function (areaName) {
-                data.area = areaName.name;
+                data.area = areaName.name ? areaName.name : '';
             })
             await config.helpers.society.getNameById(userData.societyId, async function (societyName) {
-                data.society = societyName.name;
+                data.society = societyName.name ? societyName.name : '';
             })
             await config.helpers.tower.getNameById(userData.towerId, async function (towerName) {
-                data.tower = towerName.name;
+                data.tower = towerName.name ? towerName.name : '';
             })
             
             let cartData = await Cart.findOne({userId: mongoose.mongo.ObjectId(userId)});

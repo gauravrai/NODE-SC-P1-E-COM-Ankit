@@ -6,6 +6,7 @@ const mongoose = require('mongoose');
 const bcrypt = require("bcrypt-nodejs");
 const moment = require('moment');
 const jwt = require("jsonwebtoken");
+const Messagetemplate = model.message_template;
 const { validationResult } = require('express-validator')
 
 //models import
@@ -16,33 +17,25 @@ var http = require('http'),
     url = require('url');
 
 module.exports = {
-	
-    // @route       GET api/v1/product
-    // @description Get all product
-    // @access      Public
-	productList:async function(req,res){
-        var productData = await Product.find({status:true, deletedAt: 0},{}).sort( { name : 1} );
-        return res.status(200).json({ data: productData, status: 'success', message: "Data fetched successfully!!" });
-		
-    },
-
     // @route       GET api/v1/addcustomer
     // @description Customer login page check mobile number exists in otps collection, if yes update with new otp, if not intert mobile and new otp 
     // @access      Public
     addCustomer:async function(req,res){
         var mobile_number = req.body.mobile;
-        //const otp = Math.floor(1000 + Math.random() * 9000);
-        const otp = '1234';
-        var phoneRegex = /^(0|[+91]{3})?[7-9][0-9]{9}$/;
+        const otp = Math.floor(1000 + Math.random() * 9000);
 
         const errors = validationResult(req)
         if(!errors.isEmpty()){
             return res.status(400).json({errors: errors.array()})
         }
 
-        if(mobile_number.match(phoneRegex)){
+        try{
             
-            try{
+            let messageData = await Messagetemplate.findOne({slug: 'OTP-MESSAGE'});
+            let slug = messageData.slug;
+            let message = messageData.message;
+            message = message.replace('[OTP]', otp);
+            await config.helpers.sms.sendOTP(mobile_number, slug, message, async function (smsData) {
                 const otpcheck = await OTP.findOne({mobile:mobile_number, status:true, deletedAt: 0});
                 if(otpcheck) {
                     let otpData = {
@@ -80,31 +73,22 @@ module.exports = {
                                             });
                         otpObj.save()
                         return res.status(200).json({
-                                     data: {
+                                        data: {
                                         profileUpdated: false
-                                     }, 
-                                     status: 'success', 
-                                     message: "Customer added successfully"
+                                        }, 
+                                        status: 'success', 
+                                        message: "Customer added successfully"
                                 });
                 }
-            }
-            catch (e){
-                console.log(e)
-                return res.status(500).json({ 
-                    status: 'error',
-                    errors: [{
-                        msg: "Internal server error"
-                    }] 
-                });
-            }
-            
-        } else {
-
-            return res.status(400).json({ 
+            });
+        }
+        catch (e){
+            console.log(e)
+            return res.status(500).json({ 
                 status: 'error',
                 errors: [{
-                    msg: "Invalid mobile number"
-                }]
+                    msg: "Internal server error"
+                }] 
             });
         }
           
@@ -230,7 +214,7 @@ module.exports = {
                                         });
                 customerPObj.save()
                 return res.status(200).json({
-                                data: CustomerData,
+                                data: customerPObj,
                                 status: 'success', 
                                 message: "Customer profile added successfully!!"
                             });
