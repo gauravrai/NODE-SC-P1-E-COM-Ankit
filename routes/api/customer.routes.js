@@ -12,6 +12,13 @@ module.exports = function(router) {
 		indexController.addCustomer
 	); 
 	router.post(
+		config.constant.APIURL+'/resendOtp', 
+		[
+		    check('mobile', 'Mobile is required').not().isEmpty()
+		], 
+		indexController.resendOtp
+	); 
+	router.post(
 		config.constant.APIURL+'/checkcustomerotp', 
 		[
 		    check('mobile', 'Mobile is required').not().isEmpty().trim().escape(),

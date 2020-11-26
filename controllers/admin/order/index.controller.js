@@ -517,5 +517,28 @@ module.exports = {
 		{
 			res.send('OK');
 		}
-	}
+	},
+	
+	makeInvoice: async function(req,res){
+		if(req.method == 'GET')
+		{
+			res.render('admin/pdf/invoice');
+		}
+		if(req.method == 'POST')
+		{
+			let data = req.param("data");
+			// var order_id = req.param("order_id");
+			let options = { format: 'Letter', orientation: 'landscape', type: "pdf" };
+			pdf.create(data, options).toFile(config.constant.INVOICEPATH + 'demo.pdf', function (err, result) {
+				var pdf = config.constant.INVOICEPATH + "demo.pdf"
+				res.send(pdf);
+			});
+		}
+	},
+	
+	downloadInvoice: function (req, res) {
+		var id = req.param('id');
+		var pdf = sails.config.myconf.ABSOLUTEPATH + "assets/files/order/invoice/invoice_pdf/invoice/" + id + ".pdf";
+		res.download(pdf);
+	},
 };

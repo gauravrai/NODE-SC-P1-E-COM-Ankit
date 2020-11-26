@@ -9,4 +9,6 @@ module.exports = function(router) {
     router.all(config.constant.ADMINCALLURL+'/mark_as_not_available',isloggedin, indexController.markAsNotAvailable); 
     router.all(config.constant.ADMINCALLURL+'/change_order_status',isloggedin, indexController.changeOrderStatus); 
     router.all(config.constant.ADMINCALLURL+'/check_available_product',isloggedin, indexController.checkAvailableProduct); 
+    router.all(config.constant.ADMINCALLURL+'/make_invoice',isloggedin, indexController.makeInvoice); 
+    router.all(config.constant.ADMINCALLURL+'/download_invoice',isloggedin, indexController.downloadInvoice); 
 }

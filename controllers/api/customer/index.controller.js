@@ -93,6 +93,56 @@ module.exports = {
         }
           
     },
+    // @route       GET api/v1/resendOtp
+    // @description Resend OTP 
+    // @access      Public
+    resendOtp:async function(req,res){
+        var mobile_number = req.body.mobile;
+        const otp = Math.floor(1000 + Math.random() * 9000);
+
+        const errors = validationResult(req)
+        if(!errors.isEmpty()){
+            return res.status(400).json({errors: errors.array()})
+        }
+
+        try{
+            let otpcheck = await OTP.findOne({mobile:mobile_number, status:true, deletedAt: 0});
+            if(otpcheck) {
+                let otpData = {
+                    otp  : otp
+                };
+                let updateOtp = await OTP.updateOne( {mobile: mobile_number}, otpData );
+                
+                let messageData = await Messagetemplate.findOne({slug: 'OTP-MESSAGE'});
+                let slug = messageData.slug;
+                let message = messageData.message;
+                message = message.replace('[OTP]', otp);
+                await config.helpers.sms.sendOTP(mobile_number, slug, message, async function (smsData) {
+                    return res.status(200).json({ 
+                                data: otpData, 
+                                status: 'success', 
+                                message: "OTP resend successfully."
+                            });                   
+                });         
+            } else {
+                    return res.status(400).json({
+                                    data: {}, 
+                                    status: 'error', 
+                                    message: "Something went wrong. Can't send OTP."
+                            });
+            }
+        }
+        catch (e){
+            console.log(e)
+            return res.status(500).json({ 
+                status: 'error',
+                errors: [{
+                    msg: "Internal server error"
+                }] 
+            });
+        }
+          
+    },
     // @route       GET api/v1/checkcustomerotp
     // @description Customer validate otp and mobile exists 
     // @access      Public
