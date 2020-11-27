@@ -21,6 +21,7 @@
     "express-validator": "^6.6.1",
     "fs": "0.0.1-security",
     "fund": "^1.0.0",
+    "html-pdf": "^2.2.0",
     "jsonwebtoken": "^8.5.1",
     "moment": "^2.27.0",
     "mongo-express": "^1.0.0-alpha.1",

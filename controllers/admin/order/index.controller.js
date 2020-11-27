@@ -3,6 +3,7 @@ const config = require('../../../config/index');
 const async = require("async");
 const mongoose = require('mongoose');
 const moment = require('moment');
+var pdf = require('html-pdf');
 const Store = model.store;
 const Product = model.product;
 const Customer = model.customer;
@@ -522,23 +523,77 @@ module.exports = {
 	makeInvoice: async function(req,res){
 		if(req.method == 'GET')
 		{
-			res.render('admin/pdf/invoice');
+			let odid = req.query.id;
+			let orderData = await Order.findOne({ odid:odid });
+			
+			await config.helpers.state.getNameById(orderData.customerDetail.stateId, async function (stateName) {
+				orderData.customerDetail.state = stateName.name;
+			})
+			
+			await config.helpers.city.getNameById(orderData.customerDetail.cityId, async function (cityName) {
+				orderData.customerDetail.city = cityName.name;
+			})
+			
+			await config.helpers.pincode.getNameById(orderData.customerDetail.pincodeId, async function (pincodeName) {
+				orderData.customerDetail.pincode = pincodeName.name;
+			})
+			
+			await config.helpers.area.getNameById(orderData.customerDetail.areaId, async function (areaName) {
+				orderData.customerDetail.area = areaName.name;
+			})
+			
+			await config.helpers.society.getNameById(orderData.customerDetail.societyId, async function (societyName) {
+				orderData.customerDetail.society = societyName.name;
+			})
+			
+			await config.helpers.tower.getNameById(orderData.customerDetail.towerId, async function (towerName) {
+				orderData.customerDetail.tower = towerName.name;
+			})
+			
+            let orderDetailData = await Orderdetail.aggregate([
+				{
+					$match: { odid:odid }
+				},
+                {
+                    $lookup:
+                      {
+                        from: "products",
+                        localField: "productId",
+                        foreignField: "_id",
+                        as: "productData"
+                      }
+                },
+                {
+                    $lookup:
+                      {
+                        from: "varients",
+                        localField: "varientId",
+                        foreignField: "_id",
+                        as: "varientData"
+                      }
+                },
+            ]);
+			res.render('admin/pdf/invoice', {layout:false, orderData:orderData, orderDetailData:orderDetailData, odid:odid} );
 		}
 		if(req.method == 'POST')
 		{
-			let data = req.param("data");
-			// var order_id = req.param("order_id");
+			let htmlData = req.body.htmlData;
+			let odid = req.body.odid;
 			let options = { format: 'Letter', orientation: 'landscape', type: "pdf" };
-			pdf.create(data, options).toFile(config.constant.INVOICEPATH + 'demo.pdf', function (err, result) {
-				var pdf = config.constant.INVOICEPATH + "demo.pdf"
+			pdf.create(htmlData, options).toFile(config.constant.INVOICEPATH + odid +'.pdf', function (err, result) {
+				let pdf = config.constant.INVOICEPATH + odid +'.pdf';
+				console.log('pdf----------',pdf);
 				res.send(pdf);
 			});
 		}
 	},
 	
 	downloadInvoice: function (req, res) {
-		var id = req.param('id');
-		var pdf = sails.config.myconf.ABSOLUTEPATH + "assets/files/order/invoice/invoice_pdf/invoice/" + id + ".pdf";
+		let odid = req.query.id;
+		console.log('odid----------',odid);
+		let pdf = config.constant.ABSOLUTEPATH + "/public/uploads/invoice/" + odid +".pdf";
+		console.log('coming pdf----------',pdf);
 		res.download(pdf);
 	},
+
 };

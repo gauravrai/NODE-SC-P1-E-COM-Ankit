@@ -6,6 +6,7 @@ var basic_path='C:/Users/sonali/Desktop/softchilli/backend/';
 module.exports = {
 	
 	SITEURL : SITEURL,
+	ABSOLUTEPATH : ABSOLUTEPATH,
 	SITENAME : "Local Baniyaa",
 	ADMINSITEURL:SITEURL+'admin/',
 	ADMINCALLURL:'/admin',
@@ -43,7 +44,7 @@ module.exports = {
 	OFFERBANNERUPLOADPATH: './public/uploads/offerbanner/',
 	OFFERBANNERSHOWPATH: SITEURL+'uploads/offerbanner/',	
 
-	INVOICEPATH: SITEURL+'uploads/invoice/',	
+	INVOICEPATH: './public/uploads/invoice/',	
 
 	ORDER_STATUS: [ 'NEW', 'IN_PROCESS', 'IN_TRANSIT', 'DELIVERED', 'CANCELED'],
 	MESSAGE_SLUG: [ 'NEW-ORDER', 'IN-PROCESS-ORDER', 'IN-TRANSIT-ORDER', 'DELIVERED-ORDER', 'CANCELED-ORDER'],

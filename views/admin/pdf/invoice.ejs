@@ -1,5 +1,5 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml">
+<!DOCTYPE html>
+<html>
 	<head>
 		<title>Invoice</title>
 		<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
@@ -20,7 +20,6 @@
 				font-family: 'Open Sans', sans-serif;
 				-webkit-text-size-adjust: 100%;
 				-ms-text-size-adjust: 100%;
-				/*background: url('http://10.0.4.4/Nikhil/demo-temp/html/images/home.jpg') no-repeat center top;*/
 				background-color: #ecedf1;
 			}
 			#bodyTable {
@@ -62,21 +61,21 @@
 
 <script>
 $(document).ready(function(){
-	var order = "";
-	var site_url = "";
-	vendor_invoice_pdf(order, site_url);
+	var odid = "<%=odid%>";
+	var siteUrl = "<%=APPCONSTANT.ADMINSITEURL%>";
+	vendor_invoice_pdf(odid, siteUrl);
 });
 
-function vendor_invoice_pdf(order, site_url){
+function vendor_invoice_pdf(odid, siteUrl){
 	$.ajax({
 		type : "POST",
-		url :  "download_invoice",
-		data : { data : $("html").html(), order_id : order},
+		url :  "make_invoice",
+		data : { htmlData : $("html").html(), odid : odid},
 		success : function(response){
-				window.location.href = site_url+"order/send_invoice_download_pdf/"+order;
-				setTimeout(function(){
-					window.close();
-				}, 3000);
+			window.location.href = siteUrl+"download_invoice?id="+odid;
+			setTimeout(function(){
+				window.close();
+			}, 3000);
 		}
 	});
 }
