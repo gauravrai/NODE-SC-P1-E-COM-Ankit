@@ -1,10 +1,6 @@
 const model  = require('../../../models/index.model');
 const config = require('../../../config/index');
-const db 	   = config.connection;
-const async = require("async");
 const mongoose = require('mongoose');
-const bcrypt = require("bcrypt-nodejs");
-const moment = require('moment');
 const Cart = model.cart;
 const Cartitem = model.cart_item;
 const Customer = model.customer;
@@ -16,7 +12,7 @@ module.exports = {
     // @route       GET api/v1/addToCart
     // @description User request for product
     // @access      Public
-    addToCart : async function(req,res){
+    addToCart: async function(req,res){
         const errors = validationResult(req)
         if(!errors.isEmpty()){
             return res.status(400).json({errors: errors.array()})
@@ -31,17 +27,52 @@ module.exports = {
             let moveToWishlist = req.body.moveToWishlist;
             let cartCondition = {} ;
             let cartItemCondition = { productId: mongoose.mongo.ObjectID(productId), varientId: mongoose.mongo.ObjectID(varientId) } ;
-            let userData = {} ;
-            let cartId = '' ;
+            let userData = {};
+            let cartId = '';
+            let customerGST = '';
+            let clientGST = config.constant.CLIENT_GST_NO;
+            let clientGSTStateCode = config.constant.CLIENT_GST_STATE_CODE;
+            let taxType;
+            let tax, cgst, sgst, igst, totalTax = 0;
             if(userId){
                 userData = await Customer.findOne({_id: mongoose.mongo.ObjectID(userId), deletedAt: 0, status: true});
                 cartCondition.userId =userId;
                 cartItemCondition.userId =userId;
+                customerGST = userData.gst;
             }else 
             {
                 cartCondition.sessionId = sessionId;
                 cartItemCondition.sessionId = sessionId;
             }  
+
+            let productData = await Product.findOne({_id: mongoose.mongo.ObjectID(productId), deletedAt: 0, status: true}, {tax: 1});
+            let productTax = productData.tax;
+            if(customerGST){
+                let customerGSTStateCode =  customerGST.substring(0, 2);
+                if(customerGSTStateCode == clientGSTStateCode){
+                    productTax = productTax/2;
+                    tax = productTax;
+                    cgst = ( price * quantity * tax )/100;
+                    sgst = cgst;
+                    totalTax = (cgst + sgst);
+                    taxType = 1;
+                }else {
+                    tax = productTax;
+                    igst = ( price * quantity * tax )/100;
+                    totalTax = igst;
+                    taxType = 2;
+                }
+            }
+            else
+            {
+                productTax = productTax/2;
+                tax = productTax;
+                cgst = ( price * quantity * tax )/100;
+                sgst = cgst;
+                totalTax = (cgst + sgst);
+                taxType = 1;
+            }
+
             let cartData = await Cart.find(cartCondition);
             let cartItemData = await Cartitem.find(cartItemCondition);
             if(moveToWishlist)
@@ -60,13 +91,23 @@ module.exports = {
                     cartId = cartData[0].id;
                     let previousGrandTotal = parseInt(cartData[0].grandTotal);
                     let previousQuantity = parseInt(cartData[0].quantity);
+                    let previousTotalTax = parseInt(cartData[0].totalTax);
                     if(cartItemData.length>0) {
                         previousGrandTotal = previousGrandTotal - cartItemData[0].totalPrice;
                         previousQuantity = previousQuantity - cartItemData[0].quantity;
+                        if(cartData[0].taxType == 1)
+                        {
+                            previousTotalTax = previousTotalTax - cartItemData[0].cgst;
+                            previousTotalTax = previousTotalTax - cartItemData[0].sgst;
+                        }else{
+                            previousTotalTax = previousTotalTax - cartItemData[0].igst;
+                        }
                     }
                     let cartUpdateData = {
                         grandTotal : ( previousGrandTotal + price * quantity ),
-                        quantity : ( previousQuantity + quantity )
+                        quantity : ( previousQuantity + quantity ),
+                        taxType : taxType,
+                        totalTax : ( previousTotalTax + totalTax )
                     };
                     let updateCartData = await Cart.update({_id:mongoose.mongo.ObjectID(cartData[0].id)},cartUpdateData);
                 }
@@ -76,7 +117,9 @@ module.exports = {
                         userId : userId,
                         sessionId : sessionId,
                         grandTotal : price * quantity,
-                        quantity : quantity
+                        quantity : quantity,
+                        taxType : taxType,
+                        totalTax : totalTax
                     };
                     let cart = new Cart(cartInsertData);
                     cart.save();
@@ -85,7 +128,12 @@ module.exports = {
                 if(cartItemData.length>0) { 
                     let cartItemUpdateData = {
                         totalPrice : ( price * quantity ),
-                        quantity : quantity
+                        quantity : quantity,
+                        taxType : taxType,
+                        tax : tax,
+                        cgst : cgst,
+                        sgst : sgst,
+                        igst : igst
                     };
                     let updateCartData = await Cartitem.update({_id:mongoose.mongo.ObjectID(cartItemData[0].id)},cartItemUpdateData);
                     return res.status(200).json({ 
@@ -104,7 +152,12 @@ module.exports = {
                         varientId : varientId,
                         price : price,
                         totalPrice : price * quantity,
-                        quantity : quantity
+                        quantity : quantity,
+                        taxType : taxType,
+                        tax : tax,
+                        cgst : cgst,
+                        sgst : sgst,
+                        igst : igst
                     };
                     let cartitem = new Cartitem(cartItemInsertData);
                     cartitem.save(function(err, data){
@@ -149,6 +202,12 @@ module.exports = {
                     grandTotal : ( parseInt(cartData.grandTotal) - parseInt(deletedData.totalPrice) ),
                     quantity : ( parseInt(cartData.quantity) - parseInt(deletedData.quantity) )
                 };
+                if(cartData.taxType == 1)
+                {
+                    cartUpdateData.totalTax = cartData.totalTax - cartItemData.cgst - cartItemData.sgst;
+                }else{
+                    cartUpdateData.totalTax = cartData.totalTax - deletedData.igst;
+                }
                 let updateCartData = await Cart.update({_id:mongoose.mongo.ObjectID(cartData.id)},cartUpdateData);
                 return res.status(200).json({ 
                     data: [], 
@@ -281,22 +340,49 @@ module.exports = {
         if(!errors.isEmpty()){
             return res.status(400).json({errors: errors.array()})
         }
-        try{
+        try {
             let data = {};
+            data.billingAddress = {};
+            data.shippingAddress = {};
             let userId = req.body.userId;
             let condition = {_id: mongoose.mongo.ObjectId(userId)};
             let userData = await Customer.findOne(condition);
+
             data.name = userData.name ? userData.name : '';
             data.address = userData.address ? userData.address : '';
             data.mobile = userData.mobile ? userData.mobile : '';
-            data.country = userData.country ? userData.country : '';
-            await config.helpers.state.getNameById(userData.stateId, async function (stateName) {
-                data.state = stateName.name ? stateName.name : '';
+            data.gst = userData.gst ? userData.gst : '';
+
+            data.billingAddress.address = userData.billingAddress.address ? userData.billingAddress.address : '';
+            data.billingAddress.country = userData.billingAddress.country ? userData.billingAddress.country : '';
+            await config.helpers.state.getNameById(userData.billingAddress.stateId, async function (stateName) {
+                data.billingAddress.state = stateName.name;
             })
-            await config.helpers.city.getNameById(userData.cityId, async function (cityName) {
-                data.city = cityName.name ? cityName.name : '';
+            await config.helpers.city.getNameById(userData.billingAddress.cityId, async function (cityName) {
+                data.billingAddress.city = cityName.name;
             })
-            await config.helpers.pincode.getNameById(userData.pincodeId, async function (pincode) {
+            await config.helpers.pincode.getNameById(userData.billingAddress.pincodeId, async function (pincode) {
+                data.billingAddress.pincode = pincode.pincode;
+            })
+            await config.helpers.area.getNameById(userData.billingAddress.areaId, async function (areaName) {
+                data.billingAddress.area = areaName.name;
+            })
+            await config.helpers.society.getNameById(userData.billingAddress.societyId, async function (societyName) {
+                data.billingAddress.society = societyName.name;
+            })
+            await config.helpers.tower.getNameById(userData.billingAddress.towerId, async function (towerName) {
+                data.billingAddress.tower = towerName.name;
+            })
+
+            data.shippingAddress.address = userData.shippingAddress.address ? userData.shippingAddress.address : '';
+            data.shippingAddress.country = userData.shippingAddress.country ? userData.shippingAddress.country : '';
+            await config.helpers.state.getNameById(userData.shippingAddress.stateId, async function (stateName) {
+                data.shippingAddress.state = stateName.name;
+            })
+            await config.helpers.city.getNameById(userData.shippingAddress.cityId, async function (cityName) {
+                data.shippingAddress.city = cityName.name;
+            })
+            await config.helpers.pincode.getNameById(userData.shippingAddress.pincodeId, async function (pincode) {
                 if(pincode.pincode)
                 {
                     let shippingPrice = await Pincode.findOne({_id: mongoose.mongo.ObjectID(userData.pincodeId)});
@@ -306,22 +392,23 @@ module.exports = {
                 {
                     data.shippingPrice = 0;
                 }
-                data.pincode = pincode.pincode ? pincode.pincode : '';
+                data.shippingAddress.pincode = pincode.pincode;
             })
-            await config.helpers.area.getNameById(userData.areaId, async function (areaName) {
-                data.area = areaName.name ? areaName.name : '';
+            await config.helpers.area.getNameById(userData.shippingAddress.areaId, async function (areaName) {
+                data.shippingAddress.area = areaName.name;
             })
-            await config.helpers.society.getNameById(userData.societyId, async function (societyName) {
-                data.society = societyName.name ? societyName.name : '';
+            await config.helpers.society.getNameById(userData.shippingAddress.societyId, async function (societyName) {
+                data.shippingAddress.society = societyName.name;
             })
-            await config.helpers.tower.getNameById(userData.towerId, async function (towerName) {
-                data.tower = towerName.name ? towerName.name : '';
+            await config.helpers.tower.getNameById(userData.shippingAddress.towerId, async function (towerName) {
+                data.shippingAddress.tower = towerName.name;
             })
             
             let cartData = await Cart.findOne({userId: mongoose.mongo.ObjectId(userId)});
             data.grandTotal = cartData.grandTotal ? cartData.grandTotal : '';
             data.subTotal = cartData.grandTotal ? cartData.grandTotal - cartData.couponAmount: '';
             data.couponAmount = cartData.couponAmount ? cartData.couponAmount : '';
+            data.totalTax = cartData.totalTax ? cartData.totalTax : '';
             data.tax = 0;
             if(data) {
                 return res.status(200).json({ 

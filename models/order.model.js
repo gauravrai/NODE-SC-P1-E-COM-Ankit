@@ -1,5 +1,6 @@
 const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
+var SchemaTypes = mongoose.Schema.Types;
 var ObjectId = mongoose.Schema.Types.ObjectId;
 const constant = '../config/constant';
 
@@ -28,14 +29,12 @@ let orderSchema = new Schema({
     customerDetail:{
         type: Object
     },
-    cgst: {
-        type: Number
+    taxType:{
+        type: Number //1 = cgst & sgst, 2 = igst
     },
-    sgst: {
-        type: Number
-    },
-    igst: {
-        type: Number
+    totalTax:{
+        type: Number,
+        default : 0
     },
     orderStatus: {
         type: String,

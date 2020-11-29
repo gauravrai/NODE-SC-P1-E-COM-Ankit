@@ -65,7 +65,9 @@ module.exports = {
                     orderStatus: 'NEW',
                     orderFrom: orderFrom == 'app' ? 'APP' : 'WEB',
                     paymentStatus: 'PENDING',
-                    paymentType: paymentType
+                    paymentType: paymentType,
+                    taxType: cartData.taxType,
+                    totalTax: cartData.totalTax
                 }
                 let order = new Order(orderInsertData);
                 order.save();
@@ -92,6 +94,11 @@ module.exports = {
                         totalPrice: cartItemData[i].totalPrice,
                         quantity: cartItemData[i].quantity,
                         customerDetail : customerDetail,
+                        taxType: cartItemData[i].taxType,
+                        tax: cartItemData[i].tax,
+                        cgst: cartItemData[i].cgst,
+                        sgst: cartItemData[i].sgst,
+                        igst: cartItemData[i].igst
                     }
                     let orderdetail = new Orderdetail(orderDetailInsertData);
                     orderdetail.save();

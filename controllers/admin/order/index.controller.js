@@ -370,6 +370,7 @@ module.exports = {
 			let grandTotal = 0;
 			let subTotal = 0;
 			let quantity = 0;
+			let taxAmount = 0;
 			for(i=0; i < id.length; i++){
 				let rejectOrderInsertData = {};
 				let orderDetailData = await Orderdetail.findOne({_id: mongoose.mongo.ObjectId(id[i]) },{createdAt: 0, updatedAt: 0, __v: 0, _id: 0, status: 0, deletedAt: 0} );
@@ -381,11 +382,22 @@ module.exports = {
 				rejectOrderInsertData.price = orderDetailData.price;
 				rejectOrderInsertData.totalPrice = orderDetailData.totalPrice;
 				rejectOrderInsertData.quantity = orderDetailData.quantity;
+				rejectOrderInsertData.taxType = orderDetailData.taxType;
+				rejectOrderInsertData.tax = orderDetailData.tax;
+				rejectOrderInsertData.cgst = orderDetailData.cgst;
+				rejectOrderInsertData.sgst = orderDetailData.sgst;
+				rejectOrderInsertData.igst = orderDetailData.igst;
 				let rejectOrder = new Rejectorder(rejectOrderInsertData);
 				rejectOrder.save();
 				grandTotal = ( grandTotal + orderDetailData.totalPrice );
 				subTotal = ( subTotal + orderDetailData.totalPrice );
 				quantity = ( quantity + orderDetailData.quantity );
+				if(orderDetailData.taxType == 1)
+				{
+					taxAmount = ( taxAmount + orderDetailData.cgst + orderDetailData.sgst );
+				}else {
+					taxAmount = ( taxAmount + orderDetailData.igst );
+				}
 
 				let freeItemData = await Freeitem.findOne({orderDetailId: mongoose.mongo.ObjectId(id[i]) });
 				await Orderdetail.deleteOne({_id: mongoose.mongo.ObjectId(id[i]) });
@@ -396,7 +408,8 @@ module.exports = {
 			let orderUpdateData = {
 				grandTotal : orderData.grandTotal - grandTotal,
 				subTotal : orderData.subTotal - subTotal,
-				quantity : orderData.quantity - quantity
+				quantity : orderData.quantity - quantity,
+				totalTax : orderData.totalTax - taxAmount
 			}
 			let updateOrder = await Order.updateOne({odid: odid},orderUpdateData);
 			res.send('OK');

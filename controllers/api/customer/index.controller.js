@@ -1,10 +1,6 @@
 const model  = require('../../../models/index.model');
 const config = require('../../../config/index');
-const db 	   = config.connection;
-const async = require("async");
 const mongoose = require('mongoose');
-const bcrypt = require("bcrypt-nodejs");
-const moment = require('moment');
 const jwt = require("jsonwebtoken");
 const Messagetemplate = model.message_template;
 const { validationResult } = require('express-validator')
@@ -288,13 +284,13 @@ module.exports = {
             shippingAddress : shippingAddressData,
         };
         try {
-            let customer = await Customer.findOne({ mobile: req.user.mobile });
+            let customer = await Customer.findOne({ mobile: mobile });
             
             if(!customer){
                 //insert new customer profile
                 let customerPObj = await new Customer({
                                             name,
-                                            "mobile": req.user.mobile,
+                                            "mobile": mobile,
                                             email,
                                             gst,
                                             billingAddress,
@@ -309,7 +305,7 @@ module.exports = {
             }
             else{
                 //update the customer profile
-                await Customer.updateOne({ mobile: req.user.mobile }, CustomerData, function( err, data ){
+                await Customer.updateOne({ mobile: mobile }, CustomerData, function( err, data ){
                     if(err) console.log(err)
                     return res.status(200).json({
                                 data: CustomerData,

@@ -1,5 +1,6 @@
 const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
+var SchemaTypes = mongoose.Schema.Types;
 var ObjectId = mongoose.Schema.Types.ObjectId;
 
 let CartSchema = new Schema({
@@ -23,6 +24,13 @@ let CartSchema = new Schema({
     },
     couponAmount: {
         type: Number,
+    },
+    taxType:{
+        type: Number //1 = cgst & sgst, 2 = igst
+    },
+    totalTax:{
+        type: Number,
+        default : 0
     },
     status: {
         type: Boolean,

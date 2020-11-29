@@ -1,5 +1,6 @@
 const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
+var SchemaTypes = mongoose.Schema.Types;
 var ObjectId = mongoose.Schema.Types.ObjectId;
 
 let OrderDetailSchema = new Schema({
@@ -29,6 +30,25 @@ let OrderDetailSchema = new Schema({
     },
     quantity:{
         type: Number
+    },
+    taxType:{
+        type: Number //1 = cgst & sgst, 2 = igst
+    },
+    tax:{
+        type: Number, //tax percent based on taxType
+        default : 0
+    },
+    cgst:{
+        type: Number,
+        default : 0 //cgst tax amount
+    },
+    sgst:{
+        type: Number,
+        default : 0 //sgst tax amount
+    },
+    igst:{
+        type: Number,
+        default : 0 //igst tax amount
     },
     status: {
         type: Boolean,
