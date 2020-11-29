@@ -18,14 +18,14 @@ let CustomerSchema = new Schema({
         required: true,
         unique: true
     },
+    gst: {
+        type: String,
+    },
     billingAddress: {
         type: Object
     },
     shippingAddress: {
         type: Object
-    },
-    gst: {
-        type: String,
     },
     status: {
         type: Boolean,

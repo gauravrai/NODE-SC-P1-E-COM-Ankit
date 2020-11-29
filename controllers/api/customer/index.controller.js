@@ -237,13 +237,13 @@ module.exports = {
                             });
         
     },
-    
+
     updateCustomer: async function( req, res ) {
         const errors = validationResult(req)
         if(!errors.isEmpty()){
             return res.status(400).json({errors: errors.array()})
         }
-        let { mobile, sameAsBillingAddress, name, email, billingAddress, billingCountry, billingState, billingcity, billingPicode, billingArea, billingSociety, billingTower, shippingAddress, shippingCountry, shippingState, shippingcity, shippingPicode, shippingArea, shippingSociety, shippingTower } = req.body;
+        let { mobile, sameAsBillingAddress, name, email, gst, billingAddress, billingCountry, billingState, billingcity, billingPicode, billingArea, billingSociety, billingTower, shippingAddress, shippingCountry, shippingState, shippingcity, shippingPicode, shippingArea, shippingSociety, shippingTower } = req.body;
         
         let billingAddressData = {
             address: billingAddress ? billingAddress : '',
@@ -283,6 +283,7 @@ module.exports = {
         let CustomerData = {
             name : name,
             email : email,
+            gst : gst,
             billingAddress : billingAddressData,
             shippingAddress : shippingAddressData,
         };
@@ -295,6 +296,7 @@ module.exports = {
                                             name,
                                             "mobile": req.user.mobile,
                                             email,
+                                            gst,
                                             billingAddress,
                                             shippingAddress
                                         });
@@ -412,6 +414,7 @@ module.exports = {
             data.name = userData.name ? userData.name : '';
             data.email = userData.email ? userData.email : '';
             data.mobile = userData.mobile ? userData.mobile : '';
+            data.gst = userData.gst ? userData.gst : '';
 
             data.billingAddress.address = userData.billingAddress.address ? userData.billingAddress.address : '';
             data.billingAddress.country = userData.billingAddress.country ? userData.billingAddress.country : '';
