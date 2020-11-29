@@ -22,6 +22,7 @@
             <div class="card-header d-flex p-0">
               <h3 class="card-title p-3"><%=pageTitle%></h3>
               <ul class="nav nav-pills ml-auto p-2">
+                <li class="nav-item"><a class="btn btn-block btn-danger" href="<%=APPCONSTANT.ADMINCALLURL%>/export_city" target="_blank">Export</a></li>&nbsp;&nbsp;
                 <% if(permissionData.add == '1'){ %>
                 <li class="nav-item"><a class="btn btn-block btn-primary" href="<%=APPCONSTANT.ADMINCALLURL%>/add_city">Add City</a></li>
                 <% } %>

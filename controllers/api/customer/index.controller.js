@@ -93,6 +93,7 @@ module.exports = {
         }
           
     },
+
     // @route       GET api/v1/resendOtp
     // @description Resend OTP 
     // @access      Public
@@ -143,6 +144,7 @@ module.exports = {
         }
           
     },
+
     // @route       GET api/v1/checkcustomerotp
     // @description Customer validate otp and mobile exists 
     // @access      Public
@@ -215,6 +217,7 @@ module.exports = {
         }
            
     },
+
     customer: async function( req, res ) {
 
         const customercheck = await Customer.findOne({
@@ -234,33 +237,66 @@ module.exports = {
                             });
         
     },
+    
     updateCustomer: async function( req, res ) {
-        
         const errors = validationResult(req)
         if(!errors.isEmpty()){
             return res.status(400).json({errors: errors.array()})
         }
-
-
-        const { mobile, name, email, address } = req.body
+        let { mobile, sameAsBillingAddress, name, email, billingAddress, billingCountry, billingState, billingcity, billingPicode, billingArea, billingSociety, billingTower, shippingAddress, shippingCountry, shippingState, shippingcity, shippingPicode, shippingArea, shippingSociety, shippingTower } = req.body;
+        
+        let billingAddressData = {
+            address: billingAddress ? billingAddress : '',
+            country: billingCountry ? billingCountry : '',
+            state: billingState ? mongoose.mongo.ObjectId(billingState) : '',
+            city: billingcity ? mongoose.mongo.ObjectId(billingcity) : '',
+            pincode: billingPicode ? mongoose.mongo.ObjectId(billingPicode) : '',
+            area: billingArea ? mongoose.mongo.ObjectId(billingArea) : '',
+            society: billingSociety ? mongoose.mongo.ObjectId(billingSociety) : '',
+            tower: billingTower ? mongoose.mongo.ObjectId(billingTower) : ''
+        };
+        
+        if(sameAsBillingAddress) {
+            let shippingAddressData = {
+                address: shippingAddress ? shippingAddress : '',
+                country: shippingCountry ? shippingCountry : '',
+                state: shippingState ? mongoose.mongo.ObjectId(shippingState) : '',
+                city: shippingcity ? mongoose.mongo.ObjectId(shippingcity) : '',
+                pincode: shippingPicode ? mongoose.mongo.ObjectId(shippingPicode) : '',
+                area: shippingArea ? mongoose.mongo.ObjectId(shippingArea) : '',
+                society: shippingSociety ? mongoose.mongo.ObjectId(shippingSociety) : '',
+                tower: shippingTower ? mongoose.mongo.ObjectId(shippingTower) : ''
+            };
+        }else {
+            let shippingAddressData = {
+                address: billingAddress ? billingAddress : '',
+                country: billingCountry ? billingCountry : '',
+                state: billingState ? mongoose.mongo.ObjectId(billingState) : '',
+                city: billingcity ? mongoose.mongo.ObjectId(billingcity) : '',
+                pincode: billingPicode ? mongoose.mongo.ObjectId(billingPicode) : '',
+                area: billingArea ? mongoose.mongo.ObjectId(billingArea) : '',
+                society: billingSociety ? mongoose.mongo.ObjectId(billingSociety) : '',
+                tower: billingTower ? mongoose.mongo.ObjectId(billingTower) : ''
+            };
+        }
         
         let CustomerData = {
             name : name,
             email : email,
-            address : address
+            billingAddress : billingAddressData,
+            shippingAddress : shippingAddressData,
         };
         try {
-            const customer = await Customer.findOne({
-                mobile: req.user.mobile
-            })
+            let customer = await Customer.findOne({ mobile: req.user.mobile });
             
             if(!customer){
-                //update the customer profile
-                const customerPObj = await new Customer({
+                //insert new customer profile
+                let customerPObj = await new Customer({
                                             name,
                                             "mobile": req.user.mobile,
                                             email,
-                                            address
+                                            billingAddress,
+                                            shippingAddress
                                         });
                 customerPObj.save()
                 return res.status(200).json({
@@ -270,13 +306,9 @@ module.exports = {
                             });
             }
             else{
-                //insert new customer profile
-                await Customer.updateOne({ 
-                    mobile: req.user.mobile 
-                },
-                CustomerData, function( err, data ){
+                //update the customer profile
+                await Customer.updateOne({ mobile: req.user.mobile }, CustomerData, function( err, data ){
                     if(err) console.log(err)
-
                     return res.status(200).json({
                                 data: CustomerData,
                                 status: 'success', 
@@ -305,16 +337,45 @@ module.exports = {
             return res.status(400).json({errors: errors.array()})
         }
         try{
-            let userId = req.body.userId;
+            let { userId, sameAsBillingAddress, billingAddress, billingCountry, billingState, billingcity, billingPicode, billingArea, billingSociety, billingTower, shippingAddress, shippingCountry, shippingState, shippingcity, shippingPicode, shippingArea, shippingSociety, shippingTower } = req.body;
+
+            let billingAddressData = {
+                address: billingAddress ? billingAddress : '',
+                country: billingCountry ? billingCountry : '',
+                state: billingState ? mongoose.mongo.ObjectId(billingState) : '',
+                city: billingcity ? mongoose.mongo.ObjectId(billingcity) : '',
+                pincode: billingPicode ? mongoose.mongo.ObjectId(billingPicode) : '',
+                area: billingArea ? mongoose.mongo.ObjectId(billingArea) : '',
+                society: billingSociety ? mongoose.mongo.ObjectId(billingSociety) : '',
+                tower: billingTower ? mongoose.mongo.ObjectId(billingTower) : ''
+            };
+        
+            if(sameAsBillingAddress) {
+                let shippingAddressData = {
+                    address: shippingAddress ? shippingAddress : '',
+                    country: shippingCountry ? shippingCountry : '',
+                    state: shippingState ? mongoose.mongo.ObjectId(shippingState) : '',
+                    city: shippingcity ? mongoose.mongo.ObjectId(shippingcity) : '',
+                    pincode: shippingPicode ? mongoose.mongo.ObjectId(shippingPicode) : '',
+                    area: shippingArea ? mongoose.mongo.ObjectId(shippingArea) : '',
+                    society: shippingSociety ? mongoose.mongo.ObjectId(shippingSociety) : '',
+                    tower: shippingTower ? mongoose.mongo.ObjectId(shippingTower) : ''
+                };
+            }else {
+                let shippingAddressData = {
+                    address: billingAddress ? billingAddress : '',
+                    country: billingCountry ? billingCountry : '',
+                    state: billingState ? mongoose.mongo.ObjectId(billingState) : '',
+                    city: billingcity ? mongoose.mongo.ObjectId(billingcity) : '',
+                    pincode: billingPicode ? mongoose.mongo.ObjectId(billingPicode) : '',
+                    area: billingArea ? mongoose.mongo.ObjectId(billingArea) : '',
+                    society: billingSociety ? mongoose.mongo.ObjectId(billingSociety) : '',
+                    tower: billingTower ? mongoose.mongo.ObjectId(billingTower) : ''
+                };
+            }
             let userData = {
-                address : req.body.address ? req.body.address : '',
-                country : req.body.country ? req.body.country : '',
-                stateId : req.body.stateId ? mongoose.mongo.ObjectID(req.body.stateId) : '',
-                cityId : req.body.cityId ? mongoose.mongo.ObjectID(req.body.cityId) : '',
-                pincodeId : req.body.pincodeId ? mongoose.mongo.ObjectID(req.body.pincodeId) : '',
-                areaId: req.body.areaId ? mongoose.mongo.ObjectID(req.body.areaId) : '',
-                societyId : req.body.societyId ? mongoose.mongo.ObjectID(req.body.societyId) : '',
-                towerId : req.body.towerId ? mongoose.mongo.ObjectID(req.body.towerId) : ''
+                billingAddress : billingAddressData,
+                shippingAddress : shippingAddressData
             };
             let updateUserData = await Customer.update({_id:mongoose.mongo.ObjectID(userId)},userData);
             return res.status(200).json({ 
@@ -342,31 +403,56 @@ module.exports = {
         }
         try{
             let data = {};
+            data.billingAddress = {};
+            data.shippingAddress = {};
             let userId = req.body.userId;
             let condition = {_id: mongoose.mongo.ObjectId(userId)};
             let userData = await Customer.findOne(condition);
+            
             data.name = userData.name ? userData.name : '';
             data.email = userData.email ? userData.email : '';
-            data.address = userData.address ? userData.address : '';
             data.mobile = userData.mobile ? userData.mobile : '';
-            data.country = userData.country ? userData.country : '';
-            await config.helpers.state.getNameById(userData.stateId, async function (stateName) {
-                data.state = stateName.name;
+
+            data.billingAddress.address = userData.billingAddress.address ? userData.billingAddress.address : '';
+            data.billingAddress.country = userData.billingAddress.country ? userData.billingAddress.country : '';
+            await config.helpers.state.getNameById(userData.billingAddress.stateId, async function (stateName) {
+                data.billingAddress.state = stateName.name;
             })
-            await config.helpers.city.getNameById(userData.cityId, async function (cityName) {
-                data.city = cityName.name;
+            await config.helpers.city.getNameById(userData.billingAddress.cityId, async function (cityName) {
+                data.billingAddress.city = cityName.name;
             })
-            await config.helpers.pincode.getNameById(userData.pincodeId, async function (pincode) {
-                data.pincode = pincode.pincode;
+            await config.helpers.pincode.getNameById(userData.billingAddress.pincodeId, async function (pincode) {
+                data.billingAddress.pincode = pincode.pincode;
             })
-            await config.helpers.area.getNameById(userData.areaId, async function (areaName) {
-                data.area = areaName.name;
+            await config.helpers.area.getNameById(userData.billingAddress.areaId, async function (areaName) {
+                data.billingAddress.area = areaName.name;
             })
-            await config.helpers.society.getNameById(userData.societyId, async function (societyName) {
-                data.society = societyName.name;
+            await config.helpers.society.getNameById(userData.billingAddress.societyId, async function (societyName) {
+                data.billingAddress.society = societyName.name;
             })
-            await config.helpers.tower.getNameById(userData.towerId, async function (towerName) {
-                data.tower = towerName.name;
+            await config.helpers.tower.getNameById(userData.billingAddress.towerId, async function (towerName) {
+                data.billingAddress.tower = towerName.name;
+            })
+
+            data.shippingAddress.address = userData.shippingAddress.address ? userData.shippingAddress.address : '';
+            data.shippingAddress.country = userData.shippingAddress.country ? userData.shippingAddress.country : '';
+            await config.helpers.state.getNameById(userData.shippingAddress.stateId, async function (stateName) {
+                data.shippingAddress.state = stateName.name;
+            })
+            await config.helpers.city.getNameById(userData.shippingAddress.cityId, async function (cityName) {
+                data.shippingAddress.city = cityName.name;
+            })
+            await config.helpers.pincode.getNameById(userData.shippingAddress.pincodeId, async function (pincode) {
+                data.shippingAddress.pincode = pincode.pincode;
+            })
+            await config.helpers.area.getNameById(userData.shippingAddress.areaId, async function (areaName) {
+                data.shippingAddress.area = areaName.name;
+            })
+            await config.helpers.society.getNameById(userData.shippingAddress.societyId, async function (societyName) {
+                data.shippingAddress.society = societyName.name;
+            })
+            await config.helpers.tower.getNameById(userData.shippingAddress.towerId, async function (towerName) {
+                data.shippingAddress.tower = towerName.name;
             })
             if(data) {
                 return res.status(200).json({ 

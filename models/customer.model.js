@@ -18,30 +18,14 @@ let CustomerSchema = new Schema({
         required: true,
         unique: true
     },
-    address: {
+    billingAddress: {
+        type: Object
+    },
+    shippingAddress: {
+        type: Object
+    },
+    gst: {
         type: String,
-        default: null
-    },
-    country : {
-        type: String,
-    },
-    stateId: {
-        type: ObjectId,
-    },
-    cityId: {
-        type: ObjectId,
-    },
-    pincodeId: {
-        type: ObjectId,
-    },
-    areaId: {
-        type: ObjectId,
-    },
-    societyId: {
-        type: ObjectId,
-    },
-    towerId: {
-        type: ObjectId,
     },
     status: {
         type: Boolean,

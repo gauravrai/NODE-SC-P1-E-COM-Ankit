@@ -29,6 +29,7 @@ module.exports = function(app) {
 	var contactRoutes = require('./admin/contact.routes');
 
 	var ajaxRoutes = require('./admin/ajax.routes');
+	var exportRoutes = require('./admin/export.routes');
 	var router = express.Router();
 	app.use('',router);
 
@@ -59,4 +60,5 @@ module.exports = function(app) {
 	contactRoutes(router);
 	
 	ajaxRoutes(router);
+	exportRoutes(router);
 }
