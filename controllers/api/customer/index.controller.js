@@ -352,7 +352,7 @@ module.exports = {
                 tower: billingTower ? mongoose.mongo.ObjectId(billingTower) : ''
             };
             
-            sameAsBillingAddress = sameAsBillingAddress ? true : false;
+            sameAsBillingAddress = parseInt(sameAsBillingAddress) ? true : false;
             let shippingAddressData = {};
             if(sameAsBillingAddress) {
                 shippingAddressData = {
@@ -385,7 +385,7 @@ module.exports = {
             };
             let updateUserData = await Customer.update({_id:mongoose.mongo.ObjectID(userId)},userData);
             return res.status(200).json({ 
-                data: [], 
+                data: userData, 
                 status: 'success', 
                 message: "Customer Address been updated successfully!!" 
             });	
@@ -414,7 +414,6 @@ module.exports = {
             let userId = req.body.userId;
             let condition = {_id: mongoose.mongo.ObjectId(userId)};
             let userData = await Customer.findOne(condition);
-            
             data.name = userData.name ? userData.name : '';
             data.email = userData.email ? userData.email : '';
             data.mobile = userData.mobile ? userData.mobile : '';
@@ -423,44 +422,44 @@ module.exports = {
 
             data.billingAddress.address = userData.billingAddress.address ? userData.billingAddress.address : '';
             data.billingAddress.country = userData.billingAddress.country ? userData.billingAddress.country : '';
-            await config.helpers.state.getNameById(userData.billingAddress.stateId, async function (stateName) {
-                data.billingAddress.state = stateName.name;
+            await config.helpers.state.getNameById(userData.billingAddress.state, async function (stateName) {
+                data.billingAddress.state = stateName.name ? stateName.name : '';
             })
-            await config.helpers.city.getNameById(userData.billingAddress.cityId, async function (cityName) {
-                data.billingAddress.city = cityName.name;
+            await config.helpers.city.getNameById(userData.billingAddress.city, async function (cityName) {
+                data.billingAddress.city = cityName.name ? cityName.name : '';
             })
-            await config.helpers.pincode.getNameById(userData.billingAddress.pincodeId, async function (pincode) {
-                data.billingAddress.pincode = pincode.pincode;
+            await config.helpers.pincode.getNameById(userData.billingAddress.pincode, async function (pincode) {
+                data.billingAddress.pincode = pincode.pincode ? pincode.name : '';
             })
-            await config.helpers.area.getNameById(userData.billingAddress.areaId, async function (areaName) {
-                data.billingAddress.area = areaName.name;
+            await config.helpers.area.getNameById(userData.billingAddress.area, async function (areaName) {
+                data.billingAddress.area = areaName.name ? areaName.name : '';
             })
-            await config.helpers.society.getNameById(userData.billingAddress.societyId, async function (societyName) {
-                data.billingAddress.society = societyName.name;
+            await config.helpers.society.getNameById(userData.billingAddress.society, async function (societyName) {
+                data.billingAddress.society = societyName.name ? societyName.name : '';
             })
-            await config.helpers.tower.getNameById(userData.billingAddress.towerId, async function (towerName) {
-                data.billingAddress.tower = towerName.name;
+            await config.helpers.tower.getNameById(userData.billingAddress.tower, async function (towerName) {
+                data.billingAddress.tower = towerName.name ? towerName.name : '';
             })
 
             data.shippingAddress.address = userData.shippingAddress.address ? userData.shippingAddress.address : '';
             data.shippingAddress.country = userData.shippingAddress.country ? userData.shippingAddress.country : '';
-            await config.helpers.state.getNameById(userData.shippingAddress.stateId, async function (stateName) {
-                data.shippingAddress.state = stateName.name;
+            await config.helpers.state.getNameById(userData.shippingAddress.state, async function (stateName) {
+                data.shippingAddress.state = stateName.name ? stateName.name : '';
             })
-            await config.helpers.city.getNameById(userData.shippingAddress.cityId, async function (cityName) {
-                data.shippingAddress.city = cityName.name;
+            await config.helpers.city.getNameById(userData.shippingAddress.city, async function (cityName) {
+                data.shippingAddress.city = cityName.name ? cityName.name : '';
             })
-            await config.helpers.pincode.getNameById(userData.shippingAddress.pincodeId, async function (pincode) {
-                data.shippingAddress.pincode = pincode.pincode;
+            await config.helpers.pincode.getNameById(userData.shippingAddress.pincode, async function (pincode) {
+                data.shippingAddress.pincode = pincode.pincode ? pincode.name : '';
             })
-            await config.helpers.area.getNameById(userData.shippingAddress.areaId, async function (areaName) {
-                data.shippingAddress.area = areaName.name;
+            await config.helpers.area.getNameById(userData.shippingAddress.area, async function (areaName) {
+                data.shippingAddress.area = areaName.name ? areaName.name : '';
             })
-            await config.helpers.society.getNameById(userData.shippingAddress.societyId, async function (societyName) {
-                data.shippingAddress.society = societyName.name;
+            await config.helpers.society.getNameById(userData.shippingAddress.society, async function (societyName) {
+                data.shippingAddress.society = societyName.name ? societyName.name : '';
             })
-            await config.helpers.tower.getNameById(userData.shippingAddress.towerId, async function (towerName) {
-                data.shippingAddress.tower = towerName.name;
+            await config.helpers.tower.getNameById(userData.shippingAddress.tower, async function (towerName) {
+                data.shippingAddress.tower = towerName.name ? towerName.name : '';
             })
             if(data) {
                 return res.status(200).json({ 
