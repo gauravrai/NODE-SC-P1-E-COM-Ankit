@@ -6,6 +6,9 @@ let WishlistSchema = new Schema({
     productId: {
         type: ObjectId
     },
+    varientId: {
+        type: ObjectId
+    },
     userId: {
         type: ObjectId
     },

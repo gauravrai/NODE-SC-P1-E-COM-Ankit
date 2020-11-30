@@ -4,6 +4,7 @@ const mongoose = require('mongoose');
 const Cart = model.cart;
 const Cartitem = model.cart_item;
 const Customer = model.customer;
+const Product = model.product;
 const Wishlist = model.wishlist;
 const Pincode = model.pincode;
 const { validationResult } = require('express-validator');
@@ -91,14 +92,13 @@ module.exports = {
                     cartId = cartData[0].id;
                     let previousGrandTotal = parseInt(cartData[0].grandTotal);
                     let previousQuantity = parseInt(cartData[0].quantity);
-                    let previousTotalTax = parseInt(cartData[0].totalTax);
+                    let previousTotalTax = cartData[0].totalTax;
                     if(cartItemData.length>0) {
                         previousGrandTotal = previousGrandTotal - cartItemData[0].totalPrice;
                         previousQuantity = previousQuantity - cartItemData[0].quantity;
                         if(cartData[0].taxType == 1)
                         {
-                            previousTotalTax = previousTotalTax - cartItemData[0].cgst;
-                            previousTotalTax = previousTotalTax - cartItemData[0].sgst;
+                            previousTotalTax = previousTotalTax - cartItemData[0].cgst - cartItemData[0].sgst;
                         }else{
                             previousTotalTax = previousTotalTax - cartItemData[0].igst;
                         }
@@ -109,7 +109,7 @@ module.exports = {
                         taxType : taxType,
                         totalTax : ( previousTotalTax + totalTax )
                     };
-                    let updateCartData = await Cart.update({_id:mongoose.mongo.ObjectID(cartData[0].id)},cartUpdateData);
+                    let updateCartData = await Cart.updateOne({_id:mongoose.mongo.ObjectID(cartData[0].id)},cartUpdateData);
                 }
                 else
                 {
@@ -135,7 +135,7 @@ module.exports = {
                         sgst : sgst,
                         igst : igst
                     };
-                    let updateCartData = await Cartitem.update({_id:mongoose.mongo.ObjectID(cartItemData[0].id)},cartItemUpdateData);
+                    let updateCartData = await Cartitem.updateOne({_id:mongoose.mongo.ObjectID(cartItemData[0].id)},cartItemUpdateData);
                     return res.status(200).json({ 
                         data: [], 
                         status: 'success', 
@@ -204,11 +204,11 @@ module.exports = {
                 };
                 if(cartData.taxType == 1)
                 {
-                    cartUpdateData.totalTax = cartData.totalTax - cartItemData.cgst - cartItemData.sgst;
+                    cartUpdateData.totalTax = cartData.totalTax - deletedData.cgst - deletedData.sgst;
                 }else{
                     cartUpdateData.totalTax = cartData.totalTax - deletedData.igst;
                 }
-                let updateCartData = await Cart.update({_id:mongoose.mongo.ObjectID(cartData.id)},cartUpdateData);
+                let updateCartData = await Cart.updateOne({_id:mongoose.mongo.ObjectID(cartData.id)},cartUpdateData);
                 return res.status(200).json({ 
                     data: [], 
                     status: 'success', 
@@ -293,6 +293,10 @@ module.exports = {
                         "price": { $first:"$price" },
                         "totalPrice": { $first:"$totalPrice" },
                         "quantity": { $first:"$quantity" },
+                        "tax": { $first:"$tax" },
+                        "cgst": { $first:"$cgst" },
+                        "sgst": { $first:"$sgst" },
+                        "igst": { $first:"$igst" },
                         "productData": { $first:"$productData" }
                     }
                 },
@@ -356,53 +360,53 @@ module.exports = {
 
             data.billingAddress.address = userData.billingAddress.address ? userData.billingAddress.address : '';
             data.billingAddress.country = userData.billingAddress.country ? userData.billingAddress.country : '';
-            await config.helpers.state.getNameById(userData.billingAddress.stateId, async function (stateName) {
-                data.billingAddress.state = stateName.name;
+            await config.helpers.state.getNameById(userData.billingAddress.state, async function (stateName) {
+                data.billingAddress.state = stateName.name ? stateName.name : '';
             })
-            await config.helpers.city.getNameById(userData.billingAddress.cityId, async function (cityName) {
-                data.billingAddress.city = cityName.name;
+            await config.helpers.city.getNameById(userData.billingAddress.city, async function (cityName) {
+                data.billingAddress.city = cityName.name ? cityName.name : '';
             })
-            await config.helpers.pincode.getNameById(userData.billingAddress.pincodeId, async function (pincode) {
-                data.billingAddress.pincode = pincode.pincode;
+            await config.helpers.pincode.getNameById(userData.billingAddress.pincode, async function (pincode) {
+                data.billingAddress.pincode = pincode.pincode ? pincode.pincode : '';
             })
-            await config.helpers.area.getNameById(userData.billingAddress.areaId, async function (areaName) {
-                data.billingAddress.area = areaName.name;
+            await config.helpers.area.getNameById(userData.billingAddress.area, async function (areaName) {
+                data.billingAddress.area = areaName.name ? areaName.name : '';
             })
-            await config.helpers.society.getNameById(userData.billingAddress.societyId, async function (societyName) {
-                data.billingAddress.society = societyName.name;
+            await config.helpers.society.getNameById(userData.billingAddress.society, async function (societyName) {
+                data.billingAddress.society = societyName.name ? societyName.name : '';
             })
-            await config.helpers.tower.getNameById(userData.billingAddress.towerId, async function (towerName) {
-                data.billingAddress.tower = towerName.name;
+            await config.helpers.tower.getNameById(userData.billingAddress.tower, async function (towerName) {
+                data.billingAddress.tower = towerName.name ? towerName.name : '';
             })
 
             data.shippingAddress.address = userData.shippingAddress.address ? userData.shippingAddress.address : '';
             data.shippingAddress.country = userData.shippingAddress.country ? userData.shippingAddress.country : '';
-            await config.helpers.state.getNameById(userData.shippingAddress.stateId, async function (stateName) {
-                data.shippingAddress.state = stateName.name;
+            await config.helpers.state.getNameById(userData.shippingAddress.state, async function (stateName) {
+                data.shippingAddress.state = stateName.name ? stateName.name : '';
             })
-            await config.helpers.city.getNameById(userData.shippingAddress.cityId, async function (cityName) {
-                data.shippingAddress.city = cityName.name;
+            await config.helpers.city.getNameById(userData.shippingAddress.city, async function (cityName) {
+                data.shippingAddress.city = cityName.name ? cityName.name : '';
             })
-            await config.helpers.pincode.getNameById(userData.shippingAddress.pincodeId, async function (pincode) {
+            await config.helpers.pincode.getNameById(userData.shippingAddress.pincode, async function (pincode) {
                 if(pincode.pincode)
                 {
-                    let shippingPrice = await Pincode.findOne({_id: mongoose.mongo.ObjectID(userData.pincodeId)});
+                    let shippingPrice = await Pincode.findOne({_id: mongoose.mongo.ObjectID(userData.shippingAddress.pincode)});
                     data.shippingPrice = shippingPrice.shippingCharges ? shippingPrice.shippingCharges : 0;
                 }
                 else
                 {
                     data.shippingPrice = 0;
                 }
-                data.shippingAddress.pincode = pincode.pincode;
+                data.shippingAddress.pincode = pincode.pincode ? pincode.pincode : '';
             })
-            await config.helpers.area.getNameById(userData.shippingAddress.areaId, async function (areaName) {
-                data.shippingAddress.area = areaName.name;
+            await config.helpers.area.getNameById(userData.shippingAddress.area, async function (areaName) {
+                data.shippingAddress.area = areaName.name ? areaName.name : '';
             })
-            await config.helpers.society.getNameById(userData.shippingAddress.societyId, async function (societyName) {
-                data.shippingAddress.society = societyName.name;
+            await config.helpers.society.getNameById(userData.shippingAddress.society, async function (societyName) {
+                data.shippingAddress.society = societyName.name ? societyName.name : '';
             })
-            await config.helpers.tower.getNameById(userData.shippingAddress.towerId, async function (towerName) {
-                data.shippingAddress.tower = towerName.name;
+            await config.helpers.tower.getNameById(userData.shippingAddress.tower, async function (towerName) {
+                data.shippingAddress.tower = towerName.name ? towerName.name : '';
             })
             
             let cartData = await Cart.findOne({userId: mongoose.mongo.ObjectId(userId)});

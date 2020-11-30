@@ -429,7 +429,7 @@ module.exports = {
                 data.billingAddress.city = cityName.name ? cityName.name : '';
             })
             await config.helpers.pincode.getNameById(userData.billingAddress.pincode, async function (pincode) {
-                data.billingAddress.pincode = pincode.pincode ? pincode.name : '';
+                data.billingAddress.pincode = pincode.pincode ? pincode.pincode : '';
             })
             await config.helpers.area.getNameById(userData.billingAddress.area, async function (areaName) {
                 data.billingAddress.area = areaName.name ? areaName.name : '';
@@ -450,7 +450,7 @@ module.exports = {
                 data.shippingAddress.city = cityName.name ? cityName.name : '';
             })
             await config.helpers.pincode.getNameById(userData.shippingAddress.pincode, async function (pincode) {
-                data.shippingAddress.pincode = pincode.pincode ? pincode.name : '';
+                data.shippingAddress.pincode = pincode.pincode ? pincode.pincode : '';
             })
             await config.helpers.area.getNameById(userData.shippingAddress.area, async function (areaName) {
                 data.shippingAddress.area = areaName.name ? areaName.name : '';

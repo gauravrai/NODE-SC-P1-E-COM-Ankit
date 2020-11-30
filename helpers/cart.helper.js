@@ -10,7 +10,8 @@ module.exports = {
 	moveToWishlist: async function(productId, varientId, userId, cartData, cb) {
 		let wishlistData = {
 			userId : mongoose.mongo.ObjectId(userId),
-			productId : mongoose.mongo.ObjectId(productId)
+			productId : mongoose.mongo.ObjectId(productId),
+			varientId : mongoose.mongo.ObjectId(varientId)
 		};
 		let wishlist = new Wishlist(wishlistData);
 		wishlist.save();
@@ -25,6 +26,13 @@ module.exports = {
 				grandTotal : ( parseInt(cartData.grandTotal) - parseInt(deletedData.totalPrice) ),
 				quantity : ( parseInt(cartData.quantity) - parseInt(deletedData.quantity) )
 			};
+			
+			if(cartData.taxType == 1)
+			{
+				cartUpdateData.totalTax = cartData.totalTax - deletedData.cgst - deletedData.sgst;
+			}else{
+				cartUpdateData.totalTax = cartData.totalTax - deletedData.igst;
+			}
 			let updateCartData = await Cart.update({_id:mongoose.mongo.ObjectID(cartData.id)},cartUpdateData);
 			cb();
 		}else {
