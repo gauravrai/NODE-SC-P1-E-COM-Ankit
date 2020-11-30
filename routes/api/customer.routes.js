@@ -30,19 +30,12 @@ module.exports = function(router) {
 	router.post(
 		config.constant.APIURL+'/update_customerprofile', 
 		[
-			auth,
-			[
-				check('name', 'Name is required')
-						.not()
-						.isEmpty()
-						.trim()
-						.escape(),
-		    	check('email', 'Email is required')
-		    			.not()
-		    			.isEmpty()
-		    			.isEmail()
-    					.normalizeEmail()
-			]
+			// auth,
+			// [
+				check('name', 'Name is required').not().isEmpty().trim().escape(),
+		    	check('email', 'Email is required').not().isEmpty().isEmail().normalizeEmail(),
+				check('mobile', 'Mobile is required').not().isEmpty().trim().escape()
+			// ]
 		], 
 		indexController.updateCustomer
 	);

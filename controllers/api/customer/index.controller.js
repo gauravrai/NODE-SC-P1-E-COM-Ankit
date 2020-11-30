@@ -239,28 +239,28 @@ module.exports = {
         if(!errors.isEmpty()){
             return res.status(400).json({errors: errors.array()})
         }
-        let { mobile, sameAsBillingAddress, name, email, gst, billingAddress, billingCountry, billingState, billingcity, billingPicode, billingArea, billingSociety, billingTower, shippingAddress, shippingCountry, shippingState, shippingcity, shippingPicode, shippingArea, shippingSociety, shippingTower } = req.body;
+        let { mobile, sameAsBillingAddress, name, email, gst, billingAddress, billingCountry, billingState, billingCity, billingPincode, billingArea, billingSociety, billingTower, shippingAddress, shippingCountry, shippingState, shippingCity, shippingPincode, shippingArea, shippingSociety, shippingTower } = req.body;
         
         let billingAddressData = {
             address: billingAddress ? billingAddress : '',
             country: billingCountry ? billingCountry : '',
             state: billingState ? mongoose.mongo.ObjectId(billingState) : '',
-            city: billingcity ? mongoose.mongo.ObjectId(billingcity) : '',
-            pincode: billingPicode ? mongoose.mongo.ObjectId(billingPicode) : '',
+            city: billingCity ? mongoose.mongo.ObjectId(billingCity) : '',
+            pincode: billingPincode ? mongoose.mongo.ObjectId(billingPincode) : '',
             area: billingArea ? mongoose.mongo.ObjectId(billingArea) : '',
             society: billingSociety ? mongoose.mongo.ObjectId(billingSociety) : '',
             tower: billingTower ? mongoose.mongo.ObjectId(billingTower) : ''
         };
         
-        sameAsBillingAddress = sameAsBillingAddress ? true : false;
+        sameAsBillingAddress = parseInt(sameAsBillingAddress) ? true : false;
         let shippingAddressData = {};
         if(sameAsBillingAddress) {
             shippingAddressData = {
                 address: billingAddress ? billingAddress : '',
                 country: billingCountry ? billingCountry : '',
                 state: billingState ? mongoose.mongo.ObjectId(billingState) : '',
-                city: billingcity ? mongoose.mongo.ObjectId(billingcity) : '',
-                pincode: billingPicode ? mongoose.mongo.ObjectId(billingPicode) : '',
+                city: billingCity ? mongoose.mongo.ObjectId(billingCity) : '',
+                pincode: billingPincode ? mongoose.mongo.ObjectId(billingPincode) : '',
                 area: billingArea ? mongoose.mongo.ObjectId(billingArea) : '',
                 society: billingSociety ? mongoose.mongo.ObjectId(billingSociety) : '',
                 tower: billingTower ? mongoose.mongo.ObjectId(billingTower) : ''
@@ -270,8 +270,8 @@ module.exports = {
                 address: shippingAddress ? shippingAddress : '',
                 country: shippingCountry ? shippingCountry : '',
                 state: shippingState ? mongoose.mongo.ObjectId(shippingState) : '',
-                city: shippingcity ? mongoose.mongo.ObjectId(shippingcity) : '',
-                pincode: shippingPicode ? mongoose.mongo.ObjectId(shippingPicode) : '',
+                city: shippingCity ? mongoose.mongo.ObjectId(shippingCity) : '',
+                pincode: shippingPincode ? mongoose.mongo.ObjectId(shippingPincode) : '',
                 area: shippingArea ? mongoose.mongo.ObjectId(shippingArea) : '',
                 society: shippingSociety ? mongoose.mongo.ObjectId(shippingSociety) : '',
                 tower: shippingTower ? mongoose.mongo.ObjectId(shippingTower) : ''
@@ -284,7 +284,7 @@ module.exports = {
             gst : gst,
             sameAsBillingAddress: sameAsBillingAddress,
             billingAddress : billingAddressData,
-            shippingAddress : shippingAddressData,
+            shippingAddress : shippingAddressData
         };
         try {
             let customer = await Customer.findOne({ mobile: mobile });
@@ -296,8 +296,9 @@ module.exports = {
                                             "mobile": mobile,
                                             email,
                                             gst,
-                                            billingAddress,
-                                            shippingAddress
+                                            sameAsBillingAddress: sameAsBillingAddress,
+                                            billingAddress : billingAddressData,
+                                            shippingAddress : shippingAddressData
                                         });
                 customerPObj.save()
                 return res.status(200).json({
@@ -338,14 +339,14 @@ module.exports = {
             return res.status(400).json({errors: errors.array()})
         }
         try{
-            let { userId, sameAsBillingAddress, billingAddress, billingCountry, billingState, billingcity, billingPicode, billingArea, billingSociety, billingTower, shippingAddress, shippingCountry, shippingState, shippingcity, shippingPicode, shippingArea, shippingSociety, shippingTower } = req.body;
+            let { userId, sameAsBillingAddress, billingAddress, billingCountry, billingState, billingCity, billingPincode, billingArea, billingSociety, billingTower, shippingAddress, shippingCountry, shippingState, shippingCity, shippingPincode, shippingArea, shippingSociety, shippingTower } = req.body;
 
             let billingAddressData = {
                 address: billingAddress ? billingAddress : '',
                 country: billingCountry ? billingCountry : '',
                 state: billingState ? mongoose.mongo.ObjectId(billingState) : '',
-                city: billingcity ? mongoose.mongo.ObjectId(billingcity) : '',
-                pincode: billingPicode ? mongoose.mongo.ObjectId(billingPicode) : '',
+                city: billingCity ? mongoose.mongo.ObjectId(billingCity) : '',
+                pincode: billingPincode ? mongoose.mongo.ObjectId(billingPincode) : '',
                 area: billingArea ? mongoose.mongo.ObjectId(billingArea) : '',
                 society: billingSociety ? mongoose.mongo.ObjectId(billingSociety) : '',
                 tower: billingTower ? mongoose.mongo.ObjectId(billingTower) : ''
@@ -358,8 +359,8 @@ module.exports = {
                     address: billingAddress ? billingAddress : '',
                     country: billingCountry ? billingCountry : '',
                     state: billingState ? mongoose.mongo.ObjectId(billingState) : '',
-                    city: billingcity ? mongoose.mongo.ObjectId(billingcity) : '',
-                    pincode: billingPicode ? mongoose.mongo.ObjectId(billingPicode) : '',
+                    city: billingCity ? mongoose.mongo.ObjectId(billingCity) : '',
+                    pincode: billingPincode ? mongoose.mongo.ObjectId(billingPincode) : '',
                     area: billingArea ? mongoose.mongo.ObjectId(billingArea) : '',
                     society: billingSociety ? mongoose.mongo.ObjectId(billingSociety) : '',
                     tower: billingTower ? mongoose.mongo.ObjectId(billingTower) : ''
@@ -369,8 +370,8 @@ module.exports = {
                     address: shippingAddress ? shippingAddress : '',
                     country: shippingCountry ? shippingCountry : '',
                     state: shippingState ? mongoose.mongo.ObjectId(shippingState) : '',
-                    city: shippingcity ? mongoose.mongo.ObjectId(shippingcity) : '',
-                    pincode: shippingPicode ? mongoose.mongo.ObjectId(shippingPicode) : '',
+                    city: shippingCity ? mongoose.mongo.ObjectId(shippingCity) : '',
+                    pincode: shippingPincode ? mongoose.mongo.ObjectId(shippingPincode) : '',
                     area: shippingArea ? mongoose.mongo.ObjectId(shippingArea) : '',
                     society: shippingSociety ? mongoose.mongo.ObjectId(shippingSociety) : '',
                     tower: shippingTower ? mongoose.mongo.ObjectId(shippingTower) : ''
