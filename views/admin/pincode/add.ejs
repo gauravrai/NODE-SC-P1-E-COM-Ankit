@@ -29,7 +29,7 @@
               <div class="card-body">
                 <div class="form-group">
                   <label for="state">Select State</label>
-                  <select name="stateId" class="form-control" id="stateId" onchange="getLocationFields(this.value, 'city', 'get_city', 'Select City', '')">
+                  <select name="stateId" class="form-control" id="stateId" onchange="getLocationFields(this.value, 'city', 'get_city', 'Select City', '', '')">
                     <option value="">Select State</option>
                   <% for(let i = 0; i < stateData.length; i++){ %>
                     <option value="<%=stateData[i].id%>"><%=stateData[i].name%></option>

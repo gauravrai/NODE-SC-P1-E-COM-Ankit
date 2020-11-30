@@ -21,6 +21,9 @@ let CustomerSchema = new Schema({
     gst: {
         type: String,
     },
+    sameAsBillingAddress: {
+        type: Boolean
+    },
     billingAddress: {
         type: Object
     },

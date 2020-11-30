@@ -39,14 +39,9 @@ module.exports = {
                     name : userData.name ? userData.name : '',
                     mobile : userData.mobile ? userData.mobile : '',
                     email : userData.email ? userData.email : '',
-                    address : userData.address ? userData.address : '',
-                    country : userData.country ? userData.country : '',
-                    stateId : userData.stateId ? mongoose.mongo.ObjectID(userData.stateId) : '',
-                    cityId : userData.cityId ? mongoose.mongo.ObjectID(userData.cityId) : '',
-                    pincodeId : userData.pincodeId ? mongoose.mongo.ObjectID(userData.pincodeId) : '',
-                    areaId : userData.areaId ? mongoose.mongo.ObjectID(userData.userId) : '',
-                    societyId : userData.societyId ? mongoose.mongo.ObjectID(userData.areaId) : '',
-                    towerId : userData.towerId ? mongoose.mongo.ObjectID(userData.towerId) : ''
+                    sameAsBillingAddress: userData.sameAsBillingAddress ? userData.sameAsBillingAddress : false,
+                    billingAddress: userData.billingAddress ? userData.billingAddress : {},
+                    shippingAddress: userData.shippingAddress ? userData.shippingAddress : {}
                 }
                 let couponAmount = cartData.couponAmount ? cartData.couponAmount : 0;
                 let shippingCharges = shippingPrice.shippingCharges ? shippingPrice.shippingCharges : 0;

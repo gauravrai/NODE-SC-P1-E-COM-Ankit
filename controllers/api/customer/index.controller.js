@@ -252,19 +252,10 @@ module.exports = {
             tower: billingTower ? mongoose.mongo.ObjectId(billingTower) : ''
         };
         
+        sameAsBillingAddress = sameAsBillingAddress ? true : false;
+        let shippingAddressData = {};
         if(sameAsBillingAddress) {
-            let shippingAddressData = {
-                address: shippingAddress ? shippingAddress : '',
-                country: shippingCountry ? shippingCountry : '',
-                state: shippingState ? mongoose.mongo.ObjectId(shippingState) : '',
-                city: shippingcity ? mongoose.mongo.ObjectId(shippingcity) : '',
-                pincode: shippingPicode ? mongoose.mongo.ObjectId(shippingPicode) : '',
-                area: shippingArea ? mongoose.mongo.ObjectId(shippingArea) : '',
-                society: shippingSociety ? mongoose.mongo.ObjectId(shippingSociety) : '',
-                tower: shippingTower ? mongoose.mongo.ObjectId(shippingTower) : ''
-            };
-        }else {
-            let shippingAddressData = {
+            shippingAddressData = {
                 address: billingAddress ? billingAddress : '',
                 country: billingCountry ? billingCountry : '',
                 state: billingState ? mongoose.mongo.ObjectId(billingState) : '',
@@ -274,12 +265,24 @@ module.exports = {
                 society: billingSociety ? mongoose.mongo.ObjectId(billingSociety) : '',
                 tower: billingTower ? mongoose.mongo.ObjectId(billingTower) : ''
             };
+        }else {
+            shippingAddressData = {
+                address: shippingAddress ? shippingAddress : '',
+                country: shippingCountry ? shippingCountry : '',
+                state: shippingState ? mongoose.mongo.ObjectId(shippingState) : '',
+                city: shippingcity ? mongoose.mongo.ObjectId(shippingcity) : '',
+                pincode: shippingPicode ? mongoose.mongo.ObjectId(shippingPicode) : '',
+                area: shippingArea ? mongoose.mongo.ObjectId(shippingArea) : '',
+                society: shippingSociety ? mongoose.mongo.ObjectId(shippingSociety) : '',
+                tower: shippingTower ? mongoose.mongo.ObjectId(shippingTower) : ''
+            };
         }
         
         let CustomerData = {
             name : name,
             email : email,
             gst : gst,
+            sameAsBillingAddress: sameAsBillingAddress,
             billingAddress : billingAddressData,
             shippingAddress : shippingAddressData,
         };
@@ -347,20 +350,11 @@ module.exports = {
                 society: billingSociety ? mongoose.mongo.ObjectId(billingSociety) : '',
                 tower: billingTower ? mongoose.mongo.ObjectId(billingTower) : ''
             };
-        
+            
+            sameAsBillingAddress = sameAsBillingAddress ? true : false;
+            let shippingAddressData = {};
             if(sameAsBillingAddress) {
-                let shippingAddressData = {
-                    address: shippingAddress ? shippingAddress : '',
-                    country: shippingCountry ? shippingCountry : '',
-                    state: shippingState ? mongoose.mongo.ObjectId(shippingState) : '',
-                    city: shippingcity ? mongoose.mongo.ObjectId(shippingcity) : '',
-                    pincode: shippingPicode ? mongoose.mongo.ObjectId(shippingPicode) : '',
-                    area: shippingArea ? mongoose.mongo.ObjectId(shippingArea) : '',
-                    society: shippingSociety ? mongoose.mongo.ObjectId(shippingSociety) : '',
-                    tower: shippingTower ? mongoose.mongo.ObjectId(shippingTower) : ''
-                };
-            }else {
-                let shippingAddressData = {
+                shippingAddressData = {
                     address: billingAddress ? billingAddress : '',
                     country: billingCountry ? billingCountry : '',
                     state: billingState ? mongoose.mongo.ObjectId(billingState) : '',
@@ -370,8 +364,21 @@ module.exports = {
                     society: billingSociety ? mongoose.mongo.ObjectId(billingSociety) : '',
                     tower: billingTower ? mongoose.mongo.ObjectId(billingTower) : ''
                 };
+            }else {
+                shippingAddressData = {
+                    address: shippingAddress ? shippingAddress : '',
+                    country: shippingCountry ? shippingCountry : '',
+                    state: shippingState ? mongoose.mongo.ObjectId(shippingState) : '',
+                    city: shippingcity ? mongoose.mongo.ObjectId(shippingcity) : '',
+                    pincode: shippingPicode ? mongoose.mongo.ObjectId(shippingPicode) : '',
+                    area: shippingArea ? mongoose.mongo.ObjectId(shippingArea) : '',
+                    society: shippingSociety ? mongoose.mongo.ObjectId(shippingSociety) : '',
+                    tower: shippingTower ? mongoose.mongo.ObjectId(shippingTower) : ''
+                };
             }
+
             let userData = {
+                sameAsBillingAddress: sameAsBillingAddress,
                 billingAddress : billingAddressData,
                 shippingAddress : shippingAddressData
             };
@@ -411,6 +418,7 @@ module.exports = {
             data.email = userData.email ? userData.email : '';
             data.mobile = userData.mobile ? userData.mobile : '';
             data.gst = userData.gst ? userData.gst : '';
+            data.sameAsBillingAddress = userData.sameAsBillingAddress ? userData.sameAsBillingAddress : '';
 
             data.billingAddress.address = userData.billingAddress.address ? userData.billingAddress.address : '';
             data.billingAddress.country = userData.billingAddress.country ? userData.billingAddress.country : '';

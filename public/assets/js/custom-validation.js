@@ -616,24 +616,12 @@ $(document).ready(function () {
                 minlength: 10,
                 maxlength: 10,
             },
-            address: {
-                required: false,
-            },
-            stateId: {
+            billingCountry: {
                 required: true,
             },
-            cityId: {
+            billingState: {
                 required: true,
-            },
-            pincodeId: {
-                required: true,
-            },
-            areaId: {
-                required: true,
-            },
-            societyId: {
-                required: true,
-            },
+            }
         },
         messages: {
             name: {
@@ -649,21 +637,12 @@ $(document).ready(function () {
                 minlength: "Please enter ten digits only",
                 maxlength: "Please enter ten digits only",
             },
-            stateId: {
-                required: 'Please select state',
+            billingCountry: {
+                required: 'Please enter Country',
             },
-            cityId: {
-                required: 'Please select city',
-            },
-            pincodeId: {
-                required: 'Please select pincode',
-            },
-            areaId: {
-                required: 'Please select area',
-            },
-            societyId: {
-                required: 'Please select society',
-            },
+            billingState: {
+                required: 'Please select State',
+            }
         },
         errorElement: 'span',
         errorPlacement: function (error, element) {

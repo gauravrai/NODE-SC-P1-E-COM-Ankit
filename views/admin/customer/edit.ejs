@@ -26,82 +26,142 @@
                 </ul>
               </div>
               <form role="form" id="addCustomerForm" method="post" enctype="multipart/form-data">
-                  <div class="card-body">
-                      <div class="form-group">
-                        <label for="name">Name </label>
-                        <input type="text" name="name" class="form-control" value="<%=customerData.name%>" id="name" placeholder="Enter Name">
+                <div class="card-body">
+                  <div class="form-row">
+                    <div class="form-group col-md-4">
+                      <label for="name">Name </label>
+                      <input type="text" name="name" class="form-control" value="<%=customerData.name%>" id="name" placeholder="Enter Name">
                     </div>
+                    <div class="form-group col-md-4">
+                      <label for="email">Email</label>
+                      <input type="text" name="email" class="form-control" id="email" value="<%=customerData.email%>" placeholder="Enter Email">
+                    </div>
+                    <div class="form-group col-md-4">
+                      <label for="mobile">Mobile Number</label>
+                      <input type="text" name="mobile" class="form-control" id="mobile" value="<%=customerData.mobile%>" placeholder="Enter Mobile Number">
+                    </div>
+                  </div>
+                  <div class="card-header">
+                    <h3 class="card-title">Billing Address</h3>
+                  </div>
+                  <div class="form-row">
+                    <div class="form-group col-md-4">
+                      <label for="billingAddress">Address</label>
+                      <input type="text" name="billingAddress" class="form-control" id="billingAddress" value="<%=customerData.billingAddress.address%> " placeholder="Enter Address" value="<%=customerData.billingAddress.address%>">
+                    </div>
+                    <div class="form-group col-md-4">
+                      <label for="billingCountry">Country</label>
+                      <input type="text" name="billingCountry" class="form-control" id="billingCountry" value="<%=customerData.billingAddress.address%> " placeholder="Enter Country" value="<%=customerData.billingAddress.country%>">
+                    </div>
+                    <div class="form-group col-md-4">
+                      <label for="billingState">Select State</label>
+                      <select name="billingState" class="form-control" id="billingState" onchange="getLocationFields(this.value, 'city', 'get_city', 'Select City', 'get_pincode', '')">
+                        <option value="">Select State</option>
+                        <% for(let i = 0; i < stateData.length; i++){ %>
+                        <option value="<%=stateData[i].id%>" <% if(customerData.billingAddress.state == stateData[i].id){ %> selected="selected" <% } %> ><%=stateData[i].name%></option>
+                        <% } %>
+                      </select>
+                    </div>
+                    <% if(customerData.billingAddress.city){ %>
+                    <span id="billingCityData" class="locationFields col-md-4">
                       <div class="form-group">
-                        <label for="email">Email</label>
-                        <input type="text" name="email" class="form-control" id="email" value="<%=customerData.email%>" placeholder="Enter Email">
-                      </div>
-                      <div class="form-group">
-                        <label for="mobile">Mobile Number</label>
-                        <input type="text" name="mobile" class="form-control" id="mobile" value="<%=customerData.mobile%>" placeholder="Enter Mobile Number">
-                      </div>
-                      <div class="form-group">
-                        <label for="stateId">Select State</label>
-                        <select name="stateId" class="form-control" id="stateId" onchange="getLocationFields(this.value, 'city', 'get_city', 'Select City', '')">
-                          <option value="">Select State</option>
-                          <% for(let i = 0; i < stateData.length; i++){ %>
-                          <option value="<%=stateData[i].id%>" <% if(customerData.stateId == stateData[i].id){ %> selected="selected" <% } %> ><%=stateData[i].name%></option>
+                        <label for="billingCityId">Select City</label>
+                        <select name="billingCityId" class="form-control" id="billingCityId">
+                          <option value="">Select City</option>
+                          <% for(let i = 0; i < cityData.length; i++){ %>
+                          <option value="<%=cityData[i].id%>" <% if(customerData.billingAddress.city == cityData[i].id){ %> selected="selected" <% } %> ><%=cityData[i].name%></option>
                           <% } %>
                         </select>
                       </div>
-                      <span id="cityData" class="locationFields">
-                        <div class="form-group">
-                          <label for="cityId">Select City</label>
-                          <select name="cityId" class="form-control" id="cityId">
-                            <option value="">Select City</option>
-                            <% for(let i = 0; i < cityData.length; i++){ %>
-                            <option value="<%=cityData[i].id%>" <% if(customerData.cityId == cityData[i].id){ %> selected="selected" <% } %> ><%=cityData[i].name%></option>
-                            <% } %>
-                          </select>
-                        </div>
-                      </span>
-                      <span id="pincodeData" class="locationFields">
-                        <div class="form-group">
-                          <label for="pincodeId">Select Pincode</label>
-                          <select name="pincodeId" class="form-control" id="pincodeId">
-                            <option value="">Select Pincode</option>
-                            <% for(let i = 0; i < pincodeData.length; i++){ %>
-                            <option value="<%=pincodeData[i].id%>" <% if(customerData.pincodeId == pincodeData[i].id){ %> selected="selected" <% } %> ><%=pincodeData[i].pincode%></option>
-                            <% } %>
-                          </select>
-                        </div>
-                      </span>
-                      <span id="areaData" class="locationFields">
-                        <div class="form-group">
-                          <label for="areaId">Select Area</label>
-                          <select name="areaId" class="form-control" id="areaId">
-                            <option value="">Select Area</option>
-                            <% for(let i = 0; i < areaData.length; i++){ %>
-                            <option value="<%=areaData[i].id%>" <% if(customerData.areaId == areaData[i].id){ %> selected="selected" <% } %> ><%=areaData[i].name%></option>
-                            <% } %>
-                          </select>
-                        </div>
-                      </span>
-                      <span id="societyData" class="locationFields">
-                        <div class="form-group">
-                          <label for="societyId">Select Society</label>
-                          <select name="societyId" class="form-control" id="societyId">
-                            <option value="">Select Society</option>
-                            <% for(let i = 0; i < societyData.length; i++){ %>
-                            <option value="<%=societyData[i].id%>" <% if(customerData.societyId == societyData[i].id){ %> selected="selected" <% } %> ><%=societyData[i].name%></option>
-                            <% } %>
-                          </select>
-                        </div>
-                      </span>
-                      <!-- <div class="form-group">
-                        <label for="towerId">Tower</label>
-                        <input type="text" name="towerId" class="form-control" id="towerId" placeholder="Enter Tower">
-                      </div> -->
+                    </span>
+                    <% } %>
+                    <% if(customerData.billingAddress.pincode){ %>
+                    <span id="billingPincodeData" class="locationFields col-md-4">
                       <div class="form-group">
-                        <label for="address">Address</label>
-                        <input type="text" name="address" class="form-control" id="address" value="<%=customerData.address%> " placeholder="Enter Address">
+                        <label for="billingPincodeId">Select Pincode</label>
+                        <select name="billingPincodeId" class="form-control" id="billingPincodeId">
+                          <option value="">Select Pincode</option>
+                          <% for(let i = 0; i < pincodeData.length; i++){ %>
+                          <option value="<%=pincodeData[i].id%>" <% if(customerData.billingAddress.pincode == pincodeData[i].id){ %> selected="selected" <% } %> ><%=pincodeData[i].pincode%></option>
+                          <% } %>
+                        </select>
                       </div>
+                    </span>
+                    <% } %>
+                    <% if(customerData.billingAddress.area){ %>
+                    <span id="billingAreaData" class="locationFields col-md-4">
+                      <div class="form-group">
+                        <label for="billingAreaId">Select Area</label>
+                        <select name="billingAreaId" class="form-control" id="billingAreaId">
+                          <option value="">Select Area</option>
+                          <% for(let i = 0; i < areaData.length; i++){ %>
+                          <option value="<%=areaData[i].id%>" <% if(customerData.billingAddress.area == areaData[i].id){ %> selected="selected" <% } %> ><%=areaData[i].name%></option>
+                          <% } %>
+                        </select>
+                      </div>
+                    </span>
+                    <% } %>
+                    <% if(customerData.billingAddress.society){ %>
+                    <span id="billingSocietyData" class="locationFields col-md-4">
+                      <div class="form-group">
+                        <label for="billingSocietyId">Select Society</label>
+                        <select name="billingSocietyId" class="form-control" id="billingSocietyId">
+                          <option value="">Select Society</option>
+                          <% for(let i = 0; i < societyData.length; i++){ %>
+                          <option value="<%=societyData[i].id%>" <% if(customerData.billingAddress.society == societyData[i].id){ %> selected="selected" <% } %> ><%=societyData[i].name%></option>
+                          <% } %>
+                        </select>
+                      </div>
+                    </span>
+                    <% } %>
+                    <% if(customerData.billingAddress.tower){ %>
+                    <span id="billingTowerData" class="locationFields col-md-4">
+                      <div class="form-group">
+                        <label for="billingTowerId">Select Tower</label>
+                        <select name="billingTowerId" class="form-control" id="billingTowerId">
+                          <option value="">Select Tower</option>
+                          <% for(let i = 0; i < towerData.length; i++){ %>
+                          <option value="<%=towerData[i].id%>" <% if(customerData.billingAddress.tower == towerData[i].id){ %> selected="selected" <% } %> ><%=towerData[i].name%></option>
+                          <% } %>
+                        </select>
+                      </div>
+                    </span>
+                    <% } %>
                   </div>
-                </div>    
+                  <div class="card-header">
+                    <h3 class="card-title">Shipping Address</h3>
+                  </div>
+                  <div class="form-row">
+                    <div class="form-group col-md-3">
+                      <label for="sameAsBillingAddress">Same as Billing Address</label>
+                      <input type="checkbox" name="sameAsBillingAddress" id="sameAsBillingAddress" class="form-control" style="margin-top: -24px;margin-left: 55px;" <% if(customerData.sameAsBillingAddress){ %> checked="checked" <% } %> >
+                    </div>
+                  </div>
+                  <div class="form-row" id="shippingDiv">
+                    <div class="form-group col-md-4">
+                      <label for="address">Address</label>
+                      <input type="text" name="shippingAddress" class="form-control" id="shippingAddress" placeholder="Enter Shipping Address">
+                    </div>
+                    <div class="form-group col-md-4">
+                      <label for="address">Country</label>
+                      <input type="text" name="shippingCountry" class="form-control" id="shippingCountry" placeholder="Enter Shipping Country">
+                    </div>
+                    <div class="form-group col-md-4">
+                      <label for="state">Select State</label>
+                      <select name="shippingState" class="form-control select2" id="shippingState" onchange="getLocationFields(this.value, 'shippingCity', 'get_city', 'Select City', 'get_pincode', 'shipping')">
+                        <option value="">Select State</option>
+                      <% for(let i = 0; i < stateData.length; i++){ %>
+                        <option value="<%=stateData[i].id%>"><%=stateData[i].name%></option>
+                      <% } %>
+                      </select>
+                    </div>
+                    <span id="shippingCityData" class="locationFields col-md-4"></span>
+                    <span id="shippingPincodeData" class="locationFields col-md-4"></span>
+                    <span id="shippingAreaData" class="locationFields col-md-4"></span>
+                    <span id="shippingSocietyData" class="locationFields col-md-4"></span>
+                    <span id="shippingTowerData" class="locationFields col-md-4"></span>
+                  </div>
+                </div> 
                 <div class="card-footer">
                   <a href="<%=APPCONSTANT.ADMINCALLURL%>/manage_customer" class="btn btn-default">Cancel</a>
                   <button type="submit" class="btn btn-primary add_button">Submit</button>

@@ -10,6 +10,7 @@ const State = model.state;
 const Pincode = model.pincode;
 const Area = model.area;
 const Society = model.society;
+const Tower = model.tower;
 const SubCategory = model.sub_category;
 const Product = model.product;
 const Store = model.store;
@@ -20,42 +21,87 @@ const ADMINCALLURL = config.constant.ADMINCALLURL;
 module.exports = {
 	getCity: async function(req,res){
 		let nextField = 'pincode';
+		let page = req.body.page;
+		let nextFieldId = 'pincode';
+		if(page == 'shipping') {
+			nextFieldId = 'shippingPincode';
+		}else if(page == 'billing') {
+			nextFieldId = 'billingPincode';
+		}
 		let name = req.body.name;
 		let label = req.body.label;
 		let functionName = req.body.functionName;
 		let stateId = req.param('id');
 		let data = await City.find({ stateId: mongoose.mongo.ObjectID(stateId), status: true, deletedAt: 0 });
-		res.render('admin/ajax/locationfields',{layout:false, data:data, name:name, label: label, functionName:functionName, nextField:nextField } );
+		res.render('admin/ajax/locationfields',{layout:false, data:data, name:name, label: label, functionName:functionName, nextField:nextField, nextFieldId:nextFieldId, page:page } );
 	},
 
 	getPincode: async function(req,res){
 		let nextField = 'area';
+		let page = req.body.page;
+		let nextFieldId = 'area';
+		if(page == 'shipping') {
+			nextFieldId = 'shippingArea';
+		}else if(page == 'billing') {
+			nextFieldId = 'billingArea';
+		}
 		let name = req.body.name;
 		let label = req.body.label;
 		let functionName = req.body.functionName;
 		let cityId = req.param('id');
 		let data = await Pincode.find({ cityId: mongoose.mongo.ObjectID(cityId), status: true, deletedAt: 0 });
-		res.render('admin/ajax/locationfields',{layout:false, data:data, name:name, label: label, functionName:functionName, nextField:nextField } );
+		res.render('admin/ajax/locationfields',{layout:false, data:data, name:name, label: label, functionName:functionName, nextField:nextField, nextFieldId:nextFieldId, page:page } );
 	},
 
 	getArea: async function(req,res){
 		let nextField = 'society';
+		let page = req.body.page;
+		let nextFieldId = 'society';
+		if(page == 'shipping') {
+			nextFieldId = 'shippingSociety';
+		}else if(page == 'billing') {
+			nextFieldId = 'billingSociety';
+		}
 		let name = req.body.name;
 		let label = req.body.label;
 		let functionName = req.body.functionName;
 		let pincodeId = req.param('id');
 		let data = await Area.find({ pincodeId: mongoose.mongo.ObjectID(pincodeId), status: true, deletedAt: 0 });
-		res.render('admin/ajax/locationfields',{layout:false, data:data, name:name, label: label, functionName:functionName, nextField:nextField } );
+		res.render('admin/ajax/locationfields',{layout:false, data:data, name:name, label: label, functionName:functionName, nextField:nextField, nextFieldId:nextFieldId, page:page } );
 	},
 
 	getSociety: async function(req,res){
 		let nextField = 'tower';
+		let page = req.body.page;
+		let nextFieldId = 'tower';
+		if(page == 'shipping') {
+			nextFieldId = 'shippingTower';
+		}else if(page == 'billing') {
+			nextFieldId = 'billingTower';
+		}
 		let name = req.body.name;
 		let label = req.body.label;
 		let functionName = req.body.functionName;
 		let areaId = req.param('id');
 		let data = await Society.find({ areaId: mongoose.mongo.ObjectID(areaId), status: true, deletedAt: 0 });
-		res.render('admin/ajax/locationfields',{layout:false, data:data, name:name, label: label, functionName:functionName, nextField:nextField } );
+		res.render('admin/ajax/locationfields',{layout:false, data:data, name:name, label: label, functionName:functionName, nextField:nextField, nextFieldId:nextFieldId, page:page } );
+	},
+
+	getTower: async function(req,res){
+		let nextField = '';
+		let page = req.body.page;
+		let nextFieldId = '';
+		if(page == 'shipping') {
+			nextFieldId = 'shippingTower';
+		}else if(page == 'billing') {
+			nextFieldId = 'billingTower';
+		}
+		let name = req.body.name;
+		let label = req.body.label;
+		let functionName = '';
+		let societyId = req.param('id');
+		let data = await Tower.find({ societyId: mongoose.mongo.ObjectID(societyId), status: true, deletedAt: 0 });
+		res.render('admin/ajax/locationfields',{layout:false, data:data, name:name, label: label, functionName:functionName, nextField:nextField, nextFieldId:nextFieldId, page:page } );
 	},
 
 	getSubcategory: async function(req,res){

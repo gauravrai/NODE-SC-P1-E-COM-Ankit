@@ -30,8 +30,13 @@
                 <div class="form-row">
                   <!-- <div class="card-body"> -->
                     <div class="form-group col-md-3">
+                      <input type="hidden" name="id" value="<%=societyData.id?societyData.id:''%>">
+                      <label for="name">Society Name</label>
+                      <input type="text" name="name" class="form-control" id="name" placeholder="Society Name" value="<%=societyData.name?societyData.name:''%>">
+                    </div>
+                    <div class="form-group col-md-3">
                       <label for="stateId">Select State</label>
-                      <select name="stateId" class="form-control" id="stateId" onchange="getLocationFields(this.value, 'city', 'get_city', 'Select City', '')">
+                      <select name="stateId" class="form-control" id="stateId" onchange="getLocationFields(this.value, 'city', 'get_city', 'Select City', '', '')">
                         <option value="">Select State</option>
                         <% for(let i = 0; i < stateData.length; i++){ %>
                         <option value="<%=stateData[i].id%>" <% if(societyData.stateId == stateData[i].id){ %> selected="selected" <% } %> ><%=stateData[i].name%></option>
@@ -71,11 +76,6 @@
                         </select>
                       </div>
                     </span>
-                    <div class="form-group col-md-3">
-                      <input type="hidden" name="id" value="<%=societyData.id?societyData.id:''%>">
-                      <label for="name">Society Name</label>
-                      <input type="text" name="name" class="form-control" id="name" placeholder="Society Name" value="<%=societyData.name?societyData.name:''%>">
-                    </div>
                   <!-- </div> -->
                 </div>
               </div>  
