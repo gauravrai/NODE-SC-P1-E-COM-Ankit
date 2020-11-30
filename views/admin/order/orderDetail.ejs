@@ -22,7 +22,7 @@
               <div class="card-header d-flex p-0">
                 <h3 class="card-title p-3">Customer Details</h3>
                 <ul class="nav nav-pills ml-auto p-2">
-                  <li class="nav-item"><a class="btn btn-block btn-primary" href="/admin/make_invoice?id=<%=orderData.odid%>" target="_blank">Download Invoice</a></li>&nbsp;&nbsp;
+                  <% if(orderData.orderStatus == 'DELIVERED'){ %><li class="nav-item"><a class="btn btn-block btn-primary" href="/admin/make_invoice?id=<%=orderData.odid%>" target="_blank">Download Invoice</a></li>&nbsp;&nbsp;<% } %>
                   <li class="nav-item"><a class="btn btn-block btn-secondary" href="/admin/manage_order">Back</a></li>
                 </ul>
               </div>
@@ -32,19 +32,26 @@
                 <table style="width: 100%;">
                   <tr>
                     <td><b>Order Id:</b> <%=orderData.odid %></td>
-                    <td><b>Address:</b> <%=orderData.customerDetail.address %></td>
+                    <td><b>Billing Address:</b> <%=orderData.customerDetail.billingAddress.address %></td>
+                    <td><b>Shipping Address:</b> <%=orderData.customerDetail.shippingAddress.address %></td>
                   </tr>
                   <tr>
                     <td><b>Order Date:</b> <%=moment(orderData.createdAt).format('DD-MM-YYYY'); %></td>
-                    <td><%=orderData.customerDetail.society %> <%=orderData.customerDetail.area %></td>
+                    <td><%=orderData.customerDetail.billingAddress.society %> <%=orderData.customerDetail.billingAddress.tower %> <%=orderData.customerDetail.billingAddress.area %></td>
+                    <td><%=orderData.customerDetail.shippingAddress.society %> <%=orderData.customerDetail.shippingAddress.tower %> <%=orderData.customerDetail.shippingAddress.area %></td>
                   </tr>
                   <tr>
                     <td><b>Customer Name:</b> <%=orderData.customerDetail.name %></td>
-                    <td><%=orderData.customerDetail.city %> <%=orderData.customerDetail.state %></td>
+                    <td><%=orderData.customerDetail.billingAddress.city %> <%=orderData.customerDetail.billingAddress.state %></td>
+                    <td><%=orderData.customerDetail.shippingAddress.city %> <%=orderData.customerDetail.shippingAddress.state %></td>
                   </tr>
                   <tr>
                     <td><b>Mobile:</b> <%=orderData.customerDetail.mobile %></td>
-                    <td><%=orderData.customerDetail.pincode %> <%=orderData.customerDetail.country %></td>
+                    <td><%=orderData.customerDetail.pincode %> <%=orderData.customerDetail.billingAddress.country %></td>
+                    <td><%=orderData.customerDetail.pincode %> <%=orderData.customerDetail.shippingAddress.country %></td>
+                  </tr>
+                  <tr>
+                    <td><b>GST:</b> <%=orderData.gst ? orderData.gst : 'N/A' %></td>
                   </tr>
                 </table>
                 <div class="card-header d-flex p-0">
@@ -62,6 +69,9 @@
                       <th>Product</th>
                       <th>Varient</th>
                       <th>Unit Price</th>
+                      <th>CGST</th>
+                      <th>SGST</th>
+                      <th>IGST</th>
                       <th>Quantity</th>
                       <th>Total Price</th>
                     </tr>
@@ -72,9 +82,12 @@
                       <td><input value="<%= orderDetailData[i]._id %>" class="all_check orderDetailId" type="checkbox" data-productid="<%= orderDetailData[i].productId; %>" data-varientid="<%= orderDetailData[i].varientId; %>" data-quantity="<%= orderDetailData[i].quantity; %>" /></td>
                       <td><%= orderDetailData[i].productData[0].name; %></td>
                       <td><%= orderDetailData[i].varientData[0].label %> <%=orderDetailData[i].varientData[0].measurementUnit %></td>
-                      <td><%= orderDetailData[i].price; %> </td>
+                      <td><%= orderDetailData[i].price; %> INR</td>
+                      <td><%= orderDetailData[i].cgst; %> INR</td>
+                      <td><%= orderDetailData[i].sgst; %> INR</td>
+                      <td><%= orderDetailData[i].igst; %> INR</td>
                       <td><%= orderDetailData[i].quantity; %> </td>
-                      <td><%= orderDetailData[i].price*orderDetailData[i].quantity; %></td>
+                      <td><%= ( ( orderDetailData[i].price*orderDetailData[i].quantity ) + orderDetailData[i].cgst + orderDetailData[i].sgst + orderDetailData[i].igst).toFixed(2); %></td>
                     </tr>
                     <% } %>
                   </tbody>
@@ -194,10 +207,16 @@
                         </select>
                       </td>
                       <td style="width: 20%;text-align:right;">
+                        <b>Total Discount:</b> <%= orderData.couponAmount ? orderData.couponAmount : 0; %><br>
                         <b>Sub Total:</b> <%= orderData.subTotal %><br>
-                        <b>Taxes:</b> <%= 0 %><br>
+                        <b>Taxes:</b> <%= orderData.totalTax ? orderData.totalTax.toFixed(2) : 0 %><br>
                         <b>Shipping Charges:</b> <%= orderData.shipping ? orderData.shipping : 'Free' %><br>
-                        <b>Grand Total: </b> <%= orderData.grandTotal %>
+                        <%
+                          let grandTotal = orderData.grandTotal ? orderData.grandTotal : 0; 
+                          let shipping = orderData.shipping ? orderData.shipping : 0; 
+                          let totalTax = orderData.totalTax ? orderData.totalTax : 0; 
+                        %>
+                        <b>Grand Total: </b> <%= (grandTotal + shipping + totalTax).toFixed(2); %>
                       </td>
                     </tr>
                 </table>
@@ -329,6 +348,7 @@
                         url: 'change_order_status',
                         data: {orderId:orderId, orderStatus:orderStatus, storeId:storeId, paymentStatus:paymentStatus, productIdArr:productIdArr, varientIdArr:varientIdArr, quantityArr:quantityArr, userId:userId, odid:odid, timeSlot:timeSlot, receiverName:receiverName, deliveryDate:deliveryDate},
                         success: function(response) {
+                          $('#storeErr').html('');
                           swalWithBootstrapButtons.fire(
                               'Changed!',
                               'Your order status has been changed succesfully.',

@@ -33,12 +33,13 @@ module.exports = {
             let data = {};
             if(cartData)
             {
-                let shippingPrice = await Pincode.findOne({_id: mongoose.mongo.ObjectID(userData.pincodeId)});
+                let shippingPrice = await Pincode.findOne({_id: mongoose.mongo.ObjectID(userData.shippingAddress.pincode)});
                 let odid = 'OD'+moment().format('YMDhms');
                 let customerDetail = {
                     name : userData.name ? userData.name : '',
                     mobile : userData.mobile ? userData.mobile : '',
                     email : userData.email ? userData.email : '',
+                    gst : userData.gst ? userData.gst : '',
                     sameAsBillingAddress: userData.sameAsBillingAddress ? userData.sameAsBillingAddress : false,
                     billingAddress: userData.billingAddress ? userData.billingAddress : {},
                     shippingAddress: userData.shippingAddress ? userData.shippingAddress : {}
