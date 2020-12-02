@@ -144,7 +144,7 @@ $('body').on('click', '.nav-sidebar .has-treeview', function() {
 	}else
 	{
 		$(this).removeClass('menu-open');
-		$(this > ul).sldeUp();
+		$(this > ul).slideUp();
 	}
 });
 

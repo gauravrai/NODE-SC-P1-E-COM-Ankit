@@ -309,10 +309,11 @@ module.exports = {
             }
             else{
                 //update the customer profile
-                await Customer.updateOne({ mobile: mobile }, CustomerData, function( err, data ){
+                await Customer.updateOne({ mobile: mobile }, CustomerData, async function( err, data ){
                     if(err) console.log(err)
+                    data = await Customer.findOne({ mobile: mobile });
                     return res.status(200).json({
-                                data: CustomerData,
+                                data: data,
                                 status: 'success', 
                                 message: "Customer profile updated successfully!!"
                             }); 
