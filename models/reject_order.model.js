@@ -33,6 +33,13 @@ let RejectSchema = new Schema({
     quantity:{
         type: Number
     },
+    taxType:{
+        type: Number //1 = cgst & sgst, 2 = igst
+    },
+    totalTax:{
+        type: Number,
+        default : 0
+    },
     status: {
         type: Boolean,
         default : true

@@ -47,8 +47,8 @@
                   </tr>
                   <tr>
                     <td><b>Mobile:</b> <%=orderData.customerDetail.mobile %></td>
-                    <td><%=orderData.customerDetail.pincode %> <%=orderData.customerDetail.billingAddress.country %></td>
-                    <td><%=orderData.customerDetail.pincode %> <%=orderData.customerDetail.shippingAddress.country %></td>
+                    <td><%=orderData.customerDetail.billingAddress.pincode %> <%=orderData.customerDetail.billingAddress.country %></td>
+                    <td><%=orderData.customerDetail.shippingAddress.pincode %> <%=orderData.customerDetail.shippingAddress.country %></td>
                   </tr>
                   <tr>
                     <td><b>GST:</b> <%=orderData.gst ? orderData.gst : 'N/A' %></td>
@@ -69,6 +69,7 @@
                       <th>Product</th>
                       <th>Varient</th>
                       <th>Unit Price</th>
+                      <th>Tax</th>
                       <th>CGST</th>
                       <th>SGST</th>
                       <th>IGST</th>
@@ -83,6 +84,7 @@
                       <td><%= orderDetailData[i].productData[0].name; %></td>
                       <td><%= orderDetailData[i].varientData[0].label %> <%=orderDetailData[i].varientData[0].measurementUnit %></td>
                       <td><%= orderDetailData[i].price; %> INR</td>
+                      <td><%= orderDetailData[i].tax; %> %</td>
                       <td><%= orderDetailData[i].cgst; %> INR</td>
                       <td><%= orderDetailData[i].sgst; %> INR</td>
                       <td><%= orderDetailData[i].igst; %> INR</td>

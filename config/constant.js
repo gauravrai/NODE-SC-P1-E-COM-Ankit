@@ -13,7 +13,7 @@ module.exports = {
 	APIURL:'/api/v1',
 	TIMEZONE:process.env.TIMEZONE,
 	FORMATETIME:'DD-MM-YYYY hh:mm A',
-	COMPANYLOGO:SITEURL+"", 
+	COMPANYLOGO:SITEURL+"assets/media/logo/logo.jpg", 
 	JWT_SECRET :"local_BnaiyaSecret",
 	  
 	PAGENO: 1,	  
@@ -61,4 +61,6 @@ module.exports = {
 
 	CLIENT_GST_NO: '22AAAAA0000A1Z5',
 	CLIENT_GST_STATE_CODE: '22',
+	CLIENT_PAN: 'FSXP8037',
+	CLIENT_STATE: 'Uttar Pradesh',
 }

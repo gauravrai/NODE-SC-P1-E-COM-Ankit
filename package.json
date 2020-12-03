@@ -30,6 +30,7 @@
     "mongoose-double": "0.0.1",
     "multer": "^1.4.2",
     "nodemon": "^2.0.4",
+    "num-words": "^1.2.2",
     "razorpay": "^2.0.6",
     "request": "^2.88.2",
     "sweetalert": "^2.1.2"

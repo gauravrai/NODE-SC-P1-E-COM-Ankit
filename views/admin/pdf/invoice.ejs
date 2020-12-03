@@ -1,3 +1,10 @@
+<%
+	let grandTotal = orderData.grandTotal ? orderData.grandTotal : 0; 
+	let shipping = orderData.shipping ? orderData.shipping : 0; 
+	let totalTax = orderData.totalTax ? orderData.totalTax : 0; 
+	let totalAmount = (grandTotal + shipping + totalTax).toFixed(2);
+	let invoiceDate = new Date('dd-mm-YYYY');
+%>
 <!DOCTYPE html>
 <html>
 	<head>
@@ -11,6 +18,11 @@
 		<meta name="viewport" content="width=device-width, initial-scale=1.0">
 		<link href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700,800" rel="stylesheet">
 		<style type="text/css">
+			.ExternalClass {
+				width: 100%;
+				background-color: #ecedf1;
+			}
+	
 			body {
 				font-size: 14px;
 				line-height: 1;
@@ -20,14 +32,17 @@
 				font-family: 'Open Sans', sans-serif;
 				-webkit-text-size-adjust: 100%;
 				-ms-text-size-adjust: 100%;
+				/*background: url('http://10.0.4.4/Nikhil/demo-temp/html/images/home.jpg') no-repeat center top;*/
 				background-color: #ecedf1;
 			}
+	
 			#bodyTable {
 				height: 100% !important;
 				margin: 0;
 				padding: 0;
 				width: 100% !important;
 			}
+	
 			table {
 				border-collapse: collapse;
 				mso-table-lspace: 0pt;
@@ -36,6 +51,7 @@
 				-webkit-text-size-adjust: 100%;
 				-ms-text-size-adjust: 100%;
 			}
+	
 			img {
 				border: none;
 				outline: none;
@@ -43,6 +59,7 @@
 				display: inline-block;
 				height: auto
 			}
+	
 			p {
 				margin: 0;
 				padding: 0;
@@ -53,6 +70,160 @@
 		<table width="100%" cellpadding="0" cellspacing="0" border="0">
 			<tr>
 				<td>
+					<table class="wrapper" border="0" cellpadding="0" cellspacing="0" align="center" width="100%"
+					style="background: #ffffff;">
+						<tr>
+							<td style='text-align: center;'>
+								<table border="0" cellpadding="0" cellspacing="0" width="100%">
+									<tr style="text-align: left;">
+										<td><img src="<%= APPCONSTANT.COMPANYLOGO %>" style ="width:150px"></td>
+										<td><b><%= APPCONSTANT.SITENAME %></b><br>
+											<b>GSTIN : <%= APPCONSTANT.CLIENT_GST_NO %></b><br>
+											<b>State : <%= APPCONSTANT.CLIENT_STATE %></b><br>
+											<b>PAN : <%= APPCONSTANT.CLIENT_PAN %></b><br>
+										</td>
+									</tr>
+								</table>
+							</td>
+							<td style='text-align: center;'>&nbsp;</td>
+							<td style='text-align: center;'>
+								<table border="0" cellpadding="0" cellspacing="0" width="100%">
+									<tr style="text-align: left;">
+										<td><b>Total : <%= totalAmount %> INR</b><br>
+											<b>Invoice Date : <%= invoiceDate %></b><br>
+											<b>Invoice No : 8007070</b><br>
+											<b>Reference No : 8007070DFG</b><br>
+										</td>
+									</tr>
+								</table>
+							</td>
+						</tr>   
+					</table>
+					<table width="100%">
+						<tr>
+							<td align="center"><b>Tax Invoice</b></td>
+						</tr>
+					</table>
+					<table width='100%' style='border-collapse: collapse; font-size: 13px;'>
+						<tr style="border-bottom: solid 1px;">
+							<td>
+								<table border="0" cellpadding="0" cellspacing="0" width="100%">
+									<tr><td><b>Customer Name</b></td></tr>
+									<tr><td><%= orderData.customerDetail.name ? orderData.customerDetail.name : '' %></td></tr>
+									<tr><td><b>Customer GSTIN</b></td></tr>
+									<tr><td><%= orderData.customerDetail.gst ? orderData.customerDetail.gst : '' %></td></tr>
+								</table>
+							</td>
+					
+							<td>
+								<table border="0" cellpadding="0" cellspacing="0" width="100%">
+									<tr><td><b>Billing Address</b></td></tr>
+									<tr><td><%=orderData.customerDetail.billingAddress.address %></td></tr>
+									<tr><td><%=orderData.customerDetail.billingAddress.society %> <%=orderData.customerDetail.billingAddress.tower %> <%=orderData.customerDetail.billingAddress.area %></td></tr>
+									<tr><td><%=orderData.customerDetail.billingAddress.city %> <%=orderData.customerDetail.billingAddress.state %></td></tr>
+									<tr><td><%=orderData.customerDetail.billingAddress.pincode %> <%=orderData.customerDetail.billingAddress.country %></td></tr>
+								</table>
+							</td>
+							<td>
+								<table border="0" cellpadding="0" cellspacing="0" width="100%">
+									<tr><td><b>Shipping Address</b></td></tr>
+									<tr><td><%=orderData.customerDetail.shippingAddress.address %></td></tr>
+									<tr><td><%=orderData.customerDetail.shippingAddress.society %> <%=orderData.customerDetail.shippingAddress.tower %> <%=orderData.customerDetail.shippingAddress.area %></td></tr>
+									<tr><td><%=orderData.customerDetail.shippingAddress.city %> <%=orderData.customerDetail.shippingAddress.state %></td></tr>
+									<tr><td><%=orderData.customerDetail.shippingAddress.pincode %> <%=orderData.customerDetail.shippingAddress.country %></td></tr>
+								</table>
+							</td>
+						</tr>
+						<tr style="border-bottom: solid 1px;">
+							<td>
+								<b>Country Of Supply :</b> <%=orderData.customerDetail.shippingAddress.country %></td>
+							<td>
+								<b>Place Of Supply :</b> <%=orderData.customerDetail.shippingAddress.state %>
+							</td>
+							<td>
+								<b>Due Date : </b><%=orderData.customerDetail.deliveryDate %>
+							</td>
+						</tr>
+					
+					</table>
+					<br>
+					<table border='0' width='100%' style='border-collapse: collapse; font-size: 13px;'>
+						<tr style="border-bottom: solid 1px;">
+							<td width='50%' align='left'>ITEMS</td>
+							<th align='right'>Varient</th>
+							<td align='right'>Quantity</td>
+							<td align='right'>Price</td>
+							<td align='right'>Tax</td>
+							<td align='right'>CGST</td>
+							<td align='right'>SGST</td>
+							<td align='right'>IGST</td>
+							<td align='right'>Total</td>
+						</tr>
+						
+						<% for(let i = 0; i < orderDetailData.length; i++){ %>
+						<tr style="border-bottom: solid 1px;">
+							<td  align='left'>
+								<p style='margin-top:1px; margin-bottom:1px'><%= orderDetailData[i].productData[0].name; %></p>
+							</td>
+							<td><%= orderDetailData[i].varientData[0].label %> <%=orderDetailData[i].varientData[0].measurementUnit %></td>
+							<td align='right'><%= orderDetailData[i].quantity; %></td>
+							<td align='right'><%= orderDetailData[i].price; %> INR</td>
+							<td align='right'><%= orderDetailData[i].tax; %> %</td>
+							<td align='right'><%= orderDetailData[i].cgst; %> INR</td>
+							<td align='right'><%= orderDetailData[i].sgst; %> INR</td>
+							<td align='right'><%= orderDetailData[i].igst; %> INR</td>
+							<td align='right'><%= ( ( orderDetailData[i].price*orderDetailData[i].quantity ) + orderDetailData[i].cgst + orderDetailData[i].sgst + orderDetailData[i].igst).toFixed(2); %></td>
+						</tr>
+						<% } %>
+						<tr>
+							<td colspan="7">
+								<p style='margin-top:1px; margin-bottom:1px; text-align: right'><b>Total Discount :</b></p>
+							</td>
+							<td  align='right'><b><%= orderData.couponAmount ? orderData.couponAmount : 0; %> INR</b></td>
+						</tr>
+						<tr>
+							<td colspan="7">
+								<p style='margin-top:1px; margin-bottom:1px; text-align: right'><b>Total Tax :</b></p>
+							</td>
+							<td  align='right'><b><%= orderData.totalTax ? orderData.totalTax.toFixed(2) : 0; %> INR</b></td>
+						</tr>
+						<tr>
+							<td colspan="7">
+								<p style='margin-top:1px; margin-bottom:1px; text-align: right'><b>Shipping Charge :</b></p>
+							</td>
+							<td  align='right'><b><%= orderData.shipping ? orderData.shipping : 0; %> INR</b></td>
+						</tr>
+						<tr>
+							<td colspan="7">
+								<p style='margin-top:1px; margin-bottom:1px; text-align: right'><b>Grand Total :</b></p>
+							</td>
+							<td  align='right'><b><%= totalAmount; %></b></td>
+						</tr>
+						<tr style="border-bottom: solid 1px;">
+							<td colspan="4">
+								<p style='margin-top:1px; margin-bottom:1px; text-align: right'><b>Total Amount In Words</b></p>
+							</td>
+							<td  align='right' colspan="4"><b><%= numWords(Math.round(totalAmount)) %></b></td>
+						</tr>
+					</table>
+					<table style='width:70%; font-size:13px;'>
+						<tr>
+							<td style='width:50%;'>&nbsp;</td>
+							<td style='text-align:right'>For <b>Localbaniyaa Pvt. Ltd.</b></td>
+						</tr>
+					</table>
+					<table style='width:100%; font-size:13px;'>
+						<tr>
+							<td style='width:100%; text-align: justify;' colspan="2">&nbsp;</td>
+						</tr>
+						<tr>
+							<td style='width:75%; text-align: justify;'>&nbsp;</td>
+							<td style='text-align:right'>(Autdorised Signatory)</td>
+						</tr>
+						<tr style="width:100%;border-bottom: solid 1px;">
+							<td>&nbsp;</td>
+						</tr>
+					</table>
                 </td>
 			</tr>
 		</table>

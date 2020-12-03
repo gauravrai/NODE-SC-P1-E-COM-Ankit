@@ -18,7 +18,8 @@ const whitelist = [
   "https://sc-p1-local-buniya.herokuapp.com",
   "http://sc-p1-local-buniya.herokuapp.com",
   "http://www.localbaniyaa.com:3001/admin",
-  "http://www.localbaniyaa.com"
+  "http://www.localbaniyaa.com",
+  "https://localbaniyaa.com:3001/admin"
 
 ];
 

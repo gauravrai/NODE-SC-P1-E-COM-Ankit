@@ -3,7 +3,8 @@ const config = require('../../../config/index');
 const async = require("async");
 const mongoose = require('mongoose');
 const moment = require('moment');
-var pdf = require('html-pdf');
+const pdf = require('html-pdf');
+const numWords = require('num-words');
 const Store = model.store;
 const Product = model.product;
 const Customer = model.customer;
@@ -81,8 +82,8 @@ module.exports = {
 
 			await config.helpers.permission('manage_order', req, async function(err,permissionData) {
                 for(i=0;i<data.length;i++){
-                    var arr1 = [];
-                    arr1.push(data[i].odid);
+					var arr1 = [];
+					arr1.push(data[i].odid);
 					await config.helpers.customer.getNameById(data[i].userId, async function (customerName) {
 						const customer_name = customerName ? customerName.name : 'N/A';
 						arr1.push(customer_name);
@@ -91,7 +92,7 @@ module.exports = {
 						const customer_mobile = customerMobile ? customerMobile.mobile : 'N/A';
 						arr1.push(customer_mobile);
 					})
-                    arr1.push(data[i].customerDetail.address ? data[i].customerDetail.address: '');
+                    arr1.push(data[i].customerDetail.shippingAddress.address ? data[i].customerDetail.shippingAddress.address: '');
                     arr1.push((data[i].grandTotal + data[i].totalTax + data[i].shippingPrice ).toFixed(2)+' INR');
                     arr1.push(data[i].orderStatus);
 					arr1.push(data[i].orderFrom);
@@ -126,6 +127,11 @@ module.exports = {
 			let subTotal = 0;
 			let grandQuantity = 0;
 			let userData = await Customer.findOne({_id: mongoose.mongo.ObjectID(userId)});
+            let customerGST = userData.gst;
+            let clientGST = config.constant.CLIENT_GST_NO;
+            let clientGSTStateCode = config.constant.CLIENT_GST_STATE_CODE;
+            let taxType;
+            let totalTax = 0;
 			
 			let customerDetail = {
 				name : userData.name ? userData.name : '',
@@ -145,8 +151,10 @@ module.exports = {
 			let odid = 'OD'+moment().format('YMDhms');
 
             for (let i = 0; i < productId.length; i++) {
+				let tax, cgst, sgst, igst = 0;
 				let productData = await Product.findOne({_id: mongoose.mongo.ObjectID(productId[i])});
 				let inventory = productData.inventory[0];
+				let productTax = productData.tax;
 				function search(nameKey, myArray){
 					for (var i=0; i < myArray.length; i++) {
 						if (String(myArray[i].varientId) === nameKey) {
@@ -156,6 +164,31 @@ module.exports = {
 				}
 				let resultPrice = search(varientId[i], inventory);
 				let price = resultPrice ? resultPrice.price : 0;
+				if(customerGST){
+					let customerGSTStateCode =  customerGST.substring(0, 2);
+					if(customerGSTStateCode == clientGSTStateCode){
+						productTax = productTax/2;
+						tax = productTax;
+						cgst = ( price * parseInt(quantity[i]) * tax )/100;
+						sgst = cgst;
+						totalTax += (cgst + sgst);
+						taxType = 1;
+					}else {
+						tax = productTax;
+						igst = ( price * parseInt(quantity[i]) * tax )/100;
+						totalTax += igst;
+						taxType = 2;
+					}
+				}
+				else
+				{
+					productTax = productTax/2;
+					tax = productTax;
+					cgst = ( price * parseInt(quantity[i]) * tax )/100;
+					sgst = cgst;
+					totalTax += (cgst + sgst);
+					taxType = 1;
+				}
 				let orderDetailInsertData = {
 					userId: mongoose.mongo.ObjectID(userId),
 					odid: odid,
@@ -165,10 +198,16 @@ module.exports = {
 					totalPrice: parseInt(price * quantity[i]),
 					quantity: parseInt(quantity[i]),
 					customerDetail : customerDetail,
+					taxType : taxType,
+					tax : tax,
+					cgst : cgst,
+					sgst : sgst,
+					igst : igst
 				}
 				grandTotal = grandTotal + orderDetailInsertData.totalPrice;
 				subTotal = subTotal + orderDetailInsertData.totalPrice;
 				grandQuantity = grandQuantity + orderDetailInsertData.quantity;
+				
 				let orderdetail = new Orderdetail(orderDetailInsertData);
 				orderdetail.save();
 
@@ -232,7 +271,9 @@ module.exports = {
 				orderStatus: 'NEW',
 				orderFrom: orderFrom,
 				paymentStatus: 'PENDING',
-				paymentType: paymentType
+				paymentType: paymentType,
+				taxType : taxType,
+				totalTax: totalTax
 			}
 			let order = new Order(orderInsertData);
 			order.save(async function(err, data){
@@ -558,56 +599,11 @@ module.exports = {
 		if(req.method == 'GET')
 		{
 			let odid = req.query.id;
-			let orderData = await Order.findOne({ odid:odid });
-			
-			await config.helpers.state.getNameById(orderData.customerDetail.stateId, async function (stateName) {
-				orderData.customerDetail.state = stateName.name;
-			})
-			
-			await config.helpers.city.getNameById(orderData.customerDetail.cityId, async function (cityName) {
-				orderData.customerDetail.city = cityName.name;
-			})
-			
-			await config.helpers.pincode.getNameById(orderData.customerDetail.pincodeId, async function (pincodeName) {
-				orderData.customerDetail.pincode = pincodeName.name;
-			})
-			
-			await config.helpers.area.getNameById(orderData.customerDetail.areaId, async function (areaName) {
-				orderData.customerDetail.area = areaName.name;
-			})
-			
-			await config.helpers.society.getNameById(orderData.customerDetail.societyId, async function (societyName) {
-				orderData.customerDetail.society = societyName.name;
-			})
-			
-			await config.helpers.tower.getNameById(orderData.customerDetail.towerId, async function (towerName) {
-				orderData.customerDetail.tower = towerName.name;
-			})
-			
-            let orderDetailData = await Orderdetail.aggregate([
-				{
-					$match: { odid:odid }
-				},
-                {
-                    $lookup:
-                      {
-                        from: "products",
-                        localField: "productId",
-                        foreignField: "_id",
-                        as: "productData"
-                      }
-                },
-                {
-                    $lookup:
-                      {
-                        from: "varients",
-                        localField: "varientId",
-                        foreignField: "_id",
-                        as: "varientData"
-                      }
-                },
-            ]);
-			res.render('admin/pdf/invoice', {layout:false, orderData:orderData, orderDetailData:orderDetailData, odid:odid} );
+			await config.helpers.order.getInvoiceData(odid, async function (data) {
+				let orderData = data.orderData;
+				let orderDetailData = data.orderDetailData;
+				res.render('admin/pdf/invoice', {layout:false, orderData:orderData, orderDetailData:orderDetailData, odid:odid, numWords:numWords} );
+			});
 		}
 		if(req.method == 'POST')
 		{
@@ -616,7 +612,6 @@ module.exports = {
 			let options = { format: 'Letter', orientation: 'landscape', type: "pdf" };
 			pdf.create(htmlData, options).toFile(config.constant.INVOICEPATH + odid +'.pdf', function (err, result) {
 				let pdf = config.constant.INVOICEPATH + odid +'.pdf';
-				console.log('pdf----------',pdf);
 				res.send(pdf);
 			});
 		}
@@ -624,9 +619,7 @@ module.exports = {
 	
 	downloadInvoice: function (req, res) {
 		let odid = req.query.id;
-		console.log('odid----------',odid);
 		let pdf = config.constant.ABSOLUTEPATH + "/public/uploads/invoice/" + odid +".pdf";
-		console.log('coming pdf----------',pdf);
 		res.download(pdf);
 	},
 
