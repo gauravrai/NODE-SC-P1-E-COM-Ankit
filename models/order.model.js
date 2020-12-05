@@ -70,7 +70,7 @@ let orderSchema = new Schema({
     receiverName: {
         type: String,
     },
-    deliveryData: {
+    deliveryDate: {
         type: String,
     },
     status: {

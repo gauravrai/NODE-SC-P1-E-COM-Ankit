@@ -25,6 +25,16 @@ module.exports = function(router) {
 			// ]
 		],
 		indexController.getOrderData
+	);  
+	router.get(
+		config.constant.APIURL+'/getInvoiceData', 
+		[
+			// auth,
+			// [
+				check('odid', 'Order Id is required').not().isEmpty(),
+			// ]
+		],
+		indexController.getInvoiceData
 	); 
 	router.post(
 	  config.constant.APIURL+'/checkPayment', indexController.checkPayment

@@ -217,8 +217,11 @@
                           let grandTotal = orderData.grandTotal ? orderData.grandTotal : 0; 
                           let shipping = orderData.shipping ? orderData.shipping : 0; 
                           let totalTax = orderData.totalTax ? orderData.totalTax : 0; 
+                          let totalAmount = (grandTotal + shipping + totalTax).toFixed(2);
+                          let couponAmount = orderData.couponAmount ? orderData.couponAmount : 0;
+                          totalAmount = totalAmount - couponAmount.toFixed(2);
                         %>
-                        <b>Grand Total: </b> <%= (grandTotal + shipping + totalTax).toFixed(2); %>
+                        <b>Grand Total: </b> <%= ( (grandTotal + shipping + totalTax).toFixed(2) - orderData.couponAmount); %>
                       </td>
                     </tr>
                 </table>
@@ -295,22 +298,22 @@
       }
       else
       {
-        if(orderStatus == 'IN_TRANSIT' && timeSlot == '')
+        if(orderStatus == 'IN_TRANSIT' && ( timeSlot == '' || deliveryDate == ''))
         {
           $(this).val('');
+          if(timeSlot == '')
           $('#timeSlotErr').html('Please select time slot proceed');
-        }
-        else if(orderStatus == 'DELIVERED' && ( receiverName == '' || deliveryDate == '') )
-        {
-          $(this).val('');
-          if(receiverName == '')
-          $('#receiverNameErr').html('Please enter receiver name proceed');
           else
-          $('#receiverNameErr').html('');
+          $('#timeSlotErr').html('');
           if(deliveryDate == '')
           $('#deliveryDateErr').html('Please select delivery date proceed');
           else
           $('#deliveryDateErr').html('');
+        }
+        else if(orderStatus == 'DELIVERED' && receiverName == '' )
+        {
+          $(this).val('');
+          $('#receiverNameErr').html('Please enter receiver name proceed');
         }
         else 
         {

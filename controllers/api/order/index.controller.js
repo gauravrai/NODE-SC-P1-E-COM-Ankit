@@ -274,5 +274,42 @@ module.exports = {
                     data: response, 
                 });	
         });
+    },
+
+    getInvoiceData: async function(req,res){
+        const errors = validationResult(req)
+        if(!errors.isEmpty()){
+            return res.status(400).json({errors: errors.array()})
+        }
+        
+        try{
+            
+			let odid = req.query.odid;
+			await config.helpers.order.getInvoiceData(odid, async function (data) {
+                if(data) {
+                    return res.status(200).json({ 
+                        data: data, 
+                        status: 'success', 
+                        message: "Invoice data found successfully!!" 
+                    });	
+                }else {
+                    return res.status(400).json({ 
+                        data: [], 
+                        status: 'success', 
+                        message: "Invoice has been empty!!" 
+                    });	
+                }
+            });
+        }
+        catch (e){
+            console.log(e)
+            return res.status(500).json({ 
+                                    data: [],  
+                                    status: 'error', 
+                                    errors: [{
+                                        msg: "Internal server error"
+                                    }]
+                                });
+        }
     }
 }

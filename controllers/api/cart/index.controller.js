@@ -48,17 +48,16 @@ module.exports = {
 
             let productData = await Product.findOne({_id: mongoose.mongo.ObjectID(productId), deletedAt: 0, status: true}, {tax: 1});
             let productTax = productData.tax;
+            tax = productTax;
             if(customerGST){
                 let customerGSTStateCode =  customerGST.substring(0, 2);
                 if(customerGSTStateCode == clientGSTStateCode){
                     productTax = productTax/2;
-                    tax = productTax;
                     cgst = ( price * quantity * tax )/100;
                     sgst = cgst;
                     totalTax = (cgst + sgst);
                     taxType = 1;
                 }else {
-                    tax = productTax;
                     igst = ( price * quantity * tax )/100;
                     totalTax = igst;
                     taxType = 2;
@@ -67,7 +66,6 @@ module.exports = {
             else
             {
                 productTax = productTax/2;
-                tax = productTax;
                 cgst = ( price * quantity * tax )/100;
                 sgst = cgst;
                 totalTax = (cgst + sgst);

@@ -142,9 +142,11 @@ module.exports = {
 				billingAddress: userData.billingAddress ? userData.billingAddress : {},
 				shippingAddress: userData.shippingAddress ? userData.shippingAddress : {}
 			}
-
-			let shippingPrice = await Pincode.findOne({_id: mongoose.mongo.ObjectID(userData.shippingAddress.pincode)});
-			shippingPrice = shippingPrice ? shippingPrice.shippingCharges : 0;
+			let shippingPrice = 0;
+			if(userData.shippingAddress.pincode){
+				shippingPrice = await Pincode.findOne({_id: mongoose.mongo.ObjectID(userData.shippingAddress.pincode)});
+				shippingPrice = shippingPrice ? shippingPrice.shippingCharges : 0;
+			}
 			grandTotal = grandTotal + shippingPrice;
 			subTotal = subTotal + shippingPrice;
 
@@ -164,17 +166,15 @@ module.exports = {
 				}
 				let resultPrice = search(varientId[i], inventory);
 				let price = resultPrice ? resultPrice.price : 0;
+				tax = productTax;
 				if(customerGST){
 					let customerGSTStateCode =  customerGST.substring(0, 2);
 					if(customerGSTStateCode == clientGSTStateCode){
-						productTax = productTax/2;
-						tax = productTax;
 						cgst = ( price * parseInt(quantity[i]) * tax )/100;
 						sgst = cgst;
 						totalTax += (cgst + sgst);
 						taxType = 1;
 					}else {
-						tax = productTax;
 						igst = ( price * parseInt(quantity[i]) * tax )/100;
 						totalTax += igst;
 						taxType = 2;
@@ -183,7 +183,6 @@ module.exports = {
 				else
 				{
 					productTax = productTax/2;
-					tax = productTax;
 					cgst = ( price * parseInt(quantity[i]) * tax )/100;
 					sgst = cgst;
 					totalTax += (cgst + sgst);
@@ -539,6 +538,7 @@ module.exports = {
 				orderStatus: orderStatus,
 				storeId: mongoose.mongo.ObjectId(storeId),
 				timeSlot: timeSlot,
+				deliveryDate: deliveryDate
 			},async function(err,data){
 				if(err) console.error(err);
 				await config.helpers.sms.sendSMS(userData, slug, message, async function (smsData) {
@@ -553,8 +553,7 @@ module.exports = {
 				orderStatus: orderStatus,
 				paymentStatus: paymentStatus,
 				storeId: mongoose.mongo.ObjectId(storeId),
-				receiverName: receiverName,
-				deliveryDate: deliveryDate
+				receiverName: receiverName
 			},async function(err,data){
 				if(err) console.error(err);
 				await config.helpers.sms.sendSMS(userData, slug, message, async function (smsData) {
