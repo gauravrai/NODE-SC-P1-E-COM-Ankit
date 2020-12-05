@@ -16,7 +16,7 @@ const ADMINCALLURL = config.constant.ADMINCALLURL;
 
 module.exports = {
 
-    productRequest: async function(req,res){
+    manageProductRequest: async function(req,res){
 		let moduleName = 'Requested Product Management';
 		let pageTitle = 'Manage Requested Product';
 		await config.helpers.permission('manage_product', req, (err,permissionData)=>{

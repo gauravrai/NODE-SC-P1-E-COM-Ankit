@@ -20,6 +20,8 @@ const Contact = model.contact;
 const Customer = model.customer;
 const Discount = model.discount;
 const Product = model.product;
+const Varient = model.varient;
+const RequestProduct = model.request_product;
 const Order = model.order;
 const OrderDetail = model.order_detail;
 
@@ -43,6 +45,11 @@ module.exports = {
 					},
 				}
 			},
+			{
+				$sort: {
+					name: 1
+				}
+			}
 		]);
 		let workbook = new excel.Workbook();
 		let worksheet = workbook.addWorksheet("Role Master");
@@ -105,6 +112,11 @@ module.exports = {
 					},
 				}
 			},
+			{
+				$sort: {
+					name: 1
+				}
+			}
 		]);
 		let workbook = new excel.Workbook();
 		let worksheet = workbook.addWorksheet("Administrator Master");
@@ -153,6 +165,11 @@ module.exports = {
 					},
 				}
 			},
+			{
+				$sort: {
+					name: 1
+				}
+			}
 		]);
 		let workbook = new excel.Workbook();
 		let worksheet = workbook.addWorksheet("Brand Master");
@@ -190,6 +207,10 @@ module.exports = {
 					name: 1,
 					slug: 1,
 					order: 1,
+					image:
+					{
+						$cond: { if: '$image.large' != '', then: 'Yes', else: 'No' }
+					},
 					status:
 					{
 						$cond: { if: true, then: 'Active', else: 'Inactive' }
@@ -199,6 +220,11 @@ module.exports = {
 					},
 				}
 			},
+			{
+				$sort: {
+					name: 1
+				}
+			}
 		]);
 		let workbook = new excel.Workbook();
 		let worksheet = workbook.addWorksheet("Category Master");
@@ -256,6 +282,11 @@ module.exports = {
 					},
 				}
 			},
+			{
+				$sort: {
+					name: 1
+				}
+			}
 		]);
 		let workbook = new excel.Workbook();
 		let worksheet = workbook.addWorksheet("Subcategory Master");
@@ -303,6 +334,11 @@ module.exports = {
 					},
 				}
 			},
+			{
+				$sort: {
+					name: 1
+				}
+			}
 		]);
 		let workbook = new excel.Workbook();
 		let worksheet = workbook.addWorksheet("State Master");
@@ -356,6 +392,11 @@ module.exports = {
 					},
 				}
 			},
+			{
+				$sort: {
+					name: 1
+				}
+			}
 		]);
 		let workbook = new excel.Workbook();
 		let worksheet = workbook.addWorksheet("City Master");
@@ -419,6 +460,11 @@ module.exports = {
 					},
 				}
 			},
+			{
+				$sort: {
+					pincode: 1
+				}
+			}
 		]);
 		let workbook = new excel.Workbook();
 		let worksheet = workbook.addWorksheet("Pincode Master");
@@ -492,6 +538,11 @@ module.exports = {
 					},
 				}
 			},
+			{
+				$sort: {
+					name: 1
+				}
+			}
 		]);
 		let workbook = new excel.Workbook();
 		let worksheet = workbook.addWorksheet("Area Master");
@@ -575,6 +626,11 @@ module.exports = {
 					},
 				}
 			},
+			{
+				$sort: {
+					name: 1
+				}
+			}
 		]);
 		let workbook = new excel.Workbook();
 		let worksheet = workbook.addWorksheet("Society Master");
@@ -668,6 +724,11 @@ module.exports = {
 					},
 				}
 			},
+			{
+				$sort: {
+					name: 1
+				}
+			}
 		]);
 		let workbook = new excel.Workbook();
 		let worksheet = workbook.addWorksheet("Tower Master");
@@ -738,6 +799,11 @@ module.exports = {
 					},
 				}
 			},
+			{
+				$sort: {
+					name: 1
+				}
+			}
 		]);
 		let workbook = new excel.Workbook();
 		let worksheet = workbook.addWorksheet("Store Master");
@@ -767,5 +833,77 @@ module.exports = {
 		return workbook.xlsx.write(res).then(function () {
 		  res.status(200).end();
 		});
+	},
+	
+	exportProductRequest: async function(req,res){
+		let requestProductData = await RequestProduct.aggregate([
+			{
+				$match: {deletedAt: 0}
+			},
+			{
+				$lookup: {
+					from: "products",
+					localField: "productId",
+					foreignField: "_id",
+					as: "productName"
+				}
+			},
+			{
+				$project: {
+					_id: 0,
+					registeredUser:
+					{
+						$cond: { if: '$userId', then: 'Yes', else: 'No' }
+					},
+					name: 1,
+					email: 1,
+					address: 1,
+					pincode: 1,
+					description: 1,
+					productName: { $arrayElemAt: ['$productName.name', 0] },
+					status:
+					{
+						$cond: { if: true, then: 'Active', else: 'Inactive' }
+					},
+					createdAt: {
+						$dateToString: { format: "%Y-%m-%d", date: "$createdAt" }
+					},
+				}
+			},
+			{
+				$sort: {
+					name: 1
+				}
+			}
+		]);
+		let workbook = new excel.Workbook();
+		let worksheet = workbook.addWorksheet("Requested Product Master");
+		
+		worksheet.columns = [
+			{ header: "Registered User", key: "registeredUser", width: 25 },
+			{ header: "Name", key: "name", width: 25 },
+			{ header: "Email", key: "email", width: 25 },
+			{ header: "Address", key: "address", width: 25 },
+			{ header: "Pincode", key: "pincode", width: 25 },
+			{ header: "Description", key: "description", width: 25 },
+			{ header: "Product Name", key: "productName", width: 25 },
+			{ header: "Status", key: "status", width: 10 },
+			{ header: "Created Date", key: "createdAt", width: 20 }
+		];
+
+		worksheet.addRows(requestProductData);
+		
+		res.setHeader(
+		  "Content-Type",
+		  "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
+		);
+		res.setHeader(
+		  "Content-Disposition",
+		  "attachment; filename=" + "Requested Product Master.xlsx"
+		);
+		
+		return workbook.xlsx.write(res).then(function () {
+		  res.status(200).end();
+		})
 	},
 }
