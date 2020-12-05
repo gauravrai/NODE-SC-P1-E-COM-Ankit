@@ -196,7 +196,7 @@ module.exports = {
 			let areaData = await Area.find({status: true, deletedAt: 0});	
 			let societyData = await Society.find({status: true, deletedAt: 0});	
 			let towerData = await Tower.find({status: true, deletedAt: 0});		
-			res.render('admin/customer/edit',{layout:'admin/layout/layout', pageTitle, moduleName, stateData, cityData, pincodeData, areaData, customerData, societyData } );
+			res.render('admin/customer/edit',{layout:'admin/layout/layout', pageTitle, moduleName, stateData, cityData, pincodeData, areaData, customerData, societyData, towerData } );
 		}
 		if(req.method == "POST"){
 			let { name, email, mobile, sameAsBillingAddress, gst, billingAddress, billingCountry, billingState, billingCityId, billingPincodeId, billingAreaId, billingSocietyId, billingTowerId, shippingAddress, shippingCountry, shippingState, shippingCityId, shippingPincodeId, shippingAreaId, shippingSocietyId, shippingTowerId } = req.body;
@@ -246,8 +246,6 @@ module.exports = {
 				billingAddress: billingAddressData,
 				shippingAddress: shippingAddressData
 			};
-			console.log(customerData);
-			return 0;
 			await Customer.updateOne(
 				{ _id: mongoose.mongo.ObjectId(req.body.id) },
 				customerData, function(err,data){

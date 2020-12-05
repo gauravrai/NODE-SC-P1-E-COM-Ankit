@@ -108,6 +108,8 @@ function getLocationFields(id, name, controller, label, functionName, page){
 		url: controller+'/'+id,
 		data: {name: name, label: label, functionName:functionName, page:page},
 		success: function(response) {
+			console.log(response);
+			console.log(name);
 			if(response){
 				$('#'+name+'Data').html(response);	
 			}
