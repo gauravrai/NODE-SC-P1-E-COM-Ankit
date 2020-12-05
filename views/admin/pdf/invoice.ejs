@@ -82,7 +82,7 @@
 							<td style='text-align: center;'>
 								<table border="0" cellpadding="0" cellspacing="0" width="100%">
 									<tr style="text-align: left;">
-										<td><b>Total : <%= orderData.totalAmount %></b><br>
+										<td>
 											<b>Invoice Date :  <%= orderData.invoiceDate %></b><br>
 											<b>Invoice No :  <%= orderData.invoiceNo %></b><br>
 											<b>Reference No :  <%= orderData.referenceNo %></b><br>
@@ -143,7 +143,7 @@
 					<table border='0' width='100%' style='border-collapse: collapse; font-size: 13px;'>
 						<tr style="border-bottom: solid 1px;">
 							<td width='50%' align='left'>ITEMS</td>
-							<td align='right'>Quantity</td>
+							<td align='right'>Qty.</td>
 							<td align='right'>Price</td>
 							<td align='right'>Tax</td>
 							<td align='right'>CGST</td>
@@ -200,7 +200,7 @@
 							<td colspan="4">
 								<p style='margin-top:1px; margin-bottom:1px; text-align: right'><b>Total Amount In Words</b></p>
 							</td>
-							<td  align='right' colspan="10"><b><%= numWords(Math.round(orderData.totalAmount)) %></b></td>
+							<td  align='right' colspan="20"><b><%= numWords(Math.round(orderData.totalAmount)) %></b></td>
 						</tr>
 					</table>
 					<table style='width:70%; font-size:13px;'>
