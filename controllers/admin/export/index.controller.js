@@ -233,6 +233,7 @@ module.exports = {
 			{ header: "Name", key: "name", width: 25 },
 			{ header: "Slug", key: "slug", width: 25 },
 			{ header: "Order", key: "order", width: 25 },
+			{ header: "Image", key: "image", width: 25 },
 			{ header: "Status", key: "status", width: 10 },
 			{ header: "Created Date", key: "createdAt", width: 20 }
 		];
@@ -900,6 +901,115 @@ module.exports = {
 		res.setHeader(
 		  "Content-Disposition",
 		  "attachment; filename=" + "Requested Product Master.xlsx"
+		);
+		
+		return workbook.xlsx.write(res).then(function () {
+		  res.status(200).end();
+		})
+	},
+	
+	exportVarient: async function(req,res){
+		let varientData = await Varient.aggregate([
+			{
+				$match: {deletedAt: 0}
+			},
+			{
+				$project: {
+					_id: 0,
+					label: 1,
+					measurementUnit: 1,
+					status:
+					{
+						$cond: { if: true, then: 'Active', else: 'Inactive' }
+					},
+					createdAt: {
+						$dateToString: { format: "%Y-%m-%d", date: "$createdAt" }
+					},
+				}
+			},
+			{
+				$sort: {
+					name: 1
+				}
+			}
+		]);
+		let workbook = new excel.Workbook();
+		let worksheet = workbook.addWorksheet("Varient Master");
+		
+		worksheet.columns = [
+			{ header: "Label", key: "label", width: 25 },
+			{ header: "Measurement Unit", key: "measurementUnit", width: 25 },
+			{ header: "Status", key: "status", width: 10 },
+			{ header: "Created Date", key: "createdAt", width: 20 }
+		];
+
+		worksheet.addRows(varientData);
+		
+		res.setHeader(
+		  "Content-Type",
+		  "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
+		);
+		res.setHeader(
+		  "Content-Disposition",
+		  "attachment; filename=" + "Varient Master.xlsx"
+		);
+		
+		return workbook.xlsx.write(res).then(function () {
+		  res.status(200).end();
+		})
+	},
+	
+	exportCustomer: async function(req,res){
+		let customerData = await Customer.aggregate([
+			{
+				$match: {deletedAt: 0}
+			},
+			{
+				$project: {
+					_id: 0,
+					name: 1,
+					email: 1,
+					mobile: 1,
+					sameAsBillingAddress:
+					{
+						$cond: { if: true, then: 'Yes', else: 'No' }
+					},
+					status:
+					{
+						$cond: { if: true, then: 'Active', else: 'Inactive' }
+					},
+					createdAt: {
+						$dateToString: { format: "%Y-%m-%d", date: "$createdAt" }
+					},
+				}
+			},
+			{
+				$sort: {
+					name: 1
+				}
+			}
+		]);
+		let workbook = new excel.Workbook();
+		let worksheet = workbook.addWorksheet("Customer Master");
+		
+		worksheet.columns = [
+			{ header: "Name", key: "name", width: 25 },
+			{ header: "Email", key: "email", width: 25 },
+			{ header: "Mobile", key: "mobile", width: 25 },
+			{ header: "Same As Billing Address", key: "sameAsBillingAddress", width: 25 },
+			{ header: "Status", key: "status", width: 10 },
+			{ header: "Created Date", key: "createdAt", width: 20 }
+		];
+
+		worksheet.addRows(customerData);
+		
+		res.setHeader(
+		  "Content-Type",
+		  "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
+		);
+		res.setHeader(
+		  "Content-Disposition",
+		  "attachment; filename=" + "Customer Master.xlsx"
 		);
 		
 		return workbook.xlsx.write(res).then(function () {
