@@ -413,8 +413,10 @@ module.exports = {
             data.billingAddress = {};
             data.shippingAddress = {};
             let userId = req.body.userId;
+            console.log('user id---',userId);
             let condition = {_id: mongoose.mongo.ObjectId(userId)};
             let userData = await Customer.findOne(condition);
+            console.log('userData---',userData);
             data.name = userData.name ? userData.name : '';
             data.email = userData.email ? userData.email : '';
             data.mobile = userData.mobile ? userData.mobile : '';
