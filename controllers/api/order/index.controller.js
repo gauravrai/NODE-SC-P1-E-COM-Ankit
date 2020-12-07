@@ -33,7 +33,11 @@ module.exports = {
             let data = {};
             if(cartData)
             {
-                let shippingPrice = await Pincode.findOne({_id: mongoose.mongo.ObjectID(userData.shippingAddress.pincode)});
+                let shippingPrice = 0;
+                if(userData.shippingAddress.pincode){
+                    shippingPrice = await Pincode.findOne({_id: mongoose.mongo.ObjectID(userData.shippingAddress.pincode)});
+                    shippingPrice = shippingPrice ? shippingPrice.shippingCharges : 0;
+                }
                 let odid = 'OD'+moment().format('YMDhms');
                 let customerDetail = {
                     name : userData.name ? userData.name : '',
@@ -45,7 +49,6 @@ module.exports = {
                     shippingAddress: userData.shippingAddress ? userData.shippingAddress : {}
                 }
                 let couponAmount = cartData.couponAmount ? cartData.couponAmount : 0;
-                let shippingCharges = shippingPrice.shippingCharges ? shippingPrice.shippingCharges : 0;
                 let orderInsertData = {
                     odid: odid,
                     userId: mongoose.mongo.ObjectID(cartData.userId),
