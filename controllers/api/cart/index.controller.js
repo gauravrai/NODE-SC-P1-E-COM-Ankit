@@ -354,7 +354,7 @@ module.exports = {
             data.address = userData.address ? userData.address : '';
             data.mobile = userData.mobile ? userData.mobile : '';
             data.gst = userData.gst ? userData.gst : '';
-            data.sameAsBillingAddress = userData.sameAsBillingAddress ? userData.sameAsBillingAddress : '';
+            data.sameAsBillingAddress = userData.sameAsBillingAddress ? userData.sameAsBillingAddress : false;
 
             data.billingAddress.address = userData.billingAddress.address ? userData.billingAddress.address : '';
             data.billingAddress.country = userData.billingAddress.country ? userData.billingAddress.country : '';
