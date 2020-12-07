@@ -38,7 +38,7 @@ module.exports = {
                     shippingPrice = await Pincode.findOne({_id: mongoose.mongo.ObjectID(userData.shippingAddress.pincode)});
                     shippingPrice = shippingPrice ? shippingPrice.shippingCharges : 0;
                 }
-                let odid = 'OD'+moment().format('shippingPriceYMDhms');
+                let odid = 'OD'+moment().format('YMDhms');
                 let customerDetail = {
                     name : userData.name ? userData.name : '',
                     mobile : userData.mobile ? userData.mobile : '',
