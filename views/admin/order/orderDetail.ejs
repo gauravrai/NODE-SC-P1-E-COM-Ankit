@@ -212,16 +212,16 @@
                         <b>Total Discount:</b> <%= orderData.couponAmount ? orderData.couponAmount : 0; %><br>
                         <b>Sub Total:</b> <%= orderData.subTotal %><br>
                         <b>Taxes:</b> <%= orderData.totalTax ? orderData.totalTax.toFixed(2) : 0 %><br>
-                        <b>Shipping Charges:</b> <%= orderData.shipping ? orderData.shipping : 'Free' %><br>
+                        <b>Shipping Charges:</b> <%= orderData.shippingPrice ? orderData.shippingPrice : 'Free' %><br>
                         <%
                           let grandTotal = orderData.grandTotal ? orderData.grandTotal : 0; 
-                          let shipping = orderData.shipping ? orderData.shipping : 0; 
+                          let shippingPrice = orderData.shippingPrice ? orderData.shippingPrice : 0; 
                           let totalTax = orderData.totalTax ? orderData.totalTax : 0; 
-                          let totalAmount = (grandTotal + shipping + totalTax).toFixed(2);
+                          let totalAmount = (grandTotal + shippingPrice + totalTax).toFixed(2);
                           let couponAmount = orderData.couponAmount ? orderData.couponAmount : 0;
                           totalAmount = totalAmount - couponAmount.toFixed(2);
                         %>
-                        <b>Grand Total: </b> <%= ( (grandTotal + shipping + totalTax).toFixed(2) - orderData.couponAmount); %>
+                        <b>Grand Total: </b> <%= ( (grandTotal + shippingPrice + totalTax).toFixed(2) - orderData.couponAmount); %>
                       </td>
                     </tr>
                 </table>

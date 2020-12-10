@@ -69,9 +69,9 @@ module.exports = {
 			orderData.referenceNo = 'N/A';
 
 			let grandTotal = orderData.grandTotal ? orderData.grandTotal : 0; 
-			let shipping = orderData.shipping ? orderData.shipping : 0; 
+			let shippingPrice = orderData.shippingPrice ? orderData.shippingPrice : 0; 
 			let totalTax = orderData.totalTax ? orderData.totalTax : 0; 
-			let totalAmount = (grandTotal + shipping + totalTax).toFixed(2);
+			let totalAmount = (grandTotal + shippingPrice + totalTax).toFixed(2);
 			let couponAmount = orderData.couponAmount ? orderData.couponAmount : 0;
 			totalAmount = totalAmount - couponAmount.toFixed(2);
 			orderData.totalAmount = totalAmount;
@@ -82,21 +82,23 @@ module.exports = {
 				},
 				{
 					$lookup:
-						{
+					{
 						from: "products",
 						localField: "productId",
 						foreignField: "_id",
 						as: "productData"
-						}
+					}
 				},
 				{
-					$lookup:
-						{
-						from: "varients",
-						localField: "varientId",
-						foreignField: "_id",
-						as: "varientData"
-						}
+					$project: {
+						quantity: 1,
+						price: 1,
+						tax: 1,
+						cgst: 1,
+						sgst: 1,
+						igst: 1,
+						productName: { $arrayElemAt: ['$productData.name', 0] },
+					}
 				},
 			]);
 			

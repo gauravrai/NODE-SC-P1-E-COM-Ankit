@@ -663,7 +663,7 @@ module.exports = {
 	},
 	
 	exportTower: async function(req,res){
-		let TowerData = await Tower.aggregate([
+		let towerData = await Tower.aggregate([
 			{
 				$match: {deletedAt: 0}
 			},
@@ -745,7 +745,7 @@ module.exports = {
 			{ header: "Created Date", key: "createdAt", width: 20 }
 		];
 
-		worksheet.addRows(TowerData);
+		worksheet.addRows(towerData);
 		
 		res.setHeader(
 		  "Content-Type",
@@ -873,7 +873,7 @@ module.exports = {
 			},
 			{
 				$sort: {
-					name: 1
+					productName: 1
 				}
 			}
 		]);
@@ -929,7 +929,7 @@ module.exports = {
 			},
 			{
 				$sort: {
-					name: 1
+					measurementUnit: 1
 				}
 			}
 		]);
@@ -1010,6 +1010,215 @@ module.exports = {
 		res.setHeader(
 		  "Content-Disposition",
 		  "attachment; filename=" + "Customer Master.xlsx"
+		);
+		
+		return workbook.xlsx.write(res).then(function () {
+		  res.status(200).end();
+		})
+	},
+	
+	exportProduct: async function(req,res){
+		let productData = await Product.aggregate([
+			{
+				$match: {deletedAt: 0}
+			},
+			{
+				$lookup: {
+					from: "categories",
+					localField: "categoryId",
+					foreignField: "_id",
+					as: "categoryData"
+				}
+			},
+			{
+				$lookup: {
+					from: "sub_categories",
+					localField: "subcategoryId",
+					foreignField: "_id",
+					as: "subcategoryData"
+				}
+			},
+			{
+				$lookup: {
+					from: "brands",
+					localField: "brandId",
+					foreignField: "_id",
+					as: "brandData"
+				}
+			},
+			{
+				$project: {
+					_id: 0,
+					name: 1,
+					category: { $arrayElemAt: ['$categoryData.name', 0] },
+					subcategory: { $arrayElemAt: ['$subcategoryData.name', 0] },
+					brand: { $arrayElemAt: ['$brandData.name', 0] },
+					offer: 1,
+					discount: 1,
+					stock: 1,
+					description: 1,
+					featured:
+					{
+						$cond: { if: true, then: 'Yes', else: 'No' }
+					},
+					outOfStock:
+					{
+						$cond: { if: true, then: 'Yes', else: 'No' }
+					},
+					price: 1,
+					status:
+					{
+						$cond: { if: true, then: 'Active', else: 'Inactive' }
+					},
+					createdAt: {
+						$dateToString: { format: "%Y-%m-%d", date: "$createdAt" }
+					},
+				}
+			},
+			{
+				$sort: {
+					name: 1
+				}
+			}
+		]);
+		let workbook = new excel.Workbook();
+		let worksheet = workbook.addWorksheet("Product Master");
+		
+		worksheet.columns = [
+			{ header: "Product Name", key: "name", width: 25 },
+			{ header: "Category", key: "category", width: 25 },
+			{ header: "Sub Category", key: "subcategory", width: 25 },
+			{ header: "Brand", key: "brand", width: 25 },
+			{ header: "Offer", key: "offer", width: 25 },
+			{ header: "Discount", key: "discount", width: 25 },
+			{ header: "Stock", key: "stock", width: 25 },
+			{ header: "Description", key: "description", width: 25 },
+			{ header: "Featured", key: "featured", width: 25 },
+			{ header: "Out Of Stock", key: "outOfStock", width: 25 },
+			{ header: "Price", key: "price", width: 25 },
+			{ header: "Status", key: "status", width: 10 },
+			{ header: "Created Date", key: "createdAt", width: 20 }
+		];
+
+		worksheet.addRows(productData);
+		
+		res.setHeader(
+		  "Content-Type",
+		  "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
+		);
+		res.setHeader(
+		  "Content-Disposition",
+		  "attachment; filename=" + "Product Master.xlsx"
+		);
+		
+		return workbook.xlsx.write(res).then(function () {
+		  res.status(200).end();
+		})
+	},
+	
+	exportOrder: async function(req,res){
+		var search = {deletedAt:0};
+		if (req.param('search_data')) {
+			search.$or = [
+				{ odid: { $regex: req.param('search_data') } },
+				{ "customerDetail.name": { $regex: '.*' + req.param('search_data') + '.*', $options: 'i' } },
+				{ "customerDetail.mobile": { $regex: req.param('search_data') } },
+				{ "customerDetail.address": { $regex: req.param('search_data') } },
+			];
+		}
+		if (req.param('order_status')) {
+			search.orderStatus = req.param("order_status");
+		}
+		if (req.param('date_from') && req.param('date_to')) {
+			var today = new Date(req.param('date_to'));
+			var tomorrow = new Date(req.param('date_to'));
+			tomorrow.setDate(today.getDate() + 1);
+			var tomorrow = tomorrow.toLocaleDateString();
+			search.createdAt = { '$gte': new Date(req.param('date_from')), '$lte': new Date(tomorrow) }
+		}
+		if (req.param('order_from')) {
+			search.orderFrom = req.param("order_from");
+		}
+		let orderData = await Order.aggregate([
+			{
+				$match: search
+			},
+			{
+				$project: {
+					_id: 0,
+					odid: 1,
+					grandTotal: 1,
+					subTotal: 1,
+					shippingPrice: 1,
+					totalTax: 1,
+					couponAmount: 1,
+					taxType:
+					{
+						$cond: { if: 1, then: 'CGST/SGST', else: 'IGST' }
+					},
+					quantity: 1,
+					orderStatus: 1,
+					orderFrom: 1,
+					paymentType: 1,
+					paymentStatus: 1,
+					timeSlot: 1,
+					deliveryDate: 1,
+					receiverName: 1,
+					customerDetail: 1,
+					customerName: '$customerDetail.name',
+					customerMobile: '$customerDetail.mobile',
+					customerEmail: '$customerDetail.email',
+					customerGst: '$customerDetail.gst',
+					status:
+					{
+						$cond: { if: true, then: 'Active', else: 'Inactive' }
+					},
+					createdAt: {
+						$dateToString: { format: "%Y-%m-%d", date: "$createdAt" }
+					},
+				}
+			},
+			{
+				$sort: {
+					createdAt: 1
+				}
+			}
+		]);
+		let workbook = new excel.Workbook();
+		let worksheet = workbook.addWorksheet("Order Master");
+		
+		worksheet.columns = [
+			{ header: "ODID", key: "odid", width: 25 },
+			{ header: "Customer Name", key: "customerName", width: 25 },
+			{ header: "Customer Mobile", key: "customerMobile", width: 25 },
+			{ header: "Customer Email", key: "customerEmail", width: 25 },
+			{ header: "Customer Gst", key: "customerGst", width: 25 },
+			{ header: "Grand Total", key: "grandTotal", width: 25 },
+			{ header: "Sub Total", key: "subTotal", width: 25 },
+			{ header: "Shipping Price", key: "shippingPrice", width: 25 },
+			{ header: "totalTax", key: "totalTax", width: 25 },
+			{ header: "Coupon Amount", key: "couponAmount", width: 25 },
+			{ header: "Tax Type", key: "taxType", width: 25 },
+			{ header: "Quantity", key: "quantity", width: 25 },
+			{ header: "Order Status", key: "orderStatus", width: 25 },
+			{ header: "Order From", key: "orderFrom", width: 25 },
+			{ header: "Payment Type", key: "paymentType", width: 25 },
+			{ header: "Payment Status", key: "paymentStatus", width: 25 },
+			{ header: "Time Slot", key: "timeSlot", width: 25 },
+			{ header: "Delivery Date", key: "deliveryDate", width: 25 },
+			{ header: "Receiver Name", key: "receiverName", width: 25 },
+			{ header: "Status", key: "status", width: 10 },
+			{ header: "Created Date", key: "createdAt", width: 20 }
+		];
+		worksheet.addRows(orderData);
+		
+		res.setHeader(
+		  "Content-Type",
+		  "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
+		);
+		res.setHeader(
+		  "Content-Disposition",
+		  "attachment; filename=" + "Order Master.xlsx"
 		);
 		
 		return workbook.xlsx.write(res).then(function () {

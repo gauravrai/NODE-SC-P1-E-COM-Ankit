@@ -29,7 +29,7 @@ module.exports = {
 				if (filterData != "" && req.method == 'POST') {
 					return res.redirect('manage_order' + filterData);
 				}
-				res.render('admin/order/view.ejs',{layout:'admin/layout/layout', pageTitle:pageTitle, moduleName:moduleName, permissionData:permissionData, orderStatus: constant.ORDER_STATUS, req: req});
+				res.render('admin/order/view.ejs',{layout:'admin/layout/layout', pageTitle:pageTitle, moduleName:moduleName, permissionData:permissionData, orderStatus: constant.ORDER_STATUS, req: req, filterData:filterData });
 			});
 		});
 	},

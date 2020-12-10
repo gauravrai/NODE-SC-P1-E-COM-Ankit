@@ -17,4 +17,6 @@ module.exports = function(router) {
     router.all(config.constant.ADMINCALLURL+'/export_product_request',isloggedin, indexController.exportProductRequest);
     router.all(config.constant.ADMINCALLURL+'/export_varient',isloggedin, indexController.exportVarient);
     router.all(config.constant.ADMINCALLURL+'/export_customer',isloggedin, indexController.exportCustomer);
+    router.all(config.constant.ADMINCALLURL+'/export_product',isloggedin, indexController.exportProduct);
+    router.all(config.constant.ADMINCALLURL+'/export_order',isloggedin, indexController.exportOrder);
 }

@@ -155,7 +155,7 @@
 						<% for(let i = 0; i < orderDetailData.length; i++){ %>
 						<tr style="border-bottom: solid 1px;">
 							<td  align='left'>
-								<p style='margin-top:1px; margin-bottom:1px'><%= orderDetailData[i].productData[0].name; %></p>
+								<p style='margin-top:1px; margin-bottom:1px'><%= orderDetailData[i].productName; %></p>
 							</td>
 							<td align='right'><%= orderDetailData[i].quantity; %></td>
 							<td align='right'><%= orderDetailData[i].price; %></td>
@@ -188,7 +188,7 @@
 							<td colspan="7">
 								<p style='margin-top:1px; margin-bottom:1px; text-align: right'><b>Shipping Charge :</b></p>
 							</td>
-							<td  align='right'><b><%= orderData.shipping ? orderData.shipping : 0; %></b></td>
+							<td  align='right'><b><%= orderData.shippingPrice ? orderData.shippingPrice : 'Free'; %></b></td>
 						</tr>
 						<tr>
 							<td colspan="7">
