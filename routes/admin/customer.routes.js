@@ -10,4 +10,5 @@ module.exports = function(router) {
     // ** delete customer functionality removed for now.
     // router.all(config.constant.ADMINCALLURL+'/delete_customer/:id',isloggedin, indexController.deleteCustomer);
     router.all(config.constant.ADMINCALLURL+'/edit_customer',isloggedin, indexController.editCustomer);
+    router.all(config.constant.ADMINCALLURL+'/view_customer_dashboard',isloggedin, indexController.viewCustomerDashboard);
 }

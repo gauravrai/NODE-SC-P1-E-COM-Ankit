@@ -74,9 +74,10 @@ module.exports = {
 						let change_status = "changeStatus(this,\'0\',\'change_status_customer\',\'list_customer\',\'customer\');";
 						arr1.push('<span class="badge bg-success" style="cursor:pointer;" onclick="'+change_status+'" id="'+data[i]._id+'">Active</span>');
 					}
+					let $but_view = '<span><a href="'+ADMINCALLURL+'/view_customer_dashboard?id='+data[i]._id+'" class="btn btn-flat btn-info btn-outline-success" title="View Dashboard"><i class="fas fa-tachometer-alt"></i></a></span>';
 					let $but_edit = '-';
 					if(permissionData.edit=='1'){
-					$but_edit = '<span><a href="'+ADMINCALLURL+'/edit_customer?id='+data[i]._id+'" class="btn btn-flat btn-info btn-outline-primary" title="Edit"><i class="fas fa-edit"></i></a></span>';
+					$but_edit = '&nbsp;&nbsp;<span><a href="'+ADMINCALLURL+'/edit_customer?id='+data[i]._id+'" class="btn btn-flat btn-info btn-outline-primary" title="Edit"><i class="fas fa-edit"></i></a></span>';
 					}
 					// ** delete customer functionality removed for now.
 					// let $but_delete = ' - ';
@@ -84,7 +85,7 @@ module.exports = {
 					// 	let remove = "deleteData(this,\'delete_customer\',\'list_customer\',\'customer\');";
 					// 	$but_delete = '&nbsp;&nbsp;<span><a href="javascript:void(0)" class="btn btn-flat btn-info btn-outline-danger" title="Delete" onclick="'+remove+'" id="'+data[i]._id+'"><i class="fas fa fa-trash" ></i></a></span>';
 					// }
-					arr1.push($but_edit);
+					arr1.push($but_view + $but_edit);
 					arr.push(arr1);
 				}
 				obj.data = arr;
@@ -254,6 +255,11 @@ module.exports = {
 					req.flash({});	name
 			})
 		}		
+	},
+    viewCustomerDashboard: async function(req,res){
+		let moduleName = 'Customer Management';
+        let pageTitle = 'Customer Dashboard';
+		res.render('admin/customer/customerdashboard.ejs',{layout:'admin/layout/layout', pageTitle:pageTitle, moduleName:moduleName});
 	},
 };
 

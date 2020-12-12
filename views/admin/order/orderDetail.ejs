@@ -359,7 +359,9 @@
                               'Your order status has been changed succesfully.',
                               'success'
                           )
-                        }
+                          setTimeout(function () {
+                            location.reload()
+                          }, 3000)}
                     });
                 } else if (result.dismiss === Swal.DismissReason.cancel) {
                     swalWithBootstrapButtons.fire(
