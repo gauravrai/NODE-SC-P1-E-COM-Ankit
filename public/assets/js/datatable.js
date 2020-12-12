@@ -289,7 +289,7 @@ function deleteData(id, controller, returnFunction, tableId){
                     {
                         swalWithBootstrapButtons.fire(
                             'Warning!',
-                            'There are some active city in this state.',
+                            response,
                             'warning'
                         )
                     }

@@ -124,7 +124,7 @@ module.exports = {
 		let cityData = await City.find({stateId: mongoose.mongo.ObjectId(id)});
 		if(cityData.length > 0)
 		{
-			res.send('error');
+			res.send('There are some active city in this state.');
 		}
 		else
 		{

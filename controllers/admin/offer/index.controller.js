@@ -106,16 +106,20 @@ module.exports = {
 			res.render('admin/offer/add.ejs',{layout:'admin/layout/layout', pageTitle:pageTitle, moduleName:moduleName, categoryData:categoryData,subcategoryData:subcategoryData,productData:productData} );
 		}else{
 			new Promise(function(resolve, reject) { 
-				let path = config.constant.OFFERBANNERUPLOADPATH;
-				let name = Date.now()+'_'+req.files.bannerImage.name;
-                req.files.bannerImage.mv(path+name, function(err,data) { 
-                    if (err) { 
-                        console.log(err)
-                        reject(err); 
-                    } else {  
-                        resolve(name);
-                    }
-                })
+				if(Object.keys(req.files).length) {
+					let path = config.constant.OFFERBANNERUPLOADPATH;
+					let name = Date.now()+'_'+req.files.bannerImage.name;
+					req.files.bannerImage.mv(path+name, function(err,data) { 
+						if (err) { 
+							console.log(err)
+							reject(err); 
+						} else {  
+							resolve(name);
+						}
+					})
+				} else {
+					resolve('');
+				}
 			}).then(async (bannerImage) => { 
 				let offerData = {
 					name : req.body.name,

@@ -7,6 +7,7 @@ const bcrypt = require("bcrypt-nodejs");
 const moment = require('moment');
 const Category = model.category;
 const SubCategory = model.sub_category;
+const Product = model.product;
 const ADMINCALLURL = config.constant.ADMINCALLURL;
 
 
@@ -284,10 +285,18 @@ module.exports = {
 	
     deleteSubCategory: async function(req,res){
 		let id = req.param("id");
-		return SubCategory.updateOne({_id:  mongoose.mongo.ObjectId(id)},{deletedAt:2},function(err,data){        	
-			if(err) console.error(err);
-        	res.send('done');
-        })
+		let productData = await Product.find({subcategoryId: mongoose.mongo.ObjectId(id)});
+		if(productData.length > 0)
+		{
+			res.send('There are some active product in this sub category.');
+		}
+		else
+		{
+			return SubCategory.updateOne({_id:  mongoose.mongo.ObjectId(id)},{deletedAt:2},function(err,data){        	
+				if(err) console.error(err);
+				res.send('done');
+			})
+		}
 	},
 
 	checkSlug: function(req,res){

@@ -54,9 +54,9 @@
                             <td><%= walletData[0].walletEntryData[i].amount; %></td>
                             <td>
                               <% if(walletData[0].walletEntryData[i].type == 'Add'){ %>
-                              <span class="badge bg-success">Add</span>
+                              <span class="badge bg-success">Credited</span>
                               <% }else{ %>
-                              <span class="badge bg-danger">Subtract</span>
+                              <span class="badge bg-danger">Debited</span>
                               <% } %>
                             </td>
                             <td><%= moment(walletData[0].walletEntryData[i].createdAt).format('DD-MM-YYYY'); %></td>

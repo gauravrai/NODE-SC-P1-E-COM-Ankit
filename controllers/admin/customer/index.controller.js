@@ -189,7 +189,6 @@ module.exports = {
 			let pageTitle = 'Edit Customer';
 			let id = req.body.id;
 			let customerData = await Customer.findOne({_id: mongoose.mongo.ObjectId(id), deletedAt: 0 });	
-			console.log(customerData);	
 			let stateData = await State.find({status: true, deletedAt: 0});	
 			let cityData = await City.find({status: true, deletedAt: 0});	
 			let pincodeData = await Pincode.find({status: true, deletedAt: 0});	

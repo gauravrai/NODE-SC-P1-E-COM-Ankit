@@ -408,22 +408,31 @@ module.exports = {
             })
             
             let cartData = await Cart.findOne({userId: mongoose.mongo.ObjectId(userId)});
-            data.grandTotal = cartData.grandTotal ? cartData.grandTotal : '';
-            data.subTotal = cartData.grandTotal ? cartData.grandTotal - cartData.couponAmount: '';
-            data.couponAmount = cartData.couponAmount ? cartData.couponAmount : '';
-            data.totalTax = cartData.totalTax ? cartData.totalTax : '';
-            data.tax = 0;
-            if(data) {
-                return res.status(200).json({ 
-                    data: data, 
-                    status: 'success', 
-                    message: "checkout data found successfully!!" 
-                });	
-            }else {
+            if(cartData) {
+                data.grandTotal = cartData.grandTotal ? cartData.grandTotal : '';
+                let couponAmount = cartData.couponAmount ? cartData.couponAmount : 0;
+                data.subTotal = cartData.grandTotal ? cartData.grandTotal - couponAmount: 0;
+                data.couponAmount = couponAmount ? couponAmount : 0;
+                data.totalTax = cartData.totalTax ? cartData.totalTax : 0;
+                data.tax = 0;
+                if(data) {
+                    return res.status(200).json({ 
+                        data: data, 
+                        status: 'success', 
+                        message: "checkout data found successfully!!" 
+                    });	
+                }else {
+                    return res.status(400).json({ 
+                        data: [], 
+                        status: 'success', 
+                        message: "checkout data not found!!" 
+                    });	
+                }
+            } else {
                 return res.status(400).json({ 
                     data: [], 
                     status: 'success', 
-                    message: "checkout data not found!!" 
+                    message: "No data found!!" 
                 });	
             }
         }
