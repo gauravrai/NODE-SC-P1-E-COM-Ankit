@@ -15,314 +15,210 @@
       </div>
     </section>
     <section class="content">
-      <div class="row">
-        <div class="col-md-4">
-          <div class="info-box">
-            <span class="info-box-icon bg-info elevation-1"><i class="fas fa-cog"></i></span>
-
-            <div class="info-box-content">
-              <span class="info-box-text">Total Order</span>
-              <span class="info-box-number">
-                10
-              </span>
-            </div>
-          </div>
-          <div class="info-box">
-            <span class="info-box-icon bg-danger elevation-1"><i class="fas fa-cog"></i></span>
-
-            <div class="info-box-content">
-              <span class="info-box-text">Total Shipping Amount</span>
-              <span class="info-box-number">
-                1,3456
-                <small>INR</small>
-              </span>
-            </div>
-          </div>
-          <div class="info-box">
-            <span class="info-box-icon bg-warning elevation-1"><i class="fas fa-cog"></i></span>
-
-            <div class="info-box-content">
-              <span class="info-box-text">Wallet Amount</span>
-              <span class="info-box-number">
-                1000
-                <small>INR</small>
-              </span>
-            </div>
-          </div>
-          <div class="info-box">
-            <span class="info-box-icon bg-success elevation-1"><i class="fas fa-cog"></i></span>
-
-            <div class="info-box-content">
-              <span class="info-box-text">Average Order</span>
-              <span class="info-box-number">
-                4,512
-                <small>INR</small>
-              </span>
-            </div>
-          </div>
-          <div class="info-box">
-            <span class="info-box-icon bg-primary elevation-1"><i class="fas fa-cog"></i></span>
-
-            <div class="info-box-content">
-              <span class="info-box-text">First Order Coupon Used</span>
-              <span class="info-box-number">
-                10
-                <small>%</small>
-              </span>
-            </div>
-          </div>
+      <div class="card card-widget widget-user">
+        <div class="widget-user-header bg-info">
+          <h3 class="widget-user-username"><%=userData.name%> - <%=userData.mobile%></h3>
+          <h5 class="widget-user-desc"><%=userData.email%></h5>
         </div>
-        <div class="col-md-8">
-          <div class="card">
-            <div class="card-header border-transparent">
-              <h3 class="card-title">Latest Orders</h3>
-
-              <div class="card-tools">
-                <button type="button" class="btn btn-tool" data-card-widget="collapse">
-                  <i class="fas fa-minus"></i>
-                </button>
+        <div class="widget-user-image">
+          <img class="img-circle elevation-2" src="/assets/media/user/avatar5.png" alt="User Avatar">
+        </div>
+        <div class="card-footer">
+          <div class="row">
+            <div class="col-md-4">
+              <div class="info-box">
+                <span class="info-box-icon bg-info elevation-1"><i class="fas fa-shopping-cart"></i></span>
+    
+                <div class="info-box-content">
+                  <span class="info-box-text">Total Order</span>
+                  <span class="info-box-number">
+                    <%=totalOrder.length ? totalOrder.length : 0%>
+                  </span>
+                </div>
+              </div>
+              <div class="info-box">
+                <span class="info-box-icon bg-danger elevation-1"><i class="fas fa-credit-card"></i></span>
+    
+                <div class="info-box-content">
+                  <span class="info-box-text">Total Shipping Amount</span>
+                  <span class="info-box-number">
+                    <%=Math.round(totalShippingAmount)%>
+                    <small>INR</small>
+                  </span>
+                </div>
+              </div>
+              <div class="info-box">
+                <span class="info-box-icon bg-warning elevation-1"><i class="fas fa-wallet"></i></span>
+    
+                <div class="info-box-content">
+                  <span class="info-box-text">Wallet Amount</span>
+                  <span class="info-box-number">
+                    <%=walletAmount.totalAmount ? walletAmount.totalAmount : 0%>
+                    <small>INR</small>
+                  </span>
+                </div>
+              </div>
+              <div class="info-box">
+                <span class="info-box-icon bg-success elevation-1"><i class="fas fa-shopping-bag"></i></span>
+    
+                <div class="info-box-content">
+                  <span class="info-box-text">Average Order</span>
+                  <span class="info-box-number">
+                    <%=Math.round(averageOrder)%>
+                    <small>INR</small>
+                  </span>
+                </div>
+              </div>
+              <div class="info-box">
+                <span class="info-box-icon bg-primary elevation-1"><i class="fas fa-gift"></i></span>
+    
+                <div class="info-box-content">
+                  <span class="info-box-text">First Order Coupon Used</span>
+                  <span class="info-box-number">
+                    <%=firstCouponUsed ? 'Yes' : 'No' %>
+                  </span>
+                </div>
               </div>
             </div>
-            <div class="card-body p-0">
-              <div class="table-responsive">
-                <table class="table m-0">
-                  <thead>
-                    <tr>
-                      <th>Order ID</th>
-                      <th>Item</th>
-                      <th>Status</th>
-                      <th>Popularity</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr>
-                      <td><a href="pages/examples/invoice.html">OR9842</a></td>
-                      <td>Call of Duty IV</td>
-                      <td><span class="badge badge-success">Shipped</span></td>
-                      <td>
-                        <div class="sparkbar" data-color="#00a65a" data-height="20">90,80,90,-70,61,-83,63</div>
-                      </td>
-                    </tr>
-                    <tr>
-                      <td><a href="pages/examples/invoice.html">OR1848</a></td>
-                      <td>Samsung Smart TV</td>
-                      <td><span class="badge badge-warning">Pending</span></td>
-                      <td>
-                        <div class="sparkbar" data-color="#f39c12" data-height="20">90,80,-90,70,61,-83,68</div>
-                      </td>
-                    </tr>
-                    <tr>
-                      <td><a href="pages/examples/invoice.html">OR7429</a></td>
-                      <td>iPhone 6 Plus</td>
-                      <td><span class="badge badge-danger">Delivered</span></td>
-                      <td>
-                        <div class="sparkbar" data-color="#f56954" data-height="20">90,-80,90,70,-61,83,63</div>
-                      </td>
-                    </tr>
-                    <tr>
-                      <td><a href="pages/examples/invoice.html">OR7429</a></td>
-                      <td>Samsung Smart TV</td>
-                      <td><span class="badge badge-info">Processing</span></td>
-                      <td>
-                        <div class="sparkbar" data-color="#00c0ef" data-height="20">90,80,-90,70,-61,83,63</div>
-                      </td>
-                    </tr>
-                    <tr>
-                      <td><a href="pages/examples/invoice.html">OR1848</a></td>
-                      <td>Samsung Smart TV</td>
-                      <td><span class="badge badge-warning">Pending</span></td>
-                      <td>
-                        <div class="sparkbar" data-color="#f39c12" data-height="20">90,80,-90,70,61,-83,68</div>
-                      </td>
-                    </tr>
-                    <tr>
-                      <td><a href="pages/examples/invoice.html">OR7429</a></td>
-                      <td>iPhone 6 Plus</td>
-                      <td><span class="badge badge-danger">Delivered</span></td>
-                      <td>
-                        <div class="sparkbar" data-color="#f56954" data-height="20">90,-80,90,70,-61,83,63</div>
-                      </td>
-                    </tr>
-                    <tr>
-                      <td><a href="pages/examples/invoice.html">OR9842</a></td>
-                      <td>Call of Duty IV</td>
-                      <td><span class="badge badge-success">Shipped</span></td>
-                      <td>
-                        <div class="sparkbar" data-color="#00a65a" data-height="20">90,80,90,-70,61,-83,63</div>
-                      </td>
-                    </tr>
-                    <tr>
-                      <td><a href="pages/examples/invoice.html">OR9842</a></td>
-                      <td>Call of Duty IV</td>
-                      <td><span class="badge badge-success">Shipped</span></td>
-                      <td>
-                        <div class="sparkbar" data-color="#00a65a" data-height="20">90,80,90,-70,61,-83,63</div>
-                      </td>
-                    </tr>
-                    <tr>
-                      <td><a href="pages/examples/invoice.html">OR9842</a></td>
-                      <td>Call of Duty IV</td>
-                      <td><span class="badge badge-success">Shipped</span></td>
-                      <td>
-                        <div class="sparkbar" data-color="#00a65a" data-height="20">90,80,90,-70,61,-83,63</div>
-                      </td>
-                    </tr>
-                    <tr>
-                      <td><a href="pages/examples/invoice.html">OR9842</a></td>
-                      <td>Call of Duty IV</td>
-                      <td><span class="badge badge-success">Shipped</span></td>
-                      <td>
-                        <div class="sparkbar" data-color="#00a65a" data-height="20">90,80,90,-70,61,-83,63</div>
-                      </td>
-                    </tr>
-                  </tbody>
-                </table>
+            <div class="col-md-8">
+              <div class="card">
+                <div class="card-header border-transparent">
+                  <h3 class="card-title">Latest Orders</h3>
+    
+                  <div class="card-tools">
+                    <button type="button" class="btn btn-tool" data-card-widget="collapse">
+                      <i class="fas fa-minus"></i>
+                    </button>
+                  </div>
+                </div>
+                <div class="card-body p-0">
+                  <div class="table-responsive">
+                    <table class="table m-0">
+                      <thead>
+                        <tr>
+                          <th>Order ID</th>
+                          <th>Order Status</th>
+                          <th>Payment Type</th>
+                          <th>Payment Status</th>
+                          <th>Ordered From</th>
+                          <th>Order Date</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        <%
+                          if(latestOrder.length > 0) {
+                            for(let i = 0; i < latestOrder.length; i++) {
+                        %>
+                        <tr>
+                          <td><%=latestOrder[i].odid%></td>
+                          <td><%=latestOrder[i].orderStatus%></td>
+                          <td><%=latestOrder[i].paymentType%></td>
+                          <td><%=latestOrder[i].paymentStatus%></td>
+                          <td><%=latestOrder[i].orderFrom%></td>
+                          <td><%=moment(latestOrder[i].createdAt).format('DD-MM-YYYY')%></td>
+                        </tr>
+                        <% } } else {%>
+                          <tr>
+                            <td colspan="6" style="text-align: center;">No Order Found</td>
+                          </tr>
+                        <% } %>
+                      </tbody>
+                    </table>
+                  </div>
+                </div>
+                <div class="card-footer clearfix">
+                  <a href="/admin/manage_order" class="btn btn-sm btn-secondary float-right">View All Orders</a>
+                </div>
               </div>
-            </div>
-            <div class="card-footer clearfix">
-              <a href="javascript:void(0)" class="btn btn-sm btn-secondary float-right">View All Orders</a>
-            </div>
-          </div>
-          <div class="card">
-            <div class="card-header border-transparent">
-              <h3 class="card-title">Latest Wallet Transactions</h3>
-
-              <div class="card-tools">
-                <button type="button" class="btn btn-tool" data-card-widget="collapse">
-                  <i class="fas fa-minus"></i>
-                </button>
+              <div class="card">
+                <div class="card-header border-transparent">
+                  <h3 class="card-title">Latest Wallet Transactions</h3>
+    
+                  <div class="card-tools">
+                    <button type="button" class="btn btn-tool" data-card-widget="collapse">
+                      <i class="fas fa-minus"></i>
+                    </button>
+                  </div>
+                </div>
+                <div class="card-body p-0">
+                  <div class="table-responsive">
+                    <table class="table m-0">
+                      <thead>
+                        <tr>
+                          <th>Transaction ID</th>
+                          <th>Amount</th>
+                          <th>Type</th>
+                          <th>Date</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        <% if(latestWallet.length > 0) {
+                        for(let i = 0; i < latestWallet.length; i++){ %>
+                        <tr>
+                          <td><%= latestWallet[i].transactionId ? latestWallet[i].transactionId : 'N/A'; %></td>
+                          <td><%= latestWallet[i].amount; %></td>
+                          <td>
+                            <% if(latestWallet[i].type == 'Add'){ %>
+                            <span class="badge bg-success">Credited</span>
+                            <% }else{ %>
+                            <span class="badge bg-danger">Debited</span>
+                            <% } %>
+                          </td>
+                          <td><%= moment(latestWallet[i].createdAt).format('DD-MM-YYYY'); %></td>
+                        </tr>
+                        <% } }else{ %>
+                          <tr>
+                            <td colspan="4" style="text-align: center;">No Wallet Transaction Found</td>
+                          </tr>
+                        <% } %>
+                      </tbody>
+                    </table>
+                  </div>
+                </div>
+                <div class="card-footer clearfix">
+                  <a href="/admin/view_wallet?id=<%=id%>" class="btn btn-sm btn-secondary float-right">View All Transactions</a>
+                </div>
               </div>
-            </div>
-            <div class="card-body p-0">
-              <div class="table-responsive">
-                <table class="table m-0">
-                  <thead>
-                    <tr>
-                      <th>Order ID</th>
-                      <th>Item</th>
-                      <th>Status</th>
-                      <th>Popularity</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr>
-                      <td><a href="pages/examples/invoice.html">OR9842</a></td>
-                      <td>Call of Duty IV</td>
-                      <td><span class="badge badge-success">Shipped</span></td>
-                      <td>
-                        <div class="sparkbar" data-color="#00a65a" data-height="20">90,80,90,-70,61,-83,63</div>
-                      </td>
-                    </tr>
-                    <tr>
-                      <td><a href="pages/examples/invoice.html">OR1848</a></td>
-                      <td>Samsung Smart TV</td>
-                      <td><span class="badge badge-warning">Pending</span></td>
-                      <td>
-                        <div class="sparkbar" data-color="#f39c12" data-height="20">90,80,-90,70,61,-83,68</div>
-                      </td>
-                    </tr>
-                    <tr>
-                      <td><a href="pages/examples/invoice.html">OR7429</a></td>
-                      <td>iPhone 6 Plus</td>
-                      <td><span class="badge badge-danger">Delivered</span></td>
-                      <td>
-                        <div class="sparkbar" data-color="#f56954" data-height="20">90,-80,90,70,-61,83,63</div>
-                      </td>
-                    </tr>
-                    <tr>
-                      <td><a href="pages/examples/invoice.html">OR7429</a></td>
-                      <td>Samsung Smart TV</td>
-                      <td><span class="badge badge-info">Processing</span></td>
-                      <td>
-                        <div class="sparkbar" data-color="#00c0ef" data-height="20">90,80,-90,70,-61,83,63</div>
-                      </td>
-                    </tr>
-                    <tr>
-                      <td><a href="pages/examples/invoice.html">OR1848</a></td>
-                      <td>Samsung Smart TV</td>
-                      <td><span class="badge badge-warning">Pending</span></td>
-                      <td>
-                        <div class="sparkbar" data-color="#f39c12" data-height="20">90,80,-90,70,61,-83,68</div>
-                      </td>
-                    </tr>
-                    </tr>
-                  </tbody>
-                </table>
+              <div class="card">
+                <div class="card-header border-transparent">
+                  <h3 class="card-title">Top 5 Wishlist Product</h3>
+    
+                  <div class="card-tools">
+                    <button type="button" class="btn btn-tool" data-card-widget="collapse">
+                      <i class="fas fa-minus"></i>
+                    </button>
+                  </div>
+                </div>
+                <div class="card-body p-0">
+                  <div class="table-responsive">
+                    <table class="table m-0">
+                      <thead>
+                        <tr>
+                          <th>Image</th>
+                          <th>Product Name</th>
+                          <th>Date</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        <%
+                          if(latestWishlist.length > 0) {
+                            for(let i = 0; i < latestWishlist.length; i++) {
+                        %>
+                        <tr>
+                          <td><img src="<%=latestWishlist[i].thumbnailPath%><%=latestWishlist[i].productImage[0]%>" height="50px"></td>
+                          <td><%=latestWishlist[i].productName%></td>
+                          <td><%=moment(latestWishlist[i].createdAt).format('DD-MM-YYYY')%></td>
+                        </tr>
+                        <% } }else{ %>
+                          <tr>
+                            <td colspan="3" style="text-align: center;">No Wishlist Product Found</td>
+                          </tr>
+                        <% } %>
+                      </tbody>
+                    </table>
+                  </div>
+                </div>
               </div>
-            </div>
-            <div class="card-footer clearfix">
-              <a href="javascript:void(0)" class="btn btn-sm btn-secondary float-right">View All Orders</a>
-            </div>
-          </div>
-          <div class="card">
-            <div class="card-header border-transparent">
-              <h3 class="card-title">Top 5 Wishlist Product</h3>
-
-              <div class="card-tools">
-                <button type="button" class="btn btn-tool" data-card-widget="collapse">
-                  <i class="fas fa-minus"></i>
-                </button>
-              </div>
-            </div>
-            <div class="card-body p-0">
-              <div class="table-responsive">
-                <table class="table m-0">
-                  <thead>
-                    <tr>
-                      <th>Order ID</th>
-                      <th>Item</th>
-                      <th>Status</th>
-                      <th>Popularity</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr>
-                      <td><a href="pages/examples/invoice.html">OR9842</a></td>
-                      <td>Call of Duty IV</td>
-                      <td><span class="badge badge-success">Shipped</span></td>
-                      <td>
-                        <div class="sparkbar" data-color="#00a65a" data-height="20">90,80,90,-70,61,-83,63</div>
-                      </td>
-                    </tr>
-                    <tr>
-                      <td><a href="pages/examples/invoice.html">OR1848</a></td>
-                      <td>Samsung Smart TV</td>
-                      <td><span class="badge badge-warning">Pending</span></td>
-                      <td>
-                        <div class="sparkbar" data-color="#f39c12" data-height="20">90,80,-90,70,61,-83,68</div>
-                      </td>
-                    </tr>
-                    <tr>
-                      <td><a href="pages/examples/invoice.html">OR7429</a></td>
-                      <td>iPhone 6 Plus</td>
-                      <td><span class="badge badge-danger">Delivered</span></td>
-                      <td>
-                        <div class="sparkbar" data-color="#f56954" data-height="20">90,-80,90,70,-61,83,63</div>
-                      </td>
-                    </tr>
-                    <tr>
-                      <td><a href="pages/examples/invoice.html">OR7429</a></td>
-                      <td>Samsung Smart TV</td>
-                      <td><span class="badge badge-info">Processing</span></td>
-                      <td>
-                        <div class="sparkbar" data-color="#00c0ef" data-height="20">90,80,-90,70,-61,83,63</div>
-                      </td>
-                    </tr>
-                    <tr>
-                      <td><a href="pages/examples/invoice.html">OR1848</a></td>
-                      <td>Samsung Smart TV</td>
-                      <td><span class="badge badge-warning">Pending</span></td>
-                      <td>
-                        <div class="sparkbar" data-color="#f39c12" data-height="20">90,80,-90,70,61,-83,68</div>
-                      </td>
-                    </tr>
-                    </tr>
-                  </tbody>
-                </table>
-              </div>
-            </div>
-            <div class="card-footer clearfix">
-              <a href="javascript:void(0)" class="btn btn-sm btn-secondary float-right">View All Orders</a>
             </div>
           </div>
         </div>

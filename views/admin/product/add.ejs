@@ -235,11 +235,37 @@
         }
     });
     $('#name, #description').on('keypress', function (event) {
-      var regex = new RegExp("^[a-zA-Z0-9]+$");
+      var regex = new RegExp("^[a-zA-Z0-9 .,]+$");
       var key = String.fromCharCode(!event.charCode ? event.which : event.charCode);
       if (!regex.test(key)) {
         event.preventDefault();
         return false;
       }
+    });
+    $(function(){
+
+      $( "#name" ).bind( 'paste',function()
+      {
+          setTimeout(function()
+          { 
+            var data= $( '#name' ).val() ;
+            var dataFull = data.replace(/[^\w\s]/gi, '');
+            $( '#name' ).val(dataFull);
+          });
+
+      });
+    });
+    $(function(){
+
+      $( "#description" ).bind( 'paste',function()
+      {
+          setTimeout(function()
+          { 
+            var data= $( '#description' ).val() ;
+            var dataFull = data.replace(/[^\w\s]/gi, '');
+            $( '#description' ).val(dataFull);
+          });
+
+      });
     });
   </script>

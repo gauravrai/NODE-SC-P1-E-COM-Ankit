@@ -21,6 +21,10 @@ const Tower = model.tower;
 const Product = model.product;
 const Brand   = model.brand;
 const Order   = model.order;
+const Walletentry   = model.wallet_entry;
+const Wallet   = model.wallet;
+const Wishlist   = model.wishlist;
+const Couponuses   = model.coupon_uses;
 const ADMINCALLURL = config.constant.ADMINCALLURL;
 const Customer = model.customer;
 
@@ -261,12 +265,47 @@ module.exports = {
 		let moduleName = 'Customer Management';
 		let pageTitle = 'Customer Dashboard';
 		let id = req.body.id;
-		let totalOrder = await Order.count({userId: mongoose.mongo.ObjectId(id)});
-		let walletAmount = '';
-		let firstCouponUsed = '';
+		let userData = await Customer.findOne({_id: mongoose.mongo.ObjectId(id)});
+		let totalOrder = await Order.find({userId: mongoose.mongo.ObjectId(id)});
+		let walletAmount = await Wallet.findOne({userId: mongoose.mongo.ObjectId(id)});
+		let firstCouponUsed = await Couponuses.findOne({userId: mongoose.mongo.ObjectId(id)});;
 		let latestOrder = await Order.find({userId: mongoose.mongo.ObjectId(id)}).sort({'createdAt' : -1}).limit(10);
-		console.log(latestOrder);
-		res.render('admin/customer/customerdashboard.ejs',{layout:'admin/layout/layout', pageTitle:pageTitle, moduleName:moduleName, totalOrder:totalOrder, latestOrder:latestOrder});
+		let latestWallet = await Walletentry.find({userId: mongoose.mongo.ObjectId(id)}).sort({'createdAt' : -1}).limit(5);
+		let latestWishlist = await Wishlist.aggregate([ 
+			{
+				$match : { userId: mongoose.mongo.ObjectID(id) }
+			},
+			{
+				$lookup:
+				  {
+					from: "products",
+					localField: "productId",
+					foreignField: "_id",
+					as: "productData"
+				  }
+			},
+			{
+				$addFields: {
+					"thumbnailPath" : config.constant.PRODUCTTHUMBNAILSHOWPATH
+				}
+			},
+			{
+				$project: { 
+					"productName": { $arrayElemAt: ['$productData.name', 0] },
+					"productImage": { $arrayElemAt: ['$productData.image.thumbnail', 0] },
+					createdAt:1,
+					thumbnailPath: 1
+				}
+			}
+		]).sort({'createdAt' : -1}).limit(5);
+		let totalShippingAmount = 0;
+		let averageOrder = 0;
+		for(let i = 0; i < totalOrder.length; i++ ) {
+			let couponAmount = totalOrder[i].couponAmount ? totalOrder[i].couponAmount : 0;
+			totalShippingAmount += totalOrder[i].grandTotal + totalOrder[i].totalTax + totalOrder[i].shippingPrice - couponAmount;
+		}
+		averageOrder = totalShippingAmount/totalOrder.length;
+		res.render('admin/customer/customerdashboard.ejs',{layout:'admin/layout/layout', pageTitle:pageTitle, moduleName:moduleName, userData:userData, totalOrder:totalOrder, totalShippingAmount:totalShippingAmount, walletAmount:walletAmount, averageOrder:averageOrder, firstCouponUsed:firstCouponUsed, latestOrder:latestOrder, latestWallet:latestWallet, latestWishlist:latestWishlist, moment:moment, id:id, walletAmount:walletAmount });
 	},
 };
 

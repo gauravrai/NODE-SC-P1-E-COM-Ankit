@@ -313,7 +313,6 @@ module.exports = {
 				categoryId : mongoose.mongo.ObjectId(req.body.categoryId),
 				subcategoryId : mongoose.mongo.ObjectId(req.body.subcategoryId),
 				name : req.body.name,
-				brandId : mongoose.mongo.ObjectId(req.body.brandId),
 				offer : req.body.offer,
 				discount: req.body.discount,
 				stock : req.body.stock ? req.body.stock.toUpperCase() : '',
@@ -322,6 +321,9 @@ module.exports = {
 				outOfStock : req.body.outOfStock == 'on' ? true : false,
 				tax : req.body.tax
 			};
+			if(req.body.brandId) {
+				productData.brandId = mongoose.mongo.ObjectId(req.body.brandId);
+			}
 			let store = req.body.store;
 			let storeId = req.body.storeId;
 			let inventory = [];
