@@ -6,6 +6,9 @@ let StoreSchema = new Schema({
     name: {
         type: String
     },
+    uniqueCode: {
+        type: String
+    },
     address: {
         type: String
     },

@@ -7,6 +7,7 @@ const bcrypt = require("bcrypt-nodejs");
 const moment = require('moment');
 const City = model.city;
 const State = model.state;
+const Pincode = model.pincode;
 const ADMINCALLURL = config.constant.ADMINCALLURL;
 
 module.exports = {
@@ -91,7 +92,6 @@ module.exports = {
 				name : req.body.name,
 				stateId : mongoose.mongo.ObjectId(req.body.stateId)
 			};
-			console.log(cityData);
 			let city = new City(cityData);
 			city.save(function(err, data){
 				if(err){console.log(err)}
@@ -129,10 +129,18 @@ module.exports = {
 
 	deleteCity: async function(req,res){
 		let id = req.param("id");
-		return City.updateOne({_id:  mongoose.mongo.ObjectId(id)},{deletedAt:2},function(err,data){        	
-			if(err) console.error(err);
-        	res.send('done');
-        })
+		let pincodeData = await Pincode.find({cityId: mongoose.mongo.ObjectId(id)});
+		if(pincodeData.length > 0)
+		{
+			res.send('There are some active pincode in this city.');
+		}
+		else
+		{
+			return City.updateOne({_id:  mongoose.mongo.ObjectId(id)},{deletedAt:2},function(err,data){        	
+				if(err) console.error(err);
+				res.send('done');
+			})
+		}
 	},
 
 	changeStatusCity: async function(req,res){

@@ -6,6 +6,9 @@ let WalletEntrySchema = new Schema({
     userId: {
         type: ObjectId
     },
+    transactionId: {
+        type: String
+    },
     amount: {
         type: Number
     },

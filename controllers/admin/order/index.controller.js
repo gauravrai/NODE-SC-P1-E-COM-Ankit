@@ -95,6 +95,7 @@ module.exports = {
                     arr1.push(data[i].customerDetail.shippingAddress.address ? data[i].customerDetail.shippingAddress.address: '');
                     arr1.push((data[i].grandTotal + data[i].totalTax + data[i].shippingPrice ).toFixed(2)+' INR');
                     arr1.push(data[i].orderStatus);
+                    arr1.push(data[i].paymentStatus);
 					arr1.push(data[i].orderFrom);
                     
 					arr1.push(moment(data[i].createdAt).format('DD-MM-YYYY'));

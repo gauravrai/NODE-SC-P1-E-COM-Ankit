@@ -54,6 +54,7 @@ module.exports = {
 				for(i=0;i<data.length;i++){
                     var arr1 = [];
                     arr1.push(data[i].name);
+                    arr1.push(data[i].uniqueCode);
                     arr1.push(data[i].address);
                     arr1.push(data[i].contactName);
                     arr1.push(data[i].contactNumber);
@@ -94,9 +95,34 @@ module.exports = {
 			let moduleName = 'Store Management';
 			let pageTitle = 'Add Store';
 			let stateData = await State.find({status: true, deletedAt: 0});	
-			res.render('admin/store/add.ejs',{layout:'admin/layout/layout', pageTitle:pageTitle, moduleName:moduleName, stateData:stateData} );
+			function generateCode(){
+				let characters = '0123456789';
+				let charactersLength = characters.length;
+				let uniqueCode = '';
+				for (var i = 0; i < 6; i++) {
+					uniqueCode += characters.charAt(Math.floor(Math.random() * charactersLength));
+				}
+				return uniqueCode;
+			}
+			let uniqueCode = generateCode();
+			let storeData = await Store.find();	
+			function search(nameKey, myArray){
+				for (var i=0; i < myArray.length; i++) {
+					if (myArray[i].uniqueCode === nameKey) {
+						return true;
+					}
+				}
+			}
+			let uniqueCodeFound = search(uniqueCode, storeData);
+			if(uniqueCodeFound)
+			{
+				uniqueCode = generateCode();
+			}
+			console.log(uniqueCode);
+			res.render('admin/store/add.ejs',{layout:'admin/layout/layout', pageTitle:pageTitle, moduleName:moduleName, stateData:stateData, uniqueCode:uniqueCode } );
 		}else{
 			let storeData = {
+                uniqueCode : req.body.uniqueCode,
                 name : req.body.name,
 				address : req.body.address,
 				stateId : mongoose.mongo.ObjectId(req.body.stateId),
@@ -127,6 +153,7 @@ module.exports = {
 		}
 		if(req.method == "POST"){
 			let storeData = {
+                uniqueCode : req.body.uniqueCode,
 				name : req.body.name,
                 address:req.body.address,
 				stateId : mongoose.mongo.ObjectId(req.body.stateId),

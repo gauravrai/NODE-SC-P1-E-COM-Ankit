@@ -124,13 +124,7 @@ module.exports = {
 			let pageTitle = 'Edit Discount & Coupon';
             let id = req.body.id;
             let discountData = await Discount.findOne({_id: mongoose.mongo.ObjectId(id), status: true, deletedAt: 0});
-			let characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789';
-			let charactersLength = characters.length;
-			let couponNo = '';
-			for (var i = 0; i < 6; i++) {
-				couponNo += characters.charAt(Math.floor(Math.random() * charactersLength));
-			}
-			res.render('admin/discount/edit.ejs',{layout:'admin/layout/layout', pageTitle:pageTitle, moduleName:moduleName, discountData:discountData,moment:moment, couponNo:couponNo} );
+			res.render('admin/discount/edit.ejs',{layout:'admin/layout/layout', pageTitle:pageTitle, moduleName:moduleName, discountData:discountData,moment:moment} );
 		}
 		if(req.method == "POST"){
 			let discountData = {

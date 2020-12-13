@@ -830,6 +830,9 @@ $(document).ready(function () {
             },
             freeVarient: {
                 required: true, 
+            },
+            bannerImage: {
+                required: true, 
             }
         },
         messages: {
@@ -874,6 +877,9 @@ $(document).ready(function () {
             },
             freeVarientId: {
                 required: "Please Select Free Varient"
+            },
+            bannerImage: {
+                required: "Please upload banner image"
             }
         },
         errorElement: 'span',

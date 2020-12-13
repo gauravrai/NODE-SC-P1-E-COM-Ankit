@@ -20,6 +20,7 @@ const Society = model.society;
 const Tower = model.tower;
 const Product = model.product;
 const Brand   = model.brand;
+const Order   = model.order;
 const ADMINCALLURL = config.constant.ADMINCALLURL;
 const Customer = model.customer;
 
@@ -258,8 +259,14 @@ module.exports = {
 	},
     viewCustomerDashboard: async function(req,res){
 		let moduleName = 'Customer Management';
-        let pageTitle = 'Customer Dashboard';
-		res.render('admin/customer/customerdashboard.ejs',{layout:'admin/layout/layout', pageTitle:pageTitle, moduleName:moduleName});
+		let pageTitle = 'Customer Dashboard';
+		let id = req.body.id;
+		let totalOrder = await Order.count({userId: mongoose.mongo.ObjectId(id)});
+		let walletAmount = '';
+		let firstCouponUsed = '';
+		let latestOrder = await Order.find({userId: mongoose.mongo.ObjectId(id)}).sort({'createdAt' : -1}).limit(10);
+		console.log(latestOrder);
+		res.render('admin/customer/customerdashboard.ejs',{layout:'admin/layout/layout', pageTitle:pageTitle, moduleName:moduleName, totalOrder:totalOrder, latestOrder:latestOrder});
 	},
 };
 

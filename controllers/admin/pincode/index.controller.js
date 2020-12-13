@@ -8,6 +8,7 @@ const moment = require('moment');
 const Pincode = model.pincode;
 const State = model.state;
 const City = model.city;
+const Area = model.area;
 const ADMINCALLURL = config.constant.ADMINCALLURL;
 
 module.exports = {
@@ -138,10 +139,18 @@ module.exports = {
 
 	deletePincode: async function(req,res){
 		let id = req.param("id");
-		return Pincode.updateOne({_id:  mongoose.mongo.ObjectId(id)},{deletedAt:2},function(err,data){        	
-			if(err) console.error(err);
-        	res.send('done');
-        })
+		let areaData = await Area.find({pincodeId: mongoose.mongo.ObjectId(id)});
+		if(areaData.length > 0)
+		{
+			res.send('There are some active area in this pincode.');
+		}
+		else
+		{
+			return Pincode.updateOne({_id:  mongoose.mongo.ObjectId(id)},{deletedAt:2},function(err,data){        	
+				if(err) console.error(err);
+				res.send('done');
+			})
+		}
 	},
 
 	changeStatusPincode: function(req,res){

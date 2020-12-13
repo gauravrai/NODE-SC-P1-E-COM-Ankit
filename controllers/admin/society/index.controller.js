@@ -10,6 +10,7 @@ const State = model.state;
 const City = model.city;
 const Pincode = model.pincode;
 const Society = model.society;
+const tower = model.tower;
 const ADMINCALLURL = config.constant.ADMINCALLURL;
 
 module.exports = {
@@ -149,10 +150,18 @@ module.exports = {
 
 	deleteSociety: async function(req,res){
 		let id = req.param("id");
-		return Society.updateOne({_id:  mongoose.mongo.ObjectId(id)},{deletedAt:2},function(err,data){        	
-			if(err) console.error(err);
-        	res.send('done');
-        })
+		let towerData = await Tower.find({soceityId: mongoose.mongo.ObjectId(id)});
+		if(towerData.length > 0)
+		{
+			res.send('There are some active tower in this society.');
+		}
+		else
+		{
+			return Society.updateOne({_id:  mongoose.mongo.ObjectId(id)},{deletedAt:2},function(err,data){        	
+				if(err) console.error(err);
+				res.send('done');
+			})
+		}
 	},
 
 	changeStatusSociety: function(req,res){

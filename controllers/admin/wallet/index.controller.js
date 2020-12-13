@@ -83,8 +83,10 @@ module.exports = {
 			let userId = req.body.userId;
 			let amount = parseInt(req.body.amount);
 			let type = req.body.type;
+			let transactionId = 'LBW-'+moment().format('YMDhms');
 			let walletEntryData = {
 				userId : userId,
+				transactionId: transactionId,
 				amount : amount,
 				type : type,
 			};

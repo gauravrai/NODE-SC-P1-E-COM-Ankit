@@ -70,7 +70,8 @@ module.exports = {
 						var subcat_name = subcategoryName ? subcategoryName.name : 'N/A';
 						arr1.push(subcat_name);
 					})
-                    arr1.push(data[i].name);
+					arr1.push(data[i].name);
+					arr1.push(data[i].stock);
 					arr1.push(moment(data[i].createdAt).format('DD-MM-YYYY'));
 					if(!data[i].status){
 						let change_status = "changeStatus(this,\'1\',\'change_status_product\',\'list_product\',\'product\');";	
@@ -106,7 +107,30 @@ module.exports = {
 			let stateData = await State.find({status:true, deletedAt: 0});
 			let brandData = await Brand.find({status:true, deletedAt: 0});
 			let varientData = await Varient.find({status:true, deletedAt: 0});
-			res.render('admin/product/add.ejs',{layout:'admin/layout/layout', pageTitle:pageTitle, moduleName:moduleName, storeData:storeData, stateData:stateData, categoryData:categoryData, brandData:brandData, varientData:varientData });
+			function generateCode(){
+				let characters = '0123456789';
+				let charactersLength = characters.length;
+				let uniqueCode = 'LB';
+				for (var i = 0; i < 7; i++) {
+					uniqueCode += characters.charAt(Math.floor(Math.random() * charactersLength));
+				}
+				return uniqueCode;
+			}
+			let uniqueCode = generateCode();
+			let productData = await Product.find();	
+			function search(nameKey, myArray){
+				for (var i=0; i < myArray.length; i++) {
+					if (myArray[i].uniqueCode === nameKey) {
+						return true;
+					}
+				}
+			}
+			let uniqueCodeFound = search(uniqueCode, productData);
+			if(uniqueCodeFound)
+			{
+				uniqueCode = generateCode();
+			}
+			res.render('admin/product/add.ejs',{layout:'admin/layout/layout', pageTitle:pageTitle, moduleName:moduleName, storeData:storeData, stateData:stateData, categoryData:categoryData, brandData:brandData, varientData:varientData, uniqueCode:uniqueCode });
 		}else
 		{
 			let productData = {};
@@ -114,7 +138,6 @@ module.exports = {
 				categoryId : mongoose.mongo.ObjectId(req.body.categoryId),
 				subcategoryId : mongoose.mongo.ObjectId(req.body.subcategoryId),
 				name : req.body.name,
-				brandId : mongoose.mongo.ObjectId(req.body.brandId),
 				offer : req.body.offer,
 				discount: req.body.discount,
 				stock : req.body.stock ? req.body.stock.toUpperCase() : '',
@@ -123,6 +146,9 @@ module.exports = {
 				outOfStock : req.body.outOfStock == 'on' ? true : false,
 				tax : req.body.tax
 			};
+			if(req.body.brandId) {
+				productData.brandId = mongoose.mongo.ObjectId(req.body.brandId);
+			}
 			let store = req.body.store;
 			let storeId = req.body.storeId;
 			let inventory = [];

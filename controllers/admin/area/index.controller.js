@@ -9,6 +9,7 @@ const Area = model.area;
 const State = model.state;
 const City = model.city;
 const Pincode = model.pincode;
+const society = model.society;
 const ADMINCALLURL = config.constant.ADMINCALLURL;
 
 module.exports = {
@@ -145,10 +146,18 @@ module.exports = {
 
 	deleteArea: async function(req,res){
 		let id = req.param("id");
-		return Area.updateOne({_id:  mongoose.mongo.ObjectId(id)},{deletedAt:2},function(err,data){        	
-			if(err) console.error(err);
-        	res.send('done');
-        })
+		let societyData = await Society.find({areaId: mongoose.mongo.ObjectId(id)});
+		if(societyData.length > 0)
+		{
+			res.send('There are some active soceity in this area.');
+		}
+		else
+		{
+			return Area.updateOne({_id:  mongoose.mongo.ObjectId(id)},{deletedAt:2},function(err,data){        	
+				if(err) console.error(err);
+				res.send('done');
+			})
+		}
 	},
 
 	changeStatusArea: function(req,res){
