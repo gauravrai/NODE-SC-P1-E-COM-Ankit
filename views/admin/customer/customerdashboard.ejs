@@ -42,7 +42,7 @@
                 <div class="info-box-content">
                   <span class="info-box-text">Total Shipping Amount</span>
                   <span class="info-box-number">
-                    <%=Math.round(totalShippingAmount)%>
+                    <%=totalShippingAmount ? Math.round(totalShippingAmount) : 0%>
                     <small>INR</small>
                   </span>
                 </div>
@@ -53,7 +53,7 @@
                 <div class="info-box-content">
                   <span class="info-box-text">Wallet Amount</span>
                   <span class="info-box-number">
-                    <%=walletAmount.totalAmount ? walletAmount.totalAmount : 0%>
+                    <%=walletAmount ? walletAmount.totalAmount : 0%>
                     <small>INR</small>
                   </span>
                 </div>
@@ -64,7 +64,7 @@
                 <div class="info-box-content">
                   <span class="info-box-text">Average Order</span>
                   <span class="info-box-number">
-                    <%=Math.round(averageOrder)%>
+                    <%=averageOrder ? Math.round(averageOrder) : 0%>
                     <small>INR</small>
                   </span>
                 </div>

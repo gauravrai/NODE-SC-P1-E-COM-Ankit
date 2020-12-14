@@ -409,64 +409,12 @@ module.exports = {
             return res.status(400).json({errors: errors.array()})
         }
         try{
-            let data = {};
-            data.billingAddress = {};
-            data.shippingAddress = {};
             let userId = req.body.userId;
-            console.log('user id---',userId);
             let condition = {_id: mongoose.mongo.ObjectId(userId)};
             let userData = await Customer.findOne(condition);
-            console.log('userData---',userData);
-            data.name = userData.name ? userData.name : '';
-            data.email = userData.email ? userData.email : '';
-            data.mobile = userData.mobile ? userData.mobile : '';
-            data.gst = userData.gst ? userData.gst : '';
-            data.sameAsBillingAddress = userData.sameAsBillingAddress ? userData.sameAsBillingAddress : false;
-
-            data.billingAddress.address = userData.billingAddress.address ? userData.billingAddress.address : '';
-            data.billingAddress.country = userData.billingAddress.country ? userData.billingAddress.country : '';
-            await config.helpers.state.getNameById(userData.billingAddress.state, async function (stateName) {
-                data.billingAddress.state = stateName.name ? stateName.name : '';
-            })
-            await config.helpers.city.getNameById(userData.billingAddress.city, async function (cityName) {
-                data.billingAddress.city = cityName.name ? cityName.name : '';
-            })
-            await config.helpers.pincode.getNameById(userData.billingAddress.pincode, async function (pincode) {
-                data.billingAddress.pincode = pincode.pincode ? pincode.pincode : '';
-            })
-            await config.helpers.area.getNameById(userData.billingAddress.area, async function (areaName) {
-                data.billingAddress.area = areaName.name ? areaName.name : '';
-            })
-            await config.helpers.society.getNameById(userData.billingAddress.society, async function (societyName) {
-                data.billingAddress.society = societyName.name ? societyName.name : '';
-            })
-            await config.helpers.tower.getNameById(userData.billingAddress.tower, async function (towerName) {
-                data.billingAddress.tower = towerName.name ? towerName.name : '';
-            })
-
-            data.shippingAddress.address = userData.shippingAddress.address ? userData.shippingAddress.address : '';
-            data.shippingAddress.country = userData.shippingAddress.country ? userData.shippingAddress.country : '';
-            await config.helpers.state.getNameById(userData.shippingAddress.state, async function (stateName) {
-                data.shippingAddress.state = stateName.name ? stateName.name : '';
-            })
-            await config.helpers.city.getNameById(userData.shippingAddress.city, async function (cityName) {
-                data.shippingAddress.city = cityName.name ? cityName.name : '';
-            })
-            await config.helpers.pincode.getNameById(userData.shippingAddress.pincode, async function (pincode) {
-                data.shippingAddress.pincode = pincode.pincode ? pincode.pincode : '';
-            })
-            await config.helpers.area.getNameById(userData.shippingAddress.area, async function (areaName) {
-                data.shippingAddress.area = areaName.name ? areaName.name : '';
-            })
-            await config.helpers.society.getNameById(userData.shippingAddress.society, async function (societyName) {
-                data.shippingAddress.society = societyName.name ? societyName.name : '';
-            })
-            await config.helpers.tower.getNameById(userData.shippingAddress.tower, async function (towerName) {
-                data.shippingAddress.tower = towerName.name ? towerName.name : '';
-            })
-            if(data) {
+            if(userData) {
                 return res.status(200).json({ 
-                    data: data, 
+                    data: userData, 
                     status: 'success', 
                     message: "User data found successfully!!" 
                 });	
