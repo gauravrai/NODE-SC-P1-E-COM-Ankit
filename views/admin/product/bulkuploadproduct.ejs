@@ -1,0 +1,177 @@
+<div class="content-wrapper">
+  <section class="content-header">
+    <div class="container-fluid">
+      <div class="row mb-2">
+        <div class="col-sm-6">
+          <h1><%=pageTitle%></h1>
+        </div>
+        <div class="col-sm-6">
+          <ol class="breadcrumb float-sm-right">
+            <li class="breadcrumb-item"><a href="javascript:void(0)"><%=moduleName%></a></li>
+            <li class="breadcrumb-item active"><%=pageTitle%></li>
+          </ol>
+        </div>
+      </div>
+    </div>
+  </section>
+  <section class="content">
+    <div class="container-fluid">
+      <div class="row">
+        <div class="col-md-12">
+          <div class="card card-primary card-outline">
+            <div class="card-header d-flex p-0">
+              <h3 class="card-title p-3">Product Information</h3>
+              <ul class="nav nav-pills ml-auto p-2">
+                <li class="nav-item"><a class="btn btn-block btn-danger" href="<%=APPCONSTANT.ADMINCALLURL%>/download_sample_file" target="_blank">Download Sample File</a></li>&nbsp;&nbsp;
+                <li class="nav-item"><a class="btn btn-block btn-secondary" href="<%=APPCONSTANT.ADMINCALLURL%>/manage_product">Back</a></li>
+              </ul>
+            </div>
+            <!--<form role="form" id="addProductForm" method="post" enctype="multipart/form-data">
+              <div id="tableContent" style="padding: 0 17px 0 10px;">
+                <div class="form-row">
+                    <div class="form-group col-md-3">
+                      <label for="state">Select Category</label>
+                      <select name="categoryId" class="form-control" id="categoryId">
+                        <option value="">Select Category</option>
+                        <% for(let i = 0; i < categoryData.length; i++){ %>
+                          <option value="<%=categoryData[i].id%>"><%=categoryData[i].name%></option>
+                        <% } %>
+                      </select>
+                    </div>
+
+                    <div class="form-group col-md-3" id="subcategoryData">
+                      <label for="state">Select Sub Category</label>
+                      <select name="subcategoryId" class="form-control" id="subcategoryId">
+                        <option value="">Select Sub Category</option>
+                      </select>
+                    </div>
+
+                    <div class="form-group col-md-3">
+                        <label for="name">Product Name</label>
+                        <input type="text" name="name" class="form-control" id="name" placeholder="Product Name">
+                    </div>
+                    
+                    <div class="form-group col-md-3">
+                      <label for="brandId">Select Brands</label>
+                      <select name="brandId" class="form-control" id="brandId" >
+                        <option value="">Select Brand</option>
+                        <% for(let i = 0; i < brandData.length; i++){ %>
+                          <option value="<%=brandData[i].id%>"><%=brandData[i].name%></option>
+                        <% } %>
+                      </select>
+                    </div>
+                    
+                    <div class="form-group col-md-2">
+                        <label for="offer">Offer applicable</label>
+                        <select name="offer" class="form-control" id="offer" >
+                        <option value="">Select Offer</option>
+                        <option value="Yes">Yes</option>
+                        <option value="No">No</option>
+                        </select>
+                    </div>
+                    
+                    <div class="form-group col-md-2">
+                        <label for="discount">Discount applicable</label>
+                        <select name="discount" class="form-control" id="discount" >
+                        <option value="">Select Discount</option>
+                        <option value="Yes">Yes</option>
+                        <option value="No">No</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group col-md-2">
+                      <label for="tax">Tax</label>
+                      <input type="text" name="tax" class="form-control" id="tax" placeholder="Tax">
+                    </div> 
+
+                    <div class="form-group col-md-2">
+                      <label for="stock">Unique Code</label>
+                      <input type="text" name="stock" class="form-control" id="stock" placeholder="Unique Code" value="<%=uniqueCode%>">
+                    </div> 
+                    <div class="form-group col-md-2">
+                      <label for="featured">Featured Product</label>
+                      <input type="checkbox" name="featured" class="form-control" id="featured">
+                    </div> 
+                    <div class="form-group col-md-2">
+                        <label for="outOfStock">Out Of Stock</label>
+                      <input type="checkbox" name="outOfStock" class="form-control" id="outOfStock">
+                    </div>                      
+                    <div class="form-group col-md-12">
+                        <label for="description">Description</label>
+                        <textarea name="description" class="form-control" id="description" placeholder="Description"></textarea>
+                    </div> 
+                </div>
+                <div class="card-header">
+                  <h3 class="card-title">Inventory</h3>
+                  <input type="hidden" value="<%=storeData.length%>" name="store">
+                </div>
+                <% for(let i = 0; i < storeData.length; i++){ 
+                  let j = 0; 
+                %>
+                  <div class="col-md-12">
+                    <h4 class="storeLabel"><%=storeData[i].name%></h4>
+                    <input type="hidden" value="<%=storeData[i].id%>" name="storeId">
+                  </div>  
+                  <div class="form-row" id="storeField_<%=i%>">
+                    <div class="form-group col-md-4">
+                      <label for="varient_<%=i%>">Select Varient</label>
+                      <select class="form-control select2" name="varient_<%=i%>" id="varient_<%=i%>">
+                        <option value="">Select Varient</option>
+                        <% for(let i = 0; i < varientData.length; i++){ %>
+                          <option value="<%=varientData[i].id%>"><%= varientData[i].label+' '+varientData[i].measurementUnit %></option>
+                        <% } %>
+                      </select>
+                    </div>
+                    <div class="form-group col-md-4">
+                      <label for="price">Price</label>
+                      <input type="text" name="price_<%=i%>" class="form-control" id="price_<%=i%>" placeholder="Price">
+                    </div>  
+                    <div class="form-group col-md-2">
+                      <label for="default">Default</label>
+                      <input type="radio" name="default_<%=i%>" id="default_<%=i%>" class="form-control" value="<%=j++%>">
+                    </div> 
+                    <div class="form-group col-md-2"></div>   
+                  </div>
+                  <div class="col-md-12"> 
+                    <button type="button" class="btn btn-primary pull-right addMoreStoreFields" data-storeno="<%=i%>" data-index="<%=j%>">Add More</button>
+                  </div>
+                  <br><br>
+                <% } %>
+                <input type="hidden" value="<%=APPCONSTANT.PRODUCTIMAGELENGTH%>" name="imageLength">
+                <% for(let i = 0; i < APPCONSTANT.PRODUCTIMAGELENGTH; i++){ %>
+                  <div class="form-row">
+                    <div class="form-group col-md-4">
+                      <label for="thumbnail">Thumbnail</label>
+                      <input type="file" name="thumbnail">       
+                      <p class="text-warning"> Image size should be 100 X 100</p>
+                    </div>  
+                    <div class="form-group col-md-4">
+                      <label for="small">Small</label>
+                      <input type="file" name="small">       
+                      <p class="text-warning"> Image size should be 260 X 260</p>
+                    </div>  
+                    <div class="form-group col-md-4">
+                      <label for="large">Large</label>
+                      <input type="file" name="large">       
+                      <p class="text-warning"> Image size should be 450 X 450</p>
+                    </div>  
+                  </div>
+                <% } %>
+              </div>    
+              <div class="card-footer">
+                <a href="<%=APPCONSTANT.ADMINCALLURL%>/manage_product" class="btn btn-default">Cancel</a>
+                <button type="submit" class="btn btn-primary add_button">Submit</button>
+              </div>
+            </form>-->
+          </div>
+        </div>
+        <div class="col-md-6">
+
+        </div>
+      </div>
+    </div>
+  </section>
+</div>
+<script>
+
+</script>

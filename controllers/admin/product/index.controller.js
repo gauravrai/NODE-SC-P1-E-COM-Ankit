@@ -496,6 +496,7 @@ module.exports = {
 			}
 	    })
 	},
+
 	deleteProduct : async function(req,res){
 		let id = req.param("id");
 		return Product.updateOne({_id:  mongoose.mongo.ObjectId(id)},{deletedAt:2},function(err,data){        	
@@ -503,6 +504,7 @@ module.exports = {
         	res.send('done');
         })
 	},
+
 	checkStockkeeping : async function(req,res){
 		   let stockkeeping  = req.body.stock_keeping;
 		   let productData = await Product.find({stock_keeping:stockkeeping, status:true, deletedAt: 0});
@@ -511,5 +513,15 @@ module.exports = {
 		   } else {
 			return res.status(200).json({ code:0 , status: '', message: "" });
 		   }
+	},
+
+    bulkUploadProduct: async function(req,res){
+		let moduleName = 'Product Management';
+		let pageTitle = 'Bulk Upload Product';
+		res.render('admin/product/bulkuploadproduct.ejs',{layout:'admin/layout/layout', pageTitle:pageTitle, moduleName:moduleName});
+	},
+
+    downloadSampleFile: async function(req,res){
+		
 	},
 }
