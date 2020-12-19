@@ -28,33 +28,30 @@
             <form role="form" id="addStockForm" method="post" enctype="multipart/form-data">
               <div id="tableContent" style="padding: 0 17px 0 10px;">
                 <div class="form-row">
-                  <div class="form-group col-md-3">
+                  <div class="form-group col-md-4">
                     <label for="productId">Select Product</label>
-                    <select name="productId" class="form-control select2" id="productId">
-                      <option value="">Select Product</option>
+                    <select name="productId" class="form-control select2 productId"  id="productId_0">
+                      <option value="">Select Option</option>
                       <% for(let i = 0; i < productData.length; i++){ %>
-                        <option value="<%=productData[i].id%>"><%=productData[i].name%></option>
+                      <option value="<%=productData[i].id%>"><%=productData[i].name%></option>
                       <% } %>
                     </select>
                   </div>
-                  <div class="form-group col-md-3">
-                    <label for="varientId" >Variant</label>
-                    <select class="form-control select2" name="varientId" id="varientId">
-                      <option value="">Select Varient</option>
-                      <% for(let i = 0; i < varientData.length; i++){ %>
-                        <option value="<%=varientData[i].id%>"><%= varientData[i].label+' '+varientData[i].measurementUnit %></option>
-                      <% } %>
+                  <div class="form-group col-md-4">
+                    <label for="varientId">Select Varient</label>
+                    <select name="varientId" class="form-control select2 varientId"  id="varientId_0">
+                      <option value="">Select Option</option>
                     </select>
                   </div>
-                  <div class="form-group col-md-3">
+                  <div class="form-group col-md-4">
                     <label for="count">Count</label>
                     <input type="text" name="count" class="form-control" id="count" placeholder="Product Count">
                   </div>
-                  <div class="form-group col-md-3">
+                  <div class="form-group col-md-4">
                     <label for="costPrice">Cost Price</label>
                     <input type="text" name="costPrice" class="form-control" id="costPrice" placeholder="Cost Price">
                   </div>
-                  <div class="form-group col-md-3">
+                  <div class="form-group col-md-4">
                     <label for="storeId">Select Store</label>
                     <select name="storeId" class="form-control select2" id="storeId">
                       <option value="">Select Store</option>
@@ -63,7 +60,7 @@
                       <% } %>
                     </select>
                   </div>
-                  <div class="form-group col-md-3">
+                  <div class="form-group col-md-4">
                     <label for="transactionType" >Transaction Type</label>
                     <select name="transactionType" class="form-control" id="transactionType" >
                       <option value="">Transaction Type</option>

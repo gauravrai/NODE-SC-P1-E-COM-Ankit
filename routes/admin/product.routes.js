@@ -11,5 +11,6 @@ module.exports = function(router) {
     router.all(config.constant.ADMINCALLURL+'/checkStockkeeping',isloggedin, indexController.checkStockkeeping); 
     router.all(config.constant.ADMINCALLURL+'/bulk_upload_product',isloggedin, indexController.bulkUploadProduct); 
     router.all(config.constant.ADMINCALLURL+'/download_sample_file',isloggedin, indexController.downloadSampleFile); 
+    router.all(config.constant.ADMINCALLURL+'/upload_sample_file',isloggedin, indexController.uploadSampleFile); 
     
 }

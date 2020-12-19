@@ -508,7 +508,7 @@ $(document).ready(function () {
                 required: true,
                 number: true,
             },
-            variant: {
+            varientId: {
                 required: true,
             },
         },
@@ -526,8 +526,8 @@ $(document).ready(function () {
                 required: 'Please enter count',
                 number: 'Please enter digits only'
             },
-            variant: {
-                required: 'Please select variant',
+            varientId: {
+                required: 'Please select varient',
             },
         },
         errorElement: 'span',
@@ -559,7 +559,7 @@ $(document).ready(function () {
                 required: true,
                 number: true,
             },
-            variant: {
+            varientId: {
                 required: true,
             },
             transactionType: {
@@ -581,8 +581,8 @@ $(document).ready(function () {
                 required: 'Please enter cost price',
                 number: 'Please enter digits only'
             },
-            variant: {
-                required: 'Please select variant',
+            varientId: {
+                required: 'Please select varient',
             },
             transactionType: {
                 required: 'Please select transaction type',

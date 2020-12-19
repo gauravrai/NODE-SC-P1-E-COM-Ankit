@@ -25,3 +25,31 @@
 .select2-container .select2-selection--single { 
     height: calc(2.25rem + 2px) !important; 
 }
+.uploadbtn {
+    position: relative; 
+    overflow: hidden; 
+    display: inline-block;
+} 
+.btnuplo {
+    border: 2px solid gray; 
+    color: gray;
+    background-color: white; 
+    padding: 4px 20px; 
+    border-radius: 8px; 
+    font-size: 18px; 
+    font-weight: bold; 
+} 
+.uploadbtn input[type=file] {
+    font-size: 100px; 
+    position: absolute; 
+    left: 0; 
+    top: 0; 
+    opacity: 0; 
+}
+#imgdiv{
+    border: 2px dashed #028AF4; 
+    background: #fff; 
+    padding: 10px; 
+    margin: 0px 0px 40px 0px; 
+    text-align: center; 
+}

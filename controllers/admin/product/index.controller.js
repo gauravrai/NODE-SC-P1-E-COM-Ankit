@@ -5,9 +5,9 @@ const async = require("async");
 const mongoose = require('mongoose');
 const bcrypt = require("bcrypt-nodejs");
 const moment = require('moment');
-const multer = require('multer');
 const path = require('path');
 const fs = require('fs');
+const excel = require('exceljs');
 const Admin = model.admin;
 const Category = model.category;
 const SubCategory = model.sub_category;
@@ -104,7 +104,6 @@ module.exports = {
 			let pageTitle = 'Add Product';
 			let categoryData = await Category.find({status:true, deletedAt: 0});
 			let storeData = await Store.find({status:true, deletedAt: 0});
-			let stateData = await State.find({status:true, deletedAt: 0});
 			let brandData = await Brand.find({status:true, deletedAt: 0});
 			let varientData = await Varient.find({status:true, deletedAt: 0});
 			function generateCode(){
@@ -130,7 +129,7 @@ module.exports = {
 			{
 				uniqueCode = generateCode();
 			}
-			res.render('admin/product/add.ejs',{layout:'admin/layout/layout', pageTitle:pageTitle, moduleName:moduleName, storeData:storeData, stateData:stateData, categoryData:categoryData, brandData:brandData, varientData:varientData, uniqueCode:uniqueCode });
+			res.render('admin/product/add.ejs',{layout:'admin/layout/layout', pageTitle:pageTitle, moduleName:moduleName, storeData:storeData, categoryData:categoryData, brandData:brandData, varientData:varientData, uniqueCode:uniqueCode });
 		}else
 		{
 			let productData = {};
@@ -518,10 +517,129 @@ module.exports = {
     bulkUploadProduct: async function(req,res){
 		let moduleName = 'Product Management';
 		let pageTitle = 'Bulk Upload Product';
-		res.render('admin/product/bulkuploadproduct.ejs',{layout:'admin/layout/layout', pageTitle:pageTitle, moduleName:moduleName});
+		let categoryData = await Category.find({status:true, deletedAt: 0});
+		res.render('admin/product/bulkuploadproduct.ejs',{layout:'admin/layout/layout', pageTitle:pageTitle, moduleName:moduleName, categoryData:categoryData});
 	},
 
     downloadSampleFile: async function(req,res){
+		let brandData = await Brand.find({status:true, deletedAt: 0});
+		let varientData = await Varient.find({status:true, deletedAt: 0});
+		let brandArr = [];
+		let brand ='';
+		for(let i = 0; i < brandData.length; i++){
+			let name = brandData[i].name;
+			brand = brand + name +",";
+		}
+		brandArr.push('"'+brand+'"');
 		
+		let varientArr = [];
+		let varient ='';
+		for(let i = 0; i < varientData.length; i++){
+			let name = varientData[i].label+' '+varientData[i].measurementUnit;
+			varient = varient + name +",";
+		}
+		varientArr.push('"'+varient+'"');
+		let customData = ["Yes","No"];
+		let booleanArr = [];
+		let custom ='';
+		for(let i = 0; i < customData.length; i++){
+			let name = customData[i];
+			custom = custom + name +",";
+		}
+		booleanArr.push('"'+custom+'"');
+
+		let workbook = new excel.Workbook();
+		let worksheet = workbook.addWorksheet('Template');
+		let firstColumns = [
+			{header :'Product Name', key :'name', width:15},
+			{header :'Brand', key :'brandId', width:15},
+			{header :'Offer applicable', key :'offer', width:15},
+			{header :'Discount applicable', key :'discount', width:15},
+			{header :'Tax', key :'tax', width:15},
+			{header :'Featured Product', key :'featured', width:15},
+			{header :'Out Of Stock', key :'outOfStock', width:15},
+			{header :'Description', key :'description', width:30},
+			{header :'Varient', key :'varient', width:15},
+			{header :'Price', key :'price', width:15},
+
+		];
+		worksheet.columns = firstColumns;
+
+		let row = worksheet.getRow(1);
+		row.eachCell(function (cell, value) {
+			if(cell == 'Brand' || cell == 'Tax' || cell == 'Featured Product' || cell == 'Out Of Stock')
+			{
+				let address = cell._address;
+				let color = 'FF259C4B';
+				worksheet.getCell(address).fill = {
+					  type: 'pattern',
+					  pattern:'darkTrellis',
+					  fgColor:{argb:color},
+					  bgColor:{argb:color}
+				};
+			}
+			if(cell == 'Product Name' || cell == 'Offer applicable' || cell == 'Discount applicable' || cell == 'Description' || cell == 'Varient' || cell == 'Price')
+			{	
+				let address = cell._address;
+				let color = 'FFA71818';
+				worksheet.getCell(address).fill = {
+					  type: 'pattern',
+					  pattern:'darkTrellis',
+					  fgColor:{argb:color},
+					  bgColor:{argb:color}
+				};
+			}
+		});
+			
+		for(i=2;i<10000;i++){
+			//set brand
+			worksheet.getCell('B'+i).dataValidation = {
+				type: 'list',
+				allowBlank: true,
+				formulae: brandArr,
+			};
+			//Offer applicable
+			worksheet.getCell('C'+i).dataValidation = {
+				type: 'list',
+				allowBlank: true,
+				formulae: booleanArr,
+			};
+			//Discount applicable
+			worksheet.getCell('D'+i).dataValidation = {
+				type: 'list',
+				allowBlank: true,
+				formulae: booleanArr,
+			};
+			//Featured Product
+			worksheet.getCell('F'+i).dataValidation = {
+				type: 'list',
+				allowBlank: true,
+				formulae: booleanArr,
+			};
+			//Out Of Stock
+			worksheet.getCell('G'+i).dataValidation = {
+				type: 'list',
+				allowBlank: true,
+				formulae: booleanArr,
+			};
+			//set varient
+			worksheet.getCell('I'+i).dataValidation = {
+				type: 'list',
+				allowBlank: true,
+				formulae: varientArr,
+			};
+		}
+		let random = Math.floor((Math.random() * 100000) + 1);
+		let fileName = 'sample_'+random+'.xlsx';
+		workbook.xlsx.writeFile(config.constant.SAMPLECSV+'/'+fileName).then(function() {
+			let file = config.constant.ABSOLUTEPATH + "/public/uploads/samplecsv/" + fileName;
+			res.download(file);
+		});
+	},
+
+	uploadSampleFile: async function(req,res){
+		let fileName = req.param('fileName');
+		let random = moment().format('DMYhis')+Math.floor((Math.random() * 100000) + 1);
+		let returnname = random+'_'+fileName;
 	},
 }

@@ -13,9 +13,8 @@ let StockSchema = new Schema({
     productId: {
         type: ObjectId,
     },
-    variant: {
+    varientId: {
         type: String,
-        enum: ['ml', 'gram', 'kg'],
     },
     transactionType: {
         type: String,

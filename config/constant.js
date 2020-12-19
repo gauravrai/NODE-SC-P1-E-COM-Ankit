@@ -2,7 +2,7 @@
 const dotenv = require('dotenv').config();
 var SITEURL = process.env.SITEURL+":"+process.env.PORT+'/';
 var ABSOLUTEPATH = process.env.ABSOLUTEPATH;
-var basic_path='C:/Users/sonali/Desktop/softchilli/backend/';
+var basic_path='C:/Users/sonali/Desktop/softchilli/backend/first/';
 module.exports = {
 	
 	SITEURL : SITEURL,
@@ -44,7 +44,10 @@ module.exports = {
 	OFFERBANNERUPLOADPATH: './public/uploads/offerbanner/',
 	OFFERBANNERSHOWPATH: SITEURL+'uploads/offerbanner/',	
 
-	INVOICEPATH: './public/uploads/invoice/',	
+	INVOICEPATH: './public/uploads/invoice/',		
+
+	SAMPLECSV: basic_path+'public/uploads/samplecsv/',	
+	PRODUCTCSV: basic_path+'public/uploads/productcsv/',	
 
 	ORDER_STATUS: [ 'NEW', 'IN_PROCESS', 'IN_TRANSIT', 'DELIVERED', 'CANCELED'],
 	MESSAGE_SLUG: [ 'NEW-ORDER', 'IN-PROCESS-ORDER', 'IN-TRANSIT-ORDER', 'DELIVERED-ORDER', 'CANCELED-ORDER'],
