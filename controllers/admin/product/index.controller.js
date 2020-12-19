@@ -8,6 +8,7 @@ const moment = require('moment');
 const path = require('path');
 const fs = require('fs');
 const excel = require('exceljs');
+const formidable = require('formidable');
 const Admin = model.admin;
 const Category = model.category;
 const SubCategory = model.sub_category;
@@ -641,5 +642,19 @@ module.exports = {
 		let fileName = req.param('fileName');
 		let random = moment().format('DMYhis')+Math.floor((Math.random() * 100000) + 1);
 		let returnname = random+'_'+fileName;
+		
+		const form = new formidable.IncomingForm();
+
+		form.parse(req);
+	console.log(__dirname);
+		form.on('fileBegin', function (name, file){
+			file.path = __dirname + config.constant.PRODUCTCSV + file.name;
+		});
+	
+		form.on('file', function (name, file){
+			console.log('Uploaded ' + file.name);
+		});
+	
+		res.status(200);
 	},
 }

@@ -20,6 +20,7 @@
     "express": "^4.17.1",
     "express-layout": "^0.1.0",
     "express-validator": "^6.6.1",
+    "formidable": "^1.2.2",
     "fs": "0.0.1-security",
     "fund": "^1.0.0",
     "html-pdf": "^2.2.0",
