@@ -559,6 +559,11 @@ module.exports = {
 				else {
 					let successdata = [];
 					let errordata = [];
+					let image = {};
+					image.thumbnail = ['default_thumbnail.jpg'];
+					image.small = ['default_small.jpg'];
+					image.large = ['default_large.jpg'];
+					let storeData = await Store.find({status:true, deletedAt: 0});
 					for(let i= 0; i < xlData.length; i++) {
 						if(!/^[a-zA-Z0-9 .,]+$/.test(xlData[i]['Product Name']) || xlData[i]['Product Name'] == '' || typeof xlData[i]['Product Name'] == 'undefined'){
 							errordata.push(xlData[i]);
@@ -615,8 +620,57 @@ module.exports = {
 								description : xlData[i]['Description'],
 								featured : typeof xlData[i]['Featured Product'] != 'undefined' && xlData[i]['Featured Product']== 'Yes' ? true : false,
 								outOfStock : typeof xlData[i]['Out Of Stock'] != 'undefined' && xlData[i]['Out Of Stock'] == 'Yes' ? true : false,
-								tax : typeof xlData[i]['Tax'] != 'undefined' ? xlData[i]['Tax'] : 0
+								tax : typeof xlData[i]['Tax'] != 'undefined' ? xlData[i]['Tax'] : 0,
+								image: image
 							};
+							if(xlData[i]['Brand'] && typeof xlData[i]['Brand'] != 'undefined') {
+								let brandData = await Brand.findOne({name: xlData[i]['Brand']});
+								if(brandData){
+									insertData.brandId = mongoose.mongo.ObjectId(brandData.id);
+								}
+							}
+							
+							let inventory = [];
+							for (let i = 0; i < storeData.length; i++) {
+								let store = [];
+								if(i == 0){
+									let varientData = await Varient.aggregate([
+										{
+											$match: {status:true, deletedAt: 0},
+										},
+										{ 
+											$project: { varientName: { $concat: [ "$label", " ", "$measurementUnit" ] } } 
+										}
+									]);
+									function search(nameKey, myArray){
+										for (var i=0; i < myArray.length; i++) {
+											if (myArray[i].varientName === nameKey) {
+												return myArray[i]._id;
+											}
+										}
+									}
+									let varientId = search(xlData[i]['Varient'], varientData);
+									let storeFieldObj = {
+										varientId: mongoose.mongo.ObjectID(varientId),
+										storeId: mongoose.mongo.ObjectID(storeData[i].id),
+										varient : xlData[i]['Varient'],
+										price : xlData[i]['Price'],
+										default : true
+									};
+									store.push(storeFieldObj);
+								}else{
+									let storeFieldObj = {
+										varientId: '',
+										storeId: mongoose.mongo.ObjectID(storeData[i].id),
+										varient : '',
+										price : '',
+										default : false
+									};
+									store.push(storeFieldObj);
+								}
+								inventory.push(store);
+							}
+							insertData.inventory = inventory;
 							let product = new Product(insertData);
 							product.save();
 						}
