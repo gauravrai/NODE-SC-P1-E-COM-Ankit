@@ -47,7 +47,8 @@ module.exports = {
 	INVOICEPATH: './public/uploads/invoice/',		
 
 	SAMPLECSV: basic_path+'public/uploads/samplecsv/',	
-	PRODUCTCSV: basic_path+'public/uploads/productcsv/',	
+	PRODUCTCSVUPLOADPATH: './public/uploads/productcsv/',	
+	PRODUCTCSVPATH: basic_path+'/public/uploads/productcsv/',	
 
 	ORDER_STATUS: [ 'NEW', 'IN_PROCESS', 'IN_TRANSIT', 'DELIVERED', 'CANCELED'],
 	MESSAGE_SLUG: [ 'NEW-ORDER', 'IN-PROCESS-ORDER', 'IN-TRANSIT-ORDER', 'DELIVERED-ORDER', 'CANCELED-ORDER'],

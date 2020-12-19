@@ -34,6 +34,7 @@
     "num-words": "^1.2.2",
     "razorpay": "^2.0.6",
     "request": "^2.88.2",
-    "sweetalert": "^2.1.2"
+    "sweetalert": "^2.1.2",
+    "xlsx": "^0.16.9"
   }
 }

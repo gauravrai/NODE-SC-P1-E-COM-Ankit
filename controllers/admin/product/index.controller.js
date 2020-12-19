@@ -8,7 +8,7 @@ const moment = require('moment');
 const path = require('path');
 const fs = require('fs');
 const excel = require('exceljs');
-const formidable = require('formidable');
+var XLSX = require('xlsx');
 const Admin = model.admin;
 const Category = model.category;
 const SubCategory = model.sub_category;
@@ -61,8 +61,12 @@ module.exports = {
 			await config.helpers.permission('manage_product', req, async function(err,permissionData) {
 				for(i=0;i<data.length;i++){
 					var arr1 = [];
-					let src= config.constant.PRODUCTTHUMBNAILSHOWPATH+data[i].image.thumbnail[0];
-					arr1.push('<img src="'+src+'" width="50px" height="50px">');
+					if(data[i].image) {
+						let src= config.constant.PRODUCTTHUMBNAILSHOWPATH+data[i].image.thumbnail[0];
+						arr1.push('<img src="'+src+'" width="50px" height="50px">');
+					}else {
+						arr1.push('');
+					}
 					await config.helpers.category.getNameById(data[i].categoryId, async function (categoryName) {
 						var cat_name = categoryName ? categoryName.name : 'N/A';
 						arr1.push(cat_name);
@@ -516,10 +520,115 @@ module.exports = {
 	},
 
     bulkUploadProduct: async function(req,res){
-		let moduleName = 'Product Management';
-		let pageTitle = 'Bulk Upload Product';
-		let categoryData = await Category.find({status:true, deletedAt: 0});
-		res.render('admin/product/bulkuploadproduct.ejs',{layout:'admin/layout/layout', pageTitle:pageTitle, moduleName:moduleName, categoryData:categoryData});
+		var detail = {};
+		if(req.method == "GET"){
+			let moduleName = 'Product Management';
+			let pageTitle = 'Bulk Upload Product';
+			let categoryData = await Category.find({status:true, deletedAt: 0});
+			detail = {message:req.flash('msg')};
+			res.render('admin/product/bulkuploadproduct.ejs',{layout:'admin/layout/layout', pageTitle:pageTitle, moduleName:moduleName, detail:detail, categoryData:categoryData});
+		}
+		if(req.method == "POST"){ 
+			new Promise(function(resolve, reject) { 
+				let path = config.constant.PRODUCTCSVUPLOADPATH;
+				let fileName = Date.now()+'_'+req.files.uploadProduct.name;
+                req.files.uploadProduct.mv(path+fileName, function(err,data) {
+                    if (err) { 
+                        console.log(err)
+                        reject(err); 
+                    } else {  
+                        resolve(fileName);
+                    }
+                })
+			}).then(async (result) => {
+				let workbook = XLSX.readFile(config.constant.PRODUCTCSVPATH+result);
+				let sheet_name_list = workbook.SheetNames;
+				let xlData = XLSX.utils.sheet_to_json(workbook.Sheets[sheet_name_list[0]]);
+				let headers = [];
+				for(var i in xlData[0]){
+					headers.push(i);
+				}
+				if(xlData.length <= 0) {
+					req.flash('msg', {msg:'File not Uploaded. Please try again.',status:false});						
+					res.redirect(config.constant.ADMINCALLURL+'/bulk_upload_product');
+				}
+				else if (headers[0] != 'Product Name' || headers[1] != 'Brand' || headers[2] != 'Offer applicable' || headers[3] != 'Discount applicable' || headers[4] != 'Tax' || headers[5] != 'Featured Product' || headers[6] != 'Out Of Stock' || headers[7] != 'Description' || headers[8] != 'Varient' || headers[9] != 'Price') {
+					req.flash('msg', {msg:'Wrong CSV File.',status:false});						
+					res.redirect(config.constant.ADMINCALLURL+'/bulk_upload_product');
+				}
+				else {
+					let successdata = [];
+					let errordata = [];
+					for(let i= 0; i < xlData.length; i++) {
+						if(!/^[a-zA-Z0-9 .,]+$/.test(xlData[i]['Product Name']) || xlData[i]['Product Name'] == '' || typeof xlData[i]['Product Name'] == 'undefined'){
+							errordata.push(xlData[i]);
+						}
+						else if(xlData[i]['Offer applicable'] == '' || typeof xlData[i]['Offer applicable'] == 'undefined'){
+							errordata.push(xlData[i]);
+						}
+						else if(xlData[i]['Discount applicable'] == '' || typeof xlData[i]['Discount applicable'] == 'undefined'){
+							errordata.push(xlData[i]);
+						}
+						else if(!/^[0-9]+$/.test(xlData[i]['Tax'])){
+							errordata.push(xlData[i]);
+						}
+						else if(!/^[a-zA-Z0-9 .,]+$/.test(xlData[i]['Description']) || xlData[i]['Description'] == '' || typeof xlData[i]['Description'] == 'undefined') {
+							errordata.push(xlData[i]);
+						}
+						else if(xlData[i]['Varient'] == '' || typeof xlData[i]['Varient'] == 'undefined'){
+							errordata.push(xlData[i]);
+						}
+						else if(xlData[i]['Price'] == '' || typeof xlData[i]['Price'] == 'undefined'){
+							errordata.push(xlData[i]);
+						} else {
+							successdata.push(xlData[i]);
+							function generateCode(){
+								let characters = '0123456789';
+								let charactersLength = characters.length;
+								let uniqueCode = 'LB';
+								for (var i = 0; i < 7; i++) {
+									uniqueCode += characters.charAt(Math.floor(Math.random() * charactersLength));
+								}
+								return uniqueCode;
+							}
+							let uniqueCode = generateCode();
+							let productData = await Product.find();	
+							function search(nameKey, myArray){
+								for (var i=0; i < myArray.length; i++) {
+									if (myArray[i].uniqueCode === nameKey) {
+										return true;
+									}
+								}
+							}
+							let uniqueCodeFound = search(uniqueCode, productData);
+							if(uniqueCodeFound)
+							{
+								uniqueCode = generateCode();
+							}
+							let insertData = {
+								categoryId : mongoose.mongo.ObjectId(req.body.categoryId),
+								subcategoryId : mongoose.mongo.ObjectId(req.body.subcategoryId),
+								name : xlData[i]['Product Name'],
+								offer : xlData[i]['Offer applicable'],
+								discount: xlData[i]['Discount applicable'],
+								stock : uniqueCode,
+								description : xlData[i]['Description'],
+								featured : typeof xlData[i]['Featured Product'] != 'undefined' && xlData[i]['Featured Product']== 'Yes' ? true : false,
+								outOfStock : typeof xlData[i]['Out Of Stock'] != 'undefined' && xlData[i]['Out Of Stock'] == 'Yes' ? true : false,
+								tax : typeof xlData[i]['Tax'] != 'undefined' ? xlData[i]['Tax'] : 0
+							};
+							let product = new Product(insertData);
+							product.save();
+						}
+					}
+					let moduleName = 'Product Management';
+					let pageTitle = 'Bulk Upload Product';
+					res.render('admin/product/productlist.ejs',{layout:'admin/layout/layout', pageTitle:pageTitle, moduleName:moduleName, successdata:successdata, errordata:errordata});
+				}
+			}).catch((err) => {
+				console.log(err);
+			});
+		}
 	},
 
     downloadSampleFile: async function(req,res){
@@ -638,23 +747,4 @@ module.exports = {
 		});
 	},
 
-	uploadSampleFile: async function(req,res){
-		let fileName = req.param('fileName');
-		let random = moment().format('DMYhis')+Math.floor((Math.random() * 100000) + 1);
-		let returnname = random+'_'+fileName;
-		
-		const form = new formidable.IncomingForm();
-
-		form.parse(req);
-	console.log(__dirname);
-		form.on('fileBegin', function (name, file){
-			file.path = __dirname + config.constant.PRODUCTCSV + file.name;
-		});
-	
-		form.on('file', function (name, file){
-			console.log('Uploaded ' + file.name);
-		});
-	
-		res.status(200);
-	},
 }

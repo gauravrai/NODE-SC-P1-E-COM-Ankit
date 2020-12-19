@@ -1,19 +1,19 @@
+<% if(typeof detail != 'undefined'){
+	if(detail.message){
+    var message = detail.message?detail.message:[]
+    if(message.length>0){
+        if(message[0].status){
+%>
 
-<% 
-if(success_messages && success_messages.length>0){
-if(success_messages[0]){%>
 <div class="alert alert-success alert-dismissible">
 	<button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
 	<h5><i class="icon fas fa-check"></i> Success!</h5>
-	<%=success_messages[0]%>
+    <%=message[0].msg%>
 </div>
-<%}}
-if(error_messages && error_messages.length>0){
-if(error_messages[0]){
-%>
-<div class="alert alert-danger alert-dismissible">
-	<button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
-	<h5><i class="icon fas fa-check"></i> Error!</h5>
-	<%=error_messages[0]%>
+<%} else{%>
+	<div class="alert alert-danger alert-dismissible">
+		<button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
+		<h5><i class="icon fas fa-check"></i> Error!</h5>
+    <%=message[0].msg%>
 </div>
-<%}}%>
+<%}}} }%>

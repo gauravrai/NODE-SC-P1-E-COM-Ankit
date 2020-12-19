@@ -1,0 +1,111 @@
+<div class="content-wrapper">
+    <section class="content-header">
+      <div class="container-fluid">
+        <div class="row mb-2">
+          <div class="col-sm-6">
+            <h1><%=pageTitle%></h1>
+          </div>
+          <div class="col-sm-6">
+            <ol class="breadcrumb float-sm-right">
+              <li class="breadcrumb-item"><a href="javascript:void(0)"><%=moduleName%></a></li>
+              <li class="breadcrumb-item active"><%=pageTitle%></li>
+            </ol>
+          </div>
+        </div>
+      </div>
+    </section>
+    <section class="content">
+      <div class="container-fluid">
+        <div class="row">
+          <div class="col-md-12">
+            <div class="card card-primary card-outline">
+              <div class="card-header d-flex p-0">
+                <h3 class="card-title p-3"><%=pageTitle%></h3>
+                <ul class="nav nav-pills ml-auto p-2">
+                  <li class="nav-item"><a class="btn btn-block btn-secondary" href="<%=APPCONSTANT.ADMINCALLURL%>/bulk_upload_product">Back</a></li>
+                </ul>
+              </div>
+              <div class="card-body">
+                <%- include ('../message/message') -%>
+                <h3>Product Uploaded Successfully</h3>
+                <table class="table table-bordered">
+                  <thead>                  
+                    <tr>
+                      <th style="width: 10px">#</th>
+                      <th>Product Name</th>
+                      <th>Brand</th>
+                      <th>Offer applicable</th>
+                      <th>Discount applicable</th>
+                      <th>Tax</th>
+                      <th>Featured Product</th>
+                      <th>Out Of Stock</th>
+                      <th>Description</th>
+                      <th>Varient</th>
+                      <th>Price</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <% let x = 1; 
+                    for(let i = 0; i < successdata.length; i++){ %>
+                    <tr>
+                      <td><%= x++; %></td>
+                      <td><%= successdata[i]['Product Name'] ? successdata[i]['Product Name'] : 'N/A'; %></td>
+                      <td><%= successdata[i]['Brand']; %></td>
+                      <td><%= successdata[i]['Offer applicable']; %></td>
+                      <td><%= successdata[i]['Discount applicable']; %></td>
+                      <td><%= successdata[i]['Tax']; %></td>
+                      <td><%= successdata[i]['Featured Product']; %></td>
+                      <td><%= successdata[i]['Out Of Stock']; %></td>
+                      <td><%= successdata[i]['Description']; %></td>
+                      <td><%= successdata[i]['Varient']; %></td>
+                      <td><%= successdata[i]['Price']; %></td>
+                    </tr>
+                    <% } %>
+                  </tbody>
+                </table>
+                <h3>Product not Uploaded</h3>
+                <table class="table table-bordered">
+                  <thead>                  
+                    <tr>
+                      <th style="width: 10px">#</th>
+                      <th>Product Name</th>
+                      <th>Brand</th>
+                      <th>Offer applicable</th>
+                      <th>Discount applicable</th>
+                      <th>Tax</th>
+                      <th>Featured Product</th>
+                      <th>Out Of Stock</th>
+                      <th>Description</th>
+                      <th>Varient</th>
+                      <th>Price</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <% let y = 1; 
+                    for(let i = 0; i < errordata.length; i++){ %>
+                    <tr>
+                      <td><%= y++; %></td>
+                      <td><%= errordata[i]['Product Name'] ? errordata[i]['Product Name'] : 'N/A'; %></td>
+                      <td><%= errordata[i]['Brand']; %></td>
+                      <td><%= errordata[i]['Offer applicable']; %></td>
+                      <td><%= errordata[i]['Discount applicable']; %></td>
+                      <td><%= errordata[i]['Tax']; %></td>
+                      <td><%= errordata[i]['Featured Product']; %></td>
+                      <td><%= errordata[i]['Out Of Stock']; %></td>
+                      <td><%= errordata[i]['Description']; %></td>
+                      <td><%= errordata[i]['Varient']; %></td>
+                      <td><%= errordata[i]['Price']; %></td>
+                    </tr>
+                    <% } %>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+          <div class="col-md-6">
+  
+          </div>
+        </div>
+      </div>
+    </section>
+  </div>

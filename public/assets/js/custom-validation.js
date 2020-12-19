@@ -1023,4 +1023,41 @@ $(document).ready(function () {
             $(element).removeClass('is-invalid');
         }
     });
+
+
+    $('#uploadProductForm').validate({
+        rules: {
+            categoryId: {
+                required: true,
+            },
+            subcategoryId: {
+                required: true,
+            },
+            uploadProduct: {
+                required: true,
+            },
+        },
+        messages: {
+            categoryId: {
+                required: "Please select Category"
+            },
+            subcategoryId: {
+                required: "Please select Sub Category"
+            },
+            uploadProduct: {
+                required: "Please upload file"
+            }
+        },
+        errorElement: 'span',
+        errorPlacement: function (error, element) {
+            error.addClass('invalid-feedback');
+            element.closest('.form-group').append(error);
+        },
+        highlight: function (element, errorClass, validClass) {
+            $(element).addClass('is-invalid');
+        },
+        unhighlight: function (element, errorClass, validClass) {
+            $(element).removeClass('is-invalid');
+        }
+    });
 });

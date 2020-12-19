@@ -25,64 +25,67 @@
                 <li class="nav-item"><a class="btn btn-block btn-secondary" href="<%=APPCONSTANT.ADMINCALLURL%>/manage_product">Back</a></li>
               </ul>
             </div>
-            <div id="hideDiv" style="padding: 0 17px 0 10px;">
-              <div class="card-body">
-                <div class="callout callout-danger">
-                  <h5>Important Note!</h5>
-                  <p>The first line in downloaded csv file should remain as it is. Please do not change the order of columns.</br>  
-                  The correct column order is <span class="text-info">(Product Name, Brand, Offer applicable, Discount applicable, Tax, Featured Product, Out Of Stock, Description, Varient, Price)</span> & you must follow this.</br> 
-                  Please make sure the csv file is UTF-8 encoded and not saved with byte order mark (BOM).</p>
+            <%- include ('../message/message') -%>
+            <form role="form" id="uploadProductForm" method="post" enctype="multipart/form-data">
+              <div id="hideDiv" style="padding: 0 17px 0 10px;">
+                <div class="card-body">
+                  <div class="callout callout-danger">
+                    <h5>Important Note!</h5>
+                    <p>The first line in downloaded csv file should remain as it is. Please do not change the order of columns.</br>  
+                    The correct column order is <span class="text-info">(Product Name, Brand, Offer applicable, Discount applicable, Tax, Featured Product, Out Of Stock, Description, Varient, Price)</span> & you must follow this.</br> 
+                    Please make sure the csv file is UTF-8 encoded and not saved with byte order mark (BOM).</p>
+                  </div>
                 </div>
-              </div>
-              <div class="form-row">
-                <div class="row">
-                  <div class="col-md-4">
-                    <h4>Step 1: Download the sample spreadsheet.</h4>
-                    <br><br>
-                    <a class="btn btn-block btn-danger" href="<%=APPCONSTANT.ADMINCALLURL%>/download_sample_file" target="_blank">Download Sample File</a>
-                  </div>
-                  <div class="col-md-4">
-                    <h4>Step 2: Fill below data to proceed.</h4>
-                    <div class="form-group">
-                      <label for="state">Select Category</label>
-                      <select name="categoryId" class="form-control" id="categoryId">
-                        <option value="">Select Category</option>
-                        <% for(let i = 0; i < categoryData.length; i++){ %>
-                          <option value="<%=categoryData[i].id%>"><%=categoryData[i].name%></option>
-                        <% } %>
-                      </select>
+                <div class="form-row">
+                  <div class="row">
+                    <div class="col-md-4">
+                      <h4>Step 1: Download the sample spreadsheet.</h4>
+                      <br><br>
+                      <a class="btn btn-block btn-danger" href="<%=APPCONSTANT.ADMINCALLURL%>/download_sample_file" target="_blank">Download Sample File</a>
                     </div>
+                    <div class="col-md-4">
+                      <h4>Step 2: Fill below data to proceed.</h4>
+                      <div class="form-group">
+                        <label for="state">Select Category</label>
+                        <select name="categoryId" class="form-control" id="categoryId">
+                          <option value="">Select Category</option>
+                          <% for(let i = 0; i < categoryData.length; i++){ %>
+                            <option value="<%=categoryData[i].id%>"><%=categoryData[i].name%></option>
+                          <% } %>
+                        </select>
+                      </div>
 
-                    <div class="form-group" id="subcategoryData">
-                      <label for="state">Select Sub Category</label>
-                      <select name="subcategoryId" class="form-control" id="subcategoryId">
-                        <option value="">Select Sub Category</option>
-                      </select>
+                      <div class="form-group" id="subcategoryData">
+                        <label for="state">Select Sub Category</label>
+                        <select name="subcategoryId" class="form-control" id="subcategoryId">
+                          <option value="">Select Sub Category</option>
+                        </select>
+                      </div>
+
                     </div>
-
-                  </div>
-                  <div class="col-md-4">
-                    <h4>Step 3: Click here to upload.</h4>
-                    <div class="form-group">
-                      <label for="file">Upload File</label>
-                      <div id="imgdiv">
-                          <h4  id="upload_product_err"><b>Click here To Upload</b></h4>
-                          <div class="uploadbtn">
-                              <button class="btnuplo">Upload an CSV</button>
-                              <input type="file" name="uploadProduct" id="uploadProduct">
-                          </div>
+                    <div class="col-md-4">
+                      <h4>Step 3: Click here to upload.</h4>
+                      <div class="form-group">
+                        <label for="file">Upload File</label>
+                        <div id="imgdiv">
+                            <h4  id="upload_product_err"><b>Click here To Upload</b></h4>
+                            <div class="uploadbtn">
+                                <button class="btnuplo">Upload an CSV</button>
+                                <input type="file" name="uploadProduct" id="uploadProduct">
+                            </div>
+                        </div>
                       </div>
                     </div>
                   </div>
                 </div>
+              </div>    
+              <p id="upload_product_err1"></p>
+              <div id="showTable"></div>
+              <div class="card-footer">
+                <a href="<%=APPCONSTANT.ADMINCALLURL%>/manage_product" class="btn btn-default" id="cancel">Cancel</a>
+                <button type="submit" class="btn btn-primary add_button" id="add_button">Submit</button>
               </div>
-            </div>    
-            <p id="upload_product_err1"></p>
-            <div id="showTable"></div>
-            <div class="card-footer">
-              <a href="<%=APPCONSTANT.ADMINCALLURL%>/manage_product" class="btn btn-default" id="cancel">Cancel</a>
-              <button type="submit" class="btn btn-primary add_button" id="add_button">Submit</button>
-            </div>
+            </form>
           </div>
         </div>
         <div class="col-md-6">
@@ -93,11 +96,6 @@
   </section>
 </div>
 <script>
-  $(document).ready(function(){
-    $("#add_button").hide();
-    $("#cancel").hide();
-  });
-  
   $('#uploadProduct').change(function () {
       sendFile(this.files[0]);
     });
@@ -107,34 +105,9 @@
        if($.inArray(ext, ['xlsx']) == -1) {
            $('#upload_product_err').html('<span style="color: red; font-weight: bold;">Invalid Extension.</span>'); 
             $('#imgdiv').css('border', '2px dashed red');   
-       }else{
-          $.ajax({
-            type: 'post', 
-            url: 'upload_sample_file?fileName='+file.name,
-            data: file,
-            success: function (data) {
-            if(data == 2)
-            {
-                $('#uploadProduct').val('');
-                $('#upload_product_err').html('<span style="color: red; font-weight: bold;">Wrong CSV File.</span>');    
-                $('#imgdiv').css('border', '2px dashed red');  
-            }
-            else if(data == 1){
-                $('#uploadProduct').val('');
-                $('#upload_product_err').html('<span style="color: red; font-weight: bold;">File not Uploaded. Please try again.</span>');    
-                $('#imgdiv').css('border', '2px dashed red');   
-              }
-              else{
-                $('#uploadProduct').val('');
-                $('#hideDiv').slideUp('slow');
-                $('#showTable').html(data);
-                $("#add_button").show();
-                $("#cancel").show();
-              }
-            },
-            processData: false,
-            contentType: file.type
-          });
+       }else {
+          $('#upload_product_err').html('<span style="color: green; font-weight: bold;">Valid File.</span>'); 
+          $('#imgdiv').css('border', '2px dashed green');   
        }
    }
 </script>
