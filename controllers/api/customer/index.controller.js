@@ -353,7 +353,7 @@ module.exports = {
                 tower: billingTower ? mongoose.mongo.ObjectId(billingTower) : ''
             };
             
-            sameAsBillingAddress = parseInt(sameAsBillingAddress) ? true : false;
+            sameAsBillingAddress = sameAsBillingAddress ? true : false;
             let shippingAddressData = {};
             if(sameAsBillingAddress) {
                 shippingAddressData = {
