@@ -12,13 +12,12 @@ const whitelist = [
   "http://127.0.0.1:3001",
   "http://164.52.200.120:3001",
   // Dev env
-  "http://lb.softchilli.com",
-  "http://softchilli.com",
   // prod env
-  "https://sc-p1-local-buniya.herokuapp.com",
-  "http://sc-p1-local-buniya.herokuapp.com",
+  // prod env
   "http://www.localbaniyaa.com:3001/admin",
   "http://www.localbaniyaa.com",
+  "https://www.localbaniyaa.com",
+  "https://localbaniyaa.com",
   "https://localbaniyaa.com:3001/admin"
 
 ];
