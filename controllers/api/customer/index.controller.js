@@ -341,7 +341,8 @@ module.exports = {
         }
         try{
             let { userId, sameAsBillingAddress, billingAddress, billingCountry, billingState, billingCity, billingPincode, billingArea, billingSociety, billingTower, shippingAddress, shippingCountry, shippingState, shippingCity, shippingPincode, shippingArea, shippingSociety, shippingTower } = req.body;
-
+            console.log('calling update address');
+            console.log(req.body);
             let billingAddressData = {
                 address: billingAddress ? billingAddress : '',
                 country: billingCountry ? billingCountry : '',
@@ -353,7 +354,11 @@ module.exports = {
                 tower: billingTower ? mongoose.mongo.ObjectId(billingTower) : ''
             };
             
+            console.log('sameAsBillingAddress before-------',sameAsBillingAddress);
+            
             sameAsBillingAddress = sameAsBillingAddress ? true : false;
+            
+            console.log('sameAsBillingAddress-------',sameAsBillingAddress);
             let shippingAddressData = {};
             if(sameAsBillingAddress) {
                 shippingAddressData = {
