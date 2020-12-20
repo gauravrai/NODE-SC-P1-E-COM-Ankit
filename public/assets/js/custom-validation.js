@@ -790,7 +790,7 @@ $(document).ready(function () {
         }
     });
     
-    $('#addOfferForm,#editOfferForm').validate({
+    $('#addOfferForm').validate({
         rules: {
             name: {
                 required: true,
@@ -879,6 +879,111 @@ $(document).ready(function () {
                 required: "Please Select Free Varient"
             },
             bannerImage: {
+                required: "Please upload banner image"
+            }
+        },
+        errorElement: 'span',
+        errorPlacement: function (error, element) {
+            error.addClass('invalid-feedback');
+            element.closest('.form-group').append(error);
+        },
+        highlight: function (element, errorClass, validClass) {
+            $(element).addClass('is-invalid');
+        },
+        unhighlight: function (element, errorClass, validClass) {
+            $(element).removeClass('is-invalid');
+        }
+    });
+    
+    $('#editOfferForm').validate({
+        rules: {
+            name: {
+                required: true,
+            },
+            from: {
+                required: true, 
+            },
+            to: {
+                required: true,
+            },
+            multipleOf: {
+                required: true, 
+            },
+            freeItem: {
+                required: true,
+            },
+            applyFor: {
+                required: true,
+            },
+            capping: {
+                required: true,
+            },
+            offerCategoryId: {
+                required: true,
+            },
+            offerProductId: {
+                required: true,
+            },
+            offerVarient: {
+                required: true,
+            },
+            freeCategoryId: {
+                required: true,
+            },
+            freeProductId: {
+                required: true,
+            },
+            freeVarient: {
+                required: true, 
+            },
+            bannerImagehidden: {
+                required: true, 
+            }
+        },
+        messages: {
+            name: {
+                required: "Please Enter Offer Name"
+            },
+            from: {
+                required: "Please Enter From Date"
+            },
+            to: {
+                required: "Please Enter to Date"
+            },
+            multipleOf: {
+                required: "Please Enter Multiple Of"
+            },
+            freeItem: {
+                required: "Please Enter Free Item"
+            },
+            offerType: {
+                required: "Please enter Offer Type"
+            },
+            applyFor: {
+                required: "Please Enter Apply For"
+            },
+            capping: {
+                required: "Please Enter Capping"
+            },
+            offerCategoryId: {
+                required: "Please Select Offer Category Name"
+            },
+            offerProductId: {
+                required: "Please Select Offer Product Name"
+            },
+            offerVarient: {
+                required: "Please Select Offer Varient"
+            },
+            freeCategoryId: {
+                required: "Please Select Free Category Name"
+            },
+            freeProductId: {
+                required: "Please Select Free Product Name"
+            },
+            freeVarientId: {
+                required: "Please Select Free Varient"
+            },
+            bannerImagehidden: {
                 required: "Please upload banner image"
             }
         },

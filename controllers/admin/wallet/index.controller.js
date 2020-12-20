@@ -15,16 +15,25 @@ module.exports = {
 	manageWallet: async function(req,res){
 		let moduleName = 'Wallet Management';
 		let pageTitle = 'Manage Wallet';
-		await config.helpers.permission('manage_wallet', req, (err,permissionData)=>{
-			res.render('admin/wallet/view',{layout:'admin/layout/layout', pageTitle:pageTitle, moduleName:moduleName,permissionData:permissionData});
+		await config.helpers.permission('manage_wallet', req, async (err,permissionData)=>{
+			await config.helpers.filter.walletFilter(req, async function (filterData) {
+				if (filterData != "" && req.method == 'POST') {
+					return res.redirect('manage_wallet' + filterData);
+				}
+				res.render('admin/wallet/view',{layout:'admin/layout/layout', pageTitle:pageTitle, moduleName:moduleName,permissionData:permissionData, req: req, filterData:filterData });
+			});
 		});
     },
 
     listWallet:function(req,res){
-		var search = {deletedAt:0}
-		let searchValue = req.body.search.value;
-		if(searchValue){			
-            search.name = { $regex: '.*' + searchValue + '.*',$options:'i' };
+		var search = {deletedAt:0};
+
+		if (req.param('date_from') && req.param('date_to')) {
+			var today = new Date(req.param('date_to'));
+			var tomorrow = new Date(req.param('date_to'));
+			tomorrow.setDate(today.getDate() + 1);
+			var tomorrow = tomorrow.toLocaleDateString();
+			search.updatedAt = { '$gte': new Date(req.param('date_from')), '$lte': new Date(tomorrow) }
 		}
 		
 		let skip = req.input('start') ? parseInt(req.input('start')) : 0;
@@ -115,6 +124,7 @@ module.exports = {
 				walletentry.save();
 				let walletData = {};
 				let totalAmount = wallet.totalAmount;
+				walletData.updatedAt = Date.now();
 				if(type == 'Add')
 				{
 					amount = ( totalAmount + amount );

@@ -204,8 +204,13 @@ $(document).ready(function() {
         "processing": true,
         "serverSide": true,
         "ordering": false,
+        "searching": false,
         "ajax": {
             url: 'list_wallet',
+            data: {
+              "date_from": $("#date_from").val(),
+              "date_to": $("#date_to").val(),
+            },
             type: "POST",          
         }
     });

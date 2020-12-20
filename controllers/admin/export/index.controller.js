@@ -24,6 +24,8 @@ const Varient = model.varient;
 const RequestProduct = model.request_product;
 const Order = model.order;
 const OrderDetail = model.order_detail;
+const Wallet = model.wallet;
+const Walletentry = model.wallet_entry;
 
 module.exports = {
 	exportRole: async function(req,res){
@@ -1185,7 +1187,7 @@ module.exports = {
 			}
 		]);
 		let workbook = new excel.Workbook();
-		let worksheet = workbook.addWorksheet("Order Master");
+		let worksheet = workbook.addWorksheet("Order Report");
 		
 		worksheet.columns = [
 			{ header: "ODID", key: "odid", width: 25 },
@@ -1218,7 +1220,77 @@ module.exports = {
 		);
 		res.setHeader(
 		  "Content-Disposition",
-		  "attachment; filename=" + "Order Master.xlsx"
+		  "attachment; filename=" + "Order Report.xlsx"
+		);
+		
+		return workbook.xlsx.write(res).then(function () {
+		  res.status(200).end();
+		})
+	},
+	
+	exportWallet: async function(req,res){
+		let search = {deletedAt:0};
+		if (req.param('date_from') && req.param('date_to')) {
+			let today = new Date(req.param('date_to'));
+			let tomorrow = new Date(req.param('date_to'));
+			tomorrow.setDate(today.getDate() + 1);
+			tomorrow = tomorrow.toLocaleDateString();
+			search.updatedAt = { '$gte': new Date(req.param('date_from')), '$lte': new Date(tomorrow) }
+		}
+		let data = await Wallet.find(search).sort({updatedAt: 1});
+		let walletData =[];
+		for(i=0;i<data.length;i++){
+			let arr = {};
+			let creditSearch = {userId: mongoose.mongo.ObjectId(data[i].userId), type: 'Add'};
+			let debitSearch = {userId: mongoose.mongo.ObjectId(data[i].userId), type: 'Sub'};
+			if (req.param('date_from') && req.param('date_to')) {
+				let today = new Date(req.param('date_to'));
+				let tomorrow = new Date(req.param('date_to'));
+				tomorrow.setDate(today.getDate() + 1);
+				tomorrow = tomorrow.toLocaleDateString();
+				creditSearch.createdAt = { '$gte': new Date(req.param('date_from')), '$lte': new Date(tomorrow) };
+				debitSearch.createdAt = { '$gte': new Date(req.param('date_from')), '$lte': new Date(tomorrow) };
+			}
+			await config.helpers.customer.getNameById(data[i].userId, async function (userName) {
+				let name = userName ? userName.name : 'N/A';
+				arr.customerName = name;
+			})
+			await config.helpers.customer.getMobileById(data[i].userId, async function (userMobile) {
+				let mobile = userMobile ? userMobile.mobile : 'N/A';
+				arr.mobile = mobile;
+			})
+			arr.amount = data[i].totalAmount;
+			let creditCount = await Walletentry.countDocuments(creditSearch);
+			let debitCount = await Walletentry.countDocuments(debitSearch);
+			arr.creditCount = creditCount;
+			arr.debitCount = debitCount;
+			arr.status = data[i].status == true ? 'Active' : 'Inactive';
+			arr.createdAt = moment(data[i].createdAt).format('DD-MM-YYYY');
+			arr.updatedAt = moment(data[i].updatedAt).format('DD-MM-YYYY');
+			walletData.push(arr);
+		}
+		let workbook = new excel.Workbook();
+		let worksheet = workbook.addWorksheet("Wallet Report");
+		
+		worksheet.columns = [
+			{ header: "Customer Name", key: "customerName", width: 25 },
+			{ header: "Mobile", key: "mobile", width: 25 },
+			{ header: "Total Amount", key: "amount", width: 25 },
+			{ header: "Credit Count", key: "creditCount", width: 25 },
+			{ header: "Debit Count", key: "debitCount", width: 25 },
+			{ header: "Status", key: "status", width: 10 },
+			{ header: "Created Date", key: "createdAt", width: 20 },
+			{ header: "Updated Date", key: "updatedAt", width: 20 }
+		];
+		worksheet.addRows(walletData);
+		
+		res.setHeader(
+		  "Content-Type",
+		  "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
+		);
+		res.setHeader(
+		  "Content-Disposition",
+		  "attachment; filename=" + "Wallet Report.xlsx"
 		);
 		
 		return workbook.xlsx.write(res).then(function () {

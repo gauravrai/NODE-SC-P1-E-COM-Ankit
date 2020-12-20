@@ -26,6 +26,5 @@ let WalletSchema = new Schema({
         default: Date.now
     }
 });
-
 // Export the model
 module.exports = mongoose.model('wallet', WalletSchema);

@@ -22,10 +22,37 @@
               <div class="card-header d-flex p-0">
                 <h3 class="card-title p-3"><%=pageTitle%></h3>
                 <ul class="nav nav-pills ml-auto p-2">
+                  <li class="nav-item"><a class="btn btn-block btn-danger" href="<%=APPCONSTANT.ADMINCALLURL%>/export_wallet<%=filterData%>" target="_blank">Export</a></li>&nbsp;&nbsp;
                   <% if(permissionData.add == '1'){ %>
                   <li class="nav-item"><a class="btn btn-block btn-primary" href="<%=APPCONSTANT.ADMINCALLURL%>/add_wallet">Add Wallet</a></li>
                   <% } %>
                 </ul>
+              </div>
+              <div class="card-header d-flex" id="searchHead">
+                <h4> Search...</h4>
+                <ul class="nav nav-pills ml-auto p-2">
+                  <li class="nav-item"><i class="fas fa-search" id="global_search"> </i></li>
+                </ul>
+              </div>
+              <div  class="card-header" id="searchBox" style="display: none !important;">
+                <form method="GET">
+                  <div class="row">
+                    <div class="col-sm-3">
+                      <div class="form-group">
+                        <input type="date" name="date_from" class="form-control" id="date_from" placeholder="(YYYY-MM-DD) From Date" value="<%= req.query.date_from ? req.query.date_from : ''%>">
+                      </div>
+                    </div>
+                    <div class="col-sm-3">
+                      <div class="form-group">
+                        <input type="date" name="date_to" class="form-control" id="date_to" placeholder="(YYYY-MM-DD) To Date" value="<%= req.query.date_to ? req.query.date_to : ''%>">
+                      </div>
+                    </div>
+                    <div class="col-sm-3">
+                      <a href="<%=APPCONSTANT.ADMINCALLURL%>/manage_order" class="btn btn-default">Cancel</a>
+                      <button type="submit" class="btn btn-primary">Submit</button>
+                    </div>
+                  </div>
+                </form>
               </div>
               <div class="card-body">
                 <%- include ('../message/message') -%>
