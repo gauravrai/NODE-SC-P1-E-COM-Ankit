@@ -252,7 +252,7 @@ module.exports = {
             tower: billingTower ? mongoose.mongo.ObjectId(billingTower) : ''
         };
         
-        sameAsBillingAddress = parseInt(sameAsBillingAddress) ? true : false;
+        // sameAsBillingAddress = parseInt(sameAsBillingAddress) ? true : false;
         let shippingAddressData = {};
         if(sameAsBillingAddress) {
             shippingAddressData = {
@@ -341,9 +341,6 @@ module.exports = {
         }
         try{
             let { userId, sameAsBillingAddress, billingAddress, billingCountry, billingState, billingCity, billingPincode, billingArea, billingSociety, billingTower, shippingAddress, shippingCountry, shippingState, shippingCity, shippingPincode, shippingArea, shippingSociety, shippingTower } = req.body;
-            console.log(req.body);
-            console.log('sameAsBillingAddress---',sameAsBillingAddress);
-            console.log('typeof sameAsBillingAddress---',typeof sameAsBillingAddress);
             let billingAddressData = {
                 address: billingAddress ? billingAddress : '',
                 country: billingCountry ? billingCountry : '',
@@ -357,7 +354,6 @@ module.exports = {
             
             let shippingAddressData = {};
             if(sameAsBillingAddress) {
-                console.log('coming if');
                 shippingAddressData = {
                     address: billingAddress ? billingAddress : '',
                     country: billingCountry ? billingCountry : '',
@@ -369,7 +365,6 @@ module.exports = {
                     tower: billingTower ? mongoose.mongo.ObjectId(billingTower) : ''
                 };
             }else {
-                console.log('coming else');
                 shippingAddressData = {
                     address: shippingAddress ? shippingAddress : '',
                     country: shippingCountry ? shippingCountry : '',
@@ -387,9 +382,6 @@ module.exports = {
                 billingAddress : billingAddressData,
                 shippingAddress : shippingAddressData
             };
-            console.log('-----------------------');
-            console.log(userData);
-            console.log('-----------------------');
             let updateUserData = await Customer.update({_id:mongoose.mongo.ObjectID(userId)},userData);
             return res.status(200).json({ 
                 data: userData, 
