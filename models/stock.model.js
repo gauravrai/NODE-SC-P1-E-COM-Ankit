@@ -3,12 +3,14 @@ const Schema = mongoose.Schema;
 var ObjectId = mongoose.Schema.Types.ObjectId;
 
 let StockSchema = new Schema({
-
     count: {
         type: Number,
     },
     productId: {
         type: ObjectId
+    },
+    costPrice: {
+        type: Number,
     },
     varientId: {
         type: ObjectId,

@@ -45,7 +45,29 @@ module.exports = {
 
 			cb('');
 		}
-	}
+	},
+
+	stockFilter: async function(req, cb) {
+		var query = "?search=1";
+
+		if(req.query.store_id && req.query.store_id != ''){
+				
+			query = query+"&store_id="+req.query.store_id;
+		}
+		if(req.query.date_from){
+			query = query+"&date_from="+req.query.date_from;
+		}
+		if(req.query.date_to){
+			query = query+"&date_to="+req.query.date_to;
+		}
+	
+		if(query!="?search=1"){
+			cb(query);
+		}else{
+
+			cb('');
+		}
+	},
 };
 
 

@@ -24,18 +24,30 @@ module.exports = {
     manageStock: async function(req,res){
 		let moduleName = 'Stock Management';
 		let pageTitle = 'Manage Stock';
-		await config.helpers.permission('manage_stock', req, (err,permissionData)=>{
-			res.render('admin/stock/view.ejs',{layout:'admin/layout/layout', pageTitle:pageTitle, moduleName:moduleName, permissionData:permissionData});
+		let storeData = await Store.find({status:true, deletedAt: 0});
+		await config.helpers.permission('manage_stock', req, async (err,permissionData)=>{
+			await config.helpers.filter.stockFilter(req, async function (filterData) {
+				if (filterData != "" && req.method == 'POST') {
+					return res.redirect('manage_stock' + filterData);
+				}
+				res.render('admin/stock/view.ejs',{layout:'admin/layout/layout', pageTitle:pageTitle, moduleName:moduleName, permissionData:permissionData, req: req, filterData:filterData, storeData:storeData });
+			});
 		});
 	},
 	
 	listStock:function(req,res){
 		var search = {deletedAt:0}
-		let searchValue = req.body.search.value;
-		if(searchValue){			
-            search.name = { $regex: '.*' + searchValue + '.*',$options:'i' };
+		if (req.param('store_id')) {
+			search.storeId = mongoose.mongo.ObjectId(req.param("store_id"));
 		}
-		
+		if (req.param('date_from') && req.param('date_to')) {
+			var today = new Date(req.param('date_to'));
+			var tomorrow = new Date(req.param('date_to'));
+			tomorrow.setDate(today.getDate() + 1);
+			var tomorrow = tomorrow.toLocaleDateString();
+			search.createdAt = { '$gte': new Date(req.param('date_from')), '$lte': new Date(tomorrow) }
+		}
+		console.log(search);
 		let skip = req.input('start') ? parseInt(req.input('start')) : 0;
 		let limit= req.input('length') ? parseInt(req.input('length')) : config.constant.LIMIT;
 		async.parallel({
@@ -111,9 +123,9 @@ module.exports = {
 		}else
 		{
 			const { productId, varientId, count, costPrice, storeId, transactionType } = req.body;
-
+			console.log(req.body);
 			const stockData = await Stock.findOne({
-				status: true, deletedAt: 0, productId: mongoose.mongo.ObjectId(productId), varientId, storeId: mongoose.mongo.ObjectId(storeId),
+				status: true, deletedAt: 0, productId: mongoose.mongo.ObjectId(productId), varientId: mongoose.mongo.ObjectId(varientId), storeId: mongoose.mongo.ObjectId(storeId),
 			});
 			if ((!stockData && transactionType === 'out') || (stockData && transactionType === 'out' && (parseInt(stockData.count) - parseInt(count)) < 0)) {
 				req.flash('msg', {msg:'Not enough stock available', status:false});
@@ -124,20 +136,20 @@ module.exports = {
 						? (parseInt(stockData.count) + parseInt(count))
 						: (parseInt(stockData.count) - parseInt(count))
 					await Stock.updateOne(
-						{ productId: mongoose.mongo.ObjectId(productId), storeId: mongoose.mongo.ObjectId(storeId), varientId, status: true, deletedAt: 0, },
+						{ productId: mongoose.mongo.ObjectId(productId), storeId: mongoose.mongo.ObjectId(storeId), varientId: mongoose.mongo.ObjectId(varientId), costPrice, status: true, deletedAt: 0, },
 						{ count: countToUpdate },
 						function(err,data){
 							if(err){console.log(err)}
 						})
 				} else {
-					const stock = new Stock({ productId: mongoose.mongo.ObjectId(productId), count, varientId, storeId: mongoose.mongo.ObjectId(storeId), });
+					const stock = new Stock({ productId: mongoose.mongo.ObjectId(productId), count, varientId: mongoose.mongo.ObjectId(varientId), costPrice, storeId: mongoose.mongo.ObjectId(storeId), });
 					stock.save(function(err, data){
 					if(err){console.log(err)}	
 					});
 				}
 	
 				const stockEntries = new StockEntries({
-					productId: mongoose.mongo.ObjectId(productId), count, varientId, costPrice, storeId:mongoose.mongo.ObjectId(storeId), transactionType,
+					productId: mongoose.mongo.ObjectId(productId), count, varientId: mongoose.mongo.ObjectId(varientId), storeId:mongoose.mongo.ObjectId(storeId), transactionType,
 				});
 				stockEntries.save(function(err, data){
 					if(err){console.log(err)}	
@@ -191,34 +203,34 @@ module.exports = {
 			res.render('admin/stock/transfer.ejs',{layout:'admin/layout/layout', pageTitle:pageTitle, moduleName:moduleName, storeData:storeData, productData:productData });
 		}
 		if (req.method === 'POST') {
-			const { productId, varient, count, toStoreId, fromStoreId } = req.body;
+			const { productId, varientId, count, toStoreId, fromStoreId } = req.body;
 			const fromStoreData = await Stock.findOne({
-				status: true, deletedAt: 0, productId: mongoose.mongo.ObjectId(productId), varient, storeId: mongoose.mongo.ObjectId(fromStoreId),
+				status: true, deletedAt: 0, productId: mongoose.mongo.ObjectId(productId), varientId: mongoose.mongo.ObjectId(varientId), storeId: mongoose.mongo.ObjectId(fromStoreId),
 			});
 			if (!fromStoreData || (fromStoreData && (parseInt(fromStoreData.count) - parseInt(count)) < 0) ) {
 				req.flash('msg', {msg:'Not enough stock available', status:false});
 				res.redirect(config.constant.ADMINCALLURL+'/transfer_stock');
 			} else {
 				const toStoreData = await Stock.findOne({
-					status: true, deletedAt: 0, productId: mongoose.mongo.ObjectId(productId), varient, storeId: mongoose.mongo.ObjectId(toStoreId),
+					status: true, deletedAt: 0, productId: mongoose.mongo.ObjectId(productId), varientId: mongoose.mongo.ObjectId(varientId), storeId: mongoose.mongo.ObjectId(toStoreId),
 				});
 				const updatedStockFromStore = Stock.updateOne(
-					{ productId: mongoose.mongo.ObjectId(productId), storeId: mongoose.mongo.ObjectId(fromStoreId), varient, status: true, deletedAt: 0, },
+					{ productId: mongoose.mongo.ObjectId(productId), storeId: mongoose.mongo.ObjectId(fromStoreId), varientId: mongoose.mongo.ObjectId(varientId), status: true, deletedAt: 0, },
 					{ count: parseInt(fromStoreData.count) - parseInt(count) });
 				const updatedStockToStore = Stock.updateOne(
-					{ productId: mongoose.mongo.ObjectId(productId), storeId: mongoose.mongo.ObjectId(toStoreId), varient, status: true, deletedAt: 0, },
+					{ productId: mongoose.mongo.ObjectId(productId), storeId: mongoose.mongo.ObjectId(toStoreId), varientId: mongoose.mongo.ObjectId(varientId), status: true, deletedAt: 0, },
 					{ count: toStoreData ? (parseInt(toStoreData.count) + parseInt(count)) : parseInt(count) },
 					{ upsert: true },
 				);
-				const stockEntriesData = StockEntries.findOne({ productId: mongoose.mongo.ObjectId(productId), storeId: mongoose.mongo.ObjectId(fromStoreId), varient, status: true, deletedAt: 0, },)
+				const stockEntriesData = StockEntries.findOne({ productId: mongoose.mongo.ObjectId(productId), storeId: mongoose.mongo.ObjectId(fromStoreId), varientId: mongoose.mongo.ObjectId(varientId), status: true, deletedAt: 0, },)
 
 				const [stockEntryData] = await Promise.all([stockEntriesData, updatedStockFromStore, updatedStockToStore]);
 				await StockEntries.insertMany([
 					{
-						productId: mongoose.mongo.ObjectId(productId), count: (parseInt(fromStoreData.count) - parseInt(count)), varient, costPrice: stockEntryData.costPrice, storeId:mongoose.mongo.ObjectId(fromStoreId), transactionType: 'out',
+						productId: mongoose.mongo.ObjectId(productId), count: (parseInt(fromStoreData.count) - parseInt(count)), varientId: mongoose.mongo.ObjectId(varientId), costPrice: fromStoreData.costPrice, storeId:mongoose.mongo.ObjectId(fromStoreId), transactionType: 'out',
 					},
 					{
-						productId: mongoose.mongo.ObjectId(productId), count: (toStoreData ? (parseInt(toStoreData.count) + parseInt(count)) : parseInt(count) ), varient, costPricricee: stockEntryData.costPrice, storeId:mongoose.mongo.ObjectId(toStoreId), transactionType: 'in',
+						productId: mongoose.mongo.ObjectId(productId), count: (toStoreData ? (parseInt(toStoreData.count) + parseInt(count)) : parseInt(count) ), varientId: mongoose.mongo.ObjectId(varientId), costPrice: fromStoreData.costPrice, storeId:mongoose.mongo.ObjectId(toStoreId), transactionType: 'in',
 					},
 				]);
 				req.flash('msg', {msg:'Stock transferred successfully', status:false});	

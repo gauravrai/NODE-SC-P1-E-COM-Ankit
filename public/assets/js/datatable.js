@@ -129,12 +129,18 @@ $(document).ready(function() {
         }
     });
     $('#stockTable').DataTable( {
+        "searching": false,
         "scrollX": true,
         "processing": true,
         "serverSide": true,
         "ordering": false,
         "ajax": {
             url: 'list_stock',
+            data: {
+              "store_id": $("#store_id").val(),
+              "date_from": $("#date_from").val(),
+              "date_to": $("#date_to").val(),
+            },
             type: "POST",          
         }
     });

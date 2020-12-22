@@ -3,7 +3,6 @@ const Schema = mongoose.Schema;
 var ObjectId = mongoose.Schema.Types.ObjectId;
 
 let StockSchema = new Schema({
-
     count: {
         type: Number,
     },
@@ -14,7 +13,7 @@ let StockSchema = new Schema({
         type: ObjectId,
     },
     varientId: {
-        type: String,
+        type: ObjectId,
     },
     transactionType: {
         type: String,
