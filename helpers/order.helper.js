@@ -12,51 +12,51 @@ module.exports = {
 		let orderData = await Order.findOne({ odid:odid });
 		if(orderData) {
 			await config.helpers.state.getNameById(orderData.customerDetail.billingAddress.state, async function (stateName) {
-				orderData.customerDetail.billingAddress.state = stateName.name;
+				orderData.customerDetail.billingAddress.state = stateName ? stateName.name : '';
 			})
 			
 			await config.helpers.city.getNameById(orderData.customerDetail.billingAddress.city, async function (cityName) {
-				orderData.customerDetail.billingAddress.city = cityName.name;
+				orderData.customerDetail.billingAddress.city = cityName ? cityName.name : '';
 			})
 			
 			await config.helpers.pincode.getNameById(orderData.customerDetail.billingAddress.pincode, async function (pincodeName) {
-				orderData.customerDetail.billingAddress.pincode = pincodeName.name;
+				orderData.customerDetail.billingAddress.pincode = pincodeName ? pincodeName.name : '';
 			})
 			
 			await config.helpers.area.getNameById(orderData.customerDetail.billingAddress.area, async function (areaName) {
-				orderData.customerDetail.billingAddress.area = areaName.name;
+				orderData.customerDetail.billingAddress.area = areaName ? areaName.name : '';
 			})
 			
 			await config.helpers.society.getNameById(orderData.customerDetail.billingAddress.society, async function (societyName) {
-				orderData.customerDetail.billingAddress.society = societyName.name;
+				orderData.customerDetail.billingAddress.society = societyName ? societyName.name : '';
 			})
 			
 			await config.helpers.tower.getNameById(orderData.customerDetail.billingAddress.tower, async function (towerName) {
-				orderData.customerDetail.billingAddress.tower = towerName.name;
+				orderData.customerDetail.billingAddress.tower = towerName ? towerName.name : '';
 			})
 			
 			await config.helpers.state.getNameById(orderData.customerDetail.shippingAddress.state, async function (stateName) {
-				orderData.customerDetail.shippingAddress.state = stateName.name;
+				orderData.customerDetail.shippingAddress.state = stateName ? stateName.name : '';
 			})
 			
 			await config.helpers.city.getNameById(orderData.customerDetail.shippingAddress.city, async function (cityName) {
-				orderData.customerDetail.shippingAddress.city = cityName.name;
+				orderData.customerDetail.shippingAddress.city = cityName ? cityName.name : '';
 			})
 			
 			await config.helpers.pincode.getNameById(orderData.customerDetail.shippingAddress.pincode, async function (pincodeName) {
-				orderData.customerDetail.shippingAddress.pincode = pincodeName.name;
+				orderData.customerDetail.shippingAddress.pincode = pincodeName ? pincodeName.name : '';
 			})
 			
 			await config.helpers.area.getNameById(orderData.customerDetail.shippingAddress.area, async function (areaName) {
-				orderData.customerDetail.shippingAddress.area = areaName.name;
+				orderData.customerDetail.shippingAddress.area = areaName ? areaName.name : '';
 			})
 			
 			await config.helpers.society.getNameById(orderData.customerDetail.shippingAddress.society, async function (societyName) {
-				orderData.customerDetail.shippingAddress.society = societyName.name;
+				orderData.customerDetail.shippingAddress.society = societyName ? societyName.name : '';
 			})
 			
 			await config.helpers.tower.getNameById(orderData.customerDetail.shippingAddress.tower, async function (towerName) {
-				orderData.customerDetail.shippingAddress.tower = towerName.name;
+				orderData.customerDetail.shippingAddress.tower = towerName ? towerName.name : '';
 			})
 
 			orderData.siteLogo = config.constant.COMPANYLOGO;
