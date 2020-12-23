@@ -25,8 +25,10 @@
                 <li class="nav-item"><a class="btn btn-block btn-secondary" href="<%=APPCONSTANT.ADMINCALLURL%>/manage_stock">Back</a></li>
               </ul>
             </div>
+            <%- include ('../message/message') -%>
             <form role="form" id="addStockForm" method="post" enctype="multipart/form-data">
-              <div id="tableContent" style="padding: 0 17px 0 10px;">
+              <div id="tableContent" style="padding: 10px 17px 0 10px;">
+                <%- include ('../message/message') -%>
                 <div class="form-row">
                   <div class="form-group col-md-4">
                     <label for="productId">Select Product</label>

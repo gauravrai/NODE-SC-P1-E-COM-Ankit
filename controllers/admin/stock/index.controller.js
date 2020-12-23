@@ -24,13 +24,15 @@ module.exports = {
     manageStock: async function(req,res){
 		let moduleName = 'Stock Management';
 		let pageTitle = 'Manage Stock';
+		var detail = {};	
+		detail = {message:req.flash('msg')};
 		let storeData = await Store.find({status:true, deletedAt: 0});
 		await config.helpers.permission('manage_stock', req, async (err,permissionData)=>{
 			await config.helpers.filter.stockFilter(req, async function (filterData) {
 				if (filterData != "" && req.method == 'POST') {
 					return res.redirect('manage_stock' + filterData);
 				}
-				res.render('admin/stock/view.ejs',{layout:'admin/layout/layout', pageTitle:pageTitle, moduleName:moduleName, permissionData:permissionData, req: req, filterData:filterData, storeData:storeData });
+				res.render('admin/stock/view.ejs',{layout:'admin/layout/layout', pageTitle:pageTitle, detail:detail, moduleName:moduleName, permissionData:permissionData, req: req, filterData:filterData, storeData:storeData });
 			});
 		});
 	},
@@ -47,7 +49,6 @@ module.exports = {
 			var tomorrow = tomorrow.toLocaleDateString();
 			search.createdAt = { '$gte': new Date(req.param('date_from')), '$lte': new Date(tomorrow) }
 		}
-		console.log(search);
 		let skip = req.input('start') ? parseInt(req.input('start')) : 0;
 		let limit= req.input('length') ? parseInt(req.input('length')) : config.constant.LIMIT;
 		async.parallel({
@@ -90,10 +91,10 @@ module.exports = {
 					arr1.push(moment(data[i].createdAt).format('DD-MM-YYYY'));
 					if(!data[i].status){
 						let change_status = "changeStatus(this,\'1\',\'change_status_stock\',\'list_stock\',\'stock\');";	
-						arr1.push('<span class="badge bg-danger" style="cursor:pointer;" onclick="'+change_status+'" id="'+data[i]._id+'">Inactive</span>');
+						// arr1.push('<span class="badge bg-danger" style="cursor:pointer;" onclick="'+change_status+'" id="'+data[i]._id+'">Inactive</span>');
 					}else{
 						let change_status = "changeStatus(this,\'0\',\'change_status_stock\',\'list_stock\',\'stock\');";
-						arr1.push('<span class="badge bg-success" style="cursor:pointer;" onclick="'+change_status+'" id="'+data[i]._id+'">Active</span>');
+						// arr1.push('<span class="badge bg-success" style="cursor:pointer;" onclick="'+change_status+'" id="'+data[i]._id+'">Active</span>');
 					}
 					let $but_edit = '-';
 					if(permissionData.edit=='1'){
@@ -104,7 +105,9 @@ module.exports = {
 						let remove = "deleteData(this,\'delete_stock\',\'list_stock\',\'stock\');";
 						$but_delete = '&nbsp;&nbsp;<span><a href="javascript:void(0)" class="btn btn-flat btn-info btn-outline-danger" title="Delete" onclick="'+remove+'" id="'+data[i]._id+'"><i class="fas fa fa-trash" ></i></a></span>';
 					}
-					arr1.push($but_delete);
+					
+					$but_view = '<span><a href="'+ADMINCALLURL+'/view_stock?productId='+data[i].productId+'&varientId='+data[i].varientId+'&storeId='+data[i].storeId+'" class="btn btn-flat btn-info btn-outline-primary" title="View"><i class="fas fa-eye"></i></a></span>';
+					arr1.push($but_view);
 					arr.push(arr1);
 				}
 				obj.data = arr;
@@ -114,17 +117,19 @@ module.exports = {
 	},
     
     addStock: async function(req,res){
+		var detail = {};
 		if(req.method == "GET"){
 			let moduleName = 'Stock Management';
-			let pageTitle = 'Add Stock';
+			let pageTitle = 'Add Stock';	
+			detail = {message:req.flash('msg')};
 			let productData = await Product.find({status:true, deletedAt: 0});
 			let storeData = await Store.find({status:true, deletedAt: 0});
-			res.render('admin/stock/add.ejs',{layout:'admin/layout/layout', pageTitle:pageTitle, moduleName:moduleName, storeData:storeData, productData:productData });
+			res.render('admin/stock/add.ejs',{layout:'admin/layout/layout', pageTitle:pageTitle, detail:detail, moduleName:moduleName, storeData:storeData, productData:productData });
 		}else
 		{
-			const { productId, varientId, count, costPrice, storeId, transactionType } = req.body;
-			console.log(req.body);
-			const stockData = await Stock.findOne({
+			let { productId, varientId, count, costPrice, storeId, transactionType } = req.body;
+			costPrice = parseInt(costPrice);
+			let stockData = await Stock.findOne({
 				status: true, deletedAt: 0, productId: mongoose.mongo.ObjectId(productId), varientId: mongoose.mongo.ObjectId(varientId), storeId: mongoose.mongo.ObjectId(storeId),
 			});
 			if ((!stockData && transactionType === 'out') || (stockData && transactionType === 'out' && (parseInt(stockData.count) - parseInt(count)) < 0)) {
@@ -132,29 +137,29 @@ module.exports = {
 				res.redirect(config.constant.ADMINCALLURL+'/add_stock');
 			} else {
 				if (stockData) {
-					const countToUpdate = transactionType === 'in' 
+					let countToUpdate = transactionType === 'in' 
 						? (parseInt(stockData.count) + parseInt(count))
 						: (parseInt(stockData.count) - parseInt(count))
 					await Stock.updateOne(
-						{ productId: mongoose.mongo.ObjectId(productId), storeId: mongoose.mongo.ObjectId(storeId), varientId: mongoose.mongo.ObjectId(varientId), costPrice, status: true, deletedAt: 0, },
+						{ productId: mongoose.mongo.ObjectId(productId), storeId: mongoose.mongo.ObjectId(storeId), varientId: mongoose.mongo.ObjectId(varientId), costPrice },
 						{ count: countToUpdate },
 						function(err,data){
 							if(err){console.log(err)}
 						})
 				} else {
-					const stock = new Stock({ productId: mongoose.mongo.ObjectId(productId), count, varientId: mongoose.mongo.ObjectId(varientId), costPrice, storeId: mongoose.mongo.ObjectId(storeId), });
+					let stock = new Stock({ productId: mongoose.mongo.ObjectId(productId), count, varientId: mongoose.mongo.ObjectId(varientId), costPrice, storeId: mongoose.mongo.ObjectId(storeId), });
 					stock.save(function(err, data){
 					if(err){console.log(err)}	
 					});
 				}
 	
-				const stockEntries = new StockEntries({
-					productId: mongoose.mongo.ObjectId(productId), count, varientId: mongoose.mongo.ObjectId(varientId), storeId:mongoose.mongo.ObjectId(storeId), transactionType,
+				let stockEntries = new StockEntries({
+					productId: mongoose.mongo.ObjectId(productId), count, varientId: mongoose.mongo.ObjectId(varientId), storeId:mongoose.mongo.ObjectId(storeId), costPrice, transactionType
 				});
 				stockEntries.save(function(err, data){
 					if(err){console.log(err)}	
 				});
-				req.flash('msg', {msg:'Stock Added Successfully', status:false});	
+				req.flash('msg', {msg:'Stock Added Successfully', status:true});	
 				res.redirect(config.constant.ADMINCALLURL+'/manage_stock');
 				req.flash({});
 			}
@@ -195,12 +200,14 @@ module.exports = {
 		   }
 	},
 	transferStock: async function(req,res){
+		var detail = {};	
 		if(req.method == "GET"){
 			let moduleName = 'Stock Management';
 			let pageTitle = 'Transfer Stock';
+			detail = {message:req.flash('msg')};
 			let productData = await Product.find({status:true, deletedAt: 0});
 			let storeData = await Store.find({status:true, deletedAt: 0});
-			res.render('admin/stock/transfer.ejs',{layout:'admin/layout/layout', pageTitle:pageTitle, moduleName:moduleName, storeData:storeData, productData:productData });
+			res.render('admin/stock/transfer.ejs',{layout:'admin/layout/layout', pageTitle:pageTitle, detail:detail, moduleName:moduleName, storeData:storeData, productData:productData });
 		}
 		if (req.method === 'POST') {
 			const { productId, varientId, count, toStoreId, fromStoreId } = req.body;
@@ -215,29 +222,61 @@ module.exports = {
 					status: true, deletedAt: 0, productId: mongoose.mongo.ObjectId(productId), varientId: mongoose.mongo.ObjectId(varientId), storeId: mongoose.mongo.ObjectId(toStoreId),
 				});
 				const updatedStockFromStore = Stock.updateOne(
-					{ productId: mongoose.mongo.ObjectId(productId), storeId: mongoose.mongo.ObjectId(fromStoreId), varientId: mongoose.mongo.ObjectId(varientId), status: true, deletedAt: 0, },
+					{ productId: mongoose.mongo.ObjectId(productId), storeId: mongoose.mongo.ObjectId(fromStoreId), varientId: mongoose.mongo.ObjectId(varientId) },
 					{ count: parseInt(fromStoreData.count) - parseInt(count) });
 				const updatedStockToStore = Stock.updateOne(
-					{ productId: mongoose.mongo.ObjectId(productId), storeId: mongoose.mongo.ObjectId(toStoreId), varientId: mongoose.mongo.ObjectId(varientId), status: true, deletedAt: 0, },
+					{ productId: mongoose.mongo.ObjectId(productId), storeId: mongoose.mongo.ObjectId(toStoreId), varientId: mongoose.mongo.ObjectId(varientId) },
 					{ count: toStoreData ? (parseInt(toStoreData.count) + parseInt(count)) : parseInt(count) },
 					{ upsert: true },
 				);
-				const stockEntriesData = StockEntries.findOne({ productId: mongoose.mongo.ObjectId(productId), storeId: mongoose.mongo.ObjectId(fromStoreId), varientId: mongoose.mongo.ObjectId(varientId), status: true, deletedAt: 0, },)
+				const stockEntriesData = StockEntries.findOne({ productId: mongoose.mongo.ObjectId(productId), storeId: mongoose.mongo.ObjectId(fromStoreId), varientId: mongoose.mongo.ObjectId(varientId) },)
 
 				const [stockEntryData] = await Promise.all([stockEntriesData, updatedStockFromStore, updatedStockToStore]);
 				await StockEntries.insertMany([
 					{
-						productId: mongoose.mongo.ObjectId(productId), count: (parseInt(fromStoreData.count) - parseInt(count)), varientId: mongoose.mongo.ObjectId(varientId), costPrice: fromStoreData.costPrice, storeId:mongoose.mongo.ObjectId(fromStoreId), transactionType: 'out',
+						productId: mongoose.mongo.ObjectId(productId), count: parseInt(count), varientId: mongoose.mongo.ObjectId(varientId), costPrice: fromStoreData.costPrice, storeId:mongoose.mongo.ObjectId(fromStoreId), transactionType: 'out',
 					},
 					{
-						productId: mongoose.mongo.ObjectId(productId), count: (toStoreData ? (parseInt(toStoreData.count) + parseInt(count)) : parseInt(count) ), varientId: mongoose.mongo.ObjectId(varientId), costPrice: fromStoreData.costPrice, storeId:mongoose.mongo.ObjectId(toStoreId), transactionType: 'in',
+						productId: mongoose.mongo.ObjectId(productId), count: parseInt(count), varientId: mongoose.mongo.ObjectId(varientId), costPrice: fromStoreData.costPrice, storeId:mongoose.mongo.ObjectId(toStoreId), transactionType: 'in',
 					},
 				]);
-				req.flash('msg', {msg:'Stock transferred successfully', status:false});	
+				req.flash('msg', {msg:'Stock transferred successfully', status:true});	
 				res.redirect(config.constant.ADMINCALLURL+'/manage_stock');
 				req.flash({});
 			}
 
 		}
 	},
+
+	viewStock: async function(req,res){
+		if(req.method == "GET"){
+			let moduleName = 'Stock Management';
+			let pageTitle = 'Stock Transfer Details';
+			let productId = req.body.productId;
+			let varientId = req.body.varientId;
+			let storeId = req.body.storeId;
+			let stockData = await StockEntries.find({ productId: mongoose.mongo.ObjectId(productId), varientId: mongoose.mongo.ObjectId(varientId), storeId: mongoose.mongo.ObjectId(storeId), deletedAt: 0, status: true});
+			let storeData = await Store.find({ _id: mongoose.mongo.ObjectId(storeId)},{name: 1});
+			let varientData = await Varient.find({ _id: mongoose.mongo.ObjectId(varientId)},{label: 1,measurementUnit: 1});
+            let productData = await Product.aggregate([ 
+                {
+                    $match : {_id: mongoose.mongo.ObjectId(productId)}
+                },
+                {
+                    $addFields: {
+                        "thumbnailPath" : config.constant.PRODUCTTHUMBNAILSHOWPATH
+                    }
+                },
+                {
+                    $project: { 
+						name: 1,
+						image: 1,
+						thumbnailPath: 1
+                    }
+                }
+			]);
+			res.render('admin/stock/stockdetail',{layout:'admin/layout/layout', pageTitle:pageTitle, moduleName:moduleName, stockData:stockData, storeData:storeData, varientData:varientData, productData:productData, moment:moment} );
+		}else{
+		}
+	}
 }

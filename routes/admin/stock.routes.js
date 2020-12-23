@@ -8,5 +8,6 @@ module.exports = function(router) {
     router.all(config.constant.ADMINCALLURL+'/change_status_stock/:id',isloggedin, indexController.changeStatusStock); 
     router.all(config.constant.ADMINCALLURL+'/delete_stock/:id',isloggedin, indexController.deleteStock);  
     router.all(config.constant.ADMINCALLURL+'/transfer_stock',isloggedin, indexController.transferStock);  
+    router.all(config.constant.ADMINCALLURL+'/view_stock',isloggedin, indexController.viewStock); 
     
 }
