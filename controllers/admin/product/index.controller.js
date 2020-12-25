@@ -587,8 +587,8 @@ module.exports = {
 						else if(xlData[i]['Varient'] == '' || typeof xlData[i]['Varient'] == 'undefined'){
 							errordata.push(xlData[i]);
 						}
-						else if(xlData[i]['Price'] == '' || typeof xlData[i]['Price'] == 'undefined'){
-							errordata.push(xlData[i]);
+						else if(xlData[i]['Price'] == '' || typeof xlData[i]['Price'] == 'undefined' || !/^[0-9]+$/.test(xlData[i]['Tax'])){
+							errordata.push(xlData[i]['Price']);
 						} else {
 							successdata.push(xlData[i]);
 							function generateCode(){
