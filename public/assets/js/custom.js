@@ -1,10 +1,12 @@
 $('.select2').select2({
-	placeholder : "Select Option"
+	placeholder : "Select Option",
+	closeOnSelect : true
 });
 function initailizeSelect2(){
-  $('.select2').select2({
-	placeholder : "Select Option"
-  });
+	$('.select2').select2({
+		placeholder : "Select Option",
+		closeOnSelect : true
+	});
 }
 
 $(document).ready(function() {

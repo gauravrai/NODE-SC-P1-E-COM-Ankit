@@ -140,7 +140,6 @@ module.exports = {
 			let productData = {};
 			productData = {	
 				categoryId : mongoose.mongo.ObjectId(req.body.categoryId),
-				subcategoryId : mongoose.mongo.ObjectId(req.body.subcategoryId),
 				name : req.body.name,
 				offer : req.body.offer,
 				discount: req.body.discount,
@@ -150,6 +149,9 @@ module.exports = {
 				outOfStock : req.body.outOfStock == 'on' ? true : false,
 				tax : req.body.tax
 			};
+			if(req.body.subcategoryId) {
+				productData.subcategoryId = mongoose.mongo.ObjectId(req.body.subcategoryId);
+			}
 			if(req.body.brandId) {
 				productData.brandId = mongoose.mongo.ObjectId(req.body.brandId);
 			}
@@ -315,7 +317,6 @@ module.exports = {
 			let productData = {};
 			productData = {	
 				categoryId : mongoose.mongo.ObjectId(req.body.categoryId),
-				subcategoryId : mongoose.mongo.ObjectId(req.body.subcategoryId),
 				name : req.body.name,
 				offer : req.body.offer,
 				discount: req.body.discount,
@@ -325,6 +326,9 @@ module.exports = {
 				outOfStock : req.body.outOfStock == 'on' ? true : false,
 				tax : req.body.tax
 			};
+			if(req.body.subcategoryId) {
+				productData.subcategoryId = mongoose.mongo.ObjectId(req.body.subcategoryId);
+			}
 			if(req.body.brandId) {
 				productData.brandId = mongoose.mongo.ObjectId(req.body.brandId);
 			}
@@ -612,7 +616,6 @@ module.exports = {
 							}
 							let insertData = {
 								categoryId : mongoose.mongo.ObjectId(req.body.categoryId),
-								subcategoryId : mongoose.mongo.ObjectId(req.body.subcategoryId),
 								name : xlData[i]['Product Name'],
 								offer : xlData[i]['Offer applicable'],
 								discount: xlData[i]['Discount applicable'],
@@ -623,6 +626,9 @@ module.exports = {
 								tax : typeof xlData[i]['Tax'] != 'undefined' ? xlData[i]['Tax'] : 0,
 								image: image
 							};
+							if(req.body.subcategoryId) {
+								insertData.subcategoryId = mongoose.mongo.ObjectId(req.body.subcategoryId);
+							}
 							if(xlData[i]['Brand'] && typeof xlData[i]['Brand'] != 'undefined') {
 								let brandData = await Brand.findOne({name: xlData[i]['Brand']});
 								if(brandData){

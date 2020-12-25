@@ -663,9 +663,6 @@ $(document).ready(function () {
             categoryId: {
                 required: true,
             },
-            subcategoryId: {
-                required: true,
-            },
             name: {
                 required: true,
             },
@@ -681,13 +678,13 @@ $(document).ready(function () {
             description: {
                 required: true, 
             },
+            tax: {
+                required: true, 
+            },
         },
         messages: {
             categoryId: {
                 required: "Please select Category"
-            },
-            subcategoryId: {
-                required: "Please select Sub Category"
             },
             name: {
                 required: "Please enter a Product Name"
@@ -703,6 +700,9 @@ $(document).ready(function () {
             },
             description: {
                 required: "Please enter a Description"
+            },
+            tax: {
+                required: "Please enter Tax"
             }
         },
         errorElement: 'span',
@@ -1135,9 +1135,6 @@ $(document).ready(function () {
             categoryId: {
                 required: true,
             },
-            subcategoryId: {
-                required: true,
-            },
             uploadProduct: {
                 required: true,
             },
@@ -1145,9 +1142,6 @@ $(document).ready(function () {
         messages: {
             categoryId: {
                 required: "Please select Category"
-            },
-            subcategoryId: {
-                required: "Please select Sub Category"
             },
             uploadProduct: {
                 required: "Please upload file"

@@ -18,6 +18,15 @@ module.exports = {
             {
                 $match : {status:true, deletedAt: 0}
             },
+            { 
+                $lookup:
+                {
+                    from: 'sub_categories',
+                    localField: '_id',
+                    foreignField: 'categoryId',
+                    as: 'subcategoryData'
+                }
+            },
             {
                 $addFields: {
                     "thumbnailPath" : config.constant.CATEGORYTHUMBNAILSHOWPATH,
@@ -34,9 +43,6 @@ module.exports = {
                 }
             }
         ]).sort( { name : 1} );
-        // console.log(categoryData);
-        // console.log(stringify(categoryData));return false;
-        // var categoryData = {name:"chandan",email:"chandan@gmail.com"};
         if(categoryData.length>0) {
             return res.status(200).json({ data: categoryData, status: 'success', message: "Data fetched successfully!!",code:200 });
         } else {
