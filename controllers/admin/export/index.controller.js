@@ -26,6 +26,8 @@ const Order = model.order;
 const OrderDetail = model.order_detail;
 const Wallet = model.wallet;
 const Walletentry = model.wallet_entry;
+const Stock = model.stock;
+const Stockentry = model.stock_entries;
 
 module.exports = {
 	exportRole: async function(req,res){
@@ -1291,6 +1293,85 @@ module.exports = {
 		res.setHeader(
 		  "Content-Disposition",
 		  "attachment; filename=" + "Wallet Report.xlsx"
+		);
+		
+		return workbook.xlsx.write(res).then(function () {
+		  res.status(200).end();
+		})
+	},
+	
+	exportStock: async function(req,res){
+		let search = {deletedAt:0};
+		if (req.param('date_from') && req.param('date_to')) {
+			let today = new Date(req.param('date_to'));
+			let tomorrow = new Date(req.param('date_to'));
+			tomorrow.setDate(today.getDate() + 1);
+			tomorrow = tomorrow.toLocaleDateString();
+			search.updatedAt = { '$gte': new Date(req.param('date_from')), '$lte': new Date(tomorrow) }
+		}
+		let data = await Stock.find(search).sort({updatedAt: 1});
+		let stockData =[];
+		console.log(data.length);
+		for(i=0;i<data.length;i++){
+			console.log(data[i]);
+			let arr = {};
+			let creditSearch = {storeId: mongoose.mongo.ObjectId(data[i].storeId), productId: mongoose.mongo.ObjectId(data[i].productId), varientId: mongoose.mongo.ObjectId(data[i].varientId), transactionType: 'in'};
+			let debitSearch = {storeId: mongoose.mongo.ObjectId(data[i].storeId), productId: mongoose.mongo.ObjectId(data[i].productId), varientId: mongoose.mongo.ObjectId(data[i].varientId), transactionType: 'out'};
+			if (req.param('date_from') && req.param('date_to')) {
+				let today = new Date(req.param('date_to'));
+				let tomorrow = new Date(req.param('date_to'));
+				tomorrow.setDate(today.getDate() + 1);
+				tomorrow = tomorrow.toLocaleDateString();
+				creditSearch.createdAt = { '$gte': new Date(req.param('date_from')), '$lte': new Date(tomorrow) };
+				debitSearch.createdAt = { '$gte': new Date(req.param('date_from')), '$lte': new Date(tomorrow) };
+			}
+			await config.helpers.store.getNameById(data[i].storeId, async function (storeName) {
+				let store = storeName ? storeName.name : 'N/A';
+				arr.store = store;
+			})
+			await config.helpers.product.getNameById(data[i].productId, async function (productName) {
+				let product = productName ? productName.name : 'N/A';
+				arr.product = product;
+			})
+			await config.helpers.varient.getNameById(data[i].varientId, async function (varientName) {
+				let varient = varientName ? varientName.label+' '+varientName.measurementUnit: 'N/A';
+				arr.varient = varient;
+			})
+			arr.costPrice = data[i].costPrice;
+			arr.totalCount = data[i].count;
+			let creditCount = await Stockentry.countDocuments(creditSearch);
+			let debitCount = await Stockentry.countDocuments(debitSearch);
+			arr.creditCount = creditCount;
+			arr.debitCount = debitCount;
+			arr.status = data[i].status == true ? 'Active' : 'Inactive';
+			arr.createdAt = moment(data[i].createdAt).format('DD-MM-YYYY');
+			arr.updatedAt = moment(data[i].updatedAt).format('DD-MM-YYYY');
+			stockData.push(arr);
+		}
+		let workbook = new excel.Workbook();
+		let worksheet = workbook.addWorksheet("Stock Report");
+		
+		worksheet.columns = [
+			{ header: "Store", key: "store", width: 25 },
+			{ header: "Product", key: "product", width: 25 },
+			{ header: "Varient", key: "varient", width: 25 },
+			{ header: "Cost Price", key: "costPrice", width: 25 },
+			{ header: "Total Available Quantity", key: "totalCount", width: 25 },
+			{ header: "Credit Count", key: "creditCount", width: 25 },
+			{ header: "Debit Count", key: "debitCount", width: 25 },
+			{ header: "Status", key: "status", width: 10 },
+			{ header: "Created Date", key: "createdAt", width: 20 },
+			{ header: "Updated Date", key: "updatedAt", width: 20 }
+		];
+		worksheet.addRows(stockData);
+		
+		res.setHeader(
+		  "Content-Type",
+		  "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
+		);
+		res.setHeader(
+		  "Content-Disposition",
+		  "attachment; filename=" + "Stock Report.xlsx"
 		);
 		
 		return workbook.xlsx.write(res).then(function () {
