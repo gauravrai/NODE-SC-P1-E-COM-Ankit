@@ -1311,7 +1311,6 @@ module.exports = {
 		}
 		let data = await Stock.find(search).sort({updatedAt: 1});
 		let stockData =[];
-		console.log(data.length);
 		for(i=0;i<data.length;i++){
 			console.log(data[i]);
 			let arr = {};
@@ -1372,6 +1371,91 @@ module.exports = {
 		res.setHeader(
 		  "Content-Disposition",
 		  "attachment; filename=" + "Stock Report.xlsx"
+		);
+		
+		return workbook.xlsx.write(res).then(function () {
+		  res.status(200).end();
+		})
+	},
+	
+	exportStockDetails: async function(req,res){
+		let productId = req.param('productId');
+		let varientId = req.param('varientId');
+		let storeId = req.param('storeId');
+		let stockDetailData = await Stockentry.aggregate([
+			{
+				$match: { productId: mongoose.mongo.ObjectId(productId), varientId: mongoose.mongo.ObjectId(varientId), storeId: mongoose.mongo.ObjectId(storeId), deletedAt: 0, status: true}
+			},
+			{
+				$lookup: {
+					from: "products",
+					localField: "productId",
+					foreignField: "_id",
+					as: "productData"
+				}
+			},
+			{
+				$lookup: {
+					from: "varients",
+					localField: "varientId",
+					foreignField: "_id",
+					as: "varientData"
+				}
+			},
+			{
+				$lookup: {
+					from: "stocks",
+					localField: "stockId",
+					foreignField: "_id",
+					as: "stockData"
+				}
+			},
+			{
+				$project: {
+					_id: 0,
+					store: { $arrayElemAt: ['$storeData.name', 0] } ,
+					product: { $arrayElemAt: ['$productData.name', 0] } ,
+					varient: { $arrayElemAt: ['$varientData.label', 0] } ,
+					costPrice: 1,
+					count: 1,
+					transactionType: 1,
+					status:
+					{
+						$cond: { if: true, then: 'Active', else: 'Inactive' }
+					},
+					createdAt: {
+						$dateToString: { format: "%Y-%m-%d", date: "$createdAt" }
+					},
+				}
+			},
+			{
+				$sort: {
+					createdAt: 1
+				}
+			}
+		]);
+		let workbook = new excel.Workbook();
+		let worksheet = workbook.addWorksheet("Stock Detail Report");
+		
+		worksheet.columns = [
+			{ header: "Store", key: "store", width: 25 },
+			{ header: "Product", key: "product", width: 25 },
+			{ header: "Varient", key: "varient", width: 25 },
+			{ header: "Cost Price", key: "costPrice", width: 25 },
+			{ header: "Quantity", key: "count", width: 25 },
+			{ header: "Transaction Type", key: "transactionType", width: 25 },
+			{ header: "Status", key: "status", width: 10 },
+			{ header: "Created Date", key: "createdAt", width: 20 }
+		];
+		worksheet.addRows(stockDetailData);
+		
+		res.setHeader(
+		  "Content-Type",
+		  "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
+		);
+		res.setHeader(
+		  "Content-Disposition",
+		  "attachment; filename=" + "Stock Detail Report.xlsx"
 		);
 		
 		return workbook.xlsx.write(res).then(function () {

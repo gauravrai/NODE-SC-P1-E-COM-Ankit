@@ -260,8 +260,8 @@ module.exports = {
 			let varientId = req.body.varientId;
 			let storeId = req.body.storeId;
 			let stockData = await StockEntries.find({ productId: mongoose.mongo.ObjectId(productId), varientId: mongoose.mongo.ObjectId(varientId), storeId: mongoose.mongo.ObjectId(storeId), deletedAt: 0, status: true});
-			let storeData = await Store.find({ _id: mongoose.mongo.ObjectId(storeId)},{name: 1});
-			let varientData = await Varient.find({ _id: mongoose.mongo.ObjectId(varientId)},{label: 1,measurementUnit: 1});
+			let storeData = await Store.findOne({ _id: mongoose.mongo.ObjectId(storeId)},{name: 1});
+			let varientData = await Varient.findOne({ _id: mongoose.mongo.ObjectId(varientId)},{label: 1,measurementUnit: 1});
             let productData = await Product.aggregate([ 
                 {
                     $match : {_id: mongoose.mongo.ObjectId(productId)}

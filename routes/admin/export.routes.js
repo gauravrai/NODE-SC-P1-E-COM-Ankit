@@ -21,4 +21,5 @@ module.exports = function(router) {
     router.all(config.constant.ADMINCALLURL+'/export_order',isloggedin, indexController.exportOrder);
     router.all(config.constant.ADMINCALLURL+'/export_wallet',isloggedin, indexController.exportWallet);
     router.all(config.constant.ADMINCALLURL+'/export_stock',isloggedin, indexController.exportStock);
+    router.all(config.constant.ADMINCALLURL+'/export_stock_details',isloggedin, indexController.exportStockDetails);
 }

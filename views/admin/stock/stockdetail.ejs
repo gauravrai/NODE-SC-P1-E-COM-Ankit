@@ -22,14 +22,15 @@
               <div class="card-header d-flex p-0">
                 <h3 class="card-title p-3">Wallet Information</h3>
                 <ul class="nav nav-pills ml-auto p-2">
+                  <li class="nav-item"><a class="btn btn-block btn-danger" href="<%=APPCONSTANT.ADMINCALLURL%>/export_stock_details?productId=<%=productData[0]._id%>&varientId=<%=varientData.id%>&storeId=<%=storeData.id%>" target="_blank">Export</a></li>&nbsp;&nbsp;
                   <li class="nav-item"><a class="btn btn-block btn-secondary" href="/admin/manage_stock">Back</a></li>
                 </ul>
               </div>
               <div class="card-body">
                 <div class="card card-widget widget-user">
                   <div class="widget-user-header bg-info">
-                    <h3 class="widget-user-username"><%=storeData[0].name%></h3>
-                    <h5 class="widget-user-desc"><%=productData[0].name%> - <%=varientData[0].label+' '+varientData[0].measurementUnit%></h5>
+                    <h3 class="widget-user-username"><%=storeData.name%></h3>
+                    <h5 class="widget-user-desc"><%=productData[0].name%> - <%=varientData.label+' '+varientData.measurementUnit%></h5>
                   </div>
                   <div class="widget-user-image">
                     <img class="img-circle elevation-2" src="<%=productData[0].thumbnailPath%><%=productData[0].image.thumbnail[0]%>" alt="User Avatar">

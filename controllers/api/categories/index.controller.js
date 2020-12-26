@@ -39,11 +39,19 @@ module.exports = {
                     __v:0,
                     createdAt:0,
                     updatedAt:0
-                    // reportedBy: { $arrayElemAt: ['$inventory', 0] } ,
                 }
             }
         ]).sort( { name : 1} );
         if(categoryData.length>0) {
+            let data = [];
+            for (let i = 0; i < categoryData.length; i++) {
+                data[i] = categoryData[i];
+                if(categoryData[i].subcategoryData.length > 0) {
+                    data[i].subcategoryData = true;
+                }else {
+                    data[i].subcategoryData = false;
+                }
+            }
             return res.status(200).json({ data: categoryData, status: 'success', message: "Data fetched successfully!!",code:200 });
         } else {
             return res.status(200).json({ data: categoryData, status: 'success', message: "Data No Found!!",code:200 });
