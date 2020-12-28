@@ -15,6 +15,7 @@ const whitelist = [
   // prod env
   // prod env
   "http://www.localbaniyaa.com:3001",
+  
   "http://www.localbaniyaa.com:3001/admin",
   "http://www.localbaniyaa.com",
   "https://www.localbaniyaa.com",
