@@ -676,6 +676,7 @@ module.exports = {
 								}
 								inventory.push(store);
 							}
+							insertData.price = xlData[i]['Price'];
 							insertData.inventory = inventory;
 							let product = new Product(insertData);
 							product.save();

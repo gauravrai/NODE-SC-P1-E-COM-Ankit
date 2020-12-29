@@ -21,7 +21,8 @@ const corsConfig = require('./config/corsConfig');
 
 //database connectivity
 //var mongoDB = 'mongodb://localhost:27017/'+process.env.DATABASE;
-var mongoDB = 'mongodb+srv://localbuniya:localbuniya@123@cluster0.2oftf.mongodb.net/test';
+// var mongoDB = 'mongodb+srv://localbuniya:localbuniya@123@cluster0.2oftf.mongodb.net/test';
+var mongoDB = process.env.MONGOURI;
 mongoose.connect(mongoDB, {
   useCreateIndex: true,
   useNewUrlParser: true,
