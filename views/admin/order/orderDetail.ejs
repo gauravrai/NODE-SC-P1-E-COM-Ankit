@@ -83,11 +83,11 @@
                       <td><input value="<%= orderDetailData[i]._id %>" class="all_check orderDetailId" type="checkbox" data-productid="<%= orderDetailData[i].productId; %>" data-varientid="<%= orderDetailData[i].varientId; %>" data-quantity="<%= orderDetailData[i].quantity; %>" /></td>
                       <td><%= orderDetailData[i].productData[0].name; %></td>
                       <td><%= orderDetailData[i].varientData[0].label %> <%=orderDetailData[i].varientData[0].measurementUnit %></td>
-                      <td><%= orderDetailData[i].price; %> INR</td>
-                      <td><%= orderDetailData[i].tax; %> %</td>
-                      <td><%= orderDetailData[i].cgst; %> INR</td>
-                      <td><%= orderDetailData[i].sgst; %> INR</td>
-                      <td><%= orderDetailData[i].igst; %> INR</td>
+                      <td><%= orderDetailData[i].price ? orderDetailData[i].price : 0; %> INR</td>
+                      <td><%= orderDetailData[i].tax ? orderDetailData[i].tax : 0; %> %</td>
+                      <td><%= orderDetailData[i].cgst ? orderDetailData[i].cgst : 0; %> INR</td>
+                      <td><%= orderDetailData[i].sgst ? orderDetailData[i].sgst : 0; %> INR</td>
+                      <td><%= orderDetailData[i].igst ? orderDetailData[i].igst : 0; %> INR</td>
                       <td><%= orderDetailData[i].quantity; %> </td>
                       <td><%= ( ( orderDetailData[i].price*orderDetailData[i].quantity ) + orderDetailData[i].cgst + orderDetailData[i].sgst + orderDetailData[i].igst).toFixed(2); %></td>
                     </tr>

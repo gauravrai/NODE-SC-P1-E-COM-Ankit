@@ -134,11 +134,13 @@ module.exports = {
 					offerProductId : req.body.offerProductId,
 					offerVarient : req.body.offerVarient,
 					freeCategoryId : mongoose.mongo.ObjectId(req.body.freeCategoryId),
-					freeSubcategoryId : mongoose.mongo.ObjectId(req.body.freeSubcategoryId),
 					freeProductId : mongoose.mongo.ObjectId(req.body.freeProductId),
 					freeVarientId : mongoose.mongo.ObjectId(req.body.freeVarientId),
 					bannerImage : bannerImage
 				};
+				if(req.body.freeSubcategoryId){
+					offerData.freeSubcategoryId = mongoose.mongo.ObjectId(req.body.freeSubcategoryId);
+				}
 				let offer = new Offer(offerData);
 				offer.save(function(err, data){
 					if(err){console.log(err)}

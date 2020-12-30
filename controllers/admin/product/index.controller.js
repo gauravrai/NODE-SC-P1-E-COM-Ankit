@@ -557,7 +557,7 @@ module.exports = {
 					res.redirect(config.constant.ADMINCALLURL+'/bulk_upload_product');
 				}
 				else if (headers[0] != 'Product Name' || headers[1] != 'Brand' || headers[2] != 'Offer applicable' || headers[3] != 'Discount applicable' || headers[4] != 'Tax' || headers[5] != 'Featured Product' || headers[6] != 'Out Of Stock' || headers[7] != 'Description' || headers[8] != 'Varient' || headers[9] != 'Price') {
-					req.flash('msg', {msg:'Wrong CSV File.',status:false});						
+					req.flash('msg', {msg:'Wrong XSLS File.',status:false});						
 					res.redirect(config.constant.ADMINCALLURL+'/bulk_upload_product');
 				}
 				else {
