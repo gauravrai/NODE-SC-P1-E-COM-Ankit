@@ -17,8 +17,10 @@ module.exports = {
     manageOffer: async function(req,res){
 		let moduleName = 'Offer Management';
 		let pageTitle = 'Manage Offer';
+		var detail = {};	
+		detail = {message:req.flash('msg')};
 		await config.helpers.permission('manage_offer', req, (err,permissionData)=>{
-			res.render('admin/offer/view.ejs',{layout:'admin/layout/layout', pageTitle:pageTitle, moduleName:moduleName, permissionData:permissionData});
+			res.render('admin/offer/view.ejs',{layout:'admin/layout/layout', pageTitle:pageTitle, moduleName:moduleName, detail:detail, permissionData:permissionData});
 		});
 	},
 	
@@ -144,7 +146,7 @@ module.exports = {
 				let offer = new Offer(offerData);
 				offer.save(function(err, data){
 					if(err){console.log(err)}
-					req.flash('msg', {msg:'Offer has been Created Successfully', status:false});	
+					req.flash('msg', {msg:'Offer has been Created Successfully', status:true});	
 					res.redirect(config.constant.ADMINCALLURL+'/manage_offer');
 					req.flash({});	
 				})
@@ -213,7 +215,7 @@ module.exports = {
 				{ _id: mongoose.mongo.ObjectId(req.body.id) },
 				offerData, function(err,data){
 					if(err){console.log(err)}
-					req.flash('msg', {msg:'Offer has been Updated Successfully', status:false});	
+					req.flash('msg', {msg:'Offer has been Updated Successfully', status:true});	
 					res.redirect(config.constant.ADMINCALLURL+'/manage_offer');
 					req.flash({});	
 			})

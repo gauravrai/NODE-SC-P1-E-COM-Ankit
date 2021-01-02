@@ -12,8 +12,10 @@ module.exports = {
 	manageBrand: async function(req,res){
 		let moduleName = 'Brand Management';
 		let pageTitle = 'Manage Brand';
+		var detail = {};	
+		detail = {message:req.flash('msg')};
 		await config.helpers.permission('manage_brand', req, (err,permissionData)=>{
-			res.render('admin/brand/view.ejs',{layout:'admin/layout/layout', pageTitle:pageTitle,moduleName:moduleName,permissionData:permissionData});
+			res.render('admin/brand/view.ejs',{layout:'admin/layout/layout', pageTitle:pageTitle, moduleName:moduleName, detail:detail, permissionData:permissionData});
 		});
     },
 
@@ -88,7 +90,7 @@ module.exports = {
 			let brand = new Brand(brandData);
 			brand.save(function(err, data){
 				if(err){console.log(err)}
-				req.flash('msg', {msg:'Brand has been Created Successfully', status:false});	
+				req.flash('msg', {msg:'Brand has been Created Successfully', status:true});	
 				res.redirect(config.constant.ADMINCALLURL+'/manage_brand');
 				req.flash({});	
 			})
@@ -111,7 +113,7 @@ module.exports = {
 				{ _id: mongoose.mongo.ObjectId(req.body.id) },
 				brandData, function(err,data){
 					if(err){console.log(err)}
-					req.flash('msg', {msg:'Brand has been Updated Successfully', status:false});	
+					req.flash('msg', {msg:'Brand has been Updated Successfully', status:true});	
 					res.redirect(config.constant.ADMINCALLURL+'/manage_brand');
 					req.flash({});	
 			})

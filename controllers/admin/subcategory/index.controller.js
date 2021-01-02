@@ -15,8 +15,10 @@ module.exports = {
     manageSubCategory: async function(req,res){
 		let moduleName = 'Sub Category Management';
 		let pageTitle = 'Manage Sub Category';
+		var detail = {};	
+		detail = {message:req.flash('msg')};
 		await config.helpers.permission('manage_subcategory', req, (err,permissionData)=>{
-			res.render('admin/subcategory/view.ejs',{layout:'admin/layout/layout', pageTitle:pageTitle,moduleName:moduleName,permissionData:permissionData});
+			res.render('admin/subcategory/view.ejs',{layout:'admin/layout/layout', pageTitle:pageTitle,moduleName:moduleName, detail:detail, permissionData:permissionData});
 		});
 	},
 	
@@ -149,7 +151,7 @@ module.exports = {
 						let subcategory = new SubCategory(subcategoryData);
 						subcategory.save(function(err, data){
 							if(err){console.log(err)}
-							req.flash('msg', {msg:'Sub Category has been Created Successfully', status:false});	
+							req.flash('msg', {msg:'Sub Category has been Created Successfully', status:true});	
 							res.redirect(config.constant.ADMINCALLURL+'/manage_subcategory');
 							req.flash({});	
 						})
@@ -258,7 +260,7 @@ module.exports = {
 				{ _id: mongoose.mongo.ObjectId(req.body.id) },
 				subcategoryData, function(err,data){
 					if(err){console.log(err)}
-					req.flash('msg', {msg:'Sub Category has been Updated Successfully', status:false});	
+					req.flash('msg', {msg:'Sub Category has been Updated Successfully', status:true});	
 					res.redirect(config.constant.ADMINCALLURL+'/manage_subcategory');
 					req.flash({});	
 			})

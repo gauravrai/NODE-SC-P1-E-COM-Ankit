@@ -19,8 +19,10 @@ module.exports = {
     manageProductRequest: async function(req,res){
 		let moduleName = 'Requested Product Management';
 		let pageTitle = 'Manage Requested Product';
+		var detail = {};	
+		detail = {message:req.flash('msg')};
 		await config.helpers.permission('manage_product', req, (err,permissionData)=>{
-			res.render('admin/productrequest/view.ejs',{layout:'admin/layout/layout', pageTitle:pageTitle, moduleName:moduleName, permissionData:permissionData});
+			res.render('admin/productrequest/view.ejs',{layout:'admin/layout/layout', pageTitle:pageTitle, moduleName:moduleName, detail:detail, permissionData:permissionData});
 		});
 	},
 	

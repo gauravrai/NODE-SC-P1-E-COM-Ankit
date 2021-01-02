@@ -13,8 +13,10 @@ module.exports = {
     manageDiscount: async function(req,res){
 		let moduleName = 'Discount & Coupon Management';
 		let pageTitle = 'Manage Discount & Coupon';
+		var detail = {};	
+		detail = {message:req.flash('msg')};
 		await config.helpers.permission('manage_discount', req, (err,permissionData)=>{
-			res.render('admin/discount/view.ejs',{layout:'admin/layout/layout', pageTitle:pageTitle, moduleName:moduleName, permissionData:permissionData});
+			res.render('admin/discount/view.ejs',{layout:'admin/layout/layout', pageTitle:pageTitle, moduleName:moduleName, detail:detail, permissionData:permissionData});
 		});
 	},
 
@@ -111,7 +113,7 @@ module.exports = {
 			let discountobj = new Discount(discountData);
 			discountobj.save(function(err, data){
 				if(err){console.log(err)}
-				req.flash('msg', {msg:'Discount has been Created Successfully', status:false});	
+				req.flash('msg', {msg:'Discount has been Created Successfully', status:true});	
 				res.redirect(config.constant.ADMINCALLURL+'/manage_discount');
 				req.flash({});	
 			})
@@ -145,7 +147,7 @@ module.exports = {
 				{ _id: mongoose.mongo.ObjectId(req.body.id) },
 				discountData, function(err,data){
 					if(err){console.log(err)}
-					req.flash('msg', {msg:'Discount has been Updated Successfully', status:false});	
+					req.flash('msg', {msg:'Discount has been Updated Successfully', status:true});	
 					res.redirect(config.constant.ADMINCALLURL+'/manage_discount');
 					req.flash({});	
 			})

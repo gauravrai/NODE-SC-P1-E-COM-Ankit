@@ -14,8 +14,10 @@ module.exports = {
 	manageAdministrator: async function(req,res){
 		let moduleName = 'Role Management';
 		let pageTitle = 'Manage Administrator';
+		var detail = {};	
+		detail = {message:req.flash('msg')};
 		await config.helpers.permission('manage_administrator', req, (err,permissionData)=>{
-			res.render('admin/administrator/view.ejs',{layout:'admin/layout/layout', pageTitle:pageTitle, moduleName:moduleName, permissionData:permissionData});
+			res.render('admin/administrator/view.ejs',{layout:'admin/layout/layout', pageTitle:pageTitle, moduleName:moduleName, detail:detail, permissionData:permissionData});
 		});
 	},
 
@@ -107,7 +109,7 @@ module.exports = {
 			let admin = new Admin(adminData);
 			admin.save(function(err, data){
 				if(err){console.log(err)}
-				req.flash('msg', {msg:'Administrator has been Created Successfully', status:false});	
+				req.flash('msg', {msg:'Administrator has been Created Successfully', status:true});	
 				res.redirect(config.constant.ADMINCALLURL+'/manage_administrator');
 				req.flash({});	
 			})
@@ -139,7 +141,7 @@ module.exports = {
 				{ _id: mongoose.mongo.ObjectId(req.body.id) },
 				administratorData, function(err,data){
 					if(err){console.log(err)}
-					req.flash('msg', {msg:'Administrator has been Updated Successfully', status:false});	
+					req.flash('msg', {msg:'Administrator has been Updated Successfully', status:true});	
 					res.redirect(config.constant.ADMINCALLURL+'/manage_administrator');
 					req.flash({});	
 			})

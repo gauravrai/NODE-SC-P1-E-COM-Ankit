@@ -15,12 +15,14 @@ module.exports = {
 	manageWallet: async function(req,res){
 		let moduleName = 'Wallet Management';
 		let pageTitle = 'Manage Wallet';
+		var detail = {};	
+		detail = {message:req.flash('msg')};
 		await config.helpers.permission('manage_wallet', req, async (err,permissionData)=>{
 			await config.helpers.filter.walletFilter(req, async function (filterData) {
 				if (filterData != "" && req.method == 'POST') {
 					return res.redirect('manage_wallet' + filterData);
 				}
-				res.render('admin/wallet/view',{layout:'admin/layout/layout', pageTitle:pageTitle, moduleName:moduleName,permissionData:permissionData, req: req, filterData:filterData });
+				res.render('admin/wallet/view',{layout:'admin/layout/layout', pageTitle:pageTitle, moduleName:moduleName, detail:detail, permissionData:permissionData, req: req, filterData:filterData });
 			});
 		});
     },
@@ -141,7 +143,7 @@ module.exports = {
 					walletData, async function(err,data){
 						if(err){console.log(err)}
 						await config.helpers.sms.sendSMS(userData, slug, message, async function (smsData) {
-							req.flash('msg', {msg:'Wallet has been Updated Successfully', status:false});	
+							req.flash('msg', {msg:'Wallet has been Updated Successfully', status:true});	
 							res.redirect(config.constant.ADMINCALLURL+'/manage_wallet');
 							req.flash({});	
 						});
@@ -160,7 +162,7 @@ module.exports = {
 					wallet.save(async function(err, data){
 						if(err){console.log(err)}
 						await config.helpers.sms.sendSMS(userData, slug, message, async function (smsData) {
-							req.flash('msg', {msg:'Wallet has been Added Successfully', status:false});	
+							req.flash('msg', {msg:'Wallet has been Added Successfully', status:true});	
 							res.redirect(config.constant.ADMINCALLURL+'/manage_wallet');
 							req.flash({});	
 						});

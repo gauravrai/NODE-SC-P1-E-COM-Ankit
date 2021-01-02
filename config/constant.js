@@ -13,7 +13,7 @@ module.exports = {
 	APIURL:'/api/v1',
 	TIMEZONE:process.env.TIMEZONE,
 	FORMATETIME:'DD-MM-YYYY hh:mm A',
-	COMPANYLOGO:SITEURL+"assets/media/logo/logo.jpg", 
+	COMPANYLOGO:SITEURL+"assets/media/logo/logo.png", 
 	JWT_SECRET :"local_BnaiyaSecret",
 	  
 	PAGENO: 1,	  
@@ -46,7 +46,7 @@ module.exports = {
 
 	INVOICEPATH: './public/uploads/invoice/',		
 
-	SAMPLECSV: basic_path+'public/uploads/samplecsv/',	
+	SAMPLECSV: basic_path+'/public/uploads/samplecsv/',	
 	PRODUCTCSVUPLOADPATH: './public/uploads/productcsv/',	
 	PRODUCTCSVPATH: basic_path+'/public/uploads/productcsv/',	
 

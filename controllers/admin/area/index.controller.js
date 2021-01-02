@@ -16,11 +16,13 @@ module.exports = {
 	manageArea: async function(req,res){
 		let moduleName = 'Location Management';
 		let pageTitle = 'Manage Area';
+		var detail = {};	
+		detail = {message:req.flash('msg')};
 		let stateData = await State.find({status: true, deletedAt: 0});	
 		let cityData = await City.find({status: true, deletedAt: 0});	
 		let pincodeData = await Pincode.find({status: true, deletedAt: 0});	
 		await config.helpers.permission('manage_area', req, (err,permissionData)=>{
-			res.render('admin/area/view.ejs',{layout:'admin/layout/layout', pageTitle:pageTitle, moduleName:moduleName, permissionData:permissionData, stateData:stateData, cityData:cityData, pincodeData:pincodeData });
+			res.render('admin/area/view.ejs',{layout:'admin/layout/layout', pageTitle:pageTitle, moduleName:moduleName, detail:detail, permissionData:permissionData, stateData:stateData, cityData:cityData, pincodeData:pincodeData });
 		});
 	},
 
@@ -108,7 +110,7 @@ module.exports = {
 			let area = new Area(areaData);
 			area.save(function(err, data){
 				if(err){console.log(err)}
-				req.flash('msg', {msg:'Area has been Created Successfully', status:false});	
+				req.flash('msg', {msg:'Area has been Created Successfully', status:true});	
 				res.redirect(config.constant.ADMINCALLURL+'/manage_area');
 				req.flash({});	
 			})
@@ -137,7 +139,7 @@ module.exports = {
 				{ _id: mongoose.mongo.ObjectId(req.body.id) },
 				areaData, function(err,data){
 					if(err){console.log(err)}
-					req.flash('msg', {msg:'Area has been Updated Successfully', status:false});	
+					req.flash('msg', {msg:'Area has been Updated Successfully', status:true});	
 					res.redirect(config.constant.ADMINCALLURL+'/manage_area');
 					req.flash({});	
 			})

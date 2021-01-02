@@ -4,6 +4,7 @@ const mongoose = require('mongoose');
 const Product     = model.product;
 const Wishlist     = model.wishlist;
 const Requestproduct = model.request_product;
+const Emailtemplate = model.email_template;
 const { validationResult } = require('express-validator');
 module.exports = {
 	
@@ -343,21 +344,29 @@ module.exports = {
         }
         try{
             let userRequestData = {
-                userId : req.body.userId,
-                productId : req.body.productId,
+                productId : mongoose.mongo.ObjectId(req.body.productId),
 				name : req.body.name,
 				email : req.body.email,
 				mobile : req.body.mobile,
 				address : req.body.address,
 				pincode : req.body.pincode,
 				description : req.body.description,
-			};
+            };
+            if(req.body.userId){
+                userRequestData.userId = mongoose.mongo.ObjectId(req.body.userId);
+            }
 			let requestproduct = new Requestproduct(userRequestData);
-			requestproduct.save(function(err, data){
-				return res.status(200).json({ 
-                    data: userRequestData, 
-                    status: 'success', 
-                    message: "Request for product send successfully!!" 
+			requestproduct.save(async function(err, data){
+                let emailData = await Emailtemplate.findOne({slug: 'REQUEST-PRODUCT'});
+                let subject = emailData.subject;
+                let message = emailData.message;
+                message = message.replace('[NAME]', req.body.name);
+                await config.helpers.email.sendEmail(req.body.email, subject, message, async function (emailData) {
+                    return res.status(200).json({ 
+                        data: userRequestData, 
+                        status: 'success', 
+                        message: "Request for product send successfully!!" 
+                    });	
                 });	
 			})
         }

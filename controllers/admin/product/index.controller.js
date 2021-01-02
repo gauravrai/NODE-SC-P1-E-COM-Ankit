@@ -24,8 +24,10 @@ module.exports = {
     manageProduct: async function(req,res){
 		let moduleName = 'Product Management';
 		let pageTitle = 'Manage Product';
+		var detail = {};	
+		detail = {message:req.flash('msg')};
 		await config.helpers.permission('manage_product', req, (err,permissionData)=>{
-			res.render('admin/product/view.ejs',{layout:'admin/layout/layout', pageTitle:pageTitle, moduleName:moduleName, permissionData:permissionData});
+			res.render('admin/product/view.ejs',{layout:'admin/layout/layout', pageTitle:pageTitle, moduleName:moduleName, detail:detail, permissionData:permissionData});
 		});
 	},
 	
@@ -288,7 +290,7 @@ module.exports = {
 						let product = new Product(productData);
 						product.save(function(err, data){
 							if(err){console.log(err)}
-							req.flash('msg', {msg:'Product has been Created Successfully', status:false});	
+							req.flash('msg', {msg:'Product has been Created Successfully', status:true});	
 							res.redirect(config.constant.ADMINCALLURL+'/manage_product');
 							req.flash({});	
 						})
@@ -480,7 +482,7 @@ module.exports = {
 				{ _id: mongoose.mongo.ObjectId(req.body.id) },
 				productData, function(err,data){
 					if(err){console.log(err)}
-					req.flash('msg', {msg:'Product has been Updated Successfully', status:false});	
+					req.flash('msg', {msg:'Product has been Updated Successfully', status:true});	
 					res.redirect(config.constant.ADMINCALLURL+'/manage_product');
 					req.flash({});	
 			})
@@ -632,14 +634,15 @@ module.exports = {
 							if(xlData[i]['Brand'] && typeof xlData[i]['Brand'] != 'undefined') {
 								let brandData = await Brand.findOne({name: xlData[i]['Brand']});
 								if(brandData){
+									var brandId = brandData.id;
 									insertData.brandId = mongoose.mongo.ObjectId(brandData.id);
 								}
 							}
 							
 							let inventory = [];
-							for (let i = 0; i < storeData.length; i++) {
+							for (let j = 0; j < storeData.length; j++) {
 								let store = [];
-								if(i == 0){
+								if(j == 0){
 									let varientData = await Varient.aggregate([
 										{
 											$match: {status:true, deletedAt: 0},
@@ -649,16 +652,16 @@ module.exports = {
 										}
 									]);
 									function search(nameKey, myArray){
-										for (var i=0; i < myArray.length; i++) {
-											if (myArray[i].varientName === nameKey) {
-												return myArray[i]._id;
+										for (let k=0; k < myArray.length; k++) {
+											if (myArray[k].varientName === nameKey) {
+												return myArray[k]._id;
 											}
 										}
 									}
 									let varientId = search(xlData[i]['Varient'], varientData);
 									let storeFieldObj = {
 										varientId: mongoose.mongo.ObjectID(varientId),
-										storeId: mongoose.mongo.ObjectID(storeData[i].id),
+										storeId: mongoose.mongo.ObjectID(storeData[j].id),
 										varient : xlData[i]['Varient'],
 										price : xlData[i]['Price'],
 										default : true
@@ -667,7 +670,7 @@ module.exports = {
 								}else{
 									let storeFieldObj = {
 										varientId: '',
-										storeId: mongoose.mongo.ObjectID(storeData[i].id),
+										storeId: mongoose.mongo.ObjectID(storeData[j].id),
 										varient : '',
 										price : '',
 										default : false
@@ -678,13 +681,34 @@ module.exports = {
 							}
 							insertData.price = xlData[i]['Price'];
 							insertData.inventory = inventory;
-							let product = new Product(insertData);
-							product.save();
+							let condition = '';
+							if(xlData[i]['Brand'] && typeof xlData[i]['Brand'] != 'undefined') {
+								if(brandId){
+									condition = {name: xlData[i]['Product Name'], brandId: mongoose.mongo.ObjectId(brandId)};
+								}
+							}
+							if(condition != ''){
+								var existsProductData = await Product.findOne(condition);
+							}
+							if(existsProductData){
+								let previousInventory = existsProductData.inventory;
+								insertData.inventory[0][0].default = false;
+								previousInventory[0].push(insertData.inventory[0][0]);
+								insertData.inventory = previousInventory;
+								await Product.updateOne({ _id: mongoose.mongo.ObjectId(existsProductData.id) }, insertData);
+							}else{
+								let product = new Product(insertData);
+								product.save();
+							}
 						}
 					}
 					let moduleName = 'Product Management';
 					let pageTitle = 'Bulk Upload Product';
-					res.render('admin/product/productlist.ejs',{layout:'admin/layout/layout', pageTitle:pageTitle, moduleName:moduleName, successdata:successdata, errordata:errordata});
+					let detail = {};
+					detail = {message:req.flash('msg')};
+					req.flash('msg', {msg:'Product has been Uploaded Successfully', status:true});	
+					res.render('admin/product/productlist.ejs',{layout:'admin/layout/layout', pageTitle:pageTitle, moduleName:moduleName, detail:detail, successdata:successdata, errordata:errordata});
+					req.flash({});
 				}
 			}).catch((err) => {
 				console.log(err);
@@ -802,7 +826,7 @@ module.exports = {
 		}
 		let random = Math.floor((Math.random() * 100000) + 1);
 		let fileName = 'sample_'+random+'.xlsx';
-		workbook.xlsx.writeFile(config.constant.SAMPLECSV+'/'+fileName).then(function() {
+		workbook.xlsx.writeFile(config.constant.SAMPLECSV+fileName).then(function() {
 			let file = config.constant.ABSOLUTEPATH + "/public/uploads/samplecsv/" + fileName;
 			res.download(file);
 		});

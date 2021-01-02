@@ -33,8 +33,10 @@ module.exports = {
     manageCustomer: async function(req,res){
 		let moduleName = 'Customer Management';
         let pageTitle = 'Manage Customer';
+		var detail = {};	
+		detail = {message:req.flash('msg')};
 		await config.helpers.permission('manage_customer', req, (err,permissionData)=>{
-			res.render('admin/customer/view.ejs',{layout:'admin/layout/layout', pageTitle:pageTitle, moduleName:moduleName, permissionData:permissionData});
+			res.render('admin/customer/view.ejs',{layout:'admin/layout/layout', pageTitle:pageTitle, moduleName:moduleName, detail:detail, permissionData:permissionData});
 		});
 	},
 	listCustomer: async function(req,res) {
@@ -156,7 +158,7 @@ module.exports = {
 			const customer = new Customer(customerData);
 			customer.save(function(err, data){
 				if(err){console.log(err)}
-				req.flash('msg', {msg:'Customer has been added Successfully', status:false});	
+				req.flash('msg', {msg:'Customer has been added Successfully', status:true});	
 				res.redirect(config.constant.ADMINCALLURL+'/manage_customer');
 				req.flash({});	
             })
@@ -255,7 +257,7 @@ module.exports = {
 				{ _id: mongoose.mongo.ObjectId(req.body.id) },
 				customerData, function(err,data){
 					if(err){console.log(err)}
-					req.flash('msg', {msg:'Customer has been Updated Successfully', status:false});	
+					req.flash('msg', {msg:'Customer has been Updated Successfully', status:true});	
 					res.redirect(config.constant.ADMINCALLURL+'/manage_customer');
 					req.flash({});	name
 			})
