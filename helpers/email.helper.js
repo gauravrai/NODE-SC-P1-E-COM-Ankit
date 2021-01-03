@@ -11,7 +11,7 @@ module.exports = {
 			// requireTLS: true,
 			auth: {
 				user: 'ersonalirps@gmail.com',
-				pass: 'XXX'
+				pass: '9570720714'
 			},
 			tls: {
 				rejectUnauthorized: false
@@ -26,6 +26,7 @@ module.exports = {
 		transporter.sendMail(mailOptions, function(error, info){
 			if (error) {
 			  console.log(error);
+			  cb(0);
 			} else {
 			  console.log('Email sent: ' + info.response);
 			  cb(1);

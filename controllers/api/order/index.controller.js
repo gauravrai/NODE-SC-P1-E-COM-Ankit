@@ -11,6 +11,7 @@ const Order = model.order;
 const Orderdetail = model.order_detail;
 const Freeitem = model.free_item;
 const Product = model.product;
+const Couponuses = model.coupon_uses;
 const Messagetemplate = model.message_template;
 const { validationResult } = require('express-validator');
 const Razorpay = require('razorpay');
@@ -48,7 +49,6 @@ module.exports = {
                     billingAddress: userData.billingAddress ? userData.billingAddress : {},
                     shippingAddress: userData.shippingAddress ? userData.shippingAddress : {}
                 }
-                let couponAmount = cartData.couponAmount ? cartData.couponAmount : 0;
                 let shippingCharges = shippingPrice;
                 let orderInsertData = {
                     odid: odid,
@@ -59,15 +59,18 @@ module.exports = {
                     subTotal: ( cartData.grandTotal  + shippingCharges - couponAmount ),
                     shippingPrice: shippingCharges,
                     quantity: cartData.quantity,
-                    couponId: mongoose.mongo.ObjectID(cartData.couponId),
-                    couponNo: cartData.couponNo,
-                    couponAmount: couponAmount,
                     orderStatus: 'NEW',
                     orderFrom: orderFrom == 'app' ? 'APP' : 'WEB',
                     paymentStatus: 'PENDING',
                     paymentType: paymentType,
                     taxType: cartData.taxType,
                     totalTax: cartData.totalTax
+                }
+                let couponAmount = cartData.couponAmount ? cartData.couponAmount : 0;
+                if(cartData.couponId){
+                    orderInsertData.couponId =  mongoose.mongo.ObjectID(cartData.couponId);
+                    orderInsertData.couponNo =  cartData.couponNo;
+                    orderInsertData.couponAmount =  couponAmount;
                 }
                 let order = new Order(orderInsertData);
                 order.save();
@@ -155,7 +158,16 @@ module.exports = {
                 await Cart.deleteOne({ userId : mongoose.mongo.ObjectId(userId)});
                 await Cartitem.deleteMany({ userId : mongoose.mongo.ObjectId(userId)});
                 if(paymentType == 'COD')
-                {
+                {   
+                    if(cartData.couponId){
+                        let couponUsesInsertData = {
+                            couponId : cartData.couponId,
+                            couponNo : cartData.couponNo,
+                            userId : userId,
+                        };
+                        let couponuses = new Couponuses(couponUsesInsertData);
+                        couponuses.save();
+                    }
                     let messageData = await Messagetemplate.findOne({slug: 'NEW-ORDER'});
                     let slug = messageData.slug;
                     let message = messageData.message;

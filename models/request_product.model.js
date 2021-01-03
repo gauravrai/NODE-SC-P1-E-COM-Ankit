@@ -27,6 +27,10 @@ let RequestProductSchema = new Schema({
     description: {
         type: String
     },
+    isReplied: {
+        type: Boolean,
+        default : false
+    },
     status: {
         type: Boolean,
         default : true

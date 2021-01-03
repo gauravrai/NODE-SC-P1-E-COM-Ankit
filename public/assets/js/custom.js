@@ -477,8 +477,6 @@ $(document).on("change", ".productId", function(){
     });
 });
 
-
-
 $('#select_all').on('click', function () {
 	if (this.checked) {
 		$('.all_check').each(function () {

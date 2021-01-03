@@ -5,13 +5,6 @@ const async = require("async");
 const mongoose = require('mongoose');
 const moment = require('moment');
 const Requestproduct = model.request_product;
-const Category = model.category;
-const SubCategory = model.sub_category;
-const Store = model.store;
-const State = model.state;
-const Product = model.product;
-const Brand   = model.brand;
-const Varient   = model.varient;
 const ADMINCALLURL = config.constant.ADMINCALLURL;
 
 module.exports = {
@@ -54,7 +47,7 @@ module.exports = {
 			obj.recordsFiltered =results.count?results.count:0;
 			var data = results.data?results.data:[];
 			var arr =[];
-            var perdata = {add:1,edit:1,delete:1}
+			var perdata = {add:1,edit:1,delete:1}
 			await config.helpers.permission('manage_product', req, async function(err,permissionData) {
 				for(i=0;i<data.length;i++){
 					var arr1 = [];
@@ -63,20 +56,47 @@ module.exports = {
 						arr1.push(product_name);
 					})
                     arr1.push(data[i].description);
-					await config.helpers.customer.getNameById(data[i].userId, async function (userName) {
-						var user_name = userName ? userName.name : 'N/A';
-						arr1.push(user_name);
-					})
+                    arr1.push(data[i].name);
                     arr1.push(data[i].email);
                     arr1.push(data[i].mobile);
 					arr1.push(moment(data[i].createdAt).format('DD-MM-YYYY'));
                     arr1.push(data[i].address);
-                    arr1.push(data[i].pincode);
+					arr1.push(data[i].pincode);
+					let $but_reply = '';
+					if(data[i].isReplied == false){
+						$but_reply = '<span><button type="button" class="btn btn-flat btn-info btn-outline-danger mailBtn" title="Delete" data-toggle="modal" data-target="#mailModal" data-email="'+data[i].email+'" data-id="'+data[i].id+'" data-name="'+data[i].name+'"><i class="fas fa-envelope" ></i></button></span>';
+					}else{
+						arr1.push('<span class="badge bg-success" style="cursor:pointer;">Replied</span>');
+					}
+					arr1.push($but_reply);
 					arr.push(arr1);
 				}
 				obj.data = arr;
 				res.send(obj);
 			});
 		});
+	},
+
+    sendReplyProductRequest: async function(req,res){
+		if(req.method == 'POST'){
+			let id = req.body.id;
+			let email = req.body.email;
+			let name = req.body.name;
+			let subject = req.body.subject;
+			let message = 'Dear '+name+',<br>';
+			message += `<p>`+req.body.message+`</p>`;
+			await config.helpers.email.sendEmail(email, subject, message, async function (emailData) {
+				if(emailData == 1)
+				{
+					let updateData = {
+						isReplied : true,
+					}
+					await Requestproduct.updateOne( { _id: mongoose.mongo.ObjectId(id) }, updateData);
+					res.send('done');
+				}else{
+					res.send('error');
+				}
+			});	
+		}
 	},
 }

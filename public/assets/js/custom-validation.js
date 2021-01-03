@@ -803,9 +803,11 @@ $(document).ready(function () {
             },
             multipleOf: {
                 required: true, 
+                number: true
             },
             freeItem: {
                 required: true,
+                number: true
             },
             applyFor: {
                 required: true,
@@ -846,10 +848,12 @@ $(document).ready(function () {
                 required: "Please Enter to Date"
             },
             multipleOf: {
-                required: "Please Enter Multiple Of"
+                required: "Please Enter Multiple Of",
+                number: "Please Enter digits only"
             },
             freeItem: {
-                required: "Please Enter Free Item"
+                required: "Please Enter Free Item",
+                number: "Please Enter digits only"
             },
             offerType: {
                 required: "Please enter Offer Type"
@@ -907,10 +911,12 @@ $(document).ready(function () {
                 required: true,
             },
             multipleOf: {
-                required: true, 
+                required: true,
+                number: true 
             },
             freeItem: {
                 required: true,
+                number: true
             },
             applyFor: {
                 required: true,
@@ -951,10 +957,12 @@ $(document).ready(function () {
                 required: "Please Enter to Date"
             },
             multipleOf: {
-                required: "Please Enter Multiple Of"
+                required: "Please Enter Multiple Of",
+                number: "Please Enter digits only"
             },
             freeItem: {
-                required: "Please Enter Free Item"
+                required: "Please Enter Free Item",
+                number: "Please Enter digits only"
             },
             offerType: {
                 required: "Please enter Offer Type"

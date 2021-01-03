@@ -200,7 +200,7 @@ module.exports = {
 						varientId: '',
 						storeId: mongoose.mongo.ObjectID(storeId[i]),
 						varient : '',
-						price : '',
+						price : 0,
 						default : false
 					};
 					storeData.push(storeFieldObj);
@@ -377,7 +377,7 @@ module.exports = {
 						varientId: '',
 						storeId: mongoose.mongo.ObjectID(storeId[i]),
 						varient : '',
-						price : '',
+						price : 0,
 						default : false
 					};
 					storeData.push(storeFieldObj);
@@ -672,7 +672,7 @@ module.exports = {
 										varientId: '',
 										storeId: mongoose.mongo.ObjectID(storeData[j].id),
 										varient : '',
-										price : '',
+										price : 0,
 										default : false
 									};
 									store.push(storeFieldObj);

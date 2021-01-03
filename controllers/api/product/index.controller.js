@@ -344,7 +344,6 @@ module.exports = {
         }
         try{
             let userRequestData = {
-                productId : mongoose.mongo.ObjectId(req.body.productId),
 				name : req.body.name,
 				email : req.body.email,
 				mobile : req.body.mobile,
@@ -352,6 +351,9 @@ module.exports = {
 				pincode : req.body.pincode,
 				description : req.body.description,
             };
+            if(req.body.productId){
+                userRequestData.productId = mongoose.mongo.ObjectId(req.body.productId);
+            }
             if(req.body.userId){
                 userRequestData.userId = mongoose.mongo.ObjectId(req.body.userId);
             }
