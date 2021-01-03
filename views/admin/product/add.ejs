@@ -83,10 +83,10 @@
                       <input type="text" name="tax" class="form-control" id="tax" placeholder="Tax" value="0">
                     </div> 
 
-                    <div class="form-group col-md-2">
+                    <!--<div class="form-group col-md-2">
                       <label for="stock">Unique Code</label>
-                      <input type="text" name="stock" class="form-control" id="stock" placeholder="Unique Code" value="<%=uniqueCode%>">
-                    </div> 
+                      <input type="text" name="stock" class="form-control" id="stock" placeholder="Unique Code" value="">
+                    </div>--> 
                     <div class="form-group col-md-2">
                       <label for="featured">Featured Product</label>
                       <input type="checkbox" name="featured" class="form-control" id="featured">
@@ -223,7 +223,7 @@
       $(".store-div-"+storeno+"-"+index).remove();
     });
     
-    $(document).on("click",".add_button",function(){
+    /*$(document).on("click",".add_button",function(){
       var regex = new RegExp(/^[a-z]{2}[0-9]{7}$/i);
       var textvalue = $("#stock").val();
         if (regex.test(textvalue)) {
@@ -233,7 +233,7 @@
             $("#stock").focus();
             return false;
         }
-    });
+    });*/
     $('#name, #description').on('keypress', function (event) {
       var regex = new RegExp("^[a-zA-Z0-9 .,]+$");
       var key = String.fromCharCode(!event.charCode ? event.which : event.charCode);

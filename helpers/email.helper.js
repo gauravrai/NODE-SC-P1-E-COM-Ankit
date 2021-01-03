@@ -10,15 +10,15 @@ module.exports = {
 			secure: false,
 			// requireTLS: true,
 			auth: {
-				user: 'ersonalirps@gmail.com',
-				pass: '9570720714'
+				user: 'localbaniyaa1989@gmail.com',
+				pass: 'LocalBaniyaa@1989'
 			},
 			tls: {
 				rejectUnauthorized: false
 			}
 		});
 		var mailOptions = {
-			from: 'ersonalirps@gmail.com',
+			from: 'localbaniyaa1989@gmail.com',
 			to: email,
 			subject: subject,
 			html: message

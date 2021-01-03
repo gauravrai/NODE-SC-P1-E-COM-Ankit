@@ -666,6 +666,9 @@ $(document).ready(function () {
             name: {
                 required: true,
             },
+            brandId: {
+                required: true,
+            },
             offer: {
                 required: true, 
             },
@@ -688,6 +691,9 @@ $(document).ready(function () {
             },
             name: {
                 required: "Please enter a Product Name"
+            },
+            brandId: {
+                required: "Please select Brand"
             },
             offer: {
                 required: "Please Select Product Offer"

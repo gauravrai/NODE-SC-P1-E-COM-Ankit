@@ -235,12 +235,10 @@ module.exports = {
     },
 
     updateCustomer: async function( req, res ) {
-        console.log('coming to updateCustomer');
         const errors = validationResult(req)
         if(!errors.isEmpty()){
             return res.status(400).json({errors: errors.array()})
         }
-        console.log(req.body);
         let { mobile, sameAsBillingAddress, name, email, gst, billingAddress, billingCountry, billingState, billingCity, billingPincode, billingArea, billingSociety, billingTower, shippingAddress, shippingCountry, shippingState, shippingCity, shippingPincode, shippingArea, shippingSociety, shippingTower } = req.body;
         
         let billingAddressData = {
@@ -283,31 +281,27 @@ module.exports = {
         let CustomerData = {
             name : name,
             email : email,
-            gst : gst,
-            sameAsBillingAddress: sameAsBillingAddress,
+            gst : gst && typeof gst != 'undefined' ? gst : '',
+            sameAsBillingAddress: sameAsBillingAddress ? sameAsBillingAddress : false,
             billingAddress : billingAddressData,
             shippingAddress : shippingAddressData
         };
         
-        console.log('-----------------------------------------------');
-        console.log(CustomerData);
-        console.log('-----------------------------------------------');
         try {
             let customer = await Customer.findOne({ mobile: mobile });
             
             if(!customer){
-                console.log('coming if');
                 //insert new customer profile
                 let customerPObj = await new Customer({
-                                            name,
-                                            "mobile": mobile,
-                                            email,
-                                            gst,
-                                            sameAsBillingAddress: sameAsBillingAddress,
+                                            name : name,
+                                            email : email,
+                                            mobile : mobile,
+                                            gst : gst && typeof gst != 'undefined' ? gst : '',
+                                            sameAsBillingAddress: sameAsBillingAddress ? sameAsBillingAddress : false,
                                             billingAddress : billingAddressData,
                                             shippingAddress : shippingAddressData
                                         });
-                customerPObj.save()
+                customerPObj.save();
                 return res.status(200).json({
                                 data: customerPObj,
                                 status: 'success', 
@@ -315,7 +309,6 @@ module.exports = {
                             });
             }
             else{
-                console.log('coming else');
                 //update the customer profile
                 await Customer.updateOne({ mobile: mobile }, CustomerData, async function( err, data ){
                     if(err) console.log(err)

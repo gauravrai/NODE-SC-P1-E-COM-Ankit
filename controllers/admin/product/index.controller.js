@@ -113,39 +113,31 @@ module.exports = {
 			let storeData = await Store.find({status:true, deletedAt: 0});
 			let brandData = await Brand.find({status:true, deletedAt: 0});
 			let varientData = await Varient.find({status:true, deletedAt: 0});
-			function generateCode(){
-				let characters = '0123456789';
-				let charactersLength = characters.length;
-				let uniqueCode = 'LB';
-				for (var i = 0; i < 7; i++) {
-					uniqueCode += characters.charAt(Math.floor(Math.random() * charactersLength));
-				}
-				return uniqueCode;
-			}
-			let uniqueCode = generateCode();
-			let productData = await Product.find();	
-			function search(nameKey, myArray){
-				for (var i=0; i < myArray.length; i++) {
-					if (myArray[i].uniqueCode === nameKey) {
-						return true;
-					}
-				}
-			}
-			let uniqueCodeFound = search(uniqueCode, productData);
-			if(uniqueCodeFound)
-			{
-				uniqueCode = generateCode();
-			}
-			res.render('admin/product/add.ejs',{layout:'admin/layout/layout', pageTitle:pageTitle, moduleName:moduleName, storeData:storeData, categoryData:categoryData, brandData:brandData, varientData:varientData, uniqueCode:uniqueCode });
+			res.render('admin/product/add.ejs',{layout:'admin/layout/layout', pageTitle:pageTitle, moduleName:moduleName, storeData:storeData, categoryData:categoryData, brandData:brandData, varientData:varientData });
 		}else
 		{
+			let previousProductData = await Product.find().sort({createdAt:-1}).limit(1);
+			function generateCode(){
+				if(previousProductData.length > 0){
+					let length = previousProductData[0].inventory[0].length;
+					let code = previousProductData[0].inventory[0][length - 1].uniqueCode;
+					return code;
+				}else {
+					return 'LB1000001';
+				}
+			}
 			let productData = {};
+			let uniqueCode = generateCode();
+			uniqueCode = uniqueCode.substr(2);
+			if(previousProductData.length > 0){ 
+				uniqueCode++;
+			}
 			productData = {	
 				categoryId : mongoose.mongo.ObjectId(req.body.categoryId),
 				name : req.body.name,
 				offer : req.body.offer,
 				discount: req.body.discount,
-				stock : req.body.stock ? req.body.stock.toUpperCase() : '',
+				stock : uniqueCode ? 'LB'+uniqueCode++ : '',
 				description : req.body.description,
 				featured : req.body.featured == 'on' ? true : false,
 				outOfStock : req.body.outOfStock == 'on' ? true : false,
@@ -181,6 +173,7 @@ module.exports = {
 						{
 							let varientData = await Varient.findOne({_id : mongoose.mongo.ObjectID(varientArr[j])});
 							let storeFieldObj = {
+								uniqueCode: 'LB'+uniqueCode++,
 								varientId: mongoose.mongo.ObjectID(varientArr[j]),
 								storeId: mongoose.mongo.ObjectID(storeId[i]),
 								varient : varientData.label+' '+varientData.measurementUnit,
@@ -316,13 +309,28 @@ module.exports = {
 			res.render('admin/product/edit',{layout:'admin/layout/layout', pageTitle:pageTitle, moduleName:moduleName, categoryData:categoryData, subcategoryData:subcategoryData, storeData:storeData, brandData:brandData, productData:productData, varientData:varientData} );
 		}
 		if(req.method == "POST"){
+			let previousProductData = await Product.find().sort({createdAt:-1}).limit(1);
+			function generateCode(){
+				if(previousProductData.length > 0){
+					let length = previousProductData[0].inventory[0].length;
+					let code = previousProductData[0].inventory[0][length - 1].uniqueCode;
+					return code;
+				}else {
+					return 'LB1000001';
+				}
+			}
+			let uniqueCode = generateCode();
+			uniqueCode = uniqueCode.substr(2);
+			if(previousProductData.length > 0){ 
+				uniqueCode++;
+			}
 			let productData = {};
 			productData = {	
 				categoryId : mongoose.mongo.ObjectId(req.body.categoryId),
 				name : req.body.name,
 				offer : req.body.offer,
 				discount: req.body.discount,
-				stock : req.body.stock ? req.body.stock.toUpperCase() : '',
+				stock : req.body.stock ? req.body.stock : '',
 				description : req.body.description,
 				featured : req.body.featured == 'on' ? true : false,
 				outOfStock : req.body.outOfStock == 'on' ? true : false,
@@ -349,6 +357,11 @@ module.exports = {
 				{
 					priceArr = Array.isArray(req.body['price_'+i]) ? req.body['price_'+i] : req.body['price_'+i].split();
 				}
+				let uniqueCodeArr = req.body['uniqueCode_'+i];
+				if(uniqueCodeArr != '' && typeof uniqueCodeArr != 'undefined')
+				{
+					uniqueCodeArr = Array.isArray(req.body['uniqueCode_'+i]) ? req.body['uniqueCode_'+i] : req.body['uniqueCode_'+i].split();
+				}
 				let defaultArr = req.body['default_'+i];
 				let storeData = [];
 				if(varientArr.length > 0)
@@ -358,6 +371,7 @@ module.exports = {
 						{
 							let varientData = await Varient.findOne({_id : mongoose.mongo.ObjectID(varientArr[j])});
 							let storeFieldObj = {
+								uniqueCode: typeof uniqueCodeArr != 'undefined' && uniqueCodeArr[j] ? uniqueCodeArr[j] : 'LB'+uniqueCode++,
 								varientId: mongoose.mongo.ObjectID(varientArr[j]),
 								storeId: mongoose.mongo.ObjectID(storeId[i]),
 								varient : varientData.label+' '+varientData.measurementUnit,
@@ -574,6 +588,9 @@ module.exports = {
 						if(!/^[a-zA-Z0-9 .,]+$/.test(xlData[i]['Product Name']) || xlData[i]['Product Name'] == '' || typeof xlData[i]['Product Name'] == 'undefined'){
 							errordata.push(xlData[i]);
 						}
+						else if(xlData[i]['Brand'] == '' || typeof xlData[i]['Brand'] == 'undefined'){
+							errordata.push(xlData[i]);
+						}
 						else if(xlData[i]['Offer applicable'] == '' || typeof xlData[i]['Offer applicable'] == 'undefined'){
 							errordata.push(xlData[i]);
 						}
@@ -593,35 +610,27 @@ module.exports = {
 							errordata.push(xlData[i]['Price']);
 						} else {
 							successdata.push(xlData[i]);
+							let previousProductData = await Product.find().sort({createdAt:-1}).limit(1);
 							function generateCode(){
-								let characters = '0123456789';
-								let charactersLength = characters.length;
-								let uniqueCode = 'LB';
-								for (var i = 0; i < 7; i++) {
-									uniqueCode += characters.charAt(Math.floor(Math.random() * charactersLength));
+								if(previousProductData.length > 0){
+									let length = previousProductData[0].inventory[0].length;
+									let code = previousProductData[0].inventory[0][length - 1].uniqueCode;
+									return code;
+								}else {
+									return 'LB1000001';
 								}
-								return uniqueCode;
 							}
 							let uniqueCode = generateCode();
-							let productData = await Product.find();	
-							function search(nameKey, myArray){
-								for (var i=0; i < myArray.length; i++) {
-									if (myArray[i].uniqueCode === nameKey) {
-										return true;
-									}
-								}
-							}
-							let uniqueCodeFound = search(uniqueCode, productData);
-							if(uniqueCodeFound)
-							{
-								uniqueCode = generateCode();
+							uniqueCode = uniqueCode.substr(2);
+							if(previousProductData.length > 0){ 
+								uniqueCode++;
 							}
 							let insertData = {
 								categoryId : mongoose.mongo.ObjectId(req.body.categoryId),
 								name : xlData[i]['Product Name'],
 								offer : xlData[i]['Offer applicable'],
 								discount: xlData[i]['Discount applicable'],
-								stock : uniqueCode,
+								stock : 'LB'+uniqueCode++,
 								description : xlData[i]['Description'],
 								featured : typeof xlData[i]['Featured Product'] != 'undefined' && xlData[i]['Featured Product']== 'Yes' ? true : false,
 								outOfStock : typeof xlData[i]['Out Of Stock'] != 'undefined' && xlData[i]['Out Of Stock'] == 'Yes' ? true : false,
@@ -660,6 +669,7 @@ module.exports = {
 									}
 									let varientId = search(xlData[i]['Varient'], varientData);
 									let storeFieldObj = {
+										uniqueCode: 'LB'+uniqueCode++,
 										varientId: mongoose.mongo.ObjectID(varientId),
 										storeId: mongoose.mongo.ObjectID(storeData[j].id),
 										varient : xlData[i]['Varient'],
@@ -693,6 +703,7 @@ module.exports = {
 							if(existsProductData){
 								let previousInventory = existsProductData.inventory;
 								insertData.inventory[0][0].default = false;
+								insertData.inventory[0][0].uniqueCode = 'LB'+uniqueCode++;
 								previousInventory[0].push(insertData.inventory[0][0]);
 								insertData.inventory = previousInventory;
 								await Product.updateOne({ _id: mongoose.mongo.ObjectId(existsProductData.id) }, insertData);
@@ -704,11 +715,7 @@ module.exports = {
 					}
 					let moduleName = 'Product Management';
 					let pageTitle = 'Bulk Upload Product';
-					let detail = {};
-					detail = {message:req.flash('msg')};
-					req.flash('msg', {msg:'Product has been Uploaded Successfully', status:true});	
-					res.render('admin/product/productlist.ejs',{layout:'admin/layout/layout', pageTitle:pageTitle, moduleName:moduleName, detail:detail, successdata:successdata, errordata:errordata});
-					req.flash({});
+					res.render('admin/product/productlist.ejs',{layout:'admin/layout/layout', pageTitle:pageTitle, moduleName:moduleName, successdata:successdata, errordata:errordata});
 				}
 			}).catch((err) => {
 				console.log(err);
@@ -762,7 +769,7 @@ module.exports = {
 
 		let row = worksheet.getRow(1);
 		row.eachCell(function (cell, value) {
-			if(cell == 'Brand' || cell == 'Tax' || cell == 'Featured Product' || cell == 'Out Of Stock')
+			if(cell == 'Tax' || cell == 'Featured Product' || cell == 'Out Of Stock')
 			{
 				let address = cell._address;
 				let color = 'FF259C4B';
@@ -773,7 +780,7 @@ module.exports = {
 					  bgColor:{argb:color}
 				};
 			}
-			if(cell == 'Product Name' || cell == 'Offer applicable' || cell == 'Discount applicable' || cell == 'Description' || cell == 'Varient' || cell == 'Price')
+			if(cell == 'Product Name' || cell == 'Brand' || cell == 'Offer applicable' || cell == 'Discount applicable' || cell == 'Description' || cell == 'Varient' || cell == 'Price')
 			{	
 				let address = cell._address;
 				let color = 'FFA71818';
@@ -833,3 +840,4 @@ module.exports = {
 	},
 
 }
+
