@@ -76,7 +76,7 @@ module.exports = {
                             let cartUpdateData = {
                                 couponId : couponData.id,
                                 couponNo : couponData.couponNo,
-                                couponAmount : couponAmount
+                                couponAmount : parseInt(couponAmount)
                             }
                             await Cart.updateOne(
                                 { _id: mongoose.mongo.ObjectId(cartId) },
@@ -91,7 +91,7 @@ module.exports = {
                             });	
                         }
                         else{
-                            return res.status(200).json({ 
+                            return res.status(400).json({ 
                                 data: [], 
                                 status: 'error', 
                                 message: "You have already used this coupon!!" 
@@ -100,7 +100,7 @@ module.exports = {
                     }
                     else
                     {
-                        return res.status(200).json({ 
+                        return res.status(400).json({ 
                             data: [], 
                             status: 'error', 
                             message: "Invalid Coupon!!" 
@@ -108,7 +108,7 @@ module.exports = {
                     }
                 }
                 else{
-                    return res.status(200).json({ 
+                    return res.status(400).json({ 
                         data: [], 
                         status: 'error', 
                         message: "Invalid Coupon!!" 
@@ -116,7 +116,7 @@ module.exports = {
                 }
             }
             else{
-                return res.status(200).json({ 
+                return res.status(400).json({ 
                     data: [], 
                     status: 'error', 
                     message: "Invalid User!!" 
@@ -146,6 +146,10 @@ module.exports = {
         try{
             let userId = req.body.userId;
             let cartId = req.body.cartId; 
+            let couponAmount = req.body.couponAmount;
+            let data = {
+                couponAmount: couponAmount
+            } 
             let userData = await Customer.findOne({_id: mongoose.mongo.ObjectID(userId)});
             if(userData)
             {
@@ -161,13 +165,13 @@ module.exports = {
                 })
 
                 return res.status(200).json({ 
-                    data: cartUpdateData, 
+                    data: data, 
                     status: 'success', 
-                    message: "Coupon applied successfully!!" 
+                    message: "Coupon removed successfully!!" 
                 });	
             }
             else{
-                return res.status(200).json({ 
+                return res.status(400).json({ 
                     data: [], 
                     status: 'error', 
                     message: "Invalid User!!" 

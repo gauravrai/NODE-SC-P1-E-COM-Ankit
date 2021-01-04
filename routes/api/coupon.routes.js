@@ -21,6 +21,7 @@ module.exports = function(router) {
 	  [
 		  // auth,
 		  // [
+			  check('couponAmount', 'Coupon Amount is required').not().isEmpty(),
 			  check('userId', 'User Id is required').not().isEmpty(),
 			  check('cartId', 'Cart Id is required').not().isEmpty()
 		  // ]
