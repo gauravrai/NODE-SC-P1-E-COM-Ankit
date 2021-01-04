@@ -206,14 +206,17 @@ module.exports = {
 			let thumbnailArr = req.files.thumbnail;
 			let smallArr = req.files.small;
 			let largeArr = req.files.large;
-			if(imageLength == 1)
+			if(!Array.isArray(thumbnailArr))
 			{
-				thumbnailArr = []; 
-				smallArr = []; 
-				largeArr = []; 
-				thumbnailArr.push(req.files.thumbnail);
-				smallArr.push(req.files.small);
-				largeArr.push(req.files.large);
+				thumbnailArr = [thumbnailArr];
+			}
+			if(!Array.isArray(smallArr))
+			{
+				smallArr = [smallArr];
+			}
+			if(!Array.isArray(largeArr))
+			{
+				largeArr = [largeArr];
 			}
 			let  image = {};
 			new Promise(function(resolve, reject) { 

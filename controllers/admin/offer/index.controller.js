@@ -187,10 +187,12 @@ module.exports = {
                 offerProductId : req.body.offerProductId,
                 offerVarient : req.body.offerVarient,
 				freeCategoryId : mongoose.mongo.ObjectId(req.body.freeCategoryId),
-				freeSubcategoryId : mongoose.mongo.ObjectId(req.body.freeSubcategoryId),
                 freeProductId : mongoose.mongo.ObjectId(req.body.freeProductId),
                 freeVarientId : mongoose.mongo.ObjectId(req.body.freeVarientId)
 			};
+			if(req.body.freeSubcategoryId){
+				offerData.freeSubcategoryId = mongoose.mongo.ObjectId(req.body.freeSubcategoryId);
+			}
 			
 			if(Object.keys(req.files).length)
 			{
