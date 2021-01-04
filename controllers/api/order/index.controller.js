@@ -50,6 +50,7 @@ module.exports = {
                     shippingAddress: userData.shippingAddress ? userData.shippingAddress : {}
                 }
                 let shippingCharges = shippingPrice;
+                let couponAmount = cartData.couponAmount ? cartData.couponAmount : 0;
                 let orderInsertData = {
                     odid: odid,
                     userId: mongoose.mongo.ObjectID(cartData.userId),
@@ -66,7 +67,6 @@ module.exports = {
                     taxType: cartData.taxType,
                     totalTax: cartData.totalTax
                 }
-                let couponAmount = cartData.couponAmount ? cartData.couponAmount : 0;
                 if(cartData.couponId){
                     orderInsertData.couponId =  mongoose.mongo.ObjectID(cartData.couponId);
                     orderInsertData.couponNo =  cartData.couponNo;
