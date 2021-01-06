@@ -99,6 +99,7 @@ module.exports = {
 			let discountData = {
 				couponNo : req.body.couponNo.toUpperCase(),
 				couponName : req.body.couponName,
+				couponUsesLimit : req.body.couponUsesLimit,
 				orderValue : req.body.orderValue,
 				noOfUses : req.body.noOfUses,
 				offerType : req.body.offerType,
@@ -132,6 +133,7 @@ module.exports = {
 			let discountData = {
 				couponNo : req.body.couponNo.toUpperCase(),
 				couponName : req.body.couponName,
+				couponUsesLimit : req.body.couponUsesLimit,
 				orderValue : req.body.orderValue,
 				noOfUses : req.body.noOfUses,
 				offerType : req.body.offerType,

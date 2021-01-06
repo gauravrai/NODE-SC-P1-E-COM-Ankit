@@ -732,6 +732,9 @@ $(document).ready(function () {
             couponName: {
                 required: true,
             },
+            couponUsesLimit: {
+                required: true,
+            },
             orderValue: {
                 required: true,
             },
@@ -761,11 +764,14 @@ $(document).ready(function () {
             couponName: {
                 required: "Please Enter Coupon Name"
             },
+            couponUsesLimit: {
+                required: "Please Enter Coupon Uses Limit"
+            },
             orderValue: {
                 required: "Please Enter Minimum Order Excluding GST"
             },
             noOfUses: {
-                required: "Please enter No Of Uses"
+                required: "Please enter No Of Uses Per Customer"
             },
             offerType: {
                 required: "Please Enter Offer Type"

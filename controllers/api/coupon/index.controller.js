@@ -29,8 +29,20 @@ module.exports = {
                 let cartData = await Cart.findOne({_id: mongoose.mongo.ObjectID(cartId)});
                 if(couponData)
                 {
+                    let grandTotal = cartData.grandTotal;
                     if(couponData.applyFor == orderFrom || couponData.applyFor == 'both')
                     {
+                        let couponUsesLimitData = 0;
+                        if(couponData.couponUsesLimit != 0){  
+                            couponUsesLimitData = await Couponuses.find({couponId: mongoose.mongo.ObjectID(couponData.id)});
+                            if(couponUsesLimitData.length >= couponData.couponUsesLimit){
+                                return res.status(400).json({ 
+                                    data: [], 
+                                    status: 'error', 
+                                    message: "This coupon is already used!!" 
+                                });	
+                            }
+                        }
                         let couponUsesData = await Couponuses.find({userId: mongoose.mongo.ObjectID(userId),couponId: mongoose.mongo.ObjectID(couponData.id)});
                         if(couponUsesData.length < couponData.noOfUses)
                         {
@@ -47,48 +59,49 @@ module.exports = {
                                     payementStatus: "COMPLETED"
                                     }
                                 ] } );
-                                console.log(orderData);
                                 if(orderData)
                                 {
-                                    return res.status(200).json({ 
+                                    return res.status(400).json({ 
                                         data: [], 
                                         status: 'error', 
                                         message: "This coupon is only valid for first order!!" 
                                     });	
                                 }
                             }
-                            // let couponUsesInsertData = {
-                            //     couponId : couponData.id,
-                            //     couponNo : couponData.couponNo,
-                            //     userId : userId,
-                            // };
-                            // let couponuses = new Couponuses(couponUsesInsertData);
-                            // couponuses.save();
-                            let couponAmount = 0;
-                            if(couponData.offerType == 'percentage')
-                            {
-                                couponAmount = (cartData.grandTotal/100)*couponData.percentage;
-                            }
-                            else
-                            {
-                                couponAmount = couponData.fixed;
-                            }
-                            let cartUpdateData = {
-                                couponId : couponData.id,
-                                couponNo : couponData.couponNo,
-                                couponAmount : parseInt(couponAmount)
-                            }
-                            await Cart.updateOne(
-                                { _id: mongoose.mongo.ObjectId(cartId) },
-                                cartUpdateData, function(err,data){
-                                    if(err){console.log(err)}
-                            })
+                            if(grandTotal >= couponData.orderValue) {
+                                let couponAmount = 0;
+                                if(couponData.offerType == 'percentage')
+                                {
+                                    couponAmount = (cartData.grandTotal/100)*couponData.percentage;
+                                }
+                                else
+                                {
+                                    couponAmount = couponData.fixed;
+                                }
+                                let cartUpdateData = {
+                                    couponId : couponData.id,
+                                    couponNo : couponData.couponNo,
+                                    couponAmount : parseInt(couponAmount)
+                                }
+                                await Cart.updateOne(
+                                    { _id: mongoose.mongo.ObjectId(cartId) },
+                                    cartUpdateData, function(err,data){
+                                        if(err){console.log(err)}
+                                })
 
-                            return res.status(200).json({ 
-                                data: cartUpdateData, 
-                                status: 'success', 
-                                message: "Coupon applied successfully!!" 
-                            });	
+                                return res.status(200).json({ 
+                                    data: cartUpdateData, 
+                                    status: 'success', 
+                                    message: "Coupon applied successfully!!" 
+                                });	
+                            }
+                            else{
+                                return res.status(400).json({ 
+                                    data: [], 
+                                    status: 'error', 
+                                    message: "Your minimun cart value is less excluding gst!!" 
+                                });	
+                            }
                         }
                         else{
                             return res.status(400).json({ 

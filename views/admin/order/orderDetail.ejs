@@ -190,7 +190,7 @@
                       </td>
                       <td style="width: 12%;">
                         <label for="deliveryDate">Delivery Date</label>
-                        <input type="date" name="deliveryDate" class="form-control" id="deliveryDate" placeholder="Delivery Date">
+                        <input type="date" name="deliveryDate" class="form-control" id="deliveryDate" placeholder="Delivery Date" value="<%=orderData.deliveryDate ? orderData.deliveryDate : ''%>">
                         <span class="customError" id="deliveryDateErr"></span>
                       </td>
                       <td style="width: 12%;">
@@ -221,7 +221,7 @@
                           let couponAmount = orderData.couponAmount ? orderData.couponAmount : 0;
                           totalAmount = totalAmount - couponAmount.toFixed(2);
                         %>
-                        <b>Grand Total: </b> <%= ( (grandTotal + shippingPrice + totalTax).toFixed(2) - orderData.couponAmount); %>
+                        <b>Grand Total: </b> <%= ( (grandTotal + shippingPrice + totalTax) - couponAmount).toFixed(2); %>
                       </td>
                     </tr>
                 </table>

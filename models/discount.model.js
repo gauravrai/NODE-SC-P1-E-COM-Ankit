@@ -9,21 +9,24 @@ let DiscountSchema = new Schema({
     couponNo: {
         type: String
     },
+    couponUsesLimit: {
+        type: Number
+    },
     orderValue: {
-        type: String
+        type: Number
     },
     noOfUses: {
-        type: String
+        type: Number
     },
     offerType : {
         type: String
     },
     percentage: {
-        type: String,
+        type: Number,
         default: 0
     },
     fixed: {
-        type: String,
+        type: Number,
         default: 0
     },
     from: {
