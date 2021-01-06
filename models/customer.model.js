@@ -11,11 +11,9 @@ let CustomerSchema = new Schema({
     },
     name: {
         type: String,
-        required: true
     },
     email: {
         type: String,
-        required: true,
         unique: true
     },
     gst: {
@@ -29,6 +27,16 @@ let CustomerSchema = new Schema({
     },
     shippingAddress: {
         type: Object
+    },
+    otp: {
+        type: Number,
+    },
+    profileUpdated: {
+        type: Boolean,
+        default : false
+    },
+    token: {
+        type: String,
     },
     status: {
         type: Boolean,
