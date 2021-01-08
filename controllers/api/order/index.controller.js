@@ -13,6 +13,7 @@ const Freeitem = model.free_item;
 const Product = model.product;
 const Couponuses = model.coupon_uses;
 const Messagetemplate = model.message_template;
+const Transaction = model.transaction;
 const { validationResult } = require('express-validator');
 const Razorpay = require('razorpay');
 
@@ -29,6 +30,7 @@ module.exports = {
             let userId = req.body.userId;
             let paymentType = req.body.paymentType;
             let orderFrom = req.body.orderFrom;
+            let walletPayment = req.body.walletPayment; //true or false
             let userData = await Customer.findOne({_id: mongoose.mongo.ObjectID(userId)});
             let cartData = await Cart.findOne({userId: mongoose.mongo.ObjectID(userId)});
             let data = {};
@@ -40,6 +42,7 @@ module.exports = {
                     shippingPrice = shippingPrice ? shippingPrice.shippingCharges : 0;
                 }
                 let odid = 'OD'+moment().format('YMDhms');
+                let receiptNo = 'RC'+moment().format('YMDhms');
                 let customerDetail = {
                     name : userData.name ? userData.name : '',
                     mobile : userData.mobile ? userData.mobile : '',
@@ -53,6 +56,7 @@ module.exports = {
                 let couponAmount = cartData.couponAmount ? cartData.couponAmount : 0;
                 let orderInsertData = {
                     odid: odid,
+                    receiptNo: receiptNo,
                     userId: mongoose.mongo.ObjectID(cartData.userId),
                     customerDetail : customerDetail,
                     sessionId: cartData.sessionId,
@@ -91,6 +95,7 @@ module.exports = {
                     let orderDetailInsertData = {
                         userId: mongoose.mongo.ObjectID(cartItemData[i].userId),
                         odid: odid,
+                        receiptNo: receiptNo,
                         productId: mongoose.mongo.ObjectID(cartItemData[i].productId),
                         varientId: mongoose.mongo.ObjectID(cartItemData[i].varientId), 
                         price: cartItemData[i].price,
@@ -157,17 +162,18 @@ module.exports = {
                 data.orderdetail = dataOrderDetail;
                 await Cart.deleteOne({ userId : mongoose.mongo.ObjectId(userId)});
                 await Cartitem.deleteMany({ userId : mongoose.mongo.ObjectId(userId)});
+                
+                if(cartData.couponId){
+                    let couponUsesInsertData = {
+                        couponId : cartData.couponId,
+                        couponNo : cartData.couponNo,
+                        userId : userId,
+                    };
+                    let couponuses = new Couponuses(couponUsesInsertData);
+                    couponuses.save();
+                }
                 if(paymentType == 'COD')
                 {   
-                    if(cartData.couponId){
-                        let couponUsesInsertData = {
-                            couponId : cartData.couponId,
-                            couponNo : cartData.couponNo,
-                            userId : userId,
-                        };
-                        let couponuses = new Couponuses(couponUsesInsertData);
-                        couponuses.save();
-                    }
                     let messageData = await Messagetemplate.findOne({slug: 'NEW-ORDER'});
                     let slug = messageData.slug;
                     let message = messageData.message;
@@ -183,12 +189,73 @@ module.exports = {
                 }
                 else
                 {
-                    //code for online payment
-                    return res.status(200).json({ 
-                        data: data, 
-                        status: 'success', 
-                        message: "Order placed successfully!!" 
-                    });	
+                    if(walletPayment == true){
+                        let walletAmount = req.body.walletAmount;
+                        let transactionId = 'LBW-'+moment().format('YMDhms');
+                        let walletEntryData = {
+                            userId : userId,
+                            transactionId: transactionId,
+                            amount : walletAmount,
+                            type : 'Sub',
+                        };
+                        let messageSlug = 'WALLET-DEBIT';
+                        let messageData = await Messagetemplate.findOne({slug: messageSlug});
+                        let slug = messageData.slug;
+                        let message = messageData.message;
+                        message = message.replace('[CUSTOMER]', userData.name);
+                        message = message.replace('[AMOUNT]', amount);
+                        message = message.replace('[DATETIME]', moment().format('D-M-YYYY hh-mm A'));
+                        message = message.replace('[DATETIME]', moment().format('D-M-YYYY hh-mm A'));
+
+                        let walletentry = new Walletentry(walletEntryData);
+                        walletentry.save();
+
+                        
+			            let wallet = await Wallet.findOne({userId: mongoose.mongo.ObjectID(userId)});
+                        let walletData = {};
+                        let totalAmount = wallet.totalAmount;
+                        walletData.updatedAt = Date.now();
+                        amount = totalAmount - amount;
+                        walletData.totalAmount = amount;
+                        message = message.replace('[TOTALBALANCE]', amount);
+                        await Wallet.updateOne(
+                            { userId: mongoose.mongo.ObjectId(userId) },
+                            walletData, async function(err,data){
+                                if(err){console.log(err)}
+                                await config.helpers.sms.sendSMS(userData, slug, message, async function (smsData) {
+                                });
+                        })
+                    }   
+                    var instance = new Razorpay({ key_id: config.constant.RAZORPAY_KEY_ID, key_secret: config.constant.RAZORPAY_KEY_SECRET })
+
+                    var options = {
+                      amount: 50000,  // amount in the smallest currency unit
+                      currency: "INR",
+                      receipt: receiptNo
+                    };
+                    instance.orders.create(options, function(err, paymentDetails) {
+                        if(err)
+                        {
+                            console.log('Error-----------------',err);
+                        }
+                        console.log(order);
+                        data.paymentDetails = paymentDetails;
+                        
+                        let transactionData = {
+                            userId : userId,
+                            odid : odid,
+                            receiptNo : receiptNo,
+                            razorpayOrderId : paymentDetails.id,
+                            paymentStatus: 'PENDING'
+                        };
+                        let transaction = new Transaction(transactionData);
+                        transaction.save();
+                        return res.status(200).json({ 
+                            data: data, 
+                            status: 'success', 
+                            message: "Order placed successfully!!" 
+                        });	
+                    });
                 }
             }
             else

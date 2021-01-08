@@ -33,31 +33,29 @@ module.exports = {
                     };
                     let updateCustomer = await Customer.updateOne( {mobile: mobile}, otpData );
                     let customerData = await Customer.findOne({mobile: mobile});
+                    let returnData = {
+                        profileUpdated: customerData.profileUpdated,                                
+                    };
                     return res.status(200).json({ 
-                            data: customerData, 
+                            data: returnData, 
                             status: 'success', 
                             message: "Customer already exits. OTP send for customer login."
                         });                   
                 } else {
-                    let payload = { mobile };
-    
-                    jwt.sign(payload, jwtSecret, {
-                        expiresIn: 3600000
-                    }, (error, token) => {
-                        if(error) throw error
-                        let customerInsertData = {
-                            mobile: mobile,
-                            otp: otp,
-                            token: token
-                        }
-                        let customer = new Customer(customerInsertData);
-                        customer.save();
-                        return res.status(200).json({ 
-                                data: customer, 
-                                status: 'success', 
-                                message: "Customer added successfully. OTP send for customer signin." 
-                            });
-                    })
+                    let customerInsertData = {
+                        mobile: mobile,
+                        otp: otp
+                    }
+                    let customer = new Customer(customerInsertData);
+                    customer.save();
+                    let returnData = {
+                        profileUpdated: false,                                
+                    };
+                    return res.status(200).json({ 
+                            data: returnData, 
+                            status: 'success', 
+                            message: "Customer added successfully. OTP send for customer signin." 
+                        });
                 }
             });
         }
@@ -134,11 +132,26 @@ module.exports = {
             let { mobile, otp } = req.body;
             let checkOtp = await Customer.findOne({ mobile, otp, status: true, deletedAt: 0 });
             if(checkOtp){
-                    return res.status(200).json({ 
-                            data: checkOtp, 
-                            status: 'success', 
-                            message: "OTP verified successfully."
-                        });
+                if(typeof checkOtp.token != 'undefined' && checkOtp.token != '')
+                { 
+                    let payload = { mobile };
+    
+                    jwt.sign(payload, jwtSecret, {
+                        expiresIn: 3600000
+                    },async (error, token) => {
+                        if(error) throw error
+                        let data = {
+                            token  : token
+                        };
+                        let updateCustomer = await Customer.updateOne( {mobile: mobile}, data );
+                    });
+                }
+                let customerData = await Customer.findOne({mobile: mobile});
+                return res.status(200).json({ 
+                        data: customerData, 
+                        status: 'success', 
+                        message: "OTP verified successfully."
+                    });
             }
             else{
                 return res.status(400).json({ 

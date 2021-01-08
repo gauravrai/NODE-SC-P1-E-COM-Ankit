@@ -14,6 +14,9 @@ let orderSchema = new Schema({
     odid: {
         type: String,
     },
+    receiptNo: {
+        type: String,
+    },
     grandTotal: {
         type: Number
     },

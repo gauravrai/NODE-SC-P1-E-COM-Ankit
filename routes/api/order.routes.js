@@ -11,7 +11,8 @@ module.exports = function(router) {
 			// [
 				check('userId', 'User Id is required').not().isEmpty(),
 				check('paymentType', 'Payment Type is required').not().isEmpty(),
-				check('orderFrom', 'Order From is required').not().isEmpty()
+				check('orderFrom', 'Order From is required').not().isEmpty(),
+				check('walletPayment', 'Wallet Payment is required').not().isEmpty()
 			// ]
 		],
 		indexController.placeOrder

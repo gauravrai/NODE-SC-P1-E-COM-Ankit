@@ -85,17 +85,23 @@ module.exports = {
 	},
 
     addDiscount: async function(req,res){
+		var detail = {};
 		if(req.method == "GET"){
 			let moduleName = 'Discount & Coupon Management';
 			let pageTitle = 'Add Discount & Coupon';
+			detail = {message:req.flash('msg')};
 			let characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789';
 			let charactersLength = characters.length;
 			let couponNo = '';
 			for (var i = 0; i < 6; i++) {
 				couponNo += characters.charAt(Math.floor(Math.random() * charactersLength));
 			}
-			res.render('admin/discount/add.ejs',{layout:'admin/layout/layout', pageTitle:pageTitle, moduleName:moduleName, couponNo:couponNo} );
+			res.render('admin/discount/add.ejs',{layout:'admin/layout/layout', pageTitle:pageTitle, moduleName:moduleName, detail:detail, couponNo:couponNo} );
 		}else{
+			if (req.body.orderValue < req.body.fixed) {
+				req.flash('msg', {msg:'Order value should be less than fixed amount', status:false});
+				res.redirect(config.constant.ADMINCALLURL+'/add_discount');
+			}
 			let discountData = {
 				couponNo : req.body.couponNo.toUpperCase(),
 				couponName : req.body.couponName,
@@ -122,14 +128,20 @@ module.exports = {
 	},
 
 	editDiscount: async function(req,res){
+		var detail = {};
 		if(req.method == "GET"){
 			let moduleName = 'Discount & Coupon Management';
 			let pageTitle = 'Edit Discount & Coupon';
+			detail = {message:req.flash('msg')};
             let id = req.body.id;
             let discountData = await Discount.findOne({_id: mongoose.mongo.ObjectId(id), status: true, deletedAt: 0});
-			res.render('admin/discount/edit.ejs',{layout:'admin/layout/layout', pageTitle:pageTitle, moduleName:moduleName, discountData:discountData,moment:moment} );
+			res.render('admin/discount/edit.ejs',{layout:'admin/layout/layout', pageTitle:pageTitle, moduleName:moduleName, detail:detail, discountData:discountData,moment:moment} );
 		}
 		if(req.method == "POST"){
+			if (req.body.orderValue < req.body.fixed) {
+				req.flash('msg', {msg:'Order value should be less than fixed amount', status:false});
+				res.redirect(config.constant.ADMINCALLURL+'/edit_discount');
+			}
 			let discountData = {
 				couponNo : req.body.couponNo.toUpperCase(),
 				couponName : req.body.couponName,
