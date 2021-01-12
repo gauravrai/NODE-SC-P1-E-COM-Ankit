@@ -26,6 +26,9 @@ let transationSchema = new Schema({
     razorpayOrderId: {
         type: String,
     },
+    razorpayPaymentId: {
+        type: String,
+    },
     razorpayResponse: {
         type: Object,
     },

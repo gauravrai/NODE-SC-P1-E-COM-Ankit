@@ -17,6 +17,17 @@ module.exports = function(router) {
 		],
 		indexController.placeOrder
 	); 
+	router.post(
+	  config.constant.APIURL+'/managePaymentResponse', 
+	  [
+		  // auth,
+		  // [
+			  check('userId', 'User Id is required').not().isEmpty(),
+			  check('razorpayOrderId', 'Razorpay Order Id is required').not().isEmpty(),
+		  // ]
+	  ],
+	  indexController.managePaymentResponse
+  ); 
 	router.get(
 		config.constant.APIURL+'/getOrderData', 
 		[

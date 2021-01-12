@@ -246,7 +246,8 @@ module.exports = {
                 gst : gst && typeof gst != 'undefined' ? gst : '',
                 sameAsBillingAddress: sameAsBillingAddress ? sameAsBillingAddress : false,
                 billingAddress : billingAddressData,
-                shippingAddress : shippingAddressData
+                shippingAddress : shippingAddressData,
+                profileUpdated : true
             };
         
             let customer = await Customer.findOne({ mobile: mobile });
@@ -260,7 +261,8 @@ module.exports = {
                                             gst : gst && typeof gst != 'undefined' ? gst : '',
                                             sameAsBillingAddress: sameAsBillingAddress ? sameAsBillingAddress : false,
                                             billingAddress : billingAddressData,
-                                            shippingAddress : shippingAddressData
+                                            shippingAddress : shippingAddressData,
+                                            profileUpdated : true
                                         });
                 customerPObj.save();
                 return res.status(200).json({

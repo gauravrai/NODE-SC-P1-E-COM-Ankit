@@ -279,6 +279,30 @@ module.exports = {
         }
     },
 
+    // @route       GET api/v1/managePaymentResponse
+    // @description Mange onlien Payment
+    // @access      Public
+    managePaymentResponse : async function(req,res){
+        const errors = validationResult(req)
+        if(!errors.isEmpty()){
+            return res.status(400).json({errors: errors.array()})
+        }
+        try{
+            let userId = req.body.userId;
+            let razorpayOrderId = req.body.razorpayOrderId;
+        }
+        catch (e){
+            console.log(e)
+            return res.status(500).json({ 
+                                    data: [],  
+                                    status: 'error', 
+                                    errors: [{
+                                        msg: "Internal server error"
+                                    }]
+                                });
+        }
+    },
+
     // @route       GET api/v1/getOrderData
     // @description Get Order list of user
     // @access      Public
