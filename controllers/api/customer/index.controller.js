@@ -132,7 +132,7 @@ module.exports = {
             let { mobile, otp } = req.body;
             let checkOtp = await Customer.findOne({ mobile, otp, status: true, deletedAt: 0 });
             if(checkOtp){
-                if(typeof checkOtp.token != 'undefined' && checkOtp.token != '')
+                if(typeof checkOtp.token == 'undefined' || checkOtp.token == '')
                 { 
                     let payload = { mobile };
     
