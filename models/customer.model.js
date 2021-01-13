@@ -13,8 +13,7 @@ let CustomerSchema = new Schema({
         type: String,
     },
     email: {
-        type: String,
-        unique: true
+        type: String
     },
     gst: {
         type: String,
