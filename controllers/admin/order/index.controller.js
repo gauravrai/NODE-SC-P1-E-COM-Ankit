@@ -17,6 +17,7 @@ const Freeitem = model.free_item;
 const Rejectorder = model.reject_order;
 const Messagetemplate = model.message_template;
 const Stock = model.stock;
+const Emailtemplate = model.email_template;
 const constant = require('../../../config/constant');
 
 module.exports = {
@@ -24,12 +25,14 @@ module.exports = {
     manageOrder: async function(req,res){
 		let moduleName = 'Order Management';
 		let pageTitle = 'View Order';
+		var detail = {};	
+		detail = {message:req.flash('msg')};
 		await config.helpers.permission('manage_order', req, async (err,permissionData)=>{
 			await config.helpers.filter.orderFilter(req, async function (filterData) {
 				if (filterData != "" && req.method == 'POST') {
 					return res.redirect('manage_order' + filterData);
 				}
-				res.render('admin/order/view.ejs',{layout:'admin/layout/layout', pageTitle:pageTitle, moduleName:moduleName, permissionData:permissionData, orderStatus: constant.ORDER_STATUS, req: req, filterData:filterData });
+				res.render('admin/order/view.ejs',{layout:'admin/layout/layout', pageTitle:pageTitle, moduleName:moduleName, detail:detail, permissionData:permissionData, orderStatus: constant.ORDER_STATUS, req: req, filterData:filterData });
 			});
 		});
 	},
@@ -284,9 +287,16 @@ module.exports = {
 				message = message.replace('[CUSTOMER]', userData.name);
 				message = message.replace('[ODID]', odid);
 				await config.helpers.sms.sendSMS(userData, slug, message, async function (smsData) {
-					req.flash('msg', {msg:'Order has been Created Successfully', status:false});	
-					res.redirect(config.constant.ADMINCALLURL+'/manage_order');
-					req.flash({});
+					let emailData = await Emailtemplate.findOne({slug: 'NEW-ORDER'});
+					let subject = emailData.subject;
+					let message1 = emailData.message;
+					message1 = message1.replace('[CUSTOMER]', userData.name);
+					message1 = message1.replace('[ODID]', odid);
+					await config.helpers.email.sendEmail(userData.email, subject, message1, async function (emailData) {
+						req.flash('msg', {msg:'Order has been Created Successfully', status:true});	
+						res.redirect(config.constant.ADMINCALLURL+'/manage_order');
+						req.flash({});
+					});
 				});
 			});
 		}
@@ -503,11 +513,20 @@ module.exports = {
 		let message = messageData.message;
 		message = message.replace('[CUSTOMER]', userData.name);
 		message = message.replace('[ODID]', odid);
+
+		let emailData = await Emailtemplate.findOne({slug: 'NEW-ORDER'});
+		let subject = emailData.subject;
+		let message1 = emailData.message;
+		message1 = message1.replace('[CUSTOMER]', userData.name);
+		message1 = message1.replace('[ODID]', odid);
+
 		if(orderStatus == 'IN_TRANSIT'){
 			message = message.replace('[TIMESLOT]', timeSlot ? timeSlot : config.constant.DEFAULTTIMESLOT);
+			message1 = message1.replace('[TIMESLOT]', timeSlot ? timeSlot : config.constant.DEFAULTTIMESLOT);
 		}
 		if(orderStatus == 'DELIVERED'){
 			message = message.replace('[RECEIVERNAME]', receiverName);
+			message1 = message1.replace('[RECEIVERNAME]', receiverName);
 		}
 
 		if(orderStatus == 'IN_TRANSIT')
@@ -543,7 +562,9 @@ module.exports = {
 			},async function(err,data){
 				if(err) console.error(err);
 				await config.helpers.sms.sendSMS(userData, slug, message, async function (smsData) {
-					res.send('OK');
+					await config.helpers.email.sendEmail(userData.email, subject, message1, async function (emailData) {
+						res.send('OK');
+					});
 				});
 			});
 		}
@@ -558,7 +579,9 @@ module.exports = {
 			},async function(err,data){
 				if(err) console.error(err);
 				await config.helpers.sms.sendSMS(userData, slug, message, async function (smsData) {
-					res.send('OK');
+					await config.helpers.email.sendEmail(userData.email, subject, message1, async function (emailData) {
+						res.send('OK');
+					});
 				})
 			})
 		}
@@ -571,7 +594,9 @@ module.exports = {
 			},async function(err,data){
 				if(err) console.error(err);
 				await config.helpers.sms.sendSMS(userData, slug, message, async function (smsData) {
-					res.send('OK');
+					await config.helpers.email.sendEmail(userData.email, subject, message1, async function (emailData) {
+						res.send('OK');
+					});
 				});
 			})
 		}

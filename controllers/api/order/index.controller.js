@@ -14,6 +14,7 @@ const Product = model.product;
 const Couponuses = model.coupon_uses;
 const Messagetemplate = model.message_template;
 const Transaction = model.transaction;
+const Emailtemplate = model.email_template;
 const { validationResult } = require('express-validator');
 const Razorpay = require('razorpay');
 
@@ -180,11 +181,18 @@ module.exports = {
                     message = message.replace('[CUSTOMER]', userData.name);
                     message = message.replace('[ODID]', odid);
                     await config.helpers.sms.sendSMS(userData, slug, message, async function (smsData) {
-                        return res.status(200).json({ 
-                            data: data, 
-                            status: 'success', 
-                            message: "Order placed successfully!!" 
-                        });	
+                        let emailData = await Emailtemplate.findOne({slug: 'NEW-ORDER'});
+                        let subject = emailData.subject;
+                        let message1 = emailData.message;
+                        message1 = message1.replace('[CUSTOMER]', userData.name);
+                        message1 = message1.replace('[ODID]', odid);
+                        await config.helpers.email.sendEmail(userData.email, subject, message1, async function (emailData) {
+                            return res.status(200).json({ 
+                                data: data, 
+                                status: 'success', 
+                                message: "Order placed successfully!!" 
+                            });	
+                        });
                     });
                 }
                 else
@@ -238,7 +246,6 @@ module.exports = {
                         {
                             console.log('Error-----------------',err);
                         }
-                        console.log(order);
                         data.paymentDetails = paymentDetails;
                         
                         let transactionData = {
@@ -248,7 +255,8 @@ module.exports = {
                             razorpayOrderId : paymentDetails.id,
                             paymentStatus: 'PENDING'
                         };
-                        let transaction = new Transaction(transactionData);
+                        let transaction = new 
+                        Transaction(transactionData);
                         transaction.save();
                         return res.status(200).json({ 
                             data: data, 
