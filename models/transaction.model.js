@@ -21,7 +21,7 @@ let transationSchema = new Schema({
     },
     paymentStatus: {
         type: String,
-        enum: PAYMENT_STATUS
+        enum: PAYMENT_STATUS //[ 'PENDING', 'FAILED', 'COMPLETED']
     },
     razorpayOrderId: {
         type: String,

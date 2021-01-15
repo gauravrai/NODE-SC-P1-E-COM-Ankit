@@ -49,6 +49,17 @@ module.exports = function(router) {
 		indexController.getInvoiceData
 	); 
 	router.post(
-	  config.constant.APIURL+'/checkPayment', indexController.checkPayment
+	  config.constant.APIURL+'/checkPayment', 
+	  [
+		  // auth,
+		  // [
+			  check('userId', 'User Id is required').not().isEmpty(),
+			  check('odid', 'Order Id is required').not().isEmpty(),
+			  check('paymentId', 'Payment Id is required').not().isEmpty(),
+			  check('orderId', 'Razor Pay Order Id is required').not().isEmpty(),
+			  check('walletAmount', 'Wallet Amount is required').not().isEmpty(),
+		  // ]
+	  ],
+	  indexController.checkPayment
  	); 
 }
