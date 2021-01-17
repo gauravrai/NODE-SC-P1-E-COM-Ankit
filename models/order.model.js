@@ -53,7 +53,7 @@ let orderSchema = new Schema({
     },
     paymentType: {
         type: String,
-        enum: [ 'COD', '' ],
+        enum: [ 'COD', 'ONLINE' ],
     },
     couponId: {
         type: ObjectId,
