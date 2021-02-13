@@ -100,7 +100,6 @@ module.exports = {
 				stateId : mongoose.mongo.ObjectId(req.body.stateId),
 				cityId : mongoose.mongo.ObjectId(req.body.cityId)
 			};
-			console.log(pincodeData);
 			let pincode = new Pincode(pincodeData);
 			pincode.save(function(err, data){
 				if(err){console.log(err)}
@@ -172,4 +171,20 @@ module.exports = {
 			}
 	    })
 	},
+	
+	checkPincode: function(req,res){
+		var pincode = req.body.name;
+		var id = req.body.id;
+		var search = {deletedAt:0,pincode:pincode};
+		if(id){
+			search._id = {$ne:id}
+		}
+		Pincode.find(search).exec(function(err,pincodeData){
+			if(pincodeData.length > 0){
+				res.send('OK');
+			}else{
+				res.send();
+			}
+		})
+	}
 }

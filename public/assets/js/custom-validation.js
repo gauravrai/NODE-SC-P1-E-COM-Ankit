@@ -666,6 +666,9 @@ $(document).ready(function () {
             name: {
                 required: true,
             },
+            searchTag: {
+                required: true,
+            },
             brandId: {
                 required: true,
             },
@@ -691,6 +694,9 @@ $(document).ready(function () {
             },
             name: {
                 required: "Please enter a Product Name"
+            },
+            searchTag: {
+                required: "Please enter Search Tags",
             },
             brandId: {
                 required: "Please select Brand"

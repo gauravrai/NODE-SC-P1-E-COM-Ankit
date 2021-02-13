@@ -8,6 +8,9 @@ let ProductSchema = new Schema({
     name: {
         type: String
     },
+    searchTag: {
+        type: Array
+    },
     categoryId: {
         type: ObjectId
     },

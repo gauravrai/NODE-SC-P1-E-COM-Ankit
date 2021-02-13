@@ -27,6 +27,7 @@ module.exports = function(app) {
 	var orderRoutes = require('./admin/order.routes');
 	var productRequestRoutes = require('./admin/productrequest.routes');
 	var contactRoutes = require('./admin/contact.routes');
+	var notificationRoutes = require('./admin/notification.routes');
 
 	var ajaxRoutes = require('./admin/ajax.routes');
 	var exportRoutes = require('./admin/export.routes');
@@ -58,6 +59,7 @@ module.exports = function(app) {
 	orderRoutes(router);
 	productRequestRoutes(router);
 	contactRoutes(router);
+	notificationRoutes(router);
 	
 	ajaxRoutes(router);
 	exportRoutes(router);

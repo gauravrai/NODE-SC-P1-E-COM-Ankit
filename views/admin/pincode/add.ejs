@@ -39,7 +39,8 @@
                 <span id="cityData" class="locationFields"></span>
                 <div class="form-group">
                   <label for="pincode">Pincode</label>
-                  <input type="text" name="pincode" class="form-control" id="pincode" placeholder="Pincode">
+                  <input type="text" name="pincode" class="form-control" id="pincode" placeholder="Pincode"  onblur="checkLocation('check_pincode', 'checkFromPincode', '')">
+                  <span id="name_error" class="customError"></span>
                 </div>
                 <div class="form-group">
                   <label for="shippingCharges">Shipping Charges</label>

@@ -26,7 +26,8 @@ module.exports = {
             {
                 if(string)
                 {
-                    condition.name = new RegExp(string, 'i');
+                    // condition.name = new RegExp(string, 'i');
+                    condition.$or = [ { name: new RegExp(string, 'i') }, { searchTag: new RegExp(string, 'i') } ];
                 }
                 if(categoryId)
                 {
@@ -82,6 +83,7 @@ module.exports = {
                         "offer": { $first:"$offer" },
                         "discount": { $first:"$discount" },
                         "stock": { $first:"$stock" },
+                        "searchTag": { $first:"$searchTag" },
                         "description": { $first:"$description" },
                         "featured": { $first:"$featured" },
                         "outOfStock": { $first:"$outOfStock" },

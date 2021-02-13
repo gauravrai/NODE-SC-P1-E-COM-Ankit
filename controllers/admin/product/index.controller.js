@@ -132,8 +132,9 @@ module.exports = {
 			if(previousProductData.length > 0){ 
 				uniqueCode++;
 			}
+			let searchTag = req.body.searchTag ? req.body.searchTag.split(",") : [];
 			productData = {	
-				categoryId : mongoose.mongo.ObjectId(req.body.categoryId),
+				// categoryId : mongoose.mongo.ObjectId(req.body.categoryId),
 				name : req.body.name,
 				offer : req.body.offer,
 				discount: req.body.discount,
@@ -141,7 +142,8 @@ module.exports = {
 				description : req.body.description,
 				featured : req.body.featured == 'on' ? true : false,
 				outOfStock : req.body.outOfStock == 'on' ? true : false,
-				tax : req.body.tax
+				tax : req.body.tax,
+				searchTag : searchTag
 			};
 			if(req.body.subcategoryId) {
 				productData.subcategoryId = mongoose.mongo.ObjectId(req.body.subcategoryId);
@@ -328,6 +330,7 @@ module.exports = {
 				uniqueCode++;
 			}
 			let productData = {};
+			let searchTag = req.body.searchTag ? req.body.searchTag.split(",") : [];
 			productData = {	
 				categoryId : mongoose.mongo.ObjectId(req.body.categoryId),
 				name : req.body.name,
@@ -337,7 +340,8 @@ module.exports = {
 				description : req.body.description,
 				featured : req.body.featured == 'on' ? true : false,
 				outOfStock : req.body.outOfStock == 'on' ? true : false,
-				tax : req.body.tax
+				tax : req.body.tax,
+				searchTag : searchTag
 			};
 			if(req.body.subcategoryId) {
 				productData.subcategoryId = mongoose.mongo.ObjectId(req.body.subcategoryId);
