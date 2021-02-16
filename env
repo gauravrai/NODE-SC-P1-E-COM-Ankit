@@ -1,0 +1,8 @@
+#.env
+NODE_ENV=development
+PORT=3001
+SITEURL=http://localbaniyaa.com
+DATABASE=softchilli
+ABSOLUTEPATH=/home/localbaniyaa/public_html/portaladmin/
+TIMEZONE=Asia/Kolkata
+MONGOURI=mongodb://admin:Fresn0612@164.52.200.120:27017/?authSource=admin&readPreference=primary&appname=MongoDB%20Compass&ssl=false
