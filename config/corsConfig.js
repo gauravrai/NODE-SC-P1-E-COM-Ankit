@@ -11,6 +11,7 @@ const whitelist = [
   "http://127.0.0.1:2001",
   "http://127.0.0.1:3001",
   "http://164.52.200.120:3001",
+  "http://103.152.79.178:3001",
   // Dev env
   // prod env
   // prod env
