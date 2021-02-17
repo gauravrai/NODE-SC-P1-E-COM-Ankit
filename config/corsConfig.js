@@ -28,7 +28,7 @@ const express = require('express');
                 "https://backend.localbaniyaa.com",
                 "https://backend.localbaniyaa.com:3001/admin"
 
-                ];
+        ];
 // Todo - need to whitelist dynamically
 
         const corsOptions = {
