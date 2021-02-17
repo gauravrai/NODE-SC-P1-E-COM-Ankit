@@ -89,7 +89,7 @@
 
                     <div class="form-group col-md-2">
                       <label for="stock">Unique Code</label>
-                      <input type="text" name="stock" class="form-control" id="stock" placeholder="Unique Code" value="<%=productData.stock%>">
+                      <input type="text" name="stock" class="form-control" id="stock" placeholder="Unique Code" value="<%=productData.stock%>" readonly>
                     </div> 
 
                     <div class="form-group col-md-2">
@@ -100,8 +100,14 @@
                     <div class="form-group col-md-2">
                       <label for="outOfStock">Out Of Stock</label>
                       <input type="checkbox" name="outOfStock" class="form-control" id="outOfStock" <% if(productData.outOfStock == true){ %> checked="checked" <% } %> >
-                    </div>
-
+                    </div>          
+                    <%
+                      let searchTag = Array.isArray(productData.searchTag) ? productData.searchTag.toString() : '';
+                    %>           
+                    <div class="form-group col-md-12">
+                        <label for="searchTag">Search Tag</label>
+                        <input type="text" name="searchTag" id="searchTag" class="demo-default" placeholder="Enter a search tag" value="<%=searchTag%>">
+                    </div>                     
                     <div class="form-group col-md-12">
                         <label for="description">Description</label>
                         <textarea name="description" class="form-control" id="description" placeholder="Description"><%=productData.description%></textarea>
@@ -133,12 +139,18 @@
                       <label for="price">Price</label>
                       <input type="text" name="price_<%=i%>" class="form-control" id="price_<%=i%>" placeholder="Price" value="<%=productData.inventory[i][k].price%>">
                     </div>  
+                    <% if(productData.inventory[i][k].uniqueCode != '' && typeof productData.inventory[i][k].uniqueCode != 'undefined'){ %>
                     <div class="form-group col-md-2 store-div-<%=i%>-<%=k%>">
+                      <label for="uniqueCode">Unique Code</label>
+                      <input type="text" name="uniqueCode_<%=i%>" id="uniqueCode_<%=i%>" class="form-control" value="<%=productData.inventory[i][k].uniqueCode%>" readonly>
+                    </div> 
+                    <% } %> 
+                    <div class="form-group col-md-1 store-div-<%=i%>-<%=k%>">
                       <label for="default">Default</label>
                       <input type="radio" name="default_<%=i%>" id="default_<%=i%>" class="form-control" value="<%=j++%>"  <% if(productData.inventory[i][k].default == true){ %> checked="checked" <% } %> >
                     </div>  
                     <% if(k != 0){ %>
-                    <div class="form-group col-md-2 store-div-<%=i%>-<%=k%>">
+                    <div class="form-group col-md-1 store-div-<%=i%>-<%=k%>">
                       <a class="deleteStoreField" href="javascript:void(0);"" data-storeno="<%=i%>" data-index="<%=k%>">Remove</a>
                     </div>
                     <% } %>

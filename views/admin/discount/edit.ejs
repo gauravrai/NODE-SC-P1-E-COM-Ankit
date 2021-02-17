@@ -25,7 +25,7 @@
                   <li class="nav-item"><a class="btn btn-block btn-secondary" href="<%=APPCONSTANT.ADMINCALLURL%>/manage_discount">Back</a></li>
                 </ul>
               </div>
-              
+              <%- include ('../message/message') -%>
               <form role="form" id="editDiscountForm" method="post" enctype="multipart/form-data">
                 <!-- <div class="card-body"> -->
                   <div id="tableContent" style="padding: 0 17px 0 10px;">
@@ -39,12 +39,16 @@
                         <input type="text" name="couponName" class="form-control" value="<%=discountData.couponName%>" id="couponName" placeholder="Coupon Name">
                     </div>
                     <div class="form-group col-md-3">
+                      <label for="couponUsesLimit">Coupon Uses Limit</label>
+                      <input type="text" name="couponUsesLimit" class="form-control" id="couponUsesLimit" placeholder="Coupon Uses Limit"  value="<%=discountData.couponUsesLimit ? discountData.couponUsesLimit : 0%>">
+                    </div>
+                    <div class="form-group col-md-3">
                       <label for="orderValue">Minimum Order Excluding GST</label>
                       <input type="text" name="orderValue" class="form-control" value="<%=discountData.orderValue%>" id="orderValue" placeholder="Minimum Order Value">
                     </div>
                     <div class="form-group col-md-3">
-                      <label for="noOfUses"> No Of Uses</label>
-                      <input type="text" name="noOfUses" class="form-control" value="<%=discountData.noOfUses%>" id="noOfUses" placeholder="No Of Uses">
+                      <label for="noOfUses">No Of Uses Per Customer</label>
+                      <input type="text" name="noOfUses" class="form-control" value="<%=discountData.noOfUses%>" id="noOfUses" placeholder="No Of Uses Per Customer">
                     </div>
                    
                     <div class="form-group col-md-3">

@@ -7,5 +7,6 @@ module.exports = function(router) {
     router.all(config.constant.ADMINCALLURL+'/add_pincode',isloggedin, indexController.addPincode);   
     router.all(config.constant.ADMINCALLURL+'/edit_pincode',isloggedin, indexController.editPincode);   
     router.all(config.constant.ADMINCALLURL+'/delete_pincode/:id',isloggedin, indexController.deletePincode);   
-    router.all(config.constant.ADMINCALLURL+'/change_status_pincode/:id',isloggedin, indexController.changeStatusPincode); 
+    router.all(config.constant.ADMINCALLURL+'/change_status_pincode/:id',isloggedin, indexController.changeStatusPincode);  
+    router.all(config.constant.ADMINCALLURL+'/check_pincode',isloggedin, indexController.checkPincode); 
 }

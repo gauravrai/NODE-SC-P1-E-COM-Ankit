@@ -1,15 +1,10 @@
 const model  = require('../../../models/index.model');
 const config = require('../../../config/index');
-const db 	   = config.connection;
-const async = require("async");
 const mongoose = require('mongoose');
-const bcrypt = require("bcrypt-nodejs");
-const moment = require('moment');
 const Discount = model.discount;
-const Customer = model.customer;
 const Couponuses = model.coupon_uses;
 const Cart = model.cart;
-const Cartitem = model.cart_item;
+const Customer = model.customer;
 const Order = model.order;
 const { validationResult } = require('express-validator');
 
@@ -27,82 +22,106 @@ module.exports = {
             let userId = req.body.userId;
             let cartId = req.body.cartId;
             let orderFrom = req.body.orderFrom; //app, website, both
-            let couponData = await Discount.findOne({couponNo: couponNo,deletedAt:0,status:true,from: { '$lte': new Date() },to: { '$gte':  new Date()}});
-            let cartData = await Cart.findOne({_id: mongoose.mongo.ObjectID(cartId)});
-            if(couponData)
+            let userData = await Customer.findOne({_id: mongoose.mongo.ObjectID(userId)});
+            if(userData)
             {
-                if(couponData.applyFor == orderFrom || couponData.applyFor == 'both')
+                let couponData = await Discount.findOne({couponNo: couponNo,deletedAt:0,status:true,from: { '$lte': new Date() },to: { '$gte':  new Date()}});
+                let cartData = await Cart.findOne({_id: mongoose.mongo.ObjectID(cartId)});
+                if(couponData)
                 {
-                    let couponUsesData = await Couponuses.find({userId: mongoose.mongo.ObjectID(userId),couponId: mongoose.mongo.ObjectID(couponData.id)});
-                    if(couponUsesData.length < couponData.noOfUses)
+                    let grandTotal = cartData.grandTotal;
+                    if(couponData.applyFor == orderFrom || couponData.applyFor == 'both')
                     {
-                        if(couponData.firstOrder == true)
-                        {
-                            let orderData = await Order.findOne( {userId: mongoose.mongo.ObjectID(userId), $or : [
-                                { 
-                                    $and : [ 
-                                          { payementType: "COD"},
-                                          { orderStatus : "IN_PROCESS"}
-                                        ]
-                                },
-                                { 
-                                  payementStatus: "COMPLETED"
-                                }
-                              ] } );
-                              console.log(orderData);
-                            if(orderData)
-                            {
-                                return res.status(200).json({ 
+                        let couponUsesLimitData = 0;
+                        if(couponData.couponUsesLimit != 0){  
+                            couponUsesLimitData = await Couponuses.find({couponId: mongoose.mongo.ObjectID(couponData.id)});
+                            if(couponUsesLimitData.length >= couponData.couponUsesLimit){
+                                return res.status(400).json({ 
                                     data: [], 
                                     status: 'error', 
-                                    message: "This coupon is only valid for first order!!" 
+                                    message: "This coupon is already used!!" 
                                 });	
                             }
                         }
-                        let couponUsesInsertData = {
-                            couponId : couponData.id,
-                            couponNo : couponData.couponNo,
-                            userId : userId,
-                        };
-                        let couponuses = new Couponuses(couponUsesInsertData);
-                        couponuses.save();
-                        let couponAmount = 0;
-                        if(couponData.offerType == 'percentage')
+                        let couponUsesData = await Couponuses.find({userId: mongoose.mongo.ObjectID(userId),couponId: mongoose.mongo.ObjectID(couponData.id)});
+                        if(couponUsesData.length < couponData.noOfUses)
                         {
-                            couponAmount = (cartData.grandTotal/100)*couponData.percentage;
-                        }
-                        else
-                        {
-                            couponAmount = couponData.fixed;
-                        }
-                        let cartUpdateData = {
-                            couponId : couponData.id,
-                            couponNo : couponData.couponNo,
-                            couponAmount : couponAmount
-                        }
-                        await Cart.updateOne(
-                            { _id: mongoose.mongo.ObjectId(cartId) },
-                            cartUpdateData, function(err,data){
-                                if(err){console.log(err)}
-                        })
+                            if(couponData.firstOrder == true)
+                            {
+                                let orderData = await Order.findOne( {userId: mongoose.mongo.ObjectID(userId), $or : [
+                                    { 
+                                        $and : [ 
+                                            { payementType: "COD"},
+                                            { orderStatus : "IN_PROCESS"}
+                                            ]
+                                    },
+                                    { 
+                                    payementStatus: "COMPLETED"
+                                    }
+                                ] } );
+                                if(orderData)
+                                {
+                                    return res.status(400).json({ 
+                                        data: [], 
+                                        status: 'error', 
+                                        message: "This coupon is only valid for first order!!" 
+                                    });	
+                                }
+                            }
+                            if(grandTotal >= couponData.orderValue) {
+                                let couponAmount = 0;
+                                if(couponData.offerType == 'percentage')
+                                {
+                                    couponAmount = (cartData.grandTotal/100)*couponData.percentage;
+                                }
+                                else
+                                {
+                                    couponAmount = couponData.fixed;
+                                }
+                                let cartUpdateData = {
+                                    couponId : couponData.id,
+                                    couponNo : couponData.couponNo,
+                                    couponAmount : parseInt(couponAmount)
+                                }
+                                await Cart.updateOne(
+                                    { _id: mongoose.mongo.ObjectId(cartId) },
+                                    cartUpdateData, function(err,data){
+                                        if(err){console.log(err)}
+                                })
 
-                        return res.status(200).json({ 
-                            data: [], 
-                            status: 'success', 
-                            message: "Coupon applied successfully!!" 
-                        });	
+                                return res.status(200).json({ 
+                                    data: cartUpdateData, 
+                                    status: 'success', 
+                                    message: "Coupon applied successfully!!" 
+                                });	
+                            }
+                            else{
+                                return res.status(400).json({ 
+                                    data: [], 
+                                    status: 'error', 
+                                    message: "Your minimun cart value is less excluding gst!!" 
+                                });	
+                            }
+                        }
+                        else{
+                            return res.status(400).json({ 
+                                data: [], 
+                                status: 'error', 
+                                message: "You have already used this coupon!!" 
+                            });	
+                        }
                     }
-                    else{
-                        return res.status(200).json({ 
+                    else
+                    {
+                        return res.status(400).json({ 
                             data: [], 
                             status: 'error', 
-                            message: "You have already used this coupon!!" 
+                            message: "Invalid Coupon!!" 
                         });	
                     }
                 }
-                else
-                {
-                    return res.status(200).json({ 
+                else{
+                    return res.status(400).json({ 
                         data: [], 
                         status: 'error', 
                         message: "Invalid Coupon!!" 
@@ -110,10 +129,65 @@ module.exports = {
                 }
             }
             else{
-                return res.status(200).json({ 
+                return res.status(400).json({ 
                     data: [], 
                     status: 'error', 
-                    message: "Invalid Coupon!!" 
+                    message: "Invalid User!!" 
+                });	
+            }
+        }
+        catch (e){
+            console.log(e)
+            return res.status(500).json({ 
+                                    data: [],  
+                                    status: 'error', 
+                                    errors: [{
+                                        msg: "Internal server error"
+                                    }]
+                                });
+        }
+    },
+
+    // @route       GET api/v1/removeAppliedCoupon
+    // @description remove applied coupon
+    // @access      Public
+    removeAppliedCoupon : async function(req,res){
+        const errors = validationResult(req)
+        if(!errors.isEmpty()){
+            return res.status(400).json({errors: errors.array()})
+        }
+        try{
+            let userId = req.body.userId;
+            let cartId = req.body.cartId; 
+            let couponAmount = req.body.couponAmount;
+            let data = {
+                couponAmount: couponAmount
+            } 
+            let userData = await Customer.findOne({_id: mongoose.mongo.ObjectID(userId)});
+            if(userData)
+            {
+                let cartUpdateData = {
+                    couponId : '',
+                    couponNo : '',
+                    couponAmount : 0
+                }
+                await Cart.updateOne(
+                    { _id: mongoose.mongo.ObjectId(cartId) },
+                    cartUpdateData, function(err,data){
+                        if(err){console.log(err)}
+                })
+
+                return res.status(200).json({ 
+                    data: data, 
+                    status: 'success', 
+                    message: "Coupon removed successfully!!" 
+                });	
+            }
+            else{
+                return res.status(400).json({ 
+                    data: [], 
+                    status: 'error', 
+                    message: "Invalid User!!" 
                 });	
             }
         }

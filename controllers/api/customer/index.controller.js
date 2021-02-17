@@ -4,77 +4,58 @@ const mongoose = require('mongoose');
 const jwt = require("jsonwebtoken");
 const Messagetemplate = model.message_template;
 const { validationResult } = require('express-validator')
-
-//models import
-const OTP     = model.otp;
-const Customer     = model.customer;
+const OTP = model.otp;
+const Customer = model.customer;
 const jwtSecret = config.constant.JWT_SECRET;
-var http = require('http'),
-    url = require('url');
 
 module.exports = {
     // @route       GET api/v1/addcustomer
-    // @description Customer login page check mobile number exists in otps collection, if yes update with new otp, if not intert mobile and new otp 
+    // @description Customer login and signup
     // @access      Public
     addCustomer:async function(req,res){
-        var mobile_number = req.body.mobile;
-        const otp = Math.floor(1000 + Math.random() * 9000);
-
         const errors = validationResult(req)
         if(!errors.isEmpty()){
             return res.status(400).json({errors: errors.array()})
         }
-
         try{
-            
+            let mobile = req.body.mobile;
+            let otp = Math.floor(1000 + Math.random() * 9000);
+
             let messageData = await Messagetemplate.findOne({slug: 'OTP-MESSAGE'});
             let slug = messageData.slug;
             let message = messageData.message;
             message = message.replace('[OTP]', otp);
-            await config.helpers.sms.sendOTP(mobile_number, slug, message, async function (smsData) {
-                const otpcheck = await OTP.findOne({mobile:mobile_number, status:true, deletedAt: 0});
-                if(otpcheck) {
+            await config.helpers.sms.sendOTP(mobile, slug, message, async function (smsData) {
+                let checkUser = await Customer.findOne({ mobile:mobile, status:true, deletedAt: 0 });
+                if(checkUser) {
                     let otpData = {
-                            otp  : otp
+                        otp  : otp
                     };
-                    const numberInOtp = await OTP.updateOne(
-                                                    {mobile: mobile_number},
-                                                    {
-                                                        $set: {
-                                                            otp: otp
-                                                        }
-                                                    }
-                                                )
-                    
-                    const getCustomer = await Customer.findOne({
-                                                    mobile: mobile_number
-                                                })
-                    let profileUpdated = false
-                    
-                    if(getCustomer)
-                        profileUpdated = true
-
-                    const returnData = {
-                                profileUpdated,                                
-                            }
+                    let updateCustomer = await Customer.updateOne( {mobile: mobile}, otpData );
+                    let customerData = await Customer.findOne({mobile: mobile});
+                    let returnData = {
+                        profileUpdated: customerData.profileUpdated,                                
+                    };
                     return res.status(200).json({ 
-                                data: returnData, 
-                                status: 'success', 
-                                message: "Customer OTP and mobile number verified"
-                            });                   
+                            data: returnData, 
+                            status: 'success', 
+                            message: "Customer already exits. OTP send for customer login."
+                        });                   
                 } else {
-                        const otpObj = new OTP({
-                                                "mobile": mobile_number,
-                                                otp
-                                            });
-                        otpObj.save()
-                        return res.status(200).json({
-                                        data: {
-                                        profileUpdated: false
-                                        }, 
-                                        status: 'success', 
-                                        message: "Customer added successfully"
-                                });
+                    let customerInsertData = {
+                        mobile: mobile,
+                        otp: otp
+                    }
+                    let customer = new Customer(customerInsertData);
+                    customer.save();
+                    let returnData = {
+                        profileUpdated: false,                                
+                    };
+                    return res.status(200).json({ 
+                            data: returnData, 
+                            status: 'success', 
+                            message: "Customer added successfully. OTP send for customer signin." 
+                        });
                 }
             });
         }
@@ -94,27 +75,25 @@ module.exports = {
     // @description Resend OTP 
     // @access      Public
     resendOtp:async function(req,res){
-        var mobile_number = req.body.mobile;
-        const otp = Math.floor(1000 + Math.random() * 9000);
-
         const errors = validationResult(req)
         if(!errors.isEmpty()){
             return res.status(400).json({errors: errors.array()})
         }
-
         try{
-            let otpcheck = await OTP.findOne({mobile:mobile_number, status:true, deletedAt: 0});
+            let mobile = req.body.mobile;
+            let otp = Math.floor(1000 + Math.random() * 9000);
+            let otpcheck = await Customer.findOne({mobile:mobile, status:true, deletedAt: 0});
             if(otpcheck) {
                 let otpData = {
                     otp  : otp
                 };
-                let updateOtp = await OTP.updateOne( {mobile: mobile_number}, otpData );
+                let updateOtp = await Customer.updateOne( {mobile: mobile}, otpData );
                 
                 let messageData = await Messagetemplate.findOne({slug: 'OTP-MESSAGE'});
                 let slug = messageData.slug;
                 let message = messageData.message;
                 message = message.replace('[OTP]', otp);
-                await config.helpers.sms.sendOTP(mobile_number, slug, message, async function (smsData) {
+                await config.helpers.sms.sendOTP(mobile, slug, message, async function (smsData) {
                     return res.status(200).json({ 
                                 data: otpData, 
                                 status: 'success', 
@@ -145,60 +124,43 @@ module.exports = {
     // @description Customer validate otp and mobile exists 
     // @access      Public
     checkCustomerOtp: async function(req, res) {
-
         const errors = validationResult(req)
         if(!errors.isEmpty()){
             return res.status(400).json({errors: errors.array()})
         }
-
-        const { mobile, otp } = req.body
-        
         try{
-            const customerCheck = await OTP.findOne({
-                                            mobile,
-                                            otp,
-                                            status: true, 
-                                            deletedAt: 0
-                                        });
-            
-            if(customerCheck){
-                const customer = await Customer.findOne({
-                                                mobile,
-                                                status: true, 
-                                                deletedAt: 0
-                                            });
-                let profileUpdated = false
-                if(customer)
-                    profileUpdated = true
-
-                const payload = {
-                        mobile
-                    }
-
-                jwt.sign(payload, jwtSecret, {
-                    expiresIn: 3600000
-                }, (error, token) => {
-                    if(error) throw error
-
-                    return res.status(200).json({ 
-                            data: {
-                                customer,
-                                profileUpdated,
-                                token 
-                            }, 
-                            status: 'success', 
-                            message: "Customer verification successfull!!"
-                        });
-                })
+            let { mobile, otp } = req.body;
+            let checkOtp = await Customer.findOne({ mobile, otp, status: true, deletedAt: 0 });
+            if(checkOtp){
+                if(typeof checkOtp.token == 'undefined' || checkOtp.token == '')
+                { 
+                    let payload = { mobile };
+    
+                    jwt.sign(payload, jwtSecret, {
+                        expiresIn: 3600000
+                    },async (error, token) => {
+                        if(error) throw error
+                        let data = {
+                            token  : token
+                        };
+                        let updateCustomer = await Customer.updateOne( {mobile: mobile}, data );
+                    });
+                }
+                let customerData = await Customer.findOne({mobile: mobile});
+                return res.status(200).json({ 
+                        data: customerData, 
+                        status: 'success', 
+                        message: "OTP verified successfully."
+                    });
             }
             else{
-               return res.status(400).json({ 
-                                data: [],  
-                                status: 'error', 
-                                errors: [{
-                                    msg: "Authentication failed"
-                                }]
-                            }); 
+                return res.status(400).json({ 
+                        data: [],  
+                        status: 'error', 
+                        errors: [{
+                            msg: "OTP doesn't match. Authentication failed."
+                        }]
+                    }); 
             }   
         }
         catch (e){
@@ -215,7 +177,6 @@ module.exports = {
     },
 
     customer: async function( req, res ) {
-
         const customercheck = await Customer.findOne({
                                         mobile: req.user.mobile,
                                         status: true, 
@@ -239,23 +200,10 @@ module.exports = {
         if(!errors.isEmpty()){
             return res.status(400).json({errors: errors.array()})
         }
-        let { mobile, sameAsBillingAddress, name, email, gst, billingAddress, billingCountry, billingState, billingCity, billingPincode, billingArea, billingSociety, billingTower, shippingAddress, shippingCountry, shippingState, shippingCity, shippingPincode, shippingArea, shippingSociety, shippingTower } = req.body;
-        
-        let billingAddressData = {
-            address: billingAddress ? billingAddress : '',
-            country: billingCountry ? billingCountry : '',
-            state: billingState ? mongoose.mongo.ObjectId(billingState) : '',
-            city: billingCity ? mongoose.mongo.ObjectId(billingCity) : '',
-            pincode: billingPincode ? mongoose.mongo.ObjectId(billingPincode) : '',
-            area: billingArea ? mongoose.mongo.ObjectId(billingArea) : '',
-            society: billingSociety ? mongoose.mongo.ObjectId(billingSociety) : '',
-            tower: billingTower ? mongoose.mongo.ObjectId(billingTower) : ''
-        };
-        
-        // sameAsBillingAddress = parseInt(sameAsBillingAddress) ? true : false;
-        let shippingAddressData = {};
-        if(sameAsBillingAddress) {
-            shippingAddressData = {
+        try {
+            let { mobile, sameAsBillingAddress, name, email, gst, billingAddress, billingCountry, billingState, billingCity, billingPincode, billingArea, billingSociety, billingTower, shippingAddress, shippingCountry, shippingState, shippingCity, shippingPincode, shippingArea, shippingSociety, shippingTower } = req.body;
+            
+            let billingAddressData = {
                 address: billingAddress ? billingAddress : '',
                 country: billingCountry ? billingCountry : '',
                 state: billingState ? mongoose.mongo.ObjectId(billingState) : '',
@@ -265,42 +213,58 @@ module.exports = {
                 society: billingSociety ? mongoose.mongo.ObjectId(billingSociety) : '',
                 tower: billingTower ? mongoose.mongo.ObjectId(billingTower) : ''
             };
-        }else {
-            shippingAddressData = {
-                address: shippingAddress ? shippingAddress : '',
-                country: shippingCountry ? shippingCountry : '',
-                state: shippingState ? mongoose.mongo.ObjectId(shippingState) : '',
-                city: shippingCity ? mongoose.mongo.ObjectId(shippingCity) : '',
-                pincode: shippingPincode ? mongoose.mongo.ObjectId(shippingPincode) : '',
-                area: shippingArea ? mongoose.mongo.ObjectId(shippingArea) : '',
-                society: shippingSociety ? mongoose.mongo.ObjectId(shippingSociety) : '',
-                tower: shippingTower ? mongoose.mongo.ObjectId(shippingTower) : ''
+            
+            // sameAsBillingAddress = parseInt(sameAsBillingAddress) ? true : false;
+            let shippingAddressData = {};
+            if(sameAsBillingAddress) {
+                shippingAddressData = {
+                    address: billingAddress ? billingAddress : '',
+                    country: billingCountry ? billingCountry : '',
+                    state: billingState ? mongoose.mongo.ObjectId(billingState) : '',
+                    city: billingCity ? mongoose.mongo.ObjectId(billingCity) : '',
+                    pincode: billingPincode ? mongoose.mongo.ObjectId(billingPincode) : '',
+                    area: billingArea ? mongoose.mongo.ObjectId(billingArea) : '',
+                    society: billingSociety ? mongoose.mongo.ObjectId(billingSociety) : '',
+                    tower: billingTower ? mongoose.mongo.ObjectId(billingTower) : ''
+                };
+            }else {
+                shippingAddressData = {
+                    address: shippingAddress ? shippingAddress : '',
+                    country: shippingCountry ? shippingCountry : '',
+                    state: shippingState ? mongoose.mongo.ObjectId(shippingState) : '',
+                    city: shippingCity ? mongoose.mongo.ObjectId(shippingCity) : '',
+                    pincode: shippingPincode ? mongoose.mongo.ObjectId(shippingPincode) : '',
+                    area: shippingArea ? mongoose.mongo.ObjectId(shippingArea) : '',
+                    society: shippingSociety ? mongoose.mongo.ObjectId(shippingSociety) : '',
+                    tower: shippingTower ? mongoose.mongo.ObjectId(shippingTower) : ''
+                };
+            }
+            
+            let CustomerData = {
+                name : name,
+                email : email,
+                gst : gst && typeof gst != 'undefined' ? gst : '',
+                sameAsBillingAddress: sameAsBillingAddress ? sameAsBillingAddress : false,
+                billingAddress : billingAddressData,
+                shippingAddress : shippingAddressData,
+                profileUpdated : true
             };
-        }
         
-        let CustomerData = {
-            name : name,
-            email : email,
-            gst : gst,
-            sameAsBillingAddress: sameAsBillingAddress,
-            billingAddress : billingAddressData,
-            shippingAddress : shippingAddressData
-        };
-        try {
             let customer = await Customer.findOne({ mobile: mobile });
             
             if(!customer){
                 //insert new customer profile
                 let customerPObj = await new Customer({
-                                            name,
-                                            "mobile": mobile,
-                                            email,
-                                            gst,
-                                            sameAsBillingAddress: sameAsBillingAddress,
+                                            name : name,
+                                            email : email,
+                                            mobile : mobile,
+                                            gst : gst && typeof gst != 'undefined' ? gst : '',
+                                            sameAsBillingAddress: sameAsBillingAddress ? sameAsBillingAddress : false,
                                             billingAddress : billingAddressData,
-                                            shippingAddress : shippingAddressData
+                                            shippingAddress : shippingAddressData,
+                                            profileUpdated : true
                                         });
-                customerPObj.save()
+                customerPObj.save();
                 return res.status(200).json({
                                 data: customerPObj,
                                 status: 'success', 

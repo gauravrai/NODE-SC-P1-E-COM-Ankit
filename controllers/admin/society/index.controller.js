@@ -17,8 +17,10 @@ module.exports = {
 	manageSociety: async function(req,res){
 		let moduleName = 'Location Management';
 		let pageTitle = 'Manage Society';
+		var detail = {};	
+		detail = {message:req.flash('msg')};
 		await config.helpers.permission('manage_society', req, (err,permissionData)=>{
-			res.render('admin/society/view.ejs',{layout:'admin/layout/layout', pageTitle:pageTitle, moduleName:moduleName, permissionData:permissionData});
+			res.render('admin/society/view.ejs',{layout:'admin/layout/layout', pageTitle:pageTitle, moduleName:moduleName, detail:detail, permissionData:permissionData});
 		});
 	},
 
@@ -110,7 +112,7 @@ module.exports = {
 			let society = new Society(societyData);
 			society.save(function(err, data){
 				if(err){console.log(err)}
-				req.flash('msg', {msg:'Society has been Created Successfully', status:false});	
+				req.flash('msg', {msg:'Society has been Created Successfully', status:true});	
 				res.redirect(config.constant.ADMINCALLURL+'/manage_society');
 				req.flash({});	
 			})
@@ -141,7 +143,7 @@ module.exports = {
 				{ _id: mongoose.mongo.ObjectId(req.body.id) },
 				societyData, function(err,data){
 					if(err){console.log(err)}
-					req.flash('msg', {msg:'Society has been Updated Successfully', status:false});	
+					req.flash('msg', {msg:'Society has been Updated Successfully', status:true});	
 					res.redirect(config.constant.ADMINCALLURL+'/manage_society');
 					req.flash({});	
 			})

@@ -15,8 +15,10 @@ module.exports = {
 	managePincode: async function(req,res){
 		let moduleName = 'Location Management';
 		let pageTitle = 'Manage Pincode';
+		var detail = {};	
+		detail = {message:req.flash('msg')};
 		await config.helpers.permission('manage_pincode', req, (err,permissionData)=>{
-			res.render('admin/pincode/view.ejs',{layout:'admin/layout/layout', pageTitle:pageTitle, moduleName:moduleName, permissionData:permissionData});
+			res.render('admin/pincode/view.ejs',{layout:'admin/layout/layout', pageTitle:pageTitle, moduleName:moduleName, detail:detail, permissionData:permissionData});
 		});
 	},
 
@@ -98,11 +100,10 @@ module.exports = {
 				stateId : mongoose.mongo.ObjectId(req.body.stateId),
 				cityId : mongoose.mongo.ObjectId(req.body.cityId)
 			};
-			console.log(pincodeData);
 			let pincode = new Pincode(pincodeData);
 			pincode.save(function(err, data){
 				if(err){console.log(err)}
-				req.flash('msg', {msg:'Pincode has been Created Successfully', status:false});	
+				req.flash('msg', {msg:'Pincode has been Created Successfully', status:true});	
 				res.redirect(config.constant.ADMINCALLURL+'/manage_pincode');
 				req.flash({});	
 			})
@@ -130,7 +131,7 @@ module.exports = {
 				{ _id: mongoose.mongo.ObjectId(req.body.id) },
 				pincodeData, function(err,data){
 					if(err){console.log(err)}
-					req.flash('msg', {msg:'Pincode has been Updated Successfully', status:false});	
+					req.flash('msg', {msg:'Pincode has been Updated Successfully', status:true});	
 					res.redirect(config.constant.ADMINCALLURL+'/manage_pincode');
 					req.flash({});	
 			})
@@ -170,4 +171,20 @@ module.exports = {
 			}
 	    })
 	},
+	
+	checkPincode: function(req,res){
+		var pincode = req.body.name;
+		var id = req.body.id;
+		var search = {deletedAt:0,pincode:pincode};
+		if(id){
+			search._id = {$ne:id}
+		}
+		Pincode.find(search).exec(function(err,pincodeData){
+			if(pincodeData.length > 0){
+				res.send('OK');
+			}else{
+				res.send();
+			}
+		})
+	}
 }

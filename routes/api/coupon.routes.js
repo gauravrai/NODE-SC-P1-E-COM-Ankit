@@ -16,6 +16,18 @@ module.exports = function(router) {
 		], 
 		indexController.applyCoupon
 	); 
+	router.post(
+	  config.constant.APIURL+'/removeAppliedCoupon', 
+	  [
+		  // auth,
+		  // [
+			  check('couponAmount', 'Coupon Amount is required').not().isEmpty(),
+			  check('userId', 'User Id is required').not().isEmpty(),
+			  check('cartId', 'Cart Id is required').not().isEmpty()
+		  // ]
+	  ], 
+	  indexController.removeAppliedCoupon
+  ); 
 	router.get(
 		config.constant.APIURL+'/getCoupon', indexController.getCoupon
 	); 

@@ -2,34 +2,24 @@ const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 var ObjectId = mongoose.Schema.Types.ObjectId;
 
-let RequestProductSchema = new Schema({
+let NotificationSchema = new Schema({
+    pincodeType: {
+        type: String
+    },
+    pincodeId: {
+        type: Array
+    },
+    userType: {
+        type: String
+    },
     userId: {
-        type: ObjectId
+        type: Array
     },
-    productId: {
-        type: ObjectId
-    },
-    name: {
+    expiryDate: {
         type: String
     },
-    email: {
+    message: {
         type: String
-    },
-    mobile: {
-        type: String
-    },
-    address: {
-        type: String
-    },
-    pincode: {
-        type: String
-    },
-    description: {
-        type: String
-    },
-    isReplied: {
-        type: Boolean,
-        default : false
     },
     status: {
         type: Boolean,
@@ -50,4 +40,4 @@ let RequestProductSchema = new Schema({
 });
 
 // Export the model
-module.exports = mongoose.model('Request_Product', RequestProductSchema);
+module.exports = mongoose.model('notification', NotificationSchema);

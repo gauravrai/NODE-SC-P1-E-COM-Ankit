@@ -1,41 +1,36 @@
 const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
+var SchemaTypes = mongoose.Schema.Types;
 var ObjectId = mongoose.Schema.Types.ObjectId;
+const constant = '../config/constant';
 
-let CustomerSchema = new Schema({
+const { PAYMENT_STATUS } = constant;
 
-    mobile: {
-        type: String,
-        required: true,
-        unique: true
+let transationSchema = new Schema({
+    userId: {
+        type: ObjectId,
     },
-    name: {
-        type: String,
-    },
-    email: {
-        type: String
-    },
-    gst: {
+    odid: {
         type: String,
     },
-    sameAsBillingAddress: {
-        type: Boolean
-    },
-    billingAddress: {
-        type: Object
-    },
-    shippingAddress: {
-        type: Object
-    },
-    otp: {
-        type: Number,
-    },
-    profileUpdated: {
-        type: Boolean,
-        default : false
-    },
-    token: {
+    receiptNo: {
         type: String,
+    },
+    totalAmount: {
+        type: Number
+    },
+    paymentStatus: {
+        type: String,
+        enum: PAYMENT_STATUS //[ 'PENDING', 'FAILED', 'COMPLETED']
+    },
+    razorpayOrderId: {
+        type: String,
+    },
+    razorpayPaymentId: {
+        type: String,
+    },
+    razorpayResponse: {
+        type: Object,
     },
     status: {
         type: Boolean,
@@ -56,4 +51,4 @@ let CustomerSchema = new Schema({
 });
 
 // Export the model
-module.exports = mongoose.model('customer', CustomerSchema);
+module.exports = mongoose.model('transation', transationSchema);

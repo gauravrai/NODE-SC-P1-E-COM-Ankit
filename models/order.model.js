@@ -14,6 +14,9 @@ let orderSchema = new Schema({
     odid: {
         type: String,
     },
+    receiptNo: {
+        type: String,
+    },
     grandTotal: {
         type: Number
     },
@@ -50,7 +53,7 @@ let orderSchema = new Schema({
     },
     paymentType: {
         type: String,
-        enum: [ 'COD', '' ],
+        enum: [ 'COD', 'ONLINE' ],
     },
     couponId: {
         type: ObjectId,

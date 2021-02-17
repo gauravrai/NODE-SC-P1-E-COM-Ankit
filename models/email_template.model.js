@@ -2,34 +2,18 @@ const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 var ObjectId = mongoose.Schema.Types.ObjectId;
 
-let RequestProductSchema = new Schema({
-    userId: {
-        type: ObjectId
-    },
-    productId: {
-        type: ObjectId
-    },
+let EmailTemplateSchema = new Schema({
     name: {
         type: String
     },
-    email: {
+    slug: {
         type: String
     },
-    mobile: {
+    message: {
         type: String
     },
-    address: {
+    subject: {
         type: String
-    },
-    pincode: {
-        type: String
-    },
-    description: {
-        type: String
-    },
-    isReplied: {
-        type: Boolean,
-        default : false
     },
     status: {
         type: Boolean,
@@ -50,4 +34,4 @@ let RequestProductSchema = new Schema({
 });
 
 // Export the model
-module.exports = mongoose.model('Request_Product', RequestProductSchema);
+module.exports = mongoose.model('Email_Template', EmailTemplateSchema);

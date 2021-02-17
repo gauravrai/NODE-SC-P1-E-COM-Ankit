@@ -38,6 +38,7 @@
                         <th>Requested date</th>
                         <th>Address</th>
                         <th>Pincode</th>
+                        <th>Action</th>
                       </tr>
                   </thead>
                   <tfoot>
@@ -50,6 +51,7 @@
                         <th>Requested date</th>
                         <th>Address</th>
                         <th>Pincode</th>
+                        <th>Action</th>
                       </tr>
                   </tfoot>
               </table>
@@ -63,3 +65,86 @@
       </div>
     </section>
   </div>
+
+<div id="mailModal" class="modal fade" role="dialog">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h4 class="modal-title">Reply Mail</h4>
+        <button type="button" class="close" data-dismiss="modal">&times;</button>
+      </div>
+      <div class="modal-body">
+        <span id="mailMessage"></span>
+        <form role="form" id="mailReplyForm" method="post">
+          <input type="hidden" name="id" class="form-control" id="id">
+          <input type="hidden" name="email" class="form-control" id="email">
+          <input type="hidden" name="name" class="form-control" id="name">
+          <div class="card-body">
+            <div class="form-group">
+              <label for="to">To</label>
+              <input type="text" name="to" class="form-control" id="to" placeholder="To" readonly disabled>
+            </div>
+            <div class="form-group">
+              <label for="subject">Subject</label>
+              <input type="text" name="subject" class="form-control" id="subject" placeholder="Subject">
+            </div>
+            <div class="form-group">
+              <label for="message">Message</label>
+              <textarea name="message" class="form-control" id="message" placeholder="Message"></textarea>
+            </div>
+          </div>
+          <div class="card-footer">
+            <button type="button" class="btn btn-primary" id="sendMail">Submit</button>
+          </div>
+        </form>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+      </div>
+    </div>
+
+  </div>
+</div>
+<script>
+  $('body').on('click', '.mailBtn', function() {
+    let email = $(this).attr('data-email');
+    let id = $(this).attr('data-id');
+    let name = $(this).attr('data-name');
+    $('#to').val(email);
+    $('#email').val(email);
+    $('#id').val(id);
+    $('#name').val(name);
+  });
+
+  $('#sendMail').on('click', function () {
+    let id = $('#id').val();
+    let email = $('#email').val();
+    let subject = $('#subject').val();
+    let message = $('#message').val();
+    let name = $('#name').val();
+    $.ajax({
+      type: 'POST',
+      url: "send_reply_product_request",
+      data: {id:id, email:email, subject:subject, message:message, name: name},
+      success: function(response) {
+        $( "body" ).animate({ scrollTop: 0 }, 500);
+        if(response == 'done')
+        {
+          $("#mailMessage").html(`<div class="alert alert-success alert-dismissible">
+                                  <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
+                                  <h5><i class="icon fas fa-check"></i> Success!</h5>
+                                  Mail Send Successfully.
+                                </div>`);
+          setTimeout("location.reload();",2000);
+        }else{
+          $("#mailMessage").html(`<div class="alert alert-danger alert-dismissible">
+                                  <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
+                                  <h5><i class="icon fas fa-check"></i> Error!</h5>
+                                  Sorry, We couldn't send mail. Please try again.
+                                </div>`);
+          setTimeout('$("#mailModal .close").click();',3000);
+        }
+      }
+    });
+  });
+</script>

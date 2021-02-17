@@ -50,11 +50,11 @@ module.exports = {
 
 	create:function(req,res){
 		
-		var Admin = new admin({
+		var admin = new Admin({
 			username:"masteradmin",
 			password:bcrypt.hashSync("12345678"),
 		})
-		Admin.save()
+		admin.save()
 		.then(data => {
 			res.send(data);
 		}).catch(err => {
