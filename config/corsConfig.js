@@ -21,6 +21,9 @@ const express = require('express');
                 "https://www.localbaniyaa.com",
                 "https://localbaniyaa.com",
                 "https://localbaniyaa.com:3001/admin"
+                "http://www.backend.localbaniyaa.com",
+                "http://backend.localbaniyaa.com",
+                "http://backend.localbaniyaa.com:3001/admin"
 
                 ];
 // Todo - need to whitelist dynamically
