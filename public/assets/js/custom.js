@@ -477,8 +477,6 @@ $(document).on("change", ".productId", function(){
     });
 });
 
-
-
 $('#select_all').on('click', function () {
 	if (this.checked) {
 		$('.all_check').each(function () {
@@ -496,4 +494,53 @@ $('body').on("click", ".all_check", function () {
 	} else {
 		$('#select_all').prop('checked', false);
 	}
+});
+
+function checkLocation(controller, checkType,user_id)
+{
+	let name = '';
+	let id = 'name';
+    if(checkType=='checkFromName')
+    {
+        name = $('#name').val();
+    }
+    if(checkType=='checkFromPincode')
+    {
+		name = $('#pincode').val();
+		id = 'pincode';
+    }
+    if(name!='')
+    {
+        $.ajax({
+            type: "POST",
+            url: controller,
+            data: { name:name, id:user_id },
+            success: function(response)
+            {
+                if(response=='OK')
+                {
+					$("#"+id).addClass('is-invalid');
+                    $("#submitBtn").attr("disabled",true);
+                    $('#name_error').html(id+' already exist. Please enter different'+id+'.');
+                }
+                else
+                {
+					$("#"+id).removeClass('is-invalid');
+                    $("#submitBtn").attr("disabled",false);
+                    $('#name_error').html('');
+                }
+            }
+        });
+    }
+}
+
+$('.demo-default').selectize({
+    delimiter: ',',
+    persist: false,
+    create: function(input) {
+        return {
+            value: input,
+            text: input
+        }
+    }
 });

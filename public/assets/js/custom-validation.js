@@ -666,6 +666,12 @@ $(document).ready(function () {
             name: {
                 required: true,
             },
+            searchTag: {
+                required: true,
+            },
+            brandId: {
+                required: true,
+            },
             offer: {
                 required: true, 
             },
@@ -688,6 +694,12 @@ $(document).ready(function () {
             },
             name: {
                 required: "Please enter a Product Name"
+            },
+            searchTag: {
+                required: "Please enter Search Tags",
+            },
+            brandId: {
+                required: "Please select Brand"
             },
             offer: {
                 required: "Please Select Product Offer"
@@ -726,6 +738,9 @@ $(document).ready(function () {
             couponName: {
                 required: true,
             },
+            couponUsesLimit: {
+                required: true,
+            },
             orderValue: {
                 required: true,
             },
@@ -755,11 +770,14 @@ $(document).ready(function () {
             couponName: {
                 required: "Please Enter Coupon Name"
             },
+            couponUsesLimit: {
+                required: "Please Enter Coupon Uses Limit"
+            },
             orderValue: {
                 required: "Please Enter Minimum Order Excluding GST"
             },
             noOfUses: {
-                required: "Please enter No Of Uses"
+                required: "Please enter No Of Uses Per Customer"
             },
             offerType: {
                 required: "Please Enter Offer Type"
@@ -803,9 +821,11 @@ $(document).ready(function () {
             },
             multipleOf: {
                 required: true, 
+                number: true
             },
             freeItem: {
                 required: true,
+                number: true
             },
             applyFor: {
                 required: true,
@@ -846,10 +866,12 @@ $(document).ready(function () {
                 required: "Please Enter to Date"
             },
             multipleOf: {
-                required: "Please Enter Multiple Of"
+                required: "Please Enter Multiple Of",
+                number: "Please Enter digits only"
             },
             freeItem: {
-                required: "Please Enter Free Item"
+                required: "Please Enter Free Item",
+                number: "Please Enter digits only"
             },
             offerType: {
                 required: "Please enter Offer Type"
@@ -907,10 +929,12 @@ $(document).ready(function () {
                 required: true,
             },
             multipleOf: {
-                required: true, 
+                required: true,
+                number: true 
             },
             freeItem: {
                 required: true,
+                number: true
             },
             applyFor: {
                 required: true,
@@ -951,10 +975,12 @@ $(document).ready(function () {
                 required: "Please Enter to Date"
             },
             multipleOf: {
-                required: "Please Enter Multiple Of"
+                required: "Please Enter Multiple Of",
+                number: "Please Enter digits only"
             },
             freeItem: {
-                required: "Please Enter Free Item"
+                required: "Please Enter Free Item",
+                number: "Please Enter digits only"
             },
             offerType: {
                 required: "Please enter Offer Type"

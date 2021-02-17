@@ -253,6 +253,17 @@ $(document).ready(function() {
             type: "POST",          
         }
     });
+
+    $('#notificationTable').DataTable( {
+        "scrollX": true,
+        "processing": true,
+        "serverSide": true,
+        "ordering": false,
+        "ajax": {
+            url: 'list_notification',
+            type: "POST",          
+        }
+    });
 });
 
 //Delete data function
