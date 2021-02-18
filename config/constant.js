@@ -7,6 +7,7 @@ var basic_path = process.env.ABSOLUTEPATH;
 module.exports = {
 
     SITEURL: SITEURL,
+    SITEURLIMG: SITEURLIMG,
     ABSOLUTEPATH: ABSOLUTEPATH,
     SITENAME: "Local Baniyaa",
     ADMINSITEURL: SITEURL + 'admin/',
