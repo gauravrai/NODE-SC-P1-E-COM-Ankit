@@ -3,3 +3,5 @@ node_modules/
 public/uploads/
 
 lbfrontend.code-workspace
+lbadminworkspace.code-workspace
+/nbproject/private/
