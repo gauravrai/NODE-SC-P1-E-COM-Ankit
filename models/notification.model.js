@@ -3,12 +3,12 @@ const Schema = mongoose.Schema;
 var ObjectId = mongoose.Schema.Types.ObjectId;
 
 let NotificationSchema = new Schema({
-    pincodeType: {
-        type: String
-    },
-    pincodeId: {
-        type: Array
-    },
+    // pincodeType: {
+    //     type: String
+    // },
+    // pincodeId: {
+    //     type: Array
+    // },
     userType: {
         type: String
     },
@@ -23,11 +23,11 @@ let NotificationSchema = new Schema({
     },
     status: {
         type: Boolean,
-        default : true
+        default: true
     },
     deletedAt: {
         type: Number,
-        default : 0
+        default: 0
     },
     createdAt: {
         type: Date,

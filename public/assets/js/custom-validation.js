@@ -27,7 +27,7 @@ $(document).ready(function () {
             $(element).removeClass('is-invalid');
         }
     });
-    
+
     $('#addAdministratorForm, #editAdministratorForm').validate({
         rules: {
             name: {
@@ -85,7 +85,7 @@ $(document).ready(function () {
             $(element).removeClass('is-invalid');
         }
     });
-    
+
     $('#addCategoryForm, #editCategoryForm').validate({
         rules: {
             name: {
@@ -133,7 +133,7 @@ $(document).ready(function () {
             $(element).removeClass('is-invalid');
         }
     });
-    
+
     $('#addSubCategoryForm, #editSubCategoryForm').validate({
         rules: {
             categoryId: {
@@ -143,7 +143,7 @@ $(document).ready(function () {
                 required: true,
             },
             slug: {
-                required: true,   
+                required: true,
             },
             thumbnail: {
                 required: true,
@@ -212,7 +212,7 @@ $(document).ready(function () {
             $(element).removeClass('is-invalid');
         }
     });
-    
+
     $('#addCityForm, #editCityForm').validate({
         rules: {
             stateId: {
@@ -242,7 +242,7 @@ $(document).ready(function () {
             $(element).removeClass('is-invalid');
         }
     });
-    
+
     $('#addPincodeForm, #editPincodeForm').validate({
         rules: {
             stateId: {
@@ -292,7 +292,7 @@ $(document).ready(function () {
             $(element).removeClass('is-invalid');
         }
     });
-    
+
     $('#addAreaForm, #editAreaForm').validate({
         rules: {
             stateId: {
@@ -334,7 +334,7 @@ $(document).ready(function () {
             $(element).removeClass('is-invalid');
         }
     });
-    
+
     $('#addSocietyForm, #editSocietyForm').validate({
         rules: {
             stateId: {
@@ -382,7 +382,7 @@ $(document).ready(function () {
             $(element).removeClass('is-invalid');
         }
     });
-    
+
     $('#addTowerForm, #editTowerForm').validate({
         rules: {
             stateId: {
@@ -673,19 +673,19 @@ $(document).ready(function () {
                 required: true,
             },
             offer: {
-                required: true, 
+                required: true,
             },
             discount: {
-                required: true, 
+                required: true,
             },
             stock: {
-                required: true, 
+                required: true,
             },
             description: {
-                required: true, 
+                required: true,
             },
             tax: {
-                required: true, 
+                required: true,
             },
         },
         messages: {
@@ -748,10 +748,10 @@ $(document).ready(function () {
                 required: true,
             },
             offerType: {
-                required: true, 
+                required: true,
             },
             from: {
-                required: true, 
+                required: true,
             },
             to: {
                 required: true,
@@ -807,20 +807,20 @@ $(document).ready(function () {
             $(element).removeClass('is-invalid');
         }
     });
-    
+
     $('#addOfferForm').validate({
         rules: {
             name: {
                 required: true,
             },
             from: {
-                required: true, 
+                required: true,
             },
             to: {
                 required: true,
             },
             multipleOf: {
-                required: true, 
+                required: true,
                 number: true
             },
             freeItem: {
@@ -849,10 +849,10 @@ $(document).ready(function () {
                 required: true,
             },
             freeVarient: {
-                required: true, 
+                required: true,
             },
             bannerImage: {
-                required: true, 
+                required: true,
             }
         },
         messages: {
@@ -916,21 +916,21 @@ $(document).ready(function () {
             $(element).removeClass('is-invalid');
         }
     });
-    
+
     $('#editOfferForm').validate({
         rules: {
             name: {
                 required: true,
             },
             from: {
-                required: true, 
+                required: true,
             },
             to: {
                 required: true,
             },
             multipleOf: {
                 required: true,
-                number: true 
+                number: true
             },
             freeItem: {
                 required: true,
@@ -958,10 +958,10 @@ $(document).ready(function () {
                 required: true,
             },
             freeVarient: {
-                required: true, 
+                required: true,
             },
             bannerImagehidden: {
-                required: true, 
+                required: true,
             }
         },
         messages: {
@@ -1172,6 +1172,48 @@ $(document).ready(function () {
             uploadProduct: {
                 required: "Please upload file"
             }
+        },
+        errorElement: 'span',
+        errorPlacement: function (error, element) {
+            error.addClass('invalid-feedback');
+            element.closest('.form-group').append(error);
+        },
+        highlight: function (element, errorClass, validClass) {
+            $(element).addClass('is-invalid');
+        },
+        unhighlight: function (element, errorClass, validClass) {
+            $(element).removeClass('is-invalid');
+        }
+    });
+
+    $('#addNotificationrForm, #editNotificationForm').validate({
+        rules: {
+            // pincodeType: {
+            //     required: true,
+            // },
+            userType: {
+                required: true,
+            },
+            expiryDate: {
+                required: true,
+            },
+            message: {
+                required: true,
+            },
+        },
+        messages: {
+            // pincodeType: {
+            //     required: "Please select a Pincode Type",
+            // },
+            userType: {
+                required: "Please select a User Type",
+            },
+            expiryDate: {
+                required: "Please select a Expiry Date",
+            },
+            message: {
+                required: "Please enter Message",
+            },
         },
         errorElement: 'span',
         errorPlacement: function (error, element) {
