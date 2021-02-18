@@ -1,46 +1,71 @@
-corsConfig.js
-const express = require('express');
-        const cors = require('cors');
-        const whitelist = [
-                // Development origin and ports
-                "http://localhost:2001",
-                "http://localhost:3001",
-                "http://localhost:3000",
-                "http://localhost:5000",
-                "http://localhost:4200",
-                "http://127.0.0.1:2001",
-                "http://127.0.0.1:3001",
-                "http://164.52.200.120:3001",
-                "https://103.152.79.178:3001",
-                "http://103.152.79.178:3001",
-                // Dev env
-                // prod env
-                // prod env
-                "http://www.localbaniyaa.com:3001",
-                "http://www.localbaniyaa.com:3001/admin",
-                "http://www.localbaniyaa.com",
-                "https://www.localbaniyaa.com",
-                "https://localbaniyaa.com",
-                "https://localbaniyaa.com:3001/admin"
-                "http://www.backend.localbaniyaa.com",
-                "http://backend.localbaniyaa.com",
-                "http://backend.localbaniyaa.com:3001/admin"
+constant
+const dotenv = require('dotenv').config();
+var SITEURL = process.env.SITEURL + ":" + process.env.PORT + '/';
+var SITEURLIMG = process.env.SITEURL + '/';
+var ABSOLUTEPATH = process.env.ABSOLUTEPATH;
+var basic_path = process.env.ABSOLUTEPATH;
+module.exports = {
 
-                ];
-// Todo - need to whitelist dynamically
+    SITEURL: SITEURL,
+    ABSOLUTEPATH: ABSOLUTEPATH,
+    SITENAME: "Local Baniyaa",
+    ADMINSITEURL: SITEURL + 'admin/',
+    ADMINCALLURL: '/admin',
+    APIURL: '/api/v1',
+    TIMEZONE: process.env.TIMEZONE,
+    FORMATETIME: 'DD-MM-YYYY hh:mm A',
+    COMPANYLOGO: SITEURL + "assets/media/logo/logo.png",
+    JWT_SECRET: "local_BnaiyaSecret",
 
-        const corsOptions = {
-        origin: function (origin, callback) {
-        // allow requests with no origin
-        // (like mobile apps or curl requests)
-        if (!origin) return callback(null, true);
-                if (whitelist.indexOf(origin) === - 1) {
-        var msg = 'The CORS policy for this site [ ' + origin + ' ] does not allow access from the specified Origin.';
-                console.log(msg);
-                return callback(new Error(msg), false);
-        }
-        return callback(null, true);
-        }
-        }
+    PAGENO: 1,
+    LIMIT: 10,
+    PRODUCTIMAGELENGTH: 2,
 
-module.exports = { corsOptions };
+    PRODUCTTHUMBNAILUPLOADPATH: './public/uploads/product/thumbnail/',
+    PRODUCTSMALLUPLOADPATH: './public/uploads/product/small/',
+    PRODUCTLARGEUPLOADPATH: './public/uploads/product/large/',
+    PRODUCTTHUMBNAILSHOWPATH: SITEURLIMG + 'uploads/product/thumbnail/',
+    PRODUCTSMALLSHOWPATH: SITEURLIMG + 'uploads/product/small/',
+    PRODUCTLARGESHOWPATH: SITEURLIMG + 'uploads/product/large/',
+
+    CATEGORYTHUMBNAILUPLOADPATH: './public/uploads/category/thumbnail/',
+    CATEGORYSMALLUPLOADPATH: './public/uploads/category/small/',
+    CATEGORYLARGEUPLOADPATH: './public/uploads/category/large/',
+    CATEGORYTHUMBNAILSHOWPATH: SITEURLIMG + 'uploads/category/thumbnail/',
+    CATEGORYSMALLSHOWPATH: SITEURLIMG + 'uploads/category/small/',
+    CATEGORYLARGESHOWPATH: SITEURLIMG + 'uploads/category/large/',
+
+    SUBCATEGORYTHUMBNAILUPLOADPATH: './public/uploads/subcategory/thumbnail/',
+    SUBCATEGORYSMALLUPLOADPATH: './public/uploads/subcategory/small/',
+    SUBCATEGORYLARGEUPLOADPATH: './public/uploads/subcategory/large/',
+    SUBCATEGORYTHUMBNAILSHOWPATH: SITEURLIMG + 'uploads/subcategory/thumbnail/',
+    SUBCATEGORYSMALLSHOWPATH: SITEURLIMG + 'uploads/subcategory/small/',
+    SUBCATEGORYLARGESHOWPATH: SITEURLIMG + 'uploads/subcategory/large/',
+
+    OFFERBANNERUPLOADPATH: './public/uploads/offerbanner/',
+    OFFERBANNERSHOWPATH: SITEURLIMG + 'uploads/offerbanner/',
+
+    INVOICEPATH: './public/uploads/invoice/',
+
+    SAMPLECSV: basic_path + '/public/uploads/samplecsv/',
+    PRODUCTCSVUPLOADPATH: './public/uploads/productcsv/',
+    PRODUCTCSVPATH: basic_path + '/public/uploads/productcsv/',
+
+    ORDER_STATUS: ['NEW', 'IN_PROCESS', 'IN_TRANSIT', 'DELIVERED', 'CANCELED'],
+    MESSAGE_SLUG: ['NEW-ORDER', 'IN-PROCESS-ORDER', 'IN-TRANSIT-ORDER', 'DELIVERED-ORDER', 'CANCELED-ORDER'],
+    PAYMENT_STATUS: ['PENDING', 'FAILED', 'COMPLETED'],
+    TIME_SLOT: ['8:00AM - 12:00PM', '12:00PM - 04:00PM', '04:00PM - 08:00PM'],
+    DEFAULTTIMESLOT: '8:00AM - 12:00PM',
+
+    SMS_API_USERNAME: 'evamastuT',
+    SMS_API_KEY: 'F46C7-CF479',
+    SMS_API_SID: 'EVMSTU',
+
+    RAZORPAY_KEY_ID: 'rzp_test_0kyyIasnFgb31Z',
+    RAZORPAY_KEY_SECRET: 'B1CSi3hSUNmIJCt1Tqp5UzPX',
+
+    CLIENT_GST_NO: '22AAAAA0000A1Z5',
+    CLIENT_GST_STATE_CODE: '09',
+    CLIENT_PAN: 'FSXP8037',
+    CLIENT_STATE: 'Uttar Pradesh',
+}
