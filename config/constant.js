@@ -15,7 +15,7 @@ module.exports = {
     APIURL: '/api/v1',
     TIMEZONE: process.env.TIMEZONE,
     FORMATETIME: 'DD-MM-YYYY hh:mm A',
-    COMPANYLOGO: SITEURL + "assets/media/logo/logo.png",
+    COMPANYLOGO: SITEURLIMG + "assets/media/logo/logo.png",
     JWT_SECRET: "local_BnaiyaSecret",
 
     PAGENO: 1,
