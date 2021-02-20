@@ -12,6 +12,8 @@ module.exports = {
         }
         try {
             let userId = req.body.userId;
+            console.log('-----------userId----------------',userId);
+            console.log('-----------typeof userId----------------',typeof userId);
             let notificationData = await Notification.find({ deletedAt: 0, status: true, expiryDate: { '$gte': new Date() }, userId: { $in: userId } });
             console.log({ deletedAt: 0, status: true, expiryDate: { '$gte': new Date() }, userId: { $in: userId } });
             console.log(notificationData);

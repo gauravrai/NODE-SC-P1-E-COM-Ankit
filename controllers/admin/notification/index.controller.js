@@ -95,6 +95,7 @@ module.exports = {
 				expiryDate: moment(req.body.expiryDate).format('YYYY-MM-DD'),
 				message: req.body.message,
 			};
+                        console.log(notificationData);
 			let notification = new Notification(notificationData);
 			notification.save(function (err, data) {
 				if (err) { console.log(err) }
