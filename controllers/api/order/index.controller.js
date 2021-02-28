@@ -236,7 +236,11 @@ module.exports = {
                                 await config.helpers.sms.sendSMS(userData, slug, message, async function (smsData) {
                                 });
                         })
+<<<<<<< HEAD
                     }   
+=======
+                    } 
+>>>>>>> 9f4a8f2f7b21f44ef9f4592774a665883a40a6bc
                     if(paymentType == 'WALLET'){
                         let orderUpdateData = {
                             paymentStatus : 'COMPLETED',
@@ -261,13 +265,13 @@ module.exports = {
                                 });	
                             });
                         });
-                    }else{
+                    }else{  
                         let instance = new Razorpay({ key_id: config.constant.RAZORPAY_KEY_ID, key_secret: config.constant.RAZORPAY_KEY_SECRET })
                         let payAmount = req.body.payAmount;
                         let options = {
-                        amount: 100,  // amount in the smallest currency unit
-                        currency: "INR",
-                        receipt: receiptNo
+                          amount: 100,  // amount in the smallest currency unit
+                          currency: "INR",
+                          receipt: receiptNo
                         };
                         instance.orders.create(options, function(err, paymentDetails) {
                             if(err)
@@ -275,7 +279,6 @@ module.exports = {
                                 console.log('Error-----------------',err);
                             }
                             data.paymentDetails = paymentDetails;
-                            
                             let transactionData = {
                                 userId : userId,
                                 odid : odid,

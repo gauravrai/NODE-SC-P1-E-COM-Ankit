@@ -16,7 +16,7 @@ let NotificationSchema = new Schema({
         type: Array
     },
     expiryDate: {
-        type: String
+        type: Date 
     },
     message: {
         type: String
