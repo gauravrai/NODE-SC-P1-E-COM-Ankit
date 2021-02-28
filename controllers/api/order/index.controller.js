@@ -236,11 +236,7 @@ module.exports = {
                                 await config.helpers.sms.sendSMS(userData, slug, message, async function (smsData) {
                                 });
                         })
-<<<<<<< HEAD
-                    }   
-=======
                     } 
->>>>>>> 9f4a8f2f7b21f44ef9f4592774a665883a40a6bc
                     if(paymentType == 'WALLET'){
                         let orderUpdateData = {
                             paymentStatus : 'COMPLETED',
