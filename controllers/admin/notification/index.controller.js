@@ -62,6 +62,10 @@ module.exports = {
 						arr1.push(moment(data[i].expiryDate).format('DD-MM-YYYY'));
 						let userType = data[i].userType == 'allUser' ? 'All User' : 'Selected User';
 						arr1.push(userType);
+						if(permissionData.edit=='1'){
+						$but_edit = '&nbsp;&nbsp;<span><a href="'+ADMINCALLURL+'/edit_notification?id='+data[i]._id+'" class="btn btn-flat btn-info btn-outline-primary" title="Edit"><i class="fas fa-edit"></i></a></span>';
+						}
+						arr1.push($but_edit);
 						arr.push(arr1);
 					}
 					obj.data = arr;
@@ -101,6 +105,45 @@ module.exports = {
 				req.flash('msg', { msg: 'Notification has been Send Successfully', status: true });
 				res.redirect(config.constant.ADMINCALLURL + '/manage_notification');
 				req.flash({});
+			})
+		}
+	},
+
+	editNotification: async function (req, res) {
+		if (req.method == "GET") {
+			let moduleName = 'Notification Management';
+			let pageTitle = 'Edit Notification';
+			let id = req.body.id;
+			let notificationData = await Notification.findOne({_id: mongoose.mongo.ObjectId(id), deletedAt: 0 });	
+			
+			let pincodeData = await Pincode.find({ status: true, deletedAt: 0 });
+			let customerData = await Customer.find({ status: true, deletedAt: 0 });
+			res.render('admin/notification/edit.ejs', { layout: 'admin/layout/layout', pageTitle: pageTitle, moduleName: moduleName, pincodeData: pincodeData, customerData: customerData, notificationData:notificationData, moment:moment });
+		} else {
+			let userType = req.body.userType;
+			let userId = req.body.userId;
+			if (userType == 'allUser') {
+				userId = [];
+				let customerData = await Customer.find({ status: true, deletedAt: 0 }, { id: 1 });
+				for (let i = 0; i < customerData.length; i++) {
+					userId.push(customerData[i]._id.toString());
+				}
+			}
+			let notificationData = {
+				// pincodeType : req.body.pincodeType,
+				// pincodeId : req.body.pincodeId ? req.body.pincodeId : [],
+				userType: userType,
+				userId: userId,
+				expiryDate: moment(req.body.expiryDate).format('YYYY-MM-DD'),
+				message: req.body.message,
+			};
+			await Notification.updateOne(
+				{ _id: mongoose.mongo.ObjectId(req.body.id) },
+				notificationData, function(err,data){
+					if(err){console.log(err)}
+					req.flash('msg', {msg:'Notification has been updated Successfully', status:true});	
+					res.redirect(config.constant.ADMINCALLURL+'/manage_notification');
+					req.flash({});
 			})
 		}
 	}

@@ -1,0 +1,139 @@
+<style>
+  .select2-container--default {
+    width: 100% !important;
+  }
+</style>
+<div class="content-wrapper">
+  <section class="content-header">
+    <div class="container-fluid">
+      <div class="row mb-2">
+        <div class="col-sm-6">
+          <h1>
+            <%=pageTitle%>
+          </h1>
+        </div>
+        <div class="col-sm-6">
+          <ol class="breadcrumb float-sm-right">
+            <li class="breadcrumb-item"><a href="javascript:void(0)">
+                <%=moduleName%>
+              </a></li>
+            <li class="breadcrumb-item active">
+              <%=pageTitle%>
+            </li>
+          </ol>
+        </div>
+      </div>
+    </div>
+  </section>
+  <section class="content">
+    <div class="container-fluid">
+      <div class="row">
+        <div class="col-md-12">
+          <div class="card card-primary card-outline">
+            <div class="card-header d-flex p-0">
+              <h3 class="card-title p-3">Person Information</h3>
+              <ul class="nav nav-pills ml-auto p-2">
+                <li class="nav-item"><a class="btn btn-block btn-secondary"
+                    href="<%=APPCONSTANT.ADMINCALLURL%>/manage_notification">Back</a></li>
+              </ul>
+            </div>
+            <form role="form" id="addNotificationrForm" method="post">
+              <div class="card-body row">
+                <!--<div class="form-group col-md-12">
+                  <label for="pincodeType">Pincode Type</label><br>
+                  <input type="radio" id="allPincode" name="pincodeType" value="allPincode">
+                  <label for="allPincode">All</label>
+                  <input type="radio" id="selectedPincode" name="pincodeType" value="selectedPincode">
+                  <label for="selectedPincode">Selected</label>
+                </div>
+                <div class="form-group col-md-12" style="display: none;" id="pincodeDiv">
+                  <label for="pincode">Select Pincode</label>
+                  <select name="pincodeId" class="form-control select2" id="pincodeId" multiple>
+                    <option value="">Select Pincode</option>
+                    <% for(let i=0; i < pincodeData.length; i++){ %>
+                      <option value="<%=pincodeData[i].id%>">
+                        <%=pincodeData[i].pincode%>
+                      </option>
+                      <% } %>
+                  </select>
+                  <p id="pincodeIdError" class="customError" style="display: none;">Please select Pincode</p>
+                </div>-->
+                <div class="form-group col-md-12">
+                  <label for="userType">Customer Type</label><br>
+                  <input type="radio" id="allUser" name="userType" value="allUser" <% if(notificationData.userType == 'allUser'){ %> checked="checked" <% } %> >
+                  <label for="allUser">All</label>
+                  <input type="radio" id="selectedUser" name="userType" value="selectedUser" <% if(notificationData.userType == 'selectedUser'){ %> checked="checked" <% } %> >
+                  <label for="selectedUser">Selected</label>
+                </div>
+                <div class="form-group col-md-12" <%if(notificationData.userType == 'allUser'){%>style="display: none;"<%}%> id="userDiv">
+                  <label for="userId">Select Customer</label><%=typeof notificationData.userId%>
+                  <select name="userId" class="form-control select2" id="userId" multiple>
+                    <option value="">Select Customer</option>
+                    <% for(let i=0; i < customerData.length; i++){ %>
+                      <option value="<%=customerData[i].id%>" <% if(notificationData.userId.indexOf(customerData[i].id) != -1){ %> selected="selected" <% } %> >
+                        <%=customerData[i].mobile%> (<%=customerData[i].name%>)
+                      </option>
+                      <% } %>
+                  </select>
+                  <span id="userIdError" class="customError" style="display: none;">Please select User</span>
+                </div>
+                <div class="form-group col-md-12">
+                  <label for="expiryDate">Expiry Date</label>
+                  <input type="date" name="expiryDate" class="form-control" id="expiryDate" placeholder="(YYYY-MM-DD) Expiry Date" value="<%=moment(notificationData.expiryDate).format('YYYY-MM-DD')%>">
+                </div>
+                <div class="form-group col-md-12">
+                  <label for="message">Message</label>
+                  <textarea name="message" class="form-control" id="message" placeholder="Message"><%=notificationData.message%></textarea>
+                </div>
+              </div>
+              <div class="card-footer">
+                <a href="<%=APPCONSTANT.ADMINCALLURL%>/manage_notification" class="btn btn-default">Cancel</a>
+                <button type="submit" class="btn btn-primary add_button">Submit</button>
+              </div>
+            </form>
+          </div>
+        </div>
+        <div class="col-md-6">
+
+        </div>
+      </div>
+    </div>
+  </section>
+</div>
+<script>
+  // $('input[type=radio][name=pincodeType]').change(function () {
+  //   if (this.value == 'selectedPincode') {
+  //     $('#pincodeDiv').slideDown();
+  //   }
+  //   else {
+  //     $('#pincodeDiv').slideUp();
+  //   }
+  // });
+  $('input[type=radio][name=userType]').change(function () {
+    if (this.value == 'selectedUser') {
+      $('#userDiv').slideDown();
+    }
+    else {
+      $('#userDiv').slideUp();
+    }
+  });
+
+  $(document).on("click", ".add_button", function () {
+    // let pincodeType = $('input[type=radio][name=pincodeType]:checked').val();
+    // let pincodeId = $('#pincodeId').val();
+    // if (pincodeType == 'selectedPincode' && pincodeId.length == 0) {
+    //   $('#pincodeIdError').css('display', 'block');
+    // }
+    // else {
+    //   $('#pincodeIdError').css('display', 'none');
+    // }
+    let userType = $('input[type=radio][name=userType]:checked').val();
+    let userId = $('#userId').val();
+    if (userType == 'selectedUser' && userId.length == 0) {
+      $('#userIdError').css('display', 'block');
+    }
+    else {
+      $('#userIdError').css('display', 'none');
+    }
+  });
+</script>

@@ -310,7 +310,9 @@ module.exports = {
         }
         try{
             var string = req.query.string;
-            var productData = await Product.find({name:new RegExp(string, 'i'),status:true, deletedAt: 0},{name:1}).sort( { name : 1} ).limit(10);
+            let condition = {status:true, deletedAt: 0};
+            condition.$or = [ { name: new RegExp(string, 'i') }, { searchTag: new RegExp(string, 'i') } ];
+            var productData = await Product.find(condition,{name:1}).sort( { name : 1} ).limit(10);
             if(productData.length>0) {
                 return res.status(200).json({ 
                                             data: productData, 

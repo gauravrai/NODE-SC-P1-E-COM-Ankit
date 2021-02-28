@@ -47,90 +47,105 @@
                   <div class="form-row">
                     <div class="form-group col-md-4">
                       <label for="billingAddress">Address</label>
-                      <input type="text" name="billingAddress" class="form-control" id="billingAddress" value="<%=customerData.billingAddress.address%>" placeholder="Enter Address">
+                      <input type="text" name="billingAddress" class="form-control" id="billingAddress" value="<%=customerData.billingAddress ? customerData.billingAddress.address : ''%>" placeholder="Enter Address">
                     </div>
                     <div class="form-group col-md-4">
                       <label for="billingCountry">Country</label>
-                      <input type="text" name="billingCountry" class="form-control" id="billingCountry" value="<%=customerData.billingAddress.country%>" placeholder="Enter Country">
+                      <input type="text" name="billingCountry" class="form-control" id="billingCountry" value="<%=customerData.billingAddress ? customerData.billingAddress.country : ''%>" placeholder="Enter Country">
                     </div>
                     <div class="form-group col-md-4">
                       <label for="billingState">Select State</label>
                       <select name="billingState" class="form-control" id="billingState" onchange="getLocationFields(this.value, 'billingCity', 'get_city', 'Select City', 'get_pincode', 'billing')">
                         <option value="">Select State</option>
                         <% for(let i = 0; i < stateData.length; i++){ %>
-                        <option value="<%=stateData[i].id%>" <% if(customerData.billingAddress.state == stateData[i].id){ %> selected="selected" <% } %> ><%=stateData[i].name%></option>
+                        <option value="<%=stateData[i].id%>" <% if(customerData.billingAddress){if(customerData.billingAddress.state == stateData[i].id){ %> selected="selected" <% }} %> ><%=stateData[i].name%></option>
                         <% } %>
                       </select>
                     </div>
-                    <% if(customerData.billingAddress.city){ %>
+                    <% //if(customerData.billingAddress && customerData.billingAddress.city){ %>
                     <span id="billingCityData" class="locationFields col-md-4">
                       <div class="form-group">
                         <label for="billingCityId">Select City</label>
                         <select name="billingCityId" class="form-control" id="billingCityId" onchange="getLocationFields(this.value, 'billingPincode', 'get_pincode', 'Select pincode', 'get_pincode', 'billing')">
                           <% for(let i = 0; i < cityData.length; i++){ 
-                            if(String(cityData[i].stateId) == String(customerData.billingAddress.state)){%>
-                          <option value="<%=cityData[i].id%>" <% if(customerData.billingAddress.city == cityData[i].id){ %> selected="selected" <% } %> ><%=cityData[i].name%></option>
-                          <% } }%>
+                            if(customerData.billingAddress){ 
+                              if(String(cityData[i].stateId) == String(customerData.billingAddress.state)){%>
+                                <option value="<%=cityData[i].id%>" <% if(customerData.billingAddress){if(customerData.billingAddress.city == cityData[i].id){ %> selected="selected" <% }} %> ><%=cityData[i].name%></option>
+                                <% }}else{ %>
+                                  <option value="<%=cityData[i].id%>" <% if(customerData.billingAddress){if(customerData.billingAddress.city == cityData[i].id){ %> selected="selected" <% }} %> ><%=cityData[i].name%></option>
+                                <% }} %>
                         </select>
                       </div>
                     </span>
-                    <% } %>
-                    <% if(customerData.billingAddress.pincode){ %>
+                    <%// } %>
+                    <% //if(customerData.billingAddress && customerData.billingAddress.pincode){ %>
                     <span id="billingPincodeData" class="locationFields col-md-4">
                       <div class="form-group">
                         <label for="billingPincodeId">Select Pincode</label>
                         <select name="billingPincodeId" class="form-control" id="billingPincodeId" onchange="getLocationFields(this.value, 'billingArea', 'get_area', 'Select area', 'get_pincode', 'billing')">
                           <option value="">Select Pincode</option>
                           <% for(let i = 0; i < pincodeData.length; i++){ 
-                            if(String(pincodeData[i].cityId) == String(customerData.billingAddress.city)){%>
-                          <option value="<%=pincodeData[i].id%>" <% if(customerData.billingAddress.pincode == pincodeData[i].id){ %> selected="selected" <% } %> ><%=pincodeData[i].pincode%></option>
-                          <% } }%>
+                            if(customerData.billingAddress){ 
+                              if(String(pincodeData[i].cityId) == String(customerData.billingAddress.city)){%>
+                                <option value="<%=pincodeData[i].id%>" <% if(customerData.billingAddress){if(customerData.billingAddress.pincode == pincodeData[i].id){ %> selected="selected" <% }} %> ><%=pincodeData[i].pincode%></option>
+                                <% }}else{ %>
+                                  <option value="<%=pincodeData[i].id%>" <% if(customerData.billingAddress){if(customerData.billingAddress.pincode == pincodeData[i].id){ %> selected="selected" <% }} %> ><%=pincodeData[i].pincode%></option>
+                                <% }} %>
                         </select>
                       </div>
                     </span>
-                    <% } %>
-                    <% if(customerData.billingAddress.area){ %>
+                    <% //} %>
+                    <% //if(customerData.billingAddress && customerData.billingAddress.area){ %>
                     <span id="billingAreaData" class="locationFields col-md-4">
                       <div class="form-group">
                         <label for="billingAreaId">Select Area</label>
                         <select name="billingAreaId" class="form-control" id="billingAreaId" onchange="getLocationFields(this.value, 'billingSociety', 'get_society', 'Select society', 'get_pincode', 'billing')">
                           <option value="">Select Area</option>
                           <% for(let i = 0; i < areaData.length; i++){  
-                            if(String(areaData[i].pincodeId) == String(customerData.billingAddress.pincode)){%>
-                          <option value="<%=areaData[i].id%>" <% if(customerData.billingAddress.area == areaData[i].id){ %> selected="selected" <% } %> ><%=areaData[i].name%></option>
-                          <% }} %>
+                            if(customerData.billingAddress){ 
+                              if(String(areaData[i].pincodeId) == String(customerData.billingAddress.pincode)){%>
+                                <option value="<%=areaData[i].id%>" <% if(customerData.billingAddress){if(customerData.billingAddress.area == areaData[i].id){ %> selected="selected" <% }} %> ><%=areaData[i].name%></option>
+                                <% }}else{ %>
+                                  <option value="<%=areaData[i].id%>" <% if(customerData.billingAddress){if(customerData.billingAddress.area == areaData[i].id){ %> selected="selected" <% }} %> ><%=areaData[i].name%></option>
+                                <% }} %>
                         </select>
                       </div>
                     </span>
-                    <% } %>
-                    <% if(customerData.billingAddress.society){ %>
+                    <% //} %>
+                    <% //if(customerData.billingAddress && customerData.billingAddress.society){ %>
                     <span id="billingSocietyData" class="locationFields col-md-4">
                       <div class="form-group">
                         <label for="billingSocietyId">Select Society</label>
                         <select name="billingSocietyId" class="form-control" id="billingSocietyId" onchange="getLocationFields(this.value, 'billingTower', 'get_tower', 'Select tower', 'get_pincode', 'billing')">
                           <option value="">Select Society</option>
                           <% for(let i = 0; i < societyData.length; i++){  
-                            if(String(societyData[i].areaId) == String(customerData.billingAddress.area)){%>
-                          <option value="<%=societyData[i].id%>" <% if(customerData.billingAddress.society == societyData[i].id){ %> selected="selected" <% } %> ><%=societyData[i].name%></option>
-                          <% } }%>
+                            if(customerData.billingAddress){ 
+                              if(String(societyData[i].areaId) == String(customerData.billingAddress.area)){%>
+                                <option value="<%=societyData[i].id%>" <% if(customerData.billingAddress){if(customerData.billingAddress.society == societyData[i].id){ %> selected="selected" <% }} %> ><%=societyData[i].name%></option>
+                                <% }}else{ %>
+                                  <option value="<%=societyData[i].id%>" <% if(customerData.billingAddress){if(customerData.billingAddress.society == societyData[i].id){ %> selected="selected" <% }} %> ><%=societyData[i].name%></option>
+                                <% }} %>
                         </select>
                       </div>
                     </span>
-                    <% } %>
-                    <% if(customerData.billingAddress.tower){ %>
+                    <%// } %>
+                    <% //if(customerData.billingAddress && customerData.billingAddress.tower){ %>
                     <span id="billingTowerData" class="locationFields col-md-4">
                       <div class="form-group">
                         <label for="billingTowerId">Select Tower</label>
                         <select name="billingTowerId" class="form-control" id="billingTowerId">
                           <option value="">Select Tower</option>
                           <% for(let i = 0; i < towerData.length; i++){ 
-                            if(String(towerData[i].societyId) == String(customerData.billingAddress.society)){ %>
-                          <option value="<%=towerData[i].id%>" <% if(customerData.billingAddress.tower == towerData[i].id){ %> selected="selected" <% } %> ><%=towerData[i].name%></option>
-                          <% } }%>
+                            if(customerData.billingAddress){ 
+                              if(String(towerData[i].societyId) == String(customerData.billingAddress.society)){ %>
+                                <option value="<%=towerData[i].id%>" <% if(customerData.billingAddress){if(customerData.billingAddress.tower == towerData[i].id){ %> selected="selected" <% }} %> ><%=towerData[i].name%></option>
+                                <% }}else{ %>
+                                  <option value="<%=towerData[i].id%>" <% if(customerData.billingAddress){if(customerData.billingAddress.tower == towerData[i].id){ %> selected="selected" <% }} %> ><%=towerData[i].name%></option>
+                                <% }} %>
                         </select>
                       </div>
                     </span>
-                    <% } %>
+                    <% //} %>
                   </div>
                   <div class="card-header">
                     <h3 class="card-title">Shipping Address</h3>
@@ -144,18 +159,18 @@
                   <div class="form-row" id="shippingDiv" style="<% if(customerData.sameAsBillingAddress){ %>display:none; <% } %>">
                     <div class="form-group col-md-4">
                       <label for="address">Address</label>
-                      <input type="text" name="shippingAddress" class="form-control" id="shippingAddress" placeholder="Enter Shipping Address" value="<%=customerData.shippingAddress.address%>">
+                      <input type="text" name="shippingAddress" class="form-control" id="shippingAddress" placeholder="Enter Shipping Address" value="<%=customerData.shippingAddress ? customerData.shippingAddress.address : ''%>">
                     </div>
                     <div class="form-group col-md-4">
                       <label for="address">Country</label>
-                      <input type="text" name="shippingCountry" class="form-control" id="shippingCountry" placeholder="Enter Shipping Country" value="<%=customerData.shippingAddress.country%>">
+                      <input type="text" name="shippingCountry" class="form-control" id="shippingCountry" placeholder="Enter Shipping Country" value="<%=customerData.shippingAddress ? customerData.shippingAddress.country : ''%>">
                     </div>
                     <div class="form-group col-md-4">
                       <label for="state">Select State</label>
                       <select name="shippingState" class="form-control select2" id="shippingState" onchange="getLocationFields(this.value, 'shippingCity', 'get_city', 'Select City', 'get_pincode', 'shipping')">
                         <option value="">Select State</option>
                       <% for(let i = 0; i < stateData.length; i++){ %>
-                        <option value="<%=stateData[i].id%>" <% if(customerData.shippingAddress.state == stateData[i].id){ %> selected="selected" <% } %> ><%=stateData[i].name%></option>
+                        <option value="<%=stateData[i].id%>" <% if(customerData.shippingAddress){if(customerData.shippingAddress.state == stateData[i].id){ %> selected="selected" <% }} %> ><%=stateData[i].name%></option>
                       <% } %>
                       </select>
                     </div>
@@ -165,8 +180,11 @@
                         <select name="cityId" class="form-control" id="cityId" onchange="getLocationFields(this.value, 'shippingPincode', 'get_pincode', 'Select pincode', 'get_pincode', 'shipping')">
                           <option value="">Select City</option>
                           <% for(let i = 0; i < cityData.length; i++){  
-                            if(String(cityData[i].stateId) == String(customerData.shippingAddress.state)){%>
-                          <option value="<%=cityData[i].id%>" <% if(customerData.shippingAddress.city == cityData[i].id){ %> selected="selected" <% } %> ><%=cityData[i].name%></option>
+                            if(customerData.shippingAddress){
+                              if(String(cityData[i].stateId) == String(customerData.shippingAddress.state)){%>
+                                <option value="<%=cityData[i].id%>" <% if(customerData.shippingAddress){if(customerData.shippingAddress.city == cityData[i].id){ %> selected="selected" <% }} %> ><%=cityData[i].name%></option>
+                          <% }}else{ %>
+                          <option value="<%=cityData[i].id%>" <% if(customerData.shippingAddress){if(customerData.shippingAddress.city == cityData[i].id){ %> selected="selected" <% }} %> ><%=cityData[i].name%></option>
                           <% }} %>
                         </select>
                       </div>
@@ -177,9 +195,12 @@
                         <select name="pincodeId" class="form-control" id="pincodeId" onchange="getLocationFields(this.value, 'shippingArea', 'get_area', 'Select area', 'get_pincode', 'shipping')">
                           <option value="">Select Pincode</option>
                           <% for(let i = 0; i < pincodeData.length; i++){  
-                            if(String(pincodeData[i].cityId) == String(customerData.shippingAddress.city)){%>
-                          <option value="<%=pincodeData[i].id%>" <% if(customerData.shippingAddress.pincode == pincodeData[i].id){ %> selected="selected" <% } %> ><%=pincodeData[i].pincode%></option>
-                          <% } }%>
+                            if(customerData.shippingAddress){
+                              if(String(pincodeData[i].cityId) == String(customerData.shippingAddress.city)){%>
+                                <option value="<%=pincodeData[i].id%>" <% if(customerData.shippingAddress){if(customerData.shippingAddress.pincode == pincodeData[i].id){ %> selected="selected" <% }} %> ><%=pincodeData[i].pincode%></option>
+                            <% }}else{ %>
+                              <option value="<%=pincodeData[i].id%>" <% if(customerData.shippingAddress){if(customerData.shippingAddress.pincode == pincodeData[i].id){ %> selected="selected" <% }} %> ><%=pincodeData[i].pincode%></option>
+                              <% }} %>
                         </select>
                       </div>
                     </span>
@@ -188,10 +209,13 @@
                         <label for="areaId">Select Area</label>
                         <select name="areaId" class="form-control" id="areaId" onchange="getLocationFields(this.value, 'shippingSociety', 'get_society', 'Select society', 'get_pincode', 'shipping')">
                           <option value="">Select Area</option>
-                          <% for(let i = 0; i < areaData.length; i++){  
-                            if(String(areaData[i].pincodeId) == String(customerData.shippingAddress.pincode)){%>
-                          <option value="<%=areaData[i].id%>" <% if(customerData.shippingAddress.area == areaData[i].id){ %> selected="selected" <% } %> ><%=areaData[i].name%></option>
-                          <% } }%>
+                          <% for(let i = 0; i < areaData.length; i++){ 
+                            if(customerData.shippingAddress){ 
+                              if(String(areaData[i].pincodeId) == String(customerData.shippingAddress.pincode)){%>
+                                <option value="<%=areaData[i].id%>" <% if(customerData.shippingAddress){if(customerData.shippingAddress.area == areaData[i].id){ %> selected="selected" <% }} %> ><%=areaData[i].name%></option>
+                            <% }}else{ %>
+                              <option value="<%=areaData[i].id%>" <% if(customerData.shippingAddress){if(customerData.shippingAddress.area == areaData[i].id){ %> selected="selected" <% }} %> ><%=areaData[i].name%></option>
+                              <% }} %>
                         </select>
                       </div>
                     </span>
@@ -201,8 +225,11 @@
                         <select name="societyId" class="form-control" id="societyId" onchange="getLocationFields(this.value, 'shippingTower', 'get_tower', 'Select tower', 'get_pincode', 'shipping')">
                           <option value="">Select Society</option>
                           <% for(let i = 0; i < societyData.length; i++){  
-                            if(String(societyData[i].areaId) == String(customerData.shippingAddress.area)){%>
-                          <option value="<%=societyData[i].id%>" <% if(customerData.shippingAddress.society == societyData[i].id){ %> selected="selected" <% } %> ><%=societyData[i].name%></option>
+                            if(customerData.shippingAddress){
+                              if(String(societyData[i].areaId) == String(customerData.shippingAddress.area)){%>
+                                <option value="<%=societyData[i].id%>" <% if(customerData.shippingAddress){if(customerData.shippingAddress.society == societyData[i].id){ %> selected="selected" <% }} %> ><%=societyData[i].name%></option>
+                                <% }}else{ %>
+                                  <option value="<%=societyData[i].id%>" <% if(customerData.shippingAddress){if(customerData.shippingAddress.society == societyData[i].id){ %> selected="selected" <% }} %> ><%=societyData[i].name%></option>
                           <% }} %>
                         </select>
                       </div>
@@ -213,9 +240,12 @@
                         <select name="towerId" class="form-control" id="towerId">
                           <option value="">Select Tower</option>
                           <% for(let i = 0; i < towerData.length; i++){ 
-                            if(String(towerData[i].societyId) == String(customerData.shippingAddress.society)){ %>
-                          <option value="<%=towerData[i].id%>" <% if(customerData.shippingAddress.tower == towerData[i].id){ %> selected="selected" <% } %> ><%=towerData[i].name%></option>
-                          <% } }%>
+                            if(customerData.shippingAddress){
+                              if(String(towerData[i].societyId) == String(customerData.shippingAddress.society)){ %>
+                                <option value="<%=towerData[i].id%>" <% if(customerData.shippingAddress){if(customerData.shippingAddress.tower == towerData[i].id){ %> selected="selected" <% }} %> ><%=towerData[i].name%></option>
+                            <% }}else{ %>
+                            <option value="<%=towerData[i].id%>" <% if(customerData.shippingAddress){if(customerData.shippingAddress.tower == towerData[i].id){ %> selected="selected" <% }} %> ><%=towerData[i].name%></option>
+                            <% }} %>
                         </select>
                       </div>
                     </span>
