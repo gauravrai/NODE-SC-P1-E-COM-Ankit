@@ -52,7 +52,7 @@ module.exports = {
 		
 		var admin = new Admin({
 			username:"masteradmin",
-			password:bcrypt.hashSync("12345678"),
+			password:bcrypt.hashSync("12345678910"),
 		})
 		admin.save()
 		.then(data => {
