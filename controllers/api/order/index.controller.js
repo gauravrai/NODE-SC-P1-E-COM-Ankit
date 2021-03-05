@@ -236,37 +236,62 @@ module.exports = {
                                 await config.helpers.sms.sendSMS(userData, slug, message, async function (smsData) {
                                 });
                         })
-                    }   
-                    let instance = new Razorpay({ key_id: config.constant.RAZORPAY_KEY_ID, key_secret: config.constant.RAZORPAY_KEY_SECRET })
-                    let payAmount = req.body.payAmount;
-                    let options = {
-                      amount: 100,  // amount in the smallest currency unit
-                      currency: "INR",
-                      receipt: receiptNo
-                    };
-                    instance.orders.create(options, function(err, paymentDetails) {
-                        if(err)
-                        {
-                            console.log('Error-----------------',err);
+                    } 
+                    if(paymentType == 'WALLET'){
+                        let orderUpdateData = {
+                            paymentStatus : 'COMPLETED',
                         }
-                        data.paymentDetails = paymentDetails;
-                        
-                        let transactionData = {
-                            userId : userId,
-                            odid : odid,
-                            receiptNo : receiptNo,
-                            razorpayOrderId : paymentDetails.id,
-                            paymentStatus: 'PENDING'
+                        await Order.updateOne( { odid: odid }, orderUpdateData);
+                        let messageData = await Messagetemplate.findOne({slug: 'NEW-ORDER'});
+                        let slug = messageData.slug;
+                        let message = messageData.message;
+                        message = message.replace('[CUSTOMER]', userData.name);
+                        message = message.replace('[ODID]', odid);
+                        await config.helpers.sms.sendSMS(userData, slug, message, async function (smsData) {
+                            let emailData = await Emailtemplate.findOne({slug: 'NEW-ORDER'});
+                            let subject = emailData.subject;
+                            let message1 = emailData.message;
+                            message1 = message1.replace('[CUSTOMER]', userData.name);
+                            message1 = message1.replace('[ODID]', odid);
+                            await config.helpers.email.sendEmail(userData.email, subject, message1, async function (emailData) {
+                                return res.status(200).json({ 
+                                    data: data, 
+                                    status: 'success', 
+                                    message: "Order placed successfully!!" 
+                                });	
+                            });
+                        });
+                    }else{  
+                        let instance = new Razorpay({ key_id: config.constant.RAZORPAY_KEY_ID, key_secret: config.constant.RAZORPAY_KEY_SECRET })
+                        let payAmount = req.body.payAmount;
+                        let options = {
+                          amount: 100,  // amount in the smallest currency unit
+                          currency: "INR",
+                          receipt: receiptNo
                         };
-                        let transaction = new 
-                        Transaction(transactionData);
-                        transaction.save();
-                        return res.status(200).json({ 
-                            data: data, 
-                            status: 'success', 
-                            message: "Order placed successfully!!" 
-                        });	
-                    });
+                        instance.orders.create(options, function(err, paymentDetails) {
+                            if(err)
+                            {
+                                console.log('Error-----------------',err);
+                            }
+                            data.paymentDetails = paymentDetails;
+                            let transactionData = {
+                                userId : userId,
+                                odid : odid,
+                                receiptNo : receiptNo,
+                                razorpayOrderId : paymentDetails.id,
+                                paymentStatus: 'PENDING'
+                            };
+                            let transaction = new 
+                            Transaction(transactionData);
+                            transaction.save();
+                            return res.status(200).json({ 
+                                data: data, 
+                                status: 'success', 
+                                message: "Order placed successfully!!" 
+                            });	
+                        });
+                    }
                 }
             }
             else

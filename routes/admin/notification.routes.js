@@ -5,4 +5,5 @@ module.exports = function(router) {
     router.all(config.constant.ADMINCALLURL+'/manage_notification', isloggedin, indexController.manageNotification); 
     router.all(config.constant.ADMINCALLURL+'/list_notification', isloggedin, indexController.listNotification); 
     router.all(config.constant.ADMINCALLURL+'/add_notification',isloggedin, indexController.addNotification);   
+    router.all(config.constant.ADMINCALLURL+'/edit_notification',isloggedin, indexController.editNotification);   
 }

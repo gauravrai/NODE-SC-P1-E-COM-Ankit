@@ -28,6 +28,7 @@ const Wallet = model.wallet;
 const Walletentry = model.wallet_entry;
 const Stock = model.stock;
 const Stockentry = model.stock_entries;
+const Notification = model.notification;
 
 module.exports = {
 	exportRole: async function(req,res){
@@ -1456,6 +1457,62 @@ module.exports = {
 		res.setHeader(
 		  "Content-Disposition",
 		  "attachment; filename=" + "Stock Detail Report.xlsx"
+		);
+		
+		return workbook.xlsx.write(res).then(function () {
+		  res.status(200).end();
+		})
+	},
+	
+	exportNotification: async function(req,res){
+		let search = {deletedAt:0};
+		let data = await Notification.find(search).sort({updatedAt: 1});
+		let notificationData =[];
+		for(i=0;i<data.length;i++){
+			let arr = {};
+			arr.message = data[i].message;
+			arr.createdAt = moment(data[i].createdAt).format('DD-MM-YYYY');
+			arr.expiryDate = moment(data[i].expiryDate).format('DD-MM-YYYY');
+			let userType = data[i].userType == 'allUser' ? 'All User' : 'Selected User';
+			arr.userType = userType;
+
+			let condition = {};
+			if (data[i].userType == 'selectedUser') {
+				let userIdArr = [];
+				for (let j = 0; j < data[i].userId.length; j++) {
+					userIdArr.push(mongoose.mongo.ObjectId(data[i].userId[j]));
+					
+				}
+				condition = {_id: {$in: userIdArr}};
+			}
+			console.log('-----------condition------------',condition);
+			let customerData = await Customer.find(condition, { name: 1 });
+			let userId = [];
+			for (let k = 0; k < customerData.length; k++) {
+				userId.push(customerData[k].name.toString());
+			}
+			arr.userName = userId;
+			notificationData.push(arr);
+		}
+		let workbook = new excel.Workbook();
+		let worksheet = workbook.addWorksheet("Wallet Report");
+		
+		worksheet.columns = [
+			{ header: "Message", key: "message", width: 25 },
+			{ header: "Created Date", key: "createdAt", width: 20 },
+			{ header: "Expiry Date", key: "expiryDate", width: 20 },
+			{ header: "User Type", key: "userType", width: 25 },
+			{ header: "User Name", key: "userName", width: 25 }
+		];
+		worksheet.addRows(notificationData);
+		
+		res.setHeader(
+		  "Content-Type",
+		  "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
+		);
+		res.setHeader(
+		  "Content-Disposition",
+		  "attachment; filename=" + "Notification Report.xlsx"
 		);
 		
 		return workbook.xlsx.write(res).then(function () {
