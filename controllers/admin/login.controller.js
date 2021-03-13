@@ -24,11 +24,11 @@ module.exports = {
 						res.cookie('username',req.input("username"),{maxAge : new Date(Date.now() + 12096000)});
 						res.cookie('password',req.input("password"),{maxAge : new Date(Date.now() + 12096000)});
 						
-						}else
-						{
+					}else
+					{
 						res.clearCookie('username');
 						res.clearCookie('password');
-						}
+					}
 					detail.status = true;
 					res.redirect(ADMINCALLURL+'/dashboard');
 				}else{
