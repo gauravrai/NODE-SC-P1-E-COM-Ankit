@@ -61,4 +61,11 @@ module.exports = {
 			res.send('error occured',err);
 		});
 	},	
+	
+	lockScreen: async function(req,res){	
+		delete req.session.ADMINID;
+		delete req.session.ADMINNAME;
+		req.flash('msg', {msg:'You are logged out due to inactivity. Please login again.',status:false});		
+		res.redirect(ADMINCALLURL);
+	},	
 }

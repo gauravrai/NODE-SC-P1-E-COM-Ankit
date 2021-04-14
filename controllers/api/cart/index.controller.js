@@ -264,7 +264,6 @@ module.exports = {
                 {
                     $project: { 
                         __v:0,
-                        createdAt:0,
                         updatedAt:0,
                         status:0,
                         deletedAt:0,
@@ -274,6 +273,9 @@ module.exports = {
                         "productData.status":0,
                         "productData.deletedAt":0
                     }
+                },
+                {
+                    $sort: {createdAt: 1}
                 },
                 {
                     $unwind: "$productData"
