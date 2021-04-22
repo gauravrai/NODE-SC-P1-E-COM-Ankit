@@ -52,14 +52,16 @@ app.use(bodyParser.urlencoded({ extended: true })); // support encoded bodies
 app.use(
     session({
         secret: 'softchilli',
-        saveUninitialized: true,
-        resave: true,
+        saveUninitialized: false,
+        resave: false,
         cookie: { maxAge: 3600000 },
         store: new MongoStore({ mongooseConnection: db }),
+        autoRemove: 'native' // Default
     })
 );
 //middleware
 app.use(mwInput());
+
 
 app.use(function (req, res, next) {
   res.locals.APPCONSTANT = constant;
@@ -68,6 +70,8 @@ app.use(function (req, res, next) {
   res.locals.ADMININPUT = req.input('__all__');
   res.locals.COOKIE = req.cookies;
   res.locals.SESSION = req.session;
+  req.session._garbage = Date();
+  req.session.touch();
   next();
 })
 
