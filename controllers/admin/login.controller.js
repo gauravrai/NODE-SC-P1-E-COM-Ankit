@@ -19,16 +19,6 @@ module.exports = {
 				if(bcrypt.compareSync(password, adminData.password)){
 					req.session.ADMINID = adminData._id;
 					req.session.ADMINNAME = adminData.name;
-					if(req.input('remember_me') == '1')
-					{
-						res.cookie('username',req.input("username"),{maxAge : new Date(Date.now() + 12096000)});
-						res.cookie('password',req.input("password"),{maxAge : new Date(Date.now() + 12096000)});
-						
-					}else
-					{
-						res.clearCookie('username');
-						res.clearCookie('password');
-					}
 					detail.status = true;
 					res.redirect(ADMINCALLURL+'/dashboard');
 				}else{

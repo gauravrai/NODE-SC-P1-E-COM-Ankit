@@ -275,9 +275,6 @@ module.exports = {
                     }
                 },
                 {
-                    $sort: {createdAt: 1}
-                },
-                {
                     $unwind: "$productData"
                 },
                 {
@@ -286,6 +283,7 @@ module.exports = {
                 {
                     $group: {
                         "_id":"$_id",
+                        "createdAt": { $first:"$createdAt" },
                         "cartId": { $first:"$cartId" },
                         "userId": { $first:"$userId" },
                         "productId": { $first:"$productId" },
@@ -299,6 +297,9 @@ module.exports = {
                         "igst": { $first:"$igst" },
                         "productData": { $first:"$productData" }
                     }
+                },
+                {
+                    $sort: {createdAt: 1}
                 },
                 {
                     $addFields: {

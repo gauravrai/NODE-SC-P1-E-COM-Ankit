@@ -54,7 +54,7 @@ app.use(
         secret: 'softchilli',
         saveUninitialized: true,
         resave: true,
-        cookie: { maxAge: 86400000 },
+        cookie: { maxAge: 3600000 },
         store: new MongoStore({ mongooseConnection: db }),
     })
 );
