@@ -15,20 +15,20 @@ const express = require('express');
                 // Dev env
                 // prod env
                 // prod env
-                "http://www.localbaniyaa.com:3001",
-                "http://www.localbaniyaa.com:3001/admin",
-                "http://www.localbaniyaa.com",
-                "https://www.localbaniyaa.com",
-                "https://localbaniyaa.com",
-                "https://localbaniyaa.com:3001/admin",
-                "http://www.backend.localbaniyaa.com",
-                "http://backend.localbaniyaa.com",
-                "http://backend.localbaniyaa.com:3001/admin",
-                "https://www.backend.localbaniyaa.com",
-                "https://backend.localbaniyaa.com",
-                "https://backend.localbaniyaa.com:3001/admin",
-                "https://backend.localbaniyaa.com/admin",
-                "http://backend.localbaniyaa.com/admin"
+                "http://www.grocerbaniya.com:3001",
+                "http://www.grocerbaniya.com:3001/admin",
+                "http://www.grocerbaniya.com",
+                "https://www.grocerbaniya.com",
+                "https://grocerbaniya.com",
+                "https://grocerbaniya.com:3001/admin",
+                "http://www.backend.grocerbaniya.com",
+                "http://backend.grocerbaniya.com",
+                "http://backend.grocerbaniya.com:3001/admin",
+                "https://www.backend.grocerbaniya.com",
+                "https://backend.grocerbaniya.com",
+                "https://backend.grocerbaniya.com:3001/admin",
+                "https://backend.grocerbaniya.com/admin",
+                "http://backend.grocerbaniya.com/admin"
 
         ];
 // Todo - need to whitelist dynamically
