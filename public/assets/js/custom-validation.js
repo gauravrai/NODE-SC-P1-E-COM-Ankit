@@ -4,6 +4,91 @@ $(document).ready(function () {
     //         alert( "Form successful submitted!" );
     //     }
     // });
+    $('#loginForm').validate({
+        rules: {
+            username: {
+                required: true,
+            },
+            password: {
+                required: true,
+            },
+        },
+        messages: {
+            username: {
+                required: "Please enter User Name",
+            },
+            password: {
+                required: "Please enter Password",
+            },
+        },
+        errorElement: 'span',
+        errorPlacement: function (error, element) {
+            error.addClass('invalid-feedback');
+            element.closest('.form-group').append(error);
+        },
+        highlight: function (element, errorClass, validClass) {
+            $(element).addClass('is-invalid');
+        },
+        unhighlight: function (element, errorClass, validClass) {
+            $(element).removeClass('is-invalid');
+        }
+    });
+    $('#forgotPasswordForm').validate({
+        rules: {
+            email: {
+                required: true,
+                email: true,
+            },
+        },
+        messages: {
+            email: {
+                required: "Please enter Email",
+                email: "Please enter a vaild Email address"
+            },
+        },
+        errorElement: 'span',
+        errorPlacement: function (error, element) {
+            error.addClass('invalid-feedback');
+            element.closest('.form-group').append(error);
+        },
+        highlight: function (element, errorClass, validClass) {
+            $(element).addClass('is-invalid');
+        },
+        unhighlight: function (element, errorClass, validClass) {
+            $(element).removeClass('is-invalid');
+        }
+    });
+    $('#resetPasswordForm').validate({
+        rules: {
+            password: {
+                required: true
+            },
+            confirmPassword: {
+                required: true,
+                equalTo: "#password"
+            }
+        },
+        messages: {
+            password: {
+                required: "Please provide a Password"
+            },
+            confirmPassword: {
+                required: "Please provide a Confirm Password",
+                equalTo: "Enter Confirm Password Same as Password"
+            },
+        },
+        errorElement: 'span',
+        errorPlacement: function (error, element) {
+            error.addClass('invalid-feedback');
+            element.closest('.form-group').append(error);
+        },
+        highlight: function (element, errorClass, validClass) {
+            $(element).addClass('is-invalid');
+        },
+        unhighlight: function (element, errorClass, validClass) {
+            $(element).removeClass('is-invalid');
+        }
+    });
     $('#addRoleForm, #editRoleForm').validate({
         rules: {
             name: {

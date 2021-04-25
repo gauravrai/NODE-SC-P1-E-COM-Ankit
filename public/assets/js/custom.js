@@ -144,11 +144,11 @@ function getLocationFieldsMulti(id, name, controller, label, functionName){
 $('body').on('click', '.nav-sidebar .has-treeview', function() {
 	if($(this).hasClass('menu-open') == false){
 		$(this).addClass('menu-open');
-		$(this > ul).slideDown();
+		$(this > 'ul').slideDown();
 	}else
 	{
 		$(this).removeClass('menu-open');
-		$(this > ul).slideUp();
+		$(this > 'ul').slideUp();
 	}
 });
 

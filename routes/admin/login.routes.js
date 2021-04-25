@@ -5,8 +5,8 @@ var isloggedinadmin = config.middleware.isloggedinadmin;
 module.exports = function(router) {
     router.all(config.constant.ADMINCALLURL,isloggedinadmin, loginController.index);   
     router.get(config.constant.ADMINCALLURL+'/logout', loginController.logout);   
-    router.all(config.constant.ADMINCALLURL+'/create', loginController.create);   
+    router.all(config.constant.ADMINCALLURL+'/create', loginController.create);  
+    router.all(config.constant.ADMINCALLURL+'/forgot_password', loginController.forgotPassword);  
+    router.all(config.constant.ADMINCALLURL+'/reset_password', loginController.resetPassword);  
     router.all(config.constant.ADMINCALLURL+'/lock_screen', loginController.lockScreen);  
-    // router.get(config.constant.ADMINCALLURL+'/resetpassword', loginController.resetpassword); 
-    // router.all(config.constant.ADMINCALLURL+'/check_email', loginController.check_email); 
 }
