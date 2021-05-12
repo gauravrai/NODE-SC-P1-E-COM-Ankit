@@ -9,7 +9,7 @@ module.exports = {
     SITEURL: SITEURL,
     SITEURLIMG: SITEURLIMG,
     ABSOLUTEPATH: ABSOLUTEPATH,
-    SITENAME: "Local Baniyaa",
+    SITENAME: "Grocer Baniyaa",
     ADMINSITEURL: SITEURL + 'admin/',
     ADMINCALLURL: '/admin',
     APIURL: '/api/v1',
