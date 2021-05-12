@@ -374,43 +374,47 @@ module.exports = {
             let userId = req.body.userId;
             let condition = {_id: mongoose.mongo.ObjectId(userId)};
             let userData = await Customer.findOne(condition);
-            await config.helpers.state.getNameById(userData.billingAddress.state, async function (stateName) {
-                userData.billingAddress.stateName = stateName.name ? stateName.name : '';
-            })
-            await config.helpers.city.getNameById(userData.billingAddress.city, async function (cityName) {
-                userData.billingAddress.cityName = cityName.name ? cityName.name : '';
-            })
-            await config.helpers.pincode.getNameById(userData.billingAddress.pincode, async function (pincode) {
-                userData.billingAddress.pincodeName = pincode.pincode ? pincode.pincode : '';
-            })
-            await config.helpers.area.getNameById(userData.billingAddress.area, async function (areaName) {
-                userData.billingAddress.areaName = areaName.name ? areaName.name : '';
-            })
-            await config.helpers.society.getNameById(userData.billingAddress.society, async function (societyName) {
-                userData.billingAddress.societyName = societyName.name ? societyName.name : '';
-            })
-            await config.helpers.tower.getNameById(userData.billingAddress.tower, async function (towerName) {
-                userData.billingAddress.towerName = towerName.name ? towerName.name : '';
-            })
+            if(userData.billingAddress){
+                await config.helpers.state.getNameById(userData.billingAddress.state, async function (stateName) {
+                    userData.billingAddress.stateName = stateName.name ? stateName.name : '';
+                })
+                await config.helpers.city.getNameById(userData.billingAddress.city, async function (cityName) {
+                    userData.billingAddress.cityName = cityName.name ? cityName.name : '';
+                })
+                await config.helpers.pincode.getNameById(userData.billingAddress.pincode, async function (pincode) {
+                    userData.billingAddress.pincodeName = pincode.pincode ? pincode.pincode : '';
+                })
+                await config.helpers.area.getNameById(userData.billingAddress.area, async function (areaName) {
+                    userData.billingAddress.areaName = areaName.name ? areaName.name : '';
+                })
+                await config.helpers.society.getNameById(userData.billingAddress.society, async function (societyName) {
+                    userData.billingAddress.societyName = societyName.name ? societyName.name : '';
+                })
+                await config.helpers.tower.getNameById(userData.billingAddress.tower, async function (towerName) {
+                    userData.billingAddress.towerName = towerName.name ? towerName.name : '';
+                })
+            }
 
-            await config.helpers.state.getNameById(userData.shippingAddress.state, async function (stateName) {
-                userData.shippingAddress.stateName = stateName.name ? stateName.name : '';
-            })
-            await config.helpers.city.getNameById(userData.shippingAddress.city, async function (cityName) {
-                userData.shippingAddress.cityName = cityName.name ? cityName.name : '';
-            })
-            await config.helpers.pincode.getNameById(userData.shippingAddress.pincode, async function (pincode) {
-                userData.shippingAddress.pincodeName = pincode.pincode ? pincode.pincode : '';
-            })
-            await config.helpers.area.getNameById(userData.shippingAddress.area, async function (areaName) {
-                userData.shippingAddress.areaName = areaName.name ? areaName.name : '';
-            })
-            await config.helpers.society.getNameById(userData.shippingAddress.society, async function (societyName) {
-                userData.shippingAddress.societyName = societyName.name ? societyName.name : '';
-            })
-            await config.helpers.tower.getNameById(userData.shippingAddress.tower, async function (towerName) {
-                userData.shippingAddress.towerName = towerName.name ? towerName.name : '';
-            })
+            if(userData.shippingAddress){
+                await config.helpers.state.getNameById(userData.shippingAddress.state, async function (stateName) {
+                    userData.shippingAddress.stateName = stateName.name ? stateName.name : '';
+                })
+                await config.helpers.city.getNameById(userData.shippingAddress.city, async function (cityName) {
+                    userData.shippingAddress.cityName = cityName.name ? cityName.name : '';
+                })
+                await config.helpers.pincode.getNameById(userData.shippingAddress.pincode, async function (pincode) {
+                    userData.shippingAddress.pincodeName = pincode.pincode ? pincode.pincode : '';
+                })
+                await config.helpers.area.getNameById(userData.shippingAddress.area, async function (areaName) {
+                    userData.shippingAddress.areaName = areaName.name ? areaName.name : '';
+                })
+                await config.helpers.society.getNameById(userData.shippingAddress.society, async function (societyName) {
+                    userData.shippingAddress.societyName = societyName.name ? societyName.name : '';
+                })
+                await config.helpers.tower.getNameById(userData.shippingAddress.tower, async function (towerName) {
+                    userData.shippingAddress.towerName = towerName.name ? towerName.name : '';
+                })
+            }
             if(userData) {
                 return res.status(200).json({ 
                     data: userData, 
