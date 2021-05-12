@@ -143,10 +143,13 @@ function getLocationFieldsMulti(id, name, controller, label, functionName){
 
 $('body').on('click', '.nav-sidebar .has-treeview', function() {
 	if($(this).hasClass('menu-open') == false){
+		console.log('coming if');
 		$(this).addClass('menu-open');
+		$(this > 'ul').css('display','block');
 		$(this > 'ul').slideDown();
 	}else
 	{
+		console.log('coming else');
 		$(this).removeClass('menu-open');
 		$(this > 'ul').slideUp();
 	}
@@ -488,6 +491,7 @@ $('#select_all').on('click', function () {
 		});
 	}
 });
+
 $('body').on("click", ".all_check", function () {
 	if ($('.all_check:checked').length == $('.all_check').length) {
 		$('#select_all').prop('checked', true);
