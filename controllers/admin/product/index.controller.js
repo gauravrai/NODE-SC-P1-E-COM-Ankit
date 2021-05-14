@@ -592,7 +592,7 @@ module.exports = {
 					image.large = ['default_large.jpg'];
 					let storeData = await Store.find({status:true, deletedAt: 0});
 					for(let i= 0; i < xlData.length; i++) {
-						if(!/^[a-zA-Z0-9 .,]+$/.test(xlData[i]['Product Name']) || xlData[i]['Product Name'] == '' || typeof xlData[i]['Product Name'] == 'undefined'){
+						if(!/^[a-zA-Z0-9 .,()-]+$/.test(xlData[i]['Product Name']) || xlData[i]['Product Name'] == '' || typeof xlData[i]['Product Name'] == 'undefined'){
 							errordata.push(xlData[i]);
 						}
 						else if(xlData[i]['Brand'] == '' || typeof xlData[i]['Brand'] == 'undefined'){
@@ -607,7 +607,7 @@ module.exports = {
 						else if(!/^[0-9]+$/.test(xlData[i]['Tax'])){
 							errordata.push(xlData[i]);
 						}
-						else if(!/^[a-zA-Z0-9 .,]+$/.test(xlData[i]['Description']) || xlData[i]['Description'] == '' || typeof xlData[i]['Description'] == 'undefined') {
+						else if(!/^[a-zA-Z0-9 .,()-]+$/.test(xlData[i]['Description']) || xlData[i]['Description'] == '' || typeof xlData[i]['Description'] == 'undefined') {
 							errordata.push(xlData[i]);
 						}
 						else if(xlData[i]['Varient'] == '' || typeof xlData[i]['Varient'] == 'undefined'){

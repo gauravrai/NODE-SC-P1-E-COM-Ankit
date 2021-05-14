@@ -26,6 +26,15 @@
     </style>
     <script>
       var ADMINSITEURL = "<%=APPCONSTANT.ADMINSITEURL%>";
+      $.sessionTimeout({
+          keepAliveUrl:"pages-starter.html",
+          logoutButton:"Logout",
+          logoutUrl: ADMINSITEURL+"logout",
+          redirUrl:ADMINSITEURL+"logout",
+          warnAfter:300000,
+          redirAfter:330000,
+          countdownMessage:"Redirecting in {timer} seconds."
+      });
     </script>
   </head>
   <body class="hold-transition sidebar-mini layout-fixed layout-navbar-fixed layout-footer-fixed" style="font-size: 13px !important;">
@@ -68,5 +77,23 @@
     <script src="/assets/js/custom.js"></script>
     <script src="/assets/js/custom-validation.js"></script>
     <script src="/assets/js/datatable.js"></script>
+    <div class="modal fade" id="session-timeout-dialog" style="padding-right: 17px; display: none;" aria-modal="true">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+            <h4 class="modal-title">Your Session is About to Expire!</h4>
+          </div>
+          <div class="modal-body">
+            <p>Your session is about to expire.</p>
+            <p>Redirecting in <span class="countdown-holder"></span> seconds.</p>
+          </div>
+          <div class="modal-footer">
+            <a id="session-timeout-dialog-logout" href="/admin/logout" class="btn btn-default">Logout</a>
+            <button id="session-timeout-dialog-keepalive" type="button" class="btn btn-primary" data-dismiss="modal">Stay Connected</button>
+          </div>
+        </div>
+      </div>
+    </div>
   </body>
 </html>
