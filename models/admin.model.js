@@ -1,49 +1,49 @@
-const mongoose = require('mongoose');
+const mongoose = require("mongoose");
 const Schema = mongoose.Schema;
 var ObjectId = mongoose.Schema.Types.ObjectId;
 
 let AdminSchema = new Schema({
     superadmin: {
-        type: Boolean
+        type: Boolean,
     },
     name: {
-        type: String
+        type: String,
     },
     email: {
-        type: String
+        type: String,
     },
     username: {
-        type: String, 
-        required: true, 
-        max: 100
+        type: String,
+        required: true,
+        max: 100,
     },
     password: {
-        type: String, 
-        required: true
+        type: String,
+        required: true,
     },
     roleId: {
-        type: ObjectId
+        type: ObjectId,
     },
     storeId: {
-        type: ObjectId
+        type: ObjectId,
     },
     status: {
         type: Boolean,
-        default : true
+        default: true,
     },
     deletedAt: {
         type: Number,
-        default : 0
+        default: 0,
     },
     createdAt: {
         type: Date,
-        default: Date.now
+        default: Date.now,
     },
     updatedAt: {
         type: Date,
-        default: Date.now
-    }
+        default: Date.now,
+    },
 });
 
 // Export the model
-module.exports = mongoose.model('Admin', AdminSchema);
+module.exports = mongoose.model("Admin", AdminSchema);
