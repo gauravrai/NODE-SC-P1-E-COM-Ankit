@@ -1,0 +1,27 @@
+[{
+  "_id": {
+    "$oid": "602772e5dd30792550184be8"
+  },
+  "pincodeId": [
+    "5feca8157a5c3411ccf94fea",
+    "5feca8297a5c3411ccf94feb"
+  ],
+  "userId": [
+    "5ffeff891edbdb20dcc40633",
+    "5fff086a1edbdb20dcc40637",
+    "6004077bf4b1366080d955d7"
+  ],
+  "status": true,
+  "deletedAt": 0,
+  "pincodeType": "selectedPincode",
+  "userType": "selectedUser",
+  "expiryDate": "2021-02-20",
+  "message": "Hello fist message",
+  "createdAt": {
+    "$date": "2021-02-13T06:34:13.482Z"
+  },
+  "updatedAt": {
+    "$date": "2021-02-13T06:34:13.482Z"
+  },
+  "__v": 0
+}]

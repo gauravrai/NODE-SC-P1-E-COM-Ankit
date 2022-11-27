@@ -1,0 +1,97 @@
+[{
+  "_id": {
+    "$oid": "5ffdd24f5372412d1c3f5c3d"
+  },
+  "name": "On Order Booking/Receipt of order",
+  "slug": "NEW-ORDER",
+  "subject": "New Order",
+  "message": "<h1>Hello [CUSTOMER],</h1> <p>Your order [ODID] has been received and is under process. You will receive he confirmation SMS once the order is confirmed. Thanks for your order we are delighted to serve you.</p>",
+  "status": true,
+  "deletedAt": 0,
+  "createdAt": {
+    "$date": "2020-10-10T18:30:00Z"
+  },
+  "updatedAt": {
+    "$date": "2020-10-10T18:30:00Z"
+  }
+},{
+  "_id": {
+    "$oid": "5ffdd2835372412d1c3f5c3e"
+  },
+  "name": "On Product Request",
+  "slug": "REQUEST-PRODUCT",
+  "subject": "Product Requested",
+  "message": "<h1>Hello [NAME]</h1><p>You have requested fro product!</p>",
+  "status": true,
+  "deletedAt": 0,
+  "createdAt": {
+    "$date": "2020-10-10T18:30:00Z"
+  },
+  "updatedAt": {
+    "$date": "2020-10-10T18:30:00Z"
+  }
+},{
+  "_id": {
+    "$oid": "5ffdd2d75372412d1c3f5c3f"
+  },
+  "name": "In Process order message",
+  "slug": "IN-PROCESS-ORDER",
+  "subject": "Order In Process",
+  "message": "<h1>Hello [CUSTOMER],</h1> <p>Your order is preparing for shipment.Your order Id is [ODID].</p>",
+  "status": true,
+  "deletedAt": 0,
+  "createdAt": {
+    "$date": "2020-10-10T18:30:00Z"
+  },
+  "updatedAt": {
+    "$date": "2020-10-10T18:30:00Z"
+  }
+},{
+  "_id": {
+    "$oid": "5ffdd31f5372412d1c3f5c40"
+  },
+  "name": "Order out for delivery",
+  "slug": "IN-TRANSIT-ORDER",
+  "subject": "Order Out For Delivery",
+  "message": "<h1>Hello [CUSTOMER],</h1> <p>Your order [ODID] is out for delivery and will be delivered by delivery agent between [TIMESLOT]. To ensure your safety, the Delivery Agent will drop the package at your doorstep, ring the doorbell and move back 2 meters while waiting for you to collect your package. If you are in a containment zone, the agent will call you and request you to collect your package from the nearest accessible point while following the same No-Contact delivery process.</p>",
+  "status": true,
+  "deletedAt": 0,
+  "createdAt": {
+    "$date": "2020-10-10T18:30:00Z"
+  },
+  "updatedAt": {
+    "$date": "2020-10-10T18:30:00Z"
+  }
+},{
+  "_id": {
+    "$oid": "5ffdd3715372412d1c3f5c41"
+  },
+  "name": "On delivery",
+  "slug": "DELIVERED-ORDER",
+  "subject": "Order Delivered",
+  "message": "<h1>Hello [CUSTOMER],</h1> <p>Your order [ODID] is delivered and received by [RECEIVERNAME].Thanks for giving us an opportunity to serve you. We would like to serve you again soon.</p>",
+  "status": true,
+  "deletedAt": 0,
+  "createdAt": {
+    "$date": "2020-10-10T18:30:00Z"
+  },
+  "updatedAt": {
+    "$date": "2020-10-10T18:30:00Z"
+  }
+},{
+  "_id": {
+    "$oid": "5ffdd3cd5372412d1c3f5c42"
+  },
+  "name": "On Order Cancellation",
+  "slug": "CANCELLED-ORDER",
+  "subject": "Order Cancelled",
+  "message": "<h1>Hello [CUSTOMER],</h1> <p>Your order [ODID] is cancelled as per your request.  Please check mobile app, website for order status , any payment against your order will be transferred to your e-wallet or returned to original source of payment. We will like to serve you soon again.</p>",
+  "status": true,
+  "deletedAt": 0,
+  "createdAt": {
+    "$date": "2020-10-10T18:30:00Z"
+  },
+  "updatedAt": {
+    "$date": "2020-10-10T18:30:00Z"
+  }
+}]

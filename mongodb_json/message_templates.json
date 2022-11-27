@@ -1,0 +1,136 @@
+[{
+  "_id": {
+    "$oid": "5faa9c9666885825e86a62a2"
+  },
+  "name": "On Order Booking/Receipt of order",
+  "slug": "NEW-ORDER",
+  "message": "Hello [CUSTOMER], Your order [ODID] has been received and is under process. You will receive the confirmation SMS once the order is confirmed. Thanks for your order we are delighted to serve you.",
+  "status": true,
+  "deletedAt": 0,
+  "createdAt": {
+    "$date": "2020-10-10T18:30:00Z"
+  },
+  "updatedAt": {
+    "$date": "2020-10-10T18:30:00Z"
+  }
+},{
+  "_id": {
+    "$oid": "5fad20f23c775537b0267ec6"
+  },
+  "name": "In Process order message",
+  "slug": "IN-PROCESS-ORDER",
+  "message": "Hello [CUSTOMER], Your order is preparing for shipment.Your order Id is [ODID].",
+  "status": true,
+  "deletedAt": 0,
+  "createdAt": {
+    "$date": "2020-10-10T18:30:00Z"
+  },
+  "updatedAt": {
+    "$date": "2020-10-10T18:30:00Z"
+  }
+},{
+  "_id": {
+    "$oid": "5fad21253c775537b0267ec7"
+  },
+  "name": "Order out for delivery",
+  "slug": "IN-TRANSIT-ORDER",
+  "message": "Hello [CUSTOMER],  Your order [ODID] is out for delivery and will be delivered by delivery agent between [TIMESLOT]. To ensure your safety, the Delivery Agent will drop the package at your doorstep, ring the doorbell and move back 2 meters while waiting for you to collect your package. If you are in a containment zone, the agent will call you and request you to collect your package from the nearest accessible point while following the same No-Contact delivery process.",
+  "status": true,
+  "deletedAt": 0,
+  "createdAt": {
+    "$date": "2020-10-10T18:30:00Z"
+  },
+  "updatedAt": {
+    "$date": "2020-10-10T18:30:00Z"
+  }
+},{
+  "_id": {
+    "$oid": "5fad217f3c775537b0267ec8"
+  },
+  "name": "OTP Message",
+  "slug": "OTP-MESSAGE",
+  "message": "Hello, Your OTP is - [OTP]. Do not share this with anyone.",
+  "status": true,
+  "deletedAt": 0,
+  "createdAt": {
+    "$date": "2020-10-10T18:30:00Z"
+  },
+  "updatedAt": {
+    "$date": "2020-10-10T18:30:00Z"
+  }
+},{
+  "_id": {
+    "$oid": "5fae0556c1873a1890d3c519"
+  },
+  "name": "On delivery",
+  "slug": "DELIVERED-ORDER",
+  "message": "Hello [CUSTOMER],  Your order [ODID] is delivered and received by [RECEIVERNAME].Thanks for giving us an opportunity to serve you. We would like to serve you again soon.",
+  "status": true,
+  "deletedAt": 0,
+  "createdAt": {
+    "$date": "2020-10-10T18:30:00Z"
+  },
+  "updatedAt": {
+    "$date": "2020-10-10T18:30:00Z"
+  }
+},{
+  "_id": {
+    "$oid": "5fb9e4aacf2a263e7401e2a1"
+  },
+  "name": "On Order Cancellation",
+  "slug": "CANCELLED-ORDER",
+  "message": "Hello [CUSTOMER],  Your order [ODID] is cancelled as per your request.  Please check mobile app, website for order status , any payment against your order will be transferred to your e-wallet or returned to original source of payment. We will like to serve you soon again.",
+  "status": true,
+  "deletedAt": 0,
+  "createdAt": {
+    "$date": "2020-10-10T18:30:00Z"
+  },
+  "updatedAt": {
+    "$date": "2020-10-10T18:30:00Z"
+  }
+},{
+  "_id": {
+    "$oid": "5fb9e582cf2a263e7401e2a2"
+  },
+  "name": "Wallet balance credit",
+  "slug": "WALLET-CREDIT",
+  "message": "Hello [CUSTOMER], The amount of INR [AMOUNT] has been credited to your wallet on [DATETIME], your wallet balance on [DATETIME] is [TOTALBALANCE].",
+  "status": true,
+  "deletedAt": 0,
+  "createdAt": {
+    "$date": "2020-10-10T18:30:00Z"
+  },
+  "updatedAt": {
+    "$date": "2020-10-10T18:30:00Z"
+  }
+},{
+  "_id": {
+    "$oid": "5fb9e5a4cf2a263e7401e2a3"
+  },
+  "name": "Wallet balance debit",
+  "slug": "WALLET-DEBIT",
+  "message": "Hello [CUSTOMER], The amount of INR [AMOUNT] has been debited from your wallet on [DATETIME], your wallet balance on [DATETIME] is [TOTALBALANCE].",
+  "status": true,
+  "deletedAt": 0,
+  "createdAt": {
+    "$date": "2020-10-10T18:30:00Z"
+  },
+  "updatedAt": {
+    "$date": "2020-10-10T18:30:00Z"
+  }
+},{
+  "_id": {
+    "$oid": "5fb9e63acf2a263e7401e2a4"
+  },
+  "name": "Wallet credit due to Cash collection",
+  "slug": "WALLET-CREDIT-CASH",
+  "message": "Hello [CUSTOMER], The amount of INR [AMOUNT] has been credited to your wallet on [DATETIME], against receipt number [RECEIPTNUMBER] your wallet balance on [DATETIME] is [TOTALBALANCE].",
+  "status": true,
+  "deletedAt": 0,
+  "createdAt": {
+    "$date": "2020-10-10T18:30:00Z"
+  },
+  "updatedAt": {
+    "$date": "2020-10-10T18:30:00Z"
+  }
+}]

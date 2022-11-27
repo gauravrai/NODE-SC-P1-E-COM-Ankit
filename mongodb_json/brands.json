@@ -1,0 +1,15 @@
+[{
+  "_id": {
+    "$oid": "5fecaa577a5c3411ccf94ff6"
+  },
+  "status": true,
+  "deletedAt": 0,
+  "name": "Evamastu",
+  "createdAt": {
+    "$date": "2020-12-30T16:27:03.534Z"
+  },
+  "updatedAt": {
+    "$date": "2020-12-30T16:27:03.534Z"
+  },
+  "__v": 0
+}]

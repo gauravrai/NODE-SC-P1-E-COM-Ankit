@@ -1,0 +1,1679 @@
+[{
+  "_id": {
+    "$oid": "5ff1fa195fefef37ed611481"
+  },
+  "inventory": [
+    [
+      {
+        "uniqueCode": "LB1000002",
+        "varientId": {
+          "$oid": "5fedb4f0eba8b06399153b05"
+        },
+        "storeId": {
+          "$oid": "5feca85c7a5c3411ccf94fec"
+        },
+        "varient": "5 KG",
+        "price": 50,
+        "default": true
+      },
+      {
+        "uniqueCode": "LB1000003",
+        "varientId": {
+          "$oid": "5fedb501eba8b06399153b06"
+        },
+        "storeId": {
+          "$oid": "5feca85c7a5c3411ccf94fec"
+        },
+        "varient": "10 KG",
+        "price": 50,
+        "default": false
+      }
+    ],
+    [
+      {
+        "varientId": "",
+        "storeId": {
+          "$oid": "5feca8777a5c3411ccf94fed"
+        },
+        "varient": "",
+        "price": 0,
+        "default": false
+      }
+    ]
+  ],
+  "tax": 18,
+  "status": true,
+  "deletedAt": 0,
+  "categoryId": {
+    "$oid": "5feca9787a5c3411ccf94ff1"
+  },
+  "name": "Wheat Flour",
+  "offer": "Yes",
+  "discount": "Yes",
+  "stock": "LB1000001",
+  "description": "Wheat Flour",
+  "featured": false,
+  "outOfStock": false,
+  "image": {
+    "thumbnail": [
+      "default_thumbnail.jpg"
+    ],
+    "small": [
+      "default_small.jpg"
+    ],
+    "large": [
+      "default_large.jpg"
+    ]
+  },
+  "brandId": {
+    "$oid": "5fecaa577a5c3411ccf94ff6"
+  },
+  "price": 50,
+  "createdAt": {
+    "$date": "2021-01-03T17:08:41.256Z"
+  },
+  "updatedAt": {
+    "$date": "2021-01-03T17:08:41.256Z"
+  },
+  "__v": 0
+},{
+  "_id": {
+    "$oid": "5ff1fa195fefef37ed611482"
+  },
+  "inventory": [
+    [
+      {
+        "uniqueCode": "LB1000005",
+        "varientId": {
+          "$oid": "5fedb4f0eba8b06399153b05"
+        },
+        "storeId": {
+          "$oid": "5feca85c7a5c3411ccf94fec"
+        },
+        "varient": "5 KG",
+        "price": 50,
+        "default": true
+      },
+      {
+        "uniqueCode": "LB1000006",
+        "varientId": {
+          "$oid": "5fedb501eba8b06399153b06"
+        },
+        "storeId": {
+          "$oid": "5feca85c7a5c3411ccf94fec"
+        },
+        "varient": "10 KG",
+        "price": 50,
+        "default": false
+      }
+    ],
+    [
+      {
+        "varientId": "",
+        "storeId": {
+          "$oid": "5feca8777a5c3411ccf94fed"
+        },
+        "varient": "",
+        "price": 0,
+        "default": false
+      }
+    ]
+  ],
+  "tax": 18,
+  "status": true,
+  "deletedAt": 0,
+  "categoryId": {
+    "$oid": "5feca9787a5c3411ccf94ff1"
+  },
+  "name": "MP Sharbati Aata",
+  "offer": "Yes",
+  "discount": "Yes",
+  "stock": "LB1000004",
+  "description": "MP Sharbati Aata",
+  "featured": false,
+  "outOfStock": false,
+  "image": {
+    "thumbnail": [
+      "default_thumbnail.jpg"
+    ],
+    "small": [
+      "default_small.jpg"
+    ],
+    "large": [
+      "default_large.jpg"
+    ]
+  },
+  "brandId": {
+    "$oid": "5fecaa577a5c3411ccf94ff6"
+  },
+  "price": 50,
+  "createdAt": {
+    "$date": "2021-01-03T17:08:41.292Z"
+  },
+  "updatedAt": {
+    "$date": "2021-01-03T17:08:41.292Z"
+  },
+  "__v": 0
+},{
+  "_id": {
+    "$oid": "5ff1fa195fefef37ed611483"
+  },
+  "inventory": [
+    [
+      {
+        "uniqueCode": "LB1000008",
+        "varientId": {
+          "$oid": "5fecad471e21255a8d7223b2"
+        },
+        "storeId": {
+          "$oid": "5feca85c7a5c3411ccf94fec"
+        },
+        "varient": "1 KG",
+        "price": 50,
+        "default": true
+      },
+      {
+        "uniqueCode": "LB1000009",
+        "varientId": {
+          "$oid": "5fecad531e21255a8d7223b3"
+        },
+        "storeId": {
+          "$oid": "5feca85c7a5c3411ccf94fec"
+        },
+        "varient": "2 KG",
+        "price": 50,
+        "default": false
+      },
+      {
+        "uniqueCode": "LB1000012",
+        "varientId": {
+          "$oid": "5fedb4f0eba8b06399153b05"
+        },
+        "storeId": {
+          "$oid": "5feca85c7a5c3411ccf94fec"
+        },
+        "varient": "5 KG",
+        "price": 50,
+        "default": false
+      }
+    ],
+    [
+      {
+        "varientId": "",
+        "storeId": {
+          "$oid": "5feca8777a5c3411ccf94fed"
+        },
+        "varient": "",
+        "price": 0,
+        "default": false
+      }
+    ]
+  ],
+  "tax": 18,
+  "status": true,
+  "deletedAt": 0,
+  "categoryId": {
+    "$oid": "5feca9787a5c3411ccf94ff1"
+  },
+  "name": "Multigrainn Aata",
+  "offer": "Yes",
+  "discount": "Yes",
+  "stock": "LB1000010",
+  "description": "Multigrainn Aata",
+  "featured": false,
+  "outOfStock": false,
+  "image": {
+    "thumbnail": [
+      "default_thumbnail.jpg"
+    ],
+    "small": [
+      "default_small.jpg"
+    ],
+    "large": [
+      "default_large.jpg"
+    ]
+  },
+  "brandId": {
+    "$oid": "5fecaa577a5c3411ccf94ff6"
+  },
+  "price": 50,
+  "createdAt": {
+    "$date": "2021-01-03T17:08:41.316Z"
+  },
+  "updatedAt": {
+    "$date": "2021-01-03T17:08:41.316Z"
+  },
+  "__v": 0
+},{
+  "_id": {
+    "$oid": "5ff1fa195fefef37ed611484"
+  },
+  "inventory": [
+    [
+      {
+        "uniqueCode": "LB1000014",
+        "varientId": {
+          "$oid": "5fedb527eba8b06399153b08"
+        },
+        "storeId": {
+          "$oid": "5feca85c7a5c3411ccf94fec"
+        },
+        "varient": "500 GM",
+        "price": 50,
+        "default": true
+      },
+      {
+        "uniqueCode": "LB1000015",
+        "varientId": {
+          "$oid": "5fecad471e21255a8d7223b2"
+        },
+        "storeId": {
+          "$oid": "5feca85c7a5c3411ccf94fec"
+        },
+        "varient": "1 KG",
+        "price": 50,
+        "default": false
+      }
+    ],
+    [
+      {
+        "varientId": "",
+        "storeId": {
+          "$oid": "5feca8777a5c3411ccf94fed"
+        },
+        "varient": "",
+        "price": 0,
+        "default": false
+      }
+    ]
+  ],
+  "tax": 18,
+  "status": true,
+  "deletedAt": 0,
+  "categoryId": {
+    "$oid": "5feca9787a5c3411ccf94ff1"
+  },
+  "name": "Chana Aata",
+  "offer": "Yes",
+  "discount": "Yes",
+  "stock": "LB1000013",
+  "description": "Chana Aata",
+  "featured": false,
+  "outOfStock": false,
+  "image": {
+    "thumbnail": [
+      "default_thumbnail.jpg"
+    ],
+    "small": [
+      "default_small.jpg"
+    ],
+    "large": [
+      "default_large.jpg"
+    ]
+  },
+  "brandId": {
+    "$oid": "5fecaa577a5c3411ccf94ff6"
+  },
+  "price": 50,
+  "createdAt": {
+    "$date": "2021-01-03T17:08:41.355Z"
+  },
+  "updatedAt": {
+    "$date": "2021-01-03T17:08:41.355Z"
+  },
+  "__v": 0
+},{
+  "_id": {
+    "$oid": "5ff1fa195fefef37ed611485"
+  },
+  "inventory": [
+    [
+      {
+        "uniqueCode": "LB1000017",
+        "varientId": {
+          "$oid": "5fedb527eba8b06399153b08"
+        },
+        "storeId": {
+          "$oid": "5feca85c7a5c3411ccf94fec"
+        },
+        "varient": "500 GM",
+        "price": 50,
+        "default": true
+      },
+      {
+        "uniqueCode": "LB1000018",
+        "varientId": {
+          "$oid": "5fecad471e21255a8d7223b2"
+        },
+        "storeId": {
+          "$oid": "5feca85c7a5c3411ccf94fec"
+        },
+        "varient": "1 KG",
+        "price": 50,
+        "default": false
+      }
+    ],
+    [
+      {
+        "varientId": "",
+        "storeId": {
+          "$oid": "5feca8777a5c3411ccf94fed"
+        },
+        "varient": "",
+        "price": 0,
+        "default": false
+      }
+    ]
+  ],
+  "tax": 18,
+  "status": true,
+  "deletedAt": 0,
+  "categoryId": {
+    "$oid": "5feca9787a5c3411ccf94ff1"
+  },
+  "name": "Rice Flour",
+  "offer": "Yes",
+  "discount": "Yes",
+  "stock": "LB1000016",
+  "description": "Rice Flour",
+  "featured": false,
+  "outOfStock": false,
+  "image": {
+    "thumbnail": [
+      "default_thumbnail.jpg"
+    ],
+    "small": [
+      "default_small.jpg"
+    ],
+    "large": [
+      "default_large.jpg"
+    ]
+  },
+  "brandId": {
+    "$oid": "5fecaa577a5c3411ccf94ff6"
+  },
+  "price": 50,
+  "createdAt": {
+    "$date": "2021-01-03T17:08:41.394Z"
+  },
+  "updatedAt": {
+    "$date": "2021-01-03T17:08:41.394Z"
+  },
+  "__v": 0
+},{
+  "_id": {
+    "$oid": "5ff1fa195fefef37ed611486"
+  },
+  "inventory": [
+    [
+      {
+        "uniqueCode": "LB1000020",
+        "varientId": {
+          "$oid": "5fedb527eba8b06399153b08"
+        },
+        "storeId": {
+          "$oid": "5feca85c7a5c3411ccf94fec"
+        },
+        "varient": "500 GM",
+        "price": 50,
+        "default": true
+      },
+      {
+        "uniqueCode": "LB1000021",
+        "varientId": {
+          "$oid": "5fecad471e21255a8d7223b2"
+        },
+        "storeId": {
+          "$oid": "5feca85c7a5c3411ccf94fec"
+        },
+        "varient": "1 KG",
+        "price": 50,
+        "default": false
+      }
+    ],
+    [
+      {
+        "varientId": "",
+        "storeId": {
+          "$oid": "5feca8777a5c3411ccf94fed"
+        },
+        "varient": "",
+        "price": 0,
+        "default": false
+      }
+    ]
+  ],
+  "tax": 18,
+  "status": true,
+  "deletedAt": 0,
+  "categoryId": {
+    "$oid": "5feca9787a5c3411ccf94ff1"
+  },
+  "name": "Makka Atta",
+  "offer": "Yes",
+  "discount": "Yes",
+  "stock": "LB1000019",
+  "description": "Makka Atta",
+  "featured": false,
+  "outOfStock": false,
+  "image": {
+    "thumbnail": [
+      "default_thumbnail.jpg"
+    ],
+    "small": [
+      "default_small.jpg"
+    ],
+    "large": [
+      "default_large.jpg"
+    ]
+  },
+  "brandId": {
+    "$oid": "5fecaa577a5c3411ccf94ff6"
+  },
+  "price": 50,
+  "createdAt": {
+    "$date": "2021-01-03T17:08:41.431Z"
+  },
+  "updatedAt": {
+    "$date": "2021-01-03T17:08:41.431Z"
+  },
+  "__v": 0
+},{
+  "_id": {
+    "$oid": "5ff1fa195fefef37ed611487"
+  },
+  "inventory": [
+    [
+      {
+        "uniqueCode": "LB1000023",
+        "varientId": {
+          "$oid": "5fedb527eba8b06399153b08"
+        },
+        "storeId": {
+          "$oid": "5feca85c7a5c3411ccf94fec"
+        },
+        "varient": "500 GM",
+        "price": "50",
+        "default": true
+      },
+      {
+        "uniqueCode": "LB1000024",
+        "varientId": {
+          "$oid": "5fecad471e21255a8d7223b2"
+        },
+        "storeId": {
+          "$oid": "5feca85c7a5c3411ccf94fec"
+        },
+        "varient": "1 KG",
+        "price": "50",
+        "default": false
+      }
+    ],
+    [
+      {
+        "varientId": "",
+        "storeId": {
+          "$oid": "5feca8777a5c3411ccf94fed"
+        },
+        "varient": "",
+        "price": 0,
+        "default": false
+      }
+    ]
+  ],
+  "tax": 18,
+  "status": true,
+  "deletedAt": 0,
+  "categoryId": {
+    "$oid": "5feca9787a5c3411ccf94ff1"
+  },
+  "name": "Bajra Atta",
+  "offer": "Yes",
+  "discount": "Yes",
+  "stock": "LB1000022",
+  "description": "Bajra Atta isso good for health  Bajra Atta isso good for health ",
+  "featured": true,
+  "outOfStock": false,
+  "image": {
+    "thumbnail": [
+      "default_thumbnail.jpg"
+    ],
+    "small": [
+      "default_small.jpg"
+    ],
+    "large": [
+      "default_large.jpg"
+    ]
+  },
+  "brandId": {
+    "$oid": "5fecaa577a5c3411ccf94ff6"
+  },
+  "price": 50,
+  "createdAt": {
+    "$date": "2021-01-03T17:08:41.459Z"
+  },
+  "updatedAt": {
+    "$date": "2021-01-03T17:08:41.459Z"
+  },
+  "__v": 0
+},{
+  "_id": {
+    "$oid": "5ff1fa195fefef37ed611488"
+  },
+  "inventory": [
+    [
+      {
+        "uniqueCode": "LB1000026",
+        "varientId": {
+          "$oid": "5fedb513eba8b06399153b07"
+        },
+        "storeId": {
+          "$oid": "5feca85c7a5c3411ccf94fec"
+        },
+        "varient": "250 GM",
+        "price": 50,
+        "default": true
+      },
+      {
+        "uniqueCode": "LB1000027",
+        "varientId": {
+          "$oid": "5fedb527eba8b06399153b08"
+        },
+        "storeId": {
+          "$oid": "5feca85c7a5c3411ccf94fec"
+        },
+        "varient": "500 GM",
+        "price": 50,
+        "default": false
+      },
+      {
+        "uniqueCode": "LB1000030",
+        "varientId": {
+          "$oid": "5fecad471e21255a8d7223b2"
+        },
+        "storeId": {
+          "$oid": "5feca85c7a5c3411ccf94fec"
+        },
+        "varient": "1 KG",
+        "price": 50,
+        "default": false
+      }
+    ],
+    [
+      {
+        "varientId": "",
+        "storeId": {
+          "$oid": "5feca8777a5c3411ccf94fed"
+        },
+        "varient": "",
+        "price": 0,
+        "default": false
+      }
+    ]
+  ],
+  "tax": 18,
+  "status": true,
+  "deletedAt": 0,
+  "categoryId": {
+    "$oid": "5feca9787a5c3411ccf94ff1"
+  },
+  "name": "Singhada Aata",
+  "offer": "Yes",
+  "discount": "Yes",
+  "stock": "LB1000028",
+  "description": "Singhada Aata",
+  "featured": false,
+  "outOfStock": false,
+  "image": {
+    "thumbnail": [
+      "default_thumbnail.jpg"
+    ],
+    "small": [
+      "default_small.jpg"
+    ],
+    "large": [
+      "default_large.jpg"
+    ]
+  },
+  "brandId": {
+    "$oid": "5fecaa577a5c3411ccf94ff6"
+  },
+  "price": 50,
+  "createdAt": {
+    "$date": "2021-01-03T17:08:41.477Z"
+  },
+  "updatedAt": {
+    "$date": "2021-01-03T17:08:41.477Z"
+  },
+  "__v": 0
+},{
+  "_id": {
+    "$oid": "5ff1fa195fefef37ed611489"
+  },
+  "inventory": [
+    [
+      {
+        "uniqueCode": "LB1000032",
+        "varientId": {
+          "$oid": "5fedb513eba8b06399153b07"
+        },
+        "storeId": {
+          "$oid": "5feca85c7a5c3411ccf94fec"
+        },
+        "varient": "250 GM",
+        "price": 50,
+        "default": true
+      },
+      {
+        "uniqueCode": "LB1000033",
+        "varientId": {
+          "$oid": "5fedb527eba8b06399153b08"
+        },
+        "storeId": {
+          "$oid": "5feca85c7a5c3411ccf94fec"
+        },
+        "varient": "500 GM",
+        "price": 50,
+        "default": false
+      },
+      {
+        "uniqueCode": "LB1000036",
+        "varientId": {
+          "$oid": "5fecad471e21255a8d7223b2"
+        },
+        "storeId": {
+          "$oid": "5feca85c7a5c3411ccf94fec"
+        },
+        "varient": "1 KG",
+        "price": 50,
+        "default": false
+      }
+    ],
+    [
+      {
+        "varientId": "",
+        "storeId": {
+          "$oid": "5feca8777a5c3411ccf94fed"
+        },
+        "varient": "",
+        "price": 0,
+        "default": false
+      }
+    ]
+  ],
+  "tax": 18,
+  "status": true,
+  "deletedAt": 0,
+  "categoryId": {
+    "$oid": "5feca9787a5c3411ccf94ff1"
+  },
+  "name": "Kuttu Aata",
+  "offer": "Yes",
+  "discount": "Yes",
+  "stock": "LB1000034",
+  "description": "Kuttu Aata",
+  "featured": false,
+  "outOfStock": false,
+  "image": {
+    "thumbnail": [
+      "default_thumbnail.jpg"
+    ],
+    "small": [
+      "default_small.jpg"
+    ],
+    "large": [
+      "default_large.jpg"
+    ]
+  },
+  "brandId": {
+    "$oid": "5fecaa577a5c3411ccf94ff6"
+  },
+  "price": 50,
+  "createdAt": {
+    "$date": "2021-01-03T17:08:41.512Z"
+  },
+  "updatedAt": {
+    "$date": "2021-01-03T17:08:41.512Z"
+  },
+  "__v": 0
+},{
+  "_id": {
+    "$oid": "5ff1fa195fefef37ed61148a"
+  },
+  "inventory": [
+    [
+      {
+        "uniqueCode": "LB1000038",
+        "varientId": {
+          "$oid": "5fedb527eba8b06399153b08"
+        },
+        "storeId": {
+          "$oid": "5feca85c7a5c3411ccf94fec"
+        },
+        "varient": "500 GM",
+        "price": 50,
+        "default": true
+      },
+      {
+        "uniqueCode": "LB1000039",
+        "varientId": {
+          "$oid": "5fecad471e21255a8d7223b2"
+        },
+        "storeId": {
+          "$oid": "5feca85c7a5c3411ccf94fec"
+        },
+        "varient": "1 KG",
+        "price": 50,
+        "default": false
+      }
+    ],
+    [
+      {
+        "varientId": "",
+        "storeId": {
+          "$oid": "5feca8777a5c3411ccf94fed"
+        },
+        "varient": "",
+        "price": 0,
+        "default": false
+      }
+    ]
+  ],
+  "tax": 18,
+  "status": true,
+  "deletedAt": 0,
+  "categoryId": {
+    "$oid": "5feca9787a5c3411ccf94ff1"
+  },
+  "name": "Sooji Fine",
+  "offer": "Yes",
+  "discount": "Yes",
+  "stock": "LB1000037",
+  "description": "Sooji Fine",
+  "featured": false,
+  "outOfStock": false,
+  "image": {
+    "thumbnail": [
+      "default_thumbnail.jpg"
+    ],
+    "small": [
+      "default_small.jpg"
+    ],
+    "large": [
+      "default_large.jpg"
+    ]
+  },
+  "brandId": {
+    "$oid": "5fecaa577a5c3411ccf94ff6"
+  },
+  "price": 50,
+  "createdAt": {
+    "$date": "2021-01-03T17:08:41.542Z"
+  },
+  "updatedAt": {
+    "$date": "2021-01-03T17:08:41.542Z"
+  },
+  "__v": 0
+},{
+  "_id": {
+    "$oid": "5ff1fa195fefef37ed61148b"
+  },
+  "inventory": [
+    [
+      {
+        "uniqueCode": "LB1000041",
+        "varientId": {
+          "$oid": "5fedb527eba8b06399153b08"
+        },
+        "storeId": {
+          "$oid": "5feca85c7a5c3411ccf94fec"
+        },
+        "varient": "500 GM",
+        "price": 50,
+        "default": true
+      },
+      {
+        "uniqueCode": "LB1000042",
+        "varientId": {
+          "$oid": "5fecad471e21255a8d7223b2"
+        },
+        "storeId": {
+          "$oid": "5feca85c7a5c3411ccf94fec"
+        },
+        "varient": "1 KG",
+        "price": 50,
+        "default": false
+      }
+    ],
+    [
+      {
+        "varientId": "",
+        "storeId": {
+          "$oid": "5feca8777a5c3411ccf94fed"
+        },
+        "varient": "",
+        "price": 0,
+        "default": false
+      }
+    ]
+  ],
+  "tax": 18,
+  "status": true,
+  "deletedAt": 0,
+  "categoryId": {
+    "$oid": "5feca9787a5c3411ccf94ff1"
+  },
+  "name": "Moti Sooji",
+  "offer": "Yes",
+  "discount": "Yes",
+  "stock": "LB1000040",
+  "description": "Moti Sooji",
+  "featured": false,
+  "outOfStock": false,
+  "image": {
+    "thumbnail": [
+      "default_thumbnail.jpg"
+    ],
+    "small": [
+      "default_small.jpg"
+    ],
+    "large": [
+      "default_large.jpg"
+    ]
+  },
+  "brandId": {
+    "$oid": "5fecaa577a5c3411ccf94ff6"
+  },
+  "price": 50,
+  "createdAt": {
+    "$date": "2021-01-03T17:08:41.556Z"
+  },
+  "updatedAt": {
+    "$date": "2021-01-03T17:08:41.556Z"
+  },
+  "__v": 0
+},{
+  "_id": {
+    "$oid": "5ff1fa195fefef37ed61148c"
+  },
+  "inventory": [
+    [
+      {
+        "uniqueCode": "LB1000044",
+        "varientId": {
+          "$oid": "5fedb527eba8b06399153b08"
+        },
+        "storeId": {
+          "$oid": "5feca85c7a5c3411ccf94fec"
+        },
+        "varient": "500 GM",
+        "price": 50,
+        "default": true
+      },
+      {
+        "uniqueCode": "LB1000045",
+        "varientId": {
+          "$oid": "5fecad471e21255a8d7223b2"
+        },
+        "storeId": {
+          "$oid": "5feca85c7a5c3411ccf94fec"
+        },
+        "varient": "1 KG",
+        "price": 50,
+        "default": false
+      }
+    ],
+    [
+      {
+        "varientId": "",
+        "storeId": {
+          "$oid": "5feca8777a5c3411ccf94fed"
+        },
+        "varient": "",
+        "price": 0,
+        "default": false
+      }
+    ]
+  ],
+  "tax": 18,
+  "status": true,
+  "deletedAt": 0,
+  "categoryId": {
+    "$oid": "5feca9787a5c3411ccf94ff1"
+  },
+  "name": "Roasted sooji",
+  "offer": "Yes",
+  "discount": "Yes",
+  "stock": "LB1000043",
+  "description": "Roasted sooji",
+  "featured": false,
+  "outOfStock": false,
+  "image": {
+    "thumbnail": [
+      "default_thumbnail.jpg"
+    ],
+    "small": [
+      "default_small.jpg"
+    ],
+    "large": [
+      "default_large.jpg"
+    ]
+  },
+  "brandId": {
+    "$oid": "5fecaa577a5c3411ccf94ff6"
+  },
+  "price": 50,
+  "createdAt": {
+    "$date": "2021-01-03T17:08:41.587Z"
+  },
+  "updatedAt": {
+    "$date": "2021-01-03T17:08:41.587Z"
+  },
+  "__v": 0
+},{
+  "_id": {
+    "$oid": "5ff1fa195fefef37ed61148d"
+  },
+  "inventory": [
+    [
+      {
+        "uniqueCode": "LB1000047",
+        "varientId": {
+          "$oid": "5fedb527eba8b06399153b08"
+        },
+        "storeId": {
+          "$oid": "5feca85c7a5c3411ccf94fec"
+        },
+        "varient": "500 GM",
+        "price": 50,
+        "default": true
+      },
+      {
+        "uniqueCode": "LB1000048",
+        "varientId": {
+          "$oid": "5fecad471e21255a8d7223b2"
+        },
+        "storeId": {
+          "$oid": "5feca85c7a5c3411ccf94fec"
+        },
+        "varient": "1 KG",
+        "price": 50,
+        "default": false
+      }
+    ],
+    [
+      {
+        "varientId": "",
+        "storeId": {
+          "$oid": "5feca8777a5c3411ccf94fed"
+        },
+        "varient": "",
+        "price": 0,
+        "default": false
+      }
+    ]
+  ],
+  "tax": 18,
+  "status": true,
+  "deletedAt": 0,
+  "categoryId": {
+    "$oid": "5feca9787a5c3411ccf94ff1"
+  },
+  "name": "Besan Fine",
+  "offer": "Yes",
+  "discount": "Yes",
+  "stock": "LB1000046",
+  "description": "Besan Fine",
+  "featured": false,
+  "outOfStock": false,
+  "image": {
+    "thumbnail": [
+      "default_thumbnail.jpg"
+    ],
+    "small": [
+      "default_small.jpg"
+    ],
+    "large": [
+      "default_large.jpg"
+    ]
+  },
+  "brandId": {
+    "$oid": "5fecaa577a5c3411ccf94ff6"
+  },
+  "price": 50,
+  "createdAt": {
+    "$date": "2021-01-03T17:08:41.608Z"
+  },
+  "updatedAt": {
+    "$date": "2021-01-03T17:08:41.608Z"
+  },
+  "__v": 0
+},{
+  "_id": {
+    "$oid": "5ff1fa195fefef37ed61148e"
+  },
+  "inventory": [
+    [
+      {
+        "uniqueCode": "LB1000050",
+        "varientId": {
+          "$oid": "5fedb527eba8b06399153b08"
+        },
+        "storeId": {
+          "$oid": "5feca85c7a5c3411ccf94fec"
+        },
+        "varient": "500 GM",
+        "price": 50,
+        "default": true
+      },
+      {
+        "uniqueCode": "LB1000051",
+        "varientId": {
+          "$oid": "5fecad471e21255a8d7223b2"
+        },
+        "storeId": {
+          "$oid": "5feca85c7a5c3411ccf94fec"
+        },
+        "varient": "1 KG",
+        "price": 50,
+        "default": false
+      }
+    ],
+    [
+      {
+        "varientId": "",
+        "storeId": {
+          "$oid": "5feca8777a5c3411ccf94fed"
+        },
+        "varient": "",
+        "price": 0,
+        "default": false
+      }
+    ]
+  ],
+  "tax": 18,
+  "status": true,
+  "deletedAt": 0,
+  "categoryId": {
+    "$oid": "5feca9787a5c3411ccf94ff1"
+  },
+  "name": "Besan Mota",
+  "offer": "Yes",
+  "discount": "Yes",
+  "stock": "LB1000049",
+  "description": "Besan Mota",
+  "featured": false,
+  "outOfStock": false,
+  "image": {
+    "thumbnail": [
+      "default_thumbnail.jpg"
+    ],
+    "small": [
+      "default_small.jpg"
+    ],
+    "large": [
+      "default_large.jpg"
+    ]
+  },
+  "brandId": {
+    "$oid": "5fecaa577a5c3411ccf94ff6"
+  },
+  "price": 50,
+  "createdAt": {
+    "$date": "2021-01-03T17:08:41.622Z"
+  },
+  "updatedAt": {
+    "$date": "2021-01-03T17:08:41.622Z"
+  },
+  "__v": 0
+},{
+  "_id": {
+    "$oid": "5ff1fa195fefef37ed61148f"
+  },
+  "inventory": [
+    [
+      {
+        "uniqueCode": "LB1000053",
+        "varientId": {
+          "$oid": "5fedb527eba8b06399153b08"
+        },
+        "storeId": {
+          "$oid": "5feca85c7a5c3411ccf94fec"
+        },
+        "varient": "500 GM",
+        "price": "50",
+        "default": true
+      },
+      {
+        "uniqueCode": "LB1000054",
+        "varientId": {
+          "$oid": "5fecad471e21255a8d7223b2"
+        },
+        "storeId": {
+          "$oid": "5feca85c7a5c3411ccf94fec"
+        },
+        "varient": "1 KG",
+        "price": "50",
+        "default": false
+      }
+    ],
+    [
+      {
+        "varientId": "",
+        "storeId": {
+          "$oid": "5feca8777a5c3411ccf94fed"
+        },
+        "varient": "",
+        "price": 0,
+        "default": false
+      }
+    ]
+  ],
+  "tax": 18,
+  "status": true,
+  "deletedAt": 0,
+  "categoryId": {
+    "$oid": "5feca9787a5c3411ccf94ff1"
+  },
+  "name": "Maida",
+  "offer": "Yes",
+  "discount": "Yes",
+  "stock": "LB1000052",
+  "description": "Maida Is too good for health Maida Is too good for health",
+  "featured": true,
+  "outOfStock": false,
+  "image": {
+    "thumbnail": [
+      "default_thumbnail.jpg"
+    ],
+    "small": [
+      "default_small.jpg"
+    ],
+    "large": [
+      "default_large.jpg"
+    ]
+  },
+  "brandId": {
+    "$oid": "5fecaa577a5c3411ccf94ff6"
+  },
+  "price": 50,
+  "createdAt": {
+    "$date": "2021-01-03T17:08:41.647Z"
+  },
+  "updatedAt": {
+    "$date": "2021-01-03T17:08:41.647Z"
+  },
+  "__v": 0
+},{
+  "_id": {
+    "$oid": "5ff1fa195fefef37ed611490"
+  },
+  "inventory": [
+    [
+      {
+        "uniqueCode": "LB1000056",
+        "varientId": {
+          "$oid": "5fedb527eba8b06399153b08"
+        },
+        "storeId": {
+          "$oid": "5feca85c7a5c3411ccf94fec"
+        },
+        "varient": "500 GM",
+        "price": "50",
+        "default": true
+      },
+      {
+        "uniqueCode": "LB1000057",
+        "varientId": {
+          "$oid": "5fecad471e21255a8d7223b2"
+        },
+        "storeId": {
+          "$oid": "5feca85c7a5c3411ccf94fec"
+        },
+        "varient": "1 KG",
+        "price": "50",
+        "default": false
+      }
+    ],
+    [
+      {
+        "varientId": "",
+        "storeId": {
+          "$oid": "5feca8777a5c3411ccf94fed"
+        },
+        "varient": "",
+        "price": 0,
+        "default": false
+      }
+    ]
+  ],
+  "tax": 10,
+  "status": true,
+  "deletedAt": 0,
+  "categoryId": {
+    "$oid": "5feca9787a5c3411ccf94ff1"
+  },
+  "name": "Daliya",
+  "offer": "Yes",
+  "discount": "No",
+  "stock": "LB1000055",
+  "description": "Daliya ",
+  "featured": true,
+  "outOfStock": false,
+  "image": {
+    "thumbnail": [
+      "1609825708692_Pintola All Natural Peanut Butter 2.jpeg",
+      ""
+    ],
+    "small": [
+      "1609825708704_Pintola All Natural Peanut Butter 2.jpeg",
+      ""
+    ],
+    "large": [
+      "1609825708706_Pintola All Natural Peanut Butter 2.jpeg",
+      ""
+    ]
+  },
+  "brandId": {
+    "$oid": "5fecaa577a5c3411ccf94ff6"
+  },
+  "price": 50,
+  "createdAt": {
+    "$date": "2021-01-03T17:08:41.683Z"
+  },
+  "updatedAt": {
+    "$date": "2021-01-03T17:08:41.683Z"
+  },
+  "__v": 0
+},{
+  "_id": {
+    "$oid": "5ff355af33f9c043e5c98f06"
+  },
+  "inventory": [
+    [
+      {
+        "uniqueCode": "LB1000059",
+        "varientId": {
+          "$oid": "5fecad471e21255a8d7223b2"
+        },
+        "storeId": {
+          "$oid": "5feca85c7a5c3411ccf94fec"
+        },
+        "varient": "1 KG",
+        "price": "120",
+        "default": true
+      }
+    ],
+    [
+      {
+        "varientId": "",
+        "storeId": {
+          "$oid": "5feca8777a5c3411ccf94fed"
+        },
+        "varient": "",
+        "price": 0,
+        "default": false
+      }
+    ]
+  ],
+  "tax": "0",
+  "status": true,
+  "deletedAt": 2,
+  "categoryId": {
+    "$oid": "5feca9787a5c3411ccf94ff1"
+  },
+  "name": "Test Product",
+  "offer": "No",
+  "discount": "No",
+  "stock": "LB1000058",
+  "description": "Lorem Ipsum is dummy text",
+  "featured": true,
+  "outOfStock": false,
+  "brandId": {
+    "$oid": "5fecaa577a5c3411ccf94ff6"
+  },
+  "price": 120,
+  "image": {
+    "thumbnail": [
+      "1609782703212_oppo-a11k-cph2083-original-imaft25bh44gzs5g.jpeg",
+      "1609782703213_oppo-a11k-cph2083-original-imaft25bqgyw3eja.jpeg"
+    ],
+    "small": [
+      "1609782703218_oppo-a11k-cph2083-original-imaft25bkrfmmtyx.jpeg",
+      "1609782703218_oppo-a11k-cph2083-original-imaft25bcwmyqkwd.jpeg"
+    ],
+    "large": [
+      "1609782703219_oppo-a11k-cph2083-original-imaft25bzadyfstj.jpeg",
+      "1609782703219_oppo-a11k-cph2083-original-imaft25bztergdhf.jpeg"
+    ]
+  },
+  "createdAt": {
+    "$date": "2021-01-04T17:51:43.226Z"
+  },
+  "updatedAt": {
+    "$date": "2021-01-04T17:51:43.226Z"
+  },
+  "__v": 0
+},{
+  "_id": {
+    "$oid": "5ff355dd33f9c043e5c98f07"
+  },
+  "inventory": [
+    [
+      {
+        "uniqueCode": "LB1000061",
+        "varientId": {
+          "$oid": "5fedb527eba8b06399153b08"
+        },
+        "storeId": {
+          "$oid": "5feca85c7a5c3411ccf94fec"
+        },
+        "varient": "500 GM",
+        "default": true
+      }
+    ],
+    [
+      {
+        "varientId": "",
+        "storeId": {
+          "$oid": "5feca8777a5c3411ccf94fed"
+        },
+        "varient": "",
+        "price": 0,
+        "default": false
+      }
+    ]
+  ],
+  "tax": "0",
+  "status": true,
+  "deletedAt": 2,
+  "categoryId": {
+    "$oid": "5feca9787a5c3411ccf94ff1"
+  },
+  "name": "Test Product",
+  "offer": "No",
+  "discount": "No",
+  "stock": "LB1000060",
+  "description": "Lorem Ipsum is ummy text",
+  "featured": false,
+  "outOfStock": false,
+  "brandId": {
+    "$oid": "5fecaa577a5c3411ccf94ff6"
+  },
+  "image": {
+    "thumbnail": [],
+    "small": [],
+    "large": []
+  },
+  "createdAt": {
+    "$date": "2021-01-04T17:52:29.045Z"
+  },
+  "updatedAt": {
+    "$date": "2021-01-04T17:52:29.045Z"
+  },
+  "__v": 0
+},{
+  "_id": {
+    "$oid": "600858a5b9e11506f586a0a5"
+  },
+  "inventory": [
+    [
+      {
+        "uniqueCode": "LB1000063",
+        "varientId": {
+          "$oid": "5fecad531e21255a8d7223b3"
+        },
+        "storeId": {
+          "$oid": "5feca85c7a5c3411ccf94fec"
+        },
+        "varient": "2 KG",
+        "price": "10",
+        "default": true
+      },
+      {
+        "uniqueCode": "LB1000064",
+        "varientId": {
+          "$oid": "5fedb513eba8b06399153b07"
+        },
+        "storeId": {
+          "$oid": "5feca85c7a5c3411ccf94fec"
+        },
+        "varient": "250 GM",
+        "price": "155",
+        "default": false
+      }
+    ],
+    [
+      {
+        "varientId": "",
+        "storeId": {
+          "$oid": "5feca8777a5c3411ccf94fed"
+        },
+        "varient": "",
+        "price": 0,
+        "default": false
+      }
+    ]
+  ],
+  "tax": 10,
+  "status": true,
+  "deletedAt": 0,
+  "categoryId": {
+    "$oid": "5feca99b7a5c3411ccf94ff2"
+  },
+  "name": "Happilo Natural Premium ",
+  "offer": "Yes",
+  "discount": "Yes",
+  "stock": "LB1000062",
+  "description": "Happilo 100 Natural Premium Californian Almonds Happilo 100 Natural Premium Californian Almonds Happilo 100 Natural Premium Californian Almonds",
+  "featured": true,
+  "outOfStock": false,
+  "brandId": {
+    "$oid": "5fecaa577a5c3411ccf94ff6"
+  },
+  "price": 10,
+  "image": {
+    "thumbnail": [
+      "1611159822657_1.jpg",
+      "1611159822657_2.jpg"
+    ],
+    "small": [
+      "1611159822668_1.jpg",
+      "1611159822669_2.jpg"
+    ],
+    "large": [
+      "1611159822670_1.jpg",
+      "1611159822670_2.jpg"
+    ]
+  },
+  "createdAt": {
+    "$date": "2021-01-20T16:21:57.257Z"
+  },
+  "updatedAt": {
+    "$date": "2021-01-20T16:21:57.257Z"
+  },
+  "__v": 0
+},{
+  "_id": {
+    "$oid": "6008599fb9e11506f586a0a6"
+  },
+  "inventory": [
+    [
+      {
+        "uniqueCode": "LB1000066",
+        "varientId": {
+          "$oid": "5fecad471e21255a8d7223b2"
+        },
+        "storeId": {
+          "$oid": "5feca85c7a5c3411ccf94fec"
+        },
+        "varient": "1 KG",
+        "price": "155",
+        "default": true
+      },
+      {
+        "uniqueCode": "LB1000067",
+        "varientId": {
+          "$oid": "5fecad531e21255a8d7223b3"
+        },
+        "storeId": {
+          "$oid": "5feca85c7a5c3411ccf94fec"
+        },
+        "varient": "2 KG",
+        "price": "300",
+        "default": false
+      },
+      {
+        "uniqueCode": "LB1000068",
+        "varientId": {
+          "$oid": "5fedb4f0eba8b06399153b05"
+        },
+        "storeId": {
+          "$oid": "5feca85c7a5c3411ccf94fec"
+        },
+        "varient": "5 KG",
+        "price": "500",
+        "default": false
+      }
+    ],
+    [
+      {
+        "varientId": "",
+        "storeId": {
+          "$oid": "5feca8777a5c3411ccf94fed"
+        },
+        "varient": "",
+        "price": 0,
+        "default": false
+      }
+    ]
+  ],
+  "tax": "5",
+  "status": true,
+  "deletedAt": 0,
+  "categoryId": {
+    "$oid": "5feca99b7a5c3411ccf94ff2"
+  },
+  "name": "proV Select Almond Almonds",
+  "offer": "Yes",
+  "discount": "Yes",
+  "stock": "LB1000065",
+  "description": "proV Select Almond Almonds proV Select Almond Almonds proV Select Almond Almonds proV Select Almond Almonds",
+  "featured": true,
+  "outOfStock": false,
+  "brandId": {
+    "$oid": "5fecaa577a5c3411ccf94ff6"
+  },
+  "price": 155,
+  "image": {
+    "thumbnail": [
+      "1611159967741_proV Select Almond Almonds1.jpg",
+      "1611159967741_proV Select Almond Almonds2.png"
+    ],
+    "small": [
+      "1611159967750_proV Select Almond Almonds1.jpg",
+      "1611159967750_proV Select Almond Almonds2.png"
+    ],
+    "large": [
+      "1611159967759_proV Select Almond Almonds1.jpg",
+      "1611159967759_proV Select Almond Almonds2.png"
+    ]
+  },
+  "createdAt": {
+    "$date": "2021-01-20T16:26:07.763Z"
+  },
+  "updatedAt": {
+    "$date": "2021-01-20T16:26:07.763Z"
+  },
+  "__v": 0
+},{
+  "_id": {
+    "$oid": "60085a12b9e11506f586a0a7"
+  },
+  "inventory": [
+    [
+      {
+        "uniqueCode": "LB1000070",
+        "varientId": {
+          "$oid": "5fecad471e21255a8d7223b2"
+        },
+        "storeId": {
+          "$oid": "5feca85c7a5c3411ccf94fec"
+        },
+        "varient": "1 KG",
+        "price": "10",
+        "default": true
+      },
+      {
+        "uniqueCode": "LB1000071",
+        "varientId": {
+          "$oid": "5fecad531e21255a8d7223b3"
+        },
+        "storeId": {
+          "$oid": "5feca85c7a5c3411ccf94fec"
+        },
+        "varient": "2 KG",
+        "price": "122",
+        "default": false
+      },
+      {
+        "uniqueCode": "LB1000072",
+        "varientId": {
+          "$oid": "5fedb4f0eba8b06399153b05"
+        },
+        "storeId": {
+          "$oid": "5feca85c7a5c3411ccf94fec"
+        },
+        "varient": "5 KG",
+        "price": "500",
+        "default": false
+      }
+    ],
+    [
+      {
+        "varientId": "",
+        "storeId": {
+          "$oid": "5feca8777a5c3411ccf94fed"
+        },
+        "varient": "",
+        "price": 0,
+        "default": false
+      }
+    ]
+  ],
+  "tax": 15,
+  "status": true,
+  "deletedAt": 0,
+  "categoryId": {
+    "$oid": "5feca99b7a5c3411ccf94ff2"
+  },
+  "name": "Naturoz Popular California Almonds",
+  "offer": "Yes",
+  "discount": "Yes",
+  "stock": "LB1000069",
+  "description": "Naturoz Popular California Almonds",
+  "featured": true,
+  "outOfStock": false,
+  "brandId": {
+    "$oid": "5fecaa577a5c3411ccf94ff6"
+  },
+  "price": 10,
+  "image": {
+    "thumbnail": [
+      "1611160082519_Naturoz Popular California Almonds1.webp"
+    ],
+    "small": [
+      "1611160082520_Naturoz Popular California Almonds1.webp"
+    ],
+    "large": [
+      "1611160082522_Naturoz Popular California Almonds1.webp"
+    ]
+  },
+  "createdAt": {
+    "$date": "2021-01-20T16:28:02.523Z"
+  },
+  "updatedAt": {
+    "$date": "2021-01-20T16:28:02.523Z"
+  },
+  "__v": 0
+}]

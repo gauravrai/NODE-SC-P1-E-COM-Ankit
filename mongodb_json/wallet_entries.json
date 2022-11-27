@@ -1,0 +1,134 @@
+[{
+  "_id": {
+    "$oid": "601fc88bb9e11506f586a227"
+  },
+  "status": true,
+  "deletedAt": 0,
+  "userId": {
+    "$oid": "6014d323b9e11506f586a180"
+  },
+  "transactionId": "LBW-20212743131",
+  "amount": 0,
+  "type": "Sub",
+  "createdAt": {
+    "$date": "2021-02-07T11:01:31.719Z"
+  },
+  "updatedAt": {
+    "$date": "2021-02-07T11:01:31.719Z"
+  },
+  "__v": 0
+},{
+  "_id": {
+    "$oid": "602756d0a52f7a146fdb2084"
+  },
+  "status": true,
+  "deletedAt": 0,
+  "userId": {
+    "$oid": "6020b81ab9e11506f586a25a"
+  },
+  "transactionId": "LBW-202121310424",
+  "amount": 100,
+  "type": "Add",
+  "createdAt": {
+    "$date": "2021-02-13T04:34:24.996Z"
+  },
+  "updatedAt": {
+    "$date": "2021-02-13T04:34:24.996Z"
+  },
+  "__v": 0
+},{
+  "_id": {
+    "$oid": "6027809fad55b240494b076e"
+  },
+  "status": true,
+  "deletedAt": 0,
+  "userId": {
+    "$oid": "6020b81ab9e11506f586a25a"
+  },
+  "transactionId": "LBW-20212131247",
+  "amount": 100,
+  "type": "Sub",
+  "createdAt": {
+    "$date": "2021-02-13T07:32:47.438Z"
+  },
+  "updatedAt": {
+    "$date": "2021-02-13T07:32:47.438Z"
+  },
+  "__v": 0
+},{
+  "_id": {
+    "$oid": "602781c5ad55b240494b0772"
+  },
+  "status": true,
+  "deletedAt": 0,
+  "userId": {
+    "$oid": "6020b81ab9e11506f586a25a"
+  },
+  "transactionId": "LBW-20212131741",
+  "amount": 5000,
+  "type": "Add",
+  "createdAt": {
+    "$date": "2021-02-13T07:37:41.289Z"
+  },
+  "updatedAt": {
+    "$date": "2021-02-13T07:37:41.289Z"
+  },
+  "__v": 0
+},{
+  "_id": {
+    "$oid": "60278232ad55b240494b077a"
+  },
+  "status": true,
+  "deletedAt": 0,
+  "userId": {
+    "$oid": "6020b81ab9e11506f586a25a"
+  },
+  "transactionId": "LBW-20212131930",
+  "amount": 136,
+  "type": "Sub",
+  "createdAt": {
+    "$date": "2021-02-13T07:39:30.156Z"
+  },
+  "updatedAt": {
+    "$date": "2021-02-13T07:39:30.156Z"
+  },
+  "__v": 0
+},{
+  "_id": {
+    "$oid": "6027e467ad55b240494b077d"
+  },
+  "status": true,
+  "deletedAt": 0,
+  "userId": {
+    "$oid": "6004077bf4b1366080d955d7"
+  },
+  "transactionId": "LBW-20212138831",
+  "amount": 5000,
+  "type": "Add",
+  "createdAt": {
+    "$date": "2021-02-13T14:38:31.311Z"
+  },
+  "updatedAt": {
+    "$date": "2021-02-13T14:38:31.311Z"
+  },
+  "__v": 0
+},{
+  "_id": {
+    "$oid": "6029f5e7ad55b240494b0784"
+  },
+  "status": true,
+  "deletedAt": 0,
+  "userId": {
+    "$oid": "5ffeff891edbdb20dcc40633"
+  },
+  "transactionId": "LBW-202121594743",
+  "amount": 5000,
+  "type": "Add",
+  "createdAt": {
+    "$date": "2021-02-15T04:17:43.364Z"
+  },
+  "updatedAt": {
+    "$date": "2021-02-15T04:17:43.364Z"
+  },
+  "__v": 0
+}]

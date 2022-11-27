@@ -1,0 +1,49 @@
+[{
+  "_id": {
+    "$oid": "5feca85c7a5c3411ccf94fec"
+  },
+  "status": true,
+  "deletedAt": 0,
+  "uniqueCode": "658191",
+  "name": "Store 1",
+  "address": "Botenical Garden Sector 45",
+  "stateId": {
+    "$oid": "5feca6ef7a5c3411ccf94fe5"
+  },
+  "cityId": {
+    "$oid": "5feca7d27a5c3411ccf94fe7"
+  },
+  "contactName": "Pawan Kumar",
+  "contactNumber": 8010043297,
+  "createdAt": {
+    "$date": "2020-12-30T16:18:36.340Z"
+  },
+  "updatedAt": {
+    "$date": "2020-12-30T16:18:36.340Z"
+  },
+  "__v": 0
+},{
+  "_id": {
+    "$oid": "5feca8777a5c3411ccf94fed"
+  },
+  "status": true,
+  "deletedAt": 0,
+  "uniqueCode": "164541",
+  "name": "Store 2",
+  "address": "Noida Sector 104",
+  "stateId": {
+    "$oid": "5feca6ef7a5c3411ccf94fe5"
+  },
+  "cityId": {
+    "$oid": "5feca7d27a5c3411ccf94fe7"
+  },
+  "contactName": "Ramesh Kumar",
+  "contactNumber": 8010043298,
+  "createdAt": {
+    "$date": "2020-12-30T16:19:03.843Z"
+  },
+  "updatedAt": {
+    "$date": "2020-12-30T16:19:03.843Z"
+  },
+  "__v": 0
+}]

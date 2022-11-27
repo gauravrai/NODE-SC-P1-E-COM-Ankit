@@ -1,0 +1,24 @@
+[{
+    "_id": {
+        "$oid": "6382b6682190ca24709ff561"
+    },
+    "status": true,
+    "deletedAt": 0,
+    "username": "masteradmin",
+    "superadmin": true,
+    "roleId": {
+        "$oid": "5f2ec71b9efde53114b89c49"
+    },
+    "password": "$2a$10$J0PkWRrDr7aB2/btEKclJuMrY1poY4FkORigT5QOkubWVPX343a2u",
+    "createdAt": {
+        "$date": {
+            "$numberLong": "1669510760496"
+        }
+    },
+    "updatedAt": {
+        "$date": {
+            "$numberLong": "1669510760496"
+        }
+    },
+    "__v": 0
+}]

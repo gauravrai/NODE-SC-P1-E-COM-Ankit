@@ -1,0 +1,33 @@
+[{
+  "_id": {
+    "$oid": "5f8e3db0878dd0200442dbce"
+  },
+  "name": "Kilogram",
+  "shortName": "KG",
+  "deletedAt": 0,
+  "status": true
+},{
+  "_id": {
+    "$oid": "5f8e3def0428af2004326773"
+  },
+  "name": "Grams",
+  "shortName": "GM",
+  "deletedAt": 0,
+  "status": true
+},{
+  "_id": {
+    "$oid": "5f8e3e020428af2004326774"
+  },
+  "name": "Liter",
+  "shortName": "L",
+  "deletedAt": 0,
+  "status": true
+},{
+  "_id": {
+    "$oid": "5f8e3e190428af2004326775"
+  },
+  "name": "Mili Liter",
+  "shortName": "ML",
+  "deletedAt": 0,
+  "status": true
+}]

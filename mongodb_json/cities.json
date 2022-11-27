@@ -1,0 +1,86 @@
+[{
+  "_id": {
+    "$oid": "5feca7d27a5c3411ccf94fe7"
+  },
+  "status": true,
+  "deletedAt": 0,
+  "name": "GAUTAM BUDDHA NAGAR",
+  "stateId": {
+    "$oid": "5feca6ef7a5c3411ccf94fe5"
+  },
+  "createdAt": {
+    "$date": "2020-12-30T16:16:18.444Z"
+  },
+  "updatedAt": {
+    "$date": "2020-12-30T16:16:18.444Z"
+  },
+  "__v": 0
+},{
+  "_id": {
+    "$oid": "5feca7dd7a5c3411ccf94fe8"
+  },
+  "status": true,
+  "deletedAt": 0,
+  "name": "Kanpur",
+  "stateId": {
+    "$oid": "5feca6ef7a5c3411ccf94fe5"
+  },
+  "createdAt": {
+    "$date": "2020-12-30T16:16:29.658Z"
+  },
+  "updatedAt": {
+    "$date": "2020-12-30T16:16:29.658Z"
+  },
+  "__v": 0
+},{
+  "_id": {
+    "$oid": "5fecb2c6895b2e1234ad0f1b"
+  },
+  "status": true,
+  "deletedAt": 0,
+  "name": "Bihta",
+  "stateId": {
+    "$oid": "5feca6fd7a5c3411ccf94fe6"
+  },
+  "createdAt": {
+    "$date": "2020-12-30T17:03:02.369Z"
+  },
+  "updatedAt": {
+    "$date": "2020-12-30T17:03:02.369Z"
+  },
+  "__v": 0
+},{
+  "_id": {
+    "$oid": "5fecb3a7895b2e1234ad0f1c"
+  },
+  "status": true,
+  "deletedAt": 0,
+  "name": "Hajipur",
+  "stateId": {
+    "$oid": "5feca6fd7a5c3411ccf94fe6"
+  },
+  "createdAt": {
+    "$date": "2020-12-30T17:06:47.797Z"
+  },
+  "updatedAt": {
+    "$date": "2020-12-30T17:06:47.797Z"
+  },
+  "__v": 0
+},{
+  "_id": {
+    "$oid": "601e7642b9e11506f586a1f1"
+  },
+  "status": true,
+  "deletedAt": 0,
+  "name": "GHAZIABAD",
+  "stateId": {
+    "$oid": "5feca6ef7a5c3411ccf94fe5"
+  },
+  "createdAt": {
+    "$date": "2021-02-06T10:58:10.419Z"
+  },
+  "updatedAt": {
+    "$date": "2021-02-06T10:58:10.419Z"
+  },
+  "__v": 0
+}]

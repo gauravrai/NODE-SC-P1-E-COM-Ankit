@@ -1,0 +1,1114 @@
+[{
+  "_id": {
+    "$oid": "5feca8007a5c3411ccf94fe9"
+  },
+  "status": true,
+  "shippingCharges": 100,
+  "deletedAt": 0,
+  "pincode": "110096",
+  "stateId": {
+    "$oid": "5feca6ef7a5c3411ccf94fe5"
+  },
+  "cityId": {
+    "$oid": "5feca7d27a5c3411ccf94fe7"
+  },
+  "createdAt": {
+    "$date": "2020-12-30T16:17:04.148Z"
+  },
+  "updatedAt": {
+    "$date": "2020-12-30T16:17:04.148Z"
+  },
+  "__v": 0
+},{
+  "_id": {
+    "$oid": "5feca8157a5c3411ccf94fea"
+  },
+  "status": true,
+  "shippingCharges": 200,
+  "deletedAt": 0,
+  "pincode": "201009",
+  "stateId": {
+    "$oid": "5feca6ef7a5c3411ccf94fe5"
+  },
+  "cityId": {
+    "$oid": "601e7642b9e11506f586a1f1"
+  },
+  "createdAt": {
+    "$date": "2020-12-30T16:17:25.457Z"
+  },
+  "updatedAt": {
+    "$date": "2020-12-30T16:17:25.457Z"
+  },
+  "__v": 0
+},{
+  "_id": {
+    "$oid": "5feca8297a5c3411ccf94feb"
+  },
+  "status": true,
+  "shippingCharges": 30,
+  "deletedAt": 0,
+  "pincode": "201203",
+  "stateId": {
+    "$oid": "5feca6ef7a5c3411ccf94fe5"
+  },
+  "cityId": {
+    "$oid": "5feca7d27a5c3411ccf94fe7"
+  },
+  "createdAt": {
+    "$date": "2020-12-30T16:17:45.476Z"
+  },
+  "updatedAt": {
+    "$date": "2020-12-30T16:17:45.476Z"
+  },
+  "__v": 0
+},{
+  "_id": {
+    "$oid": "5ff13de9cfa6db7acf2d31c2"
+  },
+  "status": true,
+  "shippingCharges": 2,
+  "deletedAt": 0,
+  "pincode": "909090",
+  "stateId": {
+    "$oid": "5feca6fd7a5c3411ccf94fe6"
+  },
+  "cityId": {
+    "$oid": "5fecb2c6895b2e1234ad0f1b"
+  },
+  "createdAt": {
+    "$date": "2021-01-03T03:45:45.320Z"
+  },
+  "updatedAt": {
+    "$date": "2021-01-03T03:45:45.320Z"
+  },
+  "__v": 0
+},{
+  "_id": {
+    "$oid": "5ff13df9cfa6db7acf2d31c3"
+  },
+  "status": true,
+  "shippingCharges": 3,
+  "deletedAt": 0,
+  "pincode": "101010",
+  "stateId": {
+    "$oid": "5feca6fd7a5c3411ccf94fe6"
+  },
+  "cityId": {
+    "$oid": "5fecb2c6895b2e1234ad0f1b"
+  },
+  "createdAt": {
+    "$date": "2021-01-03T03:46:01.301Z"
+  },
+  "updatedAt": {
+    "$date": "2021-01-03T03:46:01.301Z"
+  },
+  "__v": 0
+},{
+  "_id": {
+    "$oid": "5ff13e05cfa6db7acf2d31c4"
+  },
+  "status": true,
+  "shippingCharges": 6,
+  "deletedAt": 0,
+  "pincode": "989898",
+  "stateId": {
+    "$oid": "5feca6ef7a5c3411ccf94fe5"
+  },
+  "cityId": {
+    "$oid": "5feca7dd7a5c3411ccf94fe8"
+  },
+  "createdAt": {
+    "$date": "2021-01-03T03:46:13.122Z"
+  },
+  "updatedAt": {
+    "$date": "2021-01-03T03:46:13.122Z"
+  },
+  "__v": 0
+},{
+  "_id": {
+    "$oid": "5ff13e13cfa6db7acf2d31c5"
+  },
+  "status": true,
+  "shippingCharges": 5,
+  "deletedAt": 0,
+  "pincode": "787878",
+  "stateId": {
+    "$oid": "5feca6ef7a5c3411ccf94fe5"
+  },
+  "cityId": {
+    "$oid": "5feca7dd7a5c3411ccf94fe8"
+  },
+  "createdAt": {
+    "$date": "2021-01-03T03:46:27.919Z"
+  },
+  "updatedAt": {
+    "$date": "2021-01-03T03:46:27.919Z"
+  },
+  "__v": 0
+},{
+  "_id": {
+    "$oid": "601e74c8b9e11506f586a1e9"
+  },
+  "status": true,
+  "shippingCharges": 0,
+  "deletedAt": 0,
+  "pincode": "201308",
+  "stateId": {
+    "$oid": "5feca6ef7a5c3411ccf94fe5"
+  },
+  "cityId": {
+    "$oid": "5feca7d27a5c3411ccf94fe7"
+  },
+  "createdAt": {
+    "$date": "2021-02-06T10:51:52.337Z"
+  },
+  "updatedAt": {
+    "$date": "2021-02-06T10:51:52.337Z"
+  },
+  "__v": 0
+},{
+  "_id": {
+    "$oid": "601e74e5b9e11506f586a1ea"
+  },
+  "status": true,
+  "shippingCharges": 0,
+  "deletedAt": 0,
+  "pincode": "201306",
+  "stateId": {
+    "$oid": "5feca6ef7a5c3411ccf94fe5"
+  },
+  "cityId": {
+    "$oid": "5feca7d27a5c3411ccf94fe7"
+  },
+  "createdAt": {
+    "$date": "2021-02-06T10:52:21.702Z"
+  },
+  "updatedAt": {
+    "$date": "2021-02-06T10:52:21.702Z"
+  },
+  "__v": 0
+},{
+  "_id": {
+    "$oid": "601e74f8b9e11506f586a1eb"
+  },
+  "status": true,
+  "shippingCharges": 0,
+  "deletedAt": 0,
+  "pincode": "201008",
+  "stateId": {
+    "$oid": "5feca6ef7a5c3411ccf94fe5"
+  },
+  "cityId": {
+    "$oid": "5feca7d27a5c3411ccf94fe7"
+  },
+  "createdAt": {
+    "$date": "2021-02-06T10:52:40.674Z"
+  },
+  "updatedAt": {
+    "$date": "2021-02-06T10:52:40.674Z"
+  },
+  "__v": 0
+},{
+  "_id": {
+    "$oid": "601e7504b9e11506f586a1ec"
+  },
+  "status": true,
+  "shippingCharges": 0,
+  "deletedAt": 0,
+  "pincode": "201301",
+  "stateId": {
+    "$oid": "5feca6ef7a5c3411ccf94fe5"
+  },
+  "cityId": {
+    "$oid": "601e7642b9e11506f586a1f1"
+  },
+  "createdAt": {
+    "$date": "2021-02-06T10:52:52.511Z"
+  },
+  "updatedAt": {
+    "$date": "2021-02-06T10:52:52.511Z"
+  },
+  "__v": 0
+},{
+  "_id": {
+    "$oid": "601e7511b9e11506f586a1ed"
+  },
+  "status": true,
+  "shippingCharges": 0,
+  "deletedAt": 0,
+  "pincode": "203207",
+  "stateId": {
+    "$oid": "5feca6ef7a5c3411ccf94fe5"
+  },
+  "cityId": {
+    "$oid": "5feca7d27a5c3411ccf94fe7"
+  },
+  "createdAt": {
+    "$date": "2021-02-06T10:53:05.675Z"
+  },
+  "updatedAt": {
+    "$date": "2021-02-06T10:53:05.675Z"
+  },
+  "__v": 0
+},{
+  "_id": {
+    "$oid": "601e7523b9e11506f586a1ee"
+  },
+  "status": true,
+  "shippingCharges": 0,
+  "deletedAt": 0,
+  "pincode": "203201",
+  "stateId": {
+    "$oid": "5feca6ef7a5c3411ccf94fe5"
+  },
+  "cityId": {
+    "$oid": "5feca7d27a5c3411ccf94fe7"
+  },
+  "createdAt": {
+    "$date": "2021-02-06T10:53:23.424Z"
+  },
+  "updatedAt": {
+    "$date": "2021-02-06T10:53:23.424Z"
+  },
+  "__v": 0
+},{
+  "_id": {
+    "$oid": "601e7532b9e11506f586a1ef"
+  },
+  "status": true,
+  "shippingCharges": 0,
+  "deletedAt": 0,
+  "pincode": "201304",
+  "stateId": {
+    "$oid": "5feca6ef7a5c3411ccf94fe5"
+  },
+  "cityId": {
+    "$oid": "5feca7d27a5c3411ccf94fe7"
+  },
+  "createdAt": {
+    "$date": "2021-02-06T10:53:38.601Z"
+  },
+  "updatedAt": {
+    "$date": "2021-02-06T10:53:38.601Z"
+  },
+  "__v": 0
+},{
+  "_id": {
+    "$oid": "601e7622b9e11506f586a1f0"
+  },
+  "status": true,
+  "shippingCharges": 0,
+  "deletedAt": 0,
+  "pincode": "201001",
+  "stateId": {
+    "$oid": "5feca6ef7a5c3411ccf94fe5"
+  },
+  "cityId": {
+    "$oid": "601e7642b9e11506f586a1f1"
+  },
+  "createdAt": {
+    "$date": "2021-02-06T10:57:38.766Z"
+  },
+  "updatedAt": {
+    "$date": "2021-02-06T10:57:38.766Z"
+  },
+  "__v": 0
+},{
+  "_id": {
+    "$oid": "601e7674b9e11506f586a1f2"
+  },
+  "status": true,
+  "shippingCharges": 0,
+  "deletedAt": 0,
+  "pincode": "201002",
+  "stateId": {
+    "$oid": "5feca6ef7a5c3411ccf94fe5"
+  },
+  "cityId": {
+    "$oid": "601e7642b9e11506f586a1f1"
+  },
+  "createdAt": {
+    "$date": "2021-02-06T10:59:00.669Z"
+  },
+  "updatedAt": {
+    "$date": "2021-02-06T10:59:00.669Z"
+  },
+  "__v": 0
+},{
+  "_id": {
+    "$oid": "601e768ab9e11506f586a1f3"
+  },
+  "status": true,
+  "shippingCharges": 0,
+  "deletedAt": 0,
+  "pincode": "201003",
+  "stateId": {
+    "$oid": "5feca6ef7a5c3411ccf94fe5"
+  },
+  "cityId": {
+    "$oid": "601e7642b9e11506f586a1f1"
+  },
+  "createdAt": {
+    "$date": "2021-02-06T10:59:22.740Z"
+  },
+  "updatedAt": {
+    "$date": "2021-02-06T10:59:22.740Z"
+  },
+  "__v": 0
+},{
+  "_id": {
+    "$oid": "601e76afb9e11506f586a1f4"
+  },
+  "status": true,
+  "shippingCharges": 0,
+  "deletedAt": 0,
+  "pincode": "201004",
+  "stateId": {
+    "$oid": "5feca6ef7a5c3411ccf94fe5"
+  },
+  "cityId": {
+    "$oid": "601e7642b9e11506f586a1f1"
+  },
+  "createdAt": {
+    "$date": "2021-02-06T10:59:59.229Z"
+  },
+  "updatedAt": {
+    "$date": "2021-02-06T10:59:59.229Z"
+  },
+  "__v": 0
+},{
+  "_id": {
+    "$oid": "601e76c5b9e11506f586a1f5"
+  },
+  "status": true,
+  "shippingCharges": 0,
+  "deletedAt": 0,
+  "pincode": "201005",
+  "stateId": {
+    "$oid": "5feca6ef7a5c3411ccf94fe5"
+  },
+  "cityId": {
+    "$oid": "601e7642b9e11506f586a1f1"
+  },
+  "createdAt": {
+    "$date": "2021-02-06T11:00:21.327Z"
+  },
+  "updatedAt": {
+    "$date": "2021-02-06T11:00:21.327Z"
+  },
+  "__v": 0
+},{
+  "_id": {
+    "$oid": "601e76deb9e11506f586a1f6"
+  },
+  "status": true,
+  "shippingCharges": 0,
+  "deletedAt": 0,
+  "pincode": "201006",
+  "stateId": {
+    "$oid": "5feca6ef7a5c3411ccf94fe5"
+  },
+  "cityId": {
+    "$oid": "601e7642b9e11506f586a1f1"
+  },
+  "createdAt": {
+    "$date": "2021-02-06T11:00:46.121Z"
+  },
+  "updatedAt": {
+    "$date": "2021-02-06T11:00:46.121Z"
+  },
+  "__v": 0
+},{
+  "_id": {
+    "$oid": "601e7708b9e11506f586a1f7"
+  },
+  "status": true,
+  "shippingCharges": 0,
+  "deletedAt": 0,
+  "pincode": "201007",
+  "stateId": {
+    "$oid": "5feca6ef7a5c3411ccf94fe5"
+  },
+  "cityId": {
+    "$oid": "601e7642b9e11506f586a1f1"
+  },
+  "createdAt": {
+    "$date": "2021-02-06T11:01:28.139Z"
+  },
+  "updatedAt": {
+    "$date": "2021-02-06T11:01:28.139Z"
+  },
+  "__v": 0
+},{
+  "_id": {
+    "$oid": "601e772cb9e11506f586a1f8"
+  },
+  "status": true,
+  "shippingCharges": 0,
+  "deletedAt": 2,
+  "pincode": "201008",
+  "stateId": {
+    "$oid": "5feca6ef7a5c3411ccf94fe5"
+  },
+  "cityId": {
+    "$oid": "601e7642b9e11506f586a1f1"
+  },
+  "createdAt": {
+    "$date": "2021-02-06T11:02:04.796Z"
+  },
+  "updatedAt": {
+    "$date": "2021-02-06T11:02:04.796Z"
+  },
+  "__v": 0
+},{
+  "_id": {
+    "$oid": "601e776cb9e11506f586a1f9"
+  },
+  "status": true,
+  "shippingCharges": 0,
+  "deletedAt": 0,
+  "pincode": "201010",
+  "stateId": {
+    "$oid": "5feca6ef7a5c3411ccf94fe5"
+  },
+  "cityId": {
+    "$oid": "601e7642b9e11506f586a1f1"
+  },
+  "createdAt": {
+    "$date": "2021-02-06T11:03:08.051Z"
+  },
+  "updatedAt": {
+    "$date": "2021-02-06T11:03:08.051Z"
+  },
+  "__v": 0
+},{
+  "_id": {
+    "$oid": "601e778cb9e11506f586a1fa"
+  },
+  "status": true,
+  "shippingCharges": 0,
+  "deletedAt": 0,
+  "pincode": "201011",
+  "stateId": {
+    "$oid": "5feca6ef7a5c3411ccf94fe5"
+  },
+  "cityId": {
+    "$oid": "601e7642b9e11506f586a1f1"
+  },
+  "createdAt": {
+    "$date": "2021-02-06T11:03:40.158Z"
+  },
+  "updatedAt": {
+    "$date": "2021-02-06T11:03:40.158Z"
+  },
+  "__v": 0
+},{
+  "_id": {
+    "$oid": "601e77a8b9e11506f586a1fb"
+  },
+  "status": true,
+  "shippingCharges": 0,
+  "deletedAt": 0,
+  "pincode": "201012",
+  "stateId": {
+    "$oid": "5feca6ef7a5c3411ccf94fe5"
+  },
+  "cityId": {
+    "$oid": "601e7642b9e11506f586a1f1"
+  },
+  "createdAt": {
+    "$date": "2021-02-06T11:04:08.748Z"
+  },
+  "updatedAt": {
+    "$date": "2021-02-06T11:04:08.748Z"
+  },
+  "__v": 0
+},{
+  "_id": {
+    "$oid": "601e77c0b9e11506f586a1fc"
+  },
+  "status": true,
+  "shippingCharges": 0,
+  "deletedAt": 0,
+  "pincode": "201013",
+  "stateId": {
+    "$oid": "5feca6ef7a5c3411ccf94fe5"
+  },
+  "cityId": {
+    "$oid": "601e7642b9e11506f586a1f1"
+  },
+  "createdAt": {
+    "$date": "2021-02-06T11:04:32.092Z"
+  },
+  "updatedAt": {
+    "$date": "2021-02-06T11:04:32.092Z"
+  },
+  "__v": 0
+},{
+  "_id": {
+    "$oid": "601e77dab9e11506f586a1fd"
+  },
+  "status": true,
+  "shippingCharges": 0,
+  "deletedAt": 0,
+  "pincode": "201102",
+  "stateId": {
+    "$oid": "5feca6ef7a5c3411ccf94fe5"
+  },
+  "cityId": {
+    "$oid": "601e7642b9e11506f586a1f1"
+  },
+  "createdAt": {
+    "$date": "2021-02-06T11:04:58.852Z"
+  },
+  "updatedAt": {
+    "$date": "2021-02-06T11:04:58.852Z"
+  },
+  "__v": 0
+},{
+  "_id": {
+    "$oid": "601e7800b9e11506f586a1fe"
+  },
+  "status": true,
+  "shippingCharges": 0,
+  "deletedAt": 0,
+  "pincode": "201201",
+  "stateId": {
+    "$oid": "5feca6ef7a5c3411ccf94fe5"
+  },
+  "cityId": {
+    "$oid": "601e7642b9e11506f586a1f1"
+  },
+  "createdAt": {
+    "$date": "2021-02-06T11:05:36.588Z"
+  },
+  "updatedAt": {
+    "$date": "2021-02-06T11:05:36.588Z"
+  },
+  "__v": 0
+},{
+  "_id": {
+    "$oid": "601e789fb9e11506f586a1ff"
+  },
+  "status": true,
+  "shippingCharges": 0,
+  "deletedAt": 0,
+  "pincode": "201204",
+  "stateId": {
+    "$oid": "5feca6ef7a5c3411ccf94fe5"
+  },
+  "cityId": {
+    "$oid": "601e7642b9e11506f586a1f1"
+  },
+  "createdAt": {
+    "$date": "2021-02-06T11:08:15.817Z"
+  },
+  "updatedAt": {
+    "$date": "2021-02-06T11:08:15.817Z"
+  },
+  "__v": 0
+},{
+  "_id": {
+    "$oid": "601e78b6b9e11506f586a200"
+  },
+  "status": true,
+  "shippingCharges": 0,
+  "deletedAt": 0,
+  "pincode": "201206",
+  "stateId": {
+    "$oid": "5feca6ef7a5c3411ccf94fe5"
+  },
+  "cityId": {
+    "$oid": "601e7642b9e11506f586a1f1"
+  },
+  "createdAt": {
+    "$date": "2021-02-06T11:08:38.968Z"
+  },
+  "updatedAt": {
+    "$date": "2021-02-06T11:08:38.968Z"
+  },
+  "__v": 0
+},{
+  "_id": {
+    "$oid": "601e7928b9e11506f586a201"
+  },
+  "status": true,
+  "shippingCharges": 0,
+  "deletedAt": 0,
+  "pincode": "201302",
+  "stateId": {
+    "$oid": "5feca6ef7a5c3411ccf94fe5"
+  },
+  "cityId": {
+    "$oid": "601e7642b9e11506f586a1f1"
+  },
+  "createdAt": {
+    "$date": "2021-02-06T11:10:32.501Z"
+  },
+  "updatedAt": {
+    "$date": "2021-02-06T11:10:32.501Z"
+  },
+  "__v": 0
+},{
+  "_id": {
+    "$oid": "601e7956b9e11506f586a202"
+  },
+  "status": true,
+  "shippingCharges": 0,
+  "deletedAt": 0,
+  "pincode": "201303",
+  "stateId": {
+    "$oid": "5feca6ef7a5c3411ccf94fe5"
+  },
+  "cityId": {
+    "$oid": "601e7642b9e11506f586a1f1"
+  },
+  "createdAt": {
+    "$date": "2021-02-06T11:11:18.091Z"
+  },
+  "updatedAt": {
+    "$date": "2021-02-06T11:11:18.091Z"
+  },
+  "__v": 0
+},{
+  "_id": {
+    "$oid": "601e798ab9e11506f586a203"
+  },
+  "status": true,
+  "shippingCharges": 0,
+  "deletedAt": 0,
+  "pincode": "201305",
+  "stateId": {
+    "$oid": "5feca6ef7a5c3411ccf94fe5"
+  },
+  "cityId": {
+    "$oid": "5feca7d27a5c3411ccf94fe7"
+  },
+  "createdAt": {
+    "$date": "2021-02-06T11:12:10.034Z"
+  },
+  "updatedAt": {
+    "$date": "2021-02-06T11:12:10.034Z"
+  },
+  "__v": 0
+},{
+  "_id": {
+    "$oid": "601e7ba1b9e11506f586a204"
+  },
+  "status": true,
+  "shippingCharges": 0,
+  "deletedAt": 0,
+  "pincode": "201307",
+  "stateId": {
+    "$oid": "5feca6ef7a5c3411ccf94fe5"
+  },
+  "cityId": {
+    "$oid": "5feca7d27a5c3411ccf94fe7"
+  },
+  "createdAt": {
+    "$date": "2021-02-06T11:21:05.932Z"
+  },
+  "updatedAt": {
+    "$date": "2021-02-06T11:21:05.932Z"
+  },
+  "__v": 0
+},{
+  "_id": {
+    "$oid": "601e7bbab9e11506f586a205"
+  },
+  "status": true,
+  "shippingCharges": 100,
+  "deletedAt": 0,
+  "pincode": "202399",
+  "stateId": {
+    "$oid": "5feca6ef7a5c3411ccf94fe5"
+  },
+  "cityId": {
+    "$oid": "5feca7d27a5c3411ccf94fe7"
+  },
+  "createdAt": {
+    "$date": "2021-02-06T11:21:30.393Z"
+  },
+  "updatedAt": {
+    "$date": "2021-02-06T11:21:30.393Z"
+  },
+  "__v": 0
+},{
+  "_id": {
+    "$oid": "601e7bcbb9e11506f586a206"
+  },
+  "status": true,
+  "shippingCharges": 0,
+  "deletedAt": 0,
+  "pincode": "203131",
+  "stateId": {
+    "$oid": "5feca6ef7a5c3411ccf94fe5"
+  },
+  "cityId": {
+    "$oid": "5feca7d27a5c3411ccf94fe7"
+  },
+  "createdAt": {
+    "$date": "2021-02-06T11:21:47.827Z"
+  },
+  "updatedAt": {
+    "$date": "2021-02-06T11:21:47.827Z"
+  },
+  "__v": 0
+},{
+  "_id": {
+    "$oid": "601e7bdbb9e11506f586a207"
+  },
+  "status": true,
+  "shippingCharges": 0,
+  "deletedAt": 0,
+  "pincode": "203135",
+  "stateId": {
+    "$oid": "5feca6ef7a5c3411ccf94fe5"
+  },
+  "cityId": {
+    "$oid": "5feca7d27a5c3411ccf94fe7"
+  },
+  "createdAt": {
+    "$date": "2021-02-06T11:22:03.682Z"
+  },
+  "updatedAt": {
+    "$date": "2021-02-06T11:22:03.683Z"
+  },
+  "__v": 0
+},{
+  "_id": {
+    "$oid": "601e7bebb9e11506f586a208"
+  },
+  "status": true,
+  "shippingCharges": 0,
+  "deletedAt": 0,
+  "pincode": "203141",
+  "stateId": {
+    "$oid": "5feca6ef7a5c3411ccf94fe5"
+  },
+  "cityId": {
+    "$oid": "5feca7d27a5c3411ccf94fe7"
+  },
+  "createdAt": {
+    "$date": "2021-02-06T11:22:19.892Z"
+  },
+  "updatedAt": {
+    "$date": "2021-02-06T11:22:19.892Z"
+  },
+  "__v": 0
+},{
+  "_id": {
+    "$oid": "601e7bfeb9e11506f586a209"
+  },
+  "status": true,
+  "shippingCharges": 0,
+  "deletedAt": 0,
+  "pincode": "203155",
+  "stateId": {
+    "$oid": "5feca6ef7a5c3411ccf94fe5"
+  },
+  "cityId": {
+    "$oid": "5feca7d27a5c3411ccf94fe7"
+  },
+  "createdAt": {
+    "$date": "2021-02-06T11:22:38.164Z"
+  },
+  "updatedAt": {
+    "$date": "2021-02-06T11:22:38.164Z"
+  },
+  "__v": 0
+},{
+  "_id": {
+    "$oid": "601e7c17b9e11506f586a20a"
+  },
+  "status": true,
+  "shippingCharges": 0,
+  "deletedAt": 0,
+  "pincode": "203202",
+  "stateId": {
+    "$oid": "5feca6ef7a5c3411ccf94fe5"
+  },
+  "cityId": {
+    "$oid": "5feca7d27a5c3411ccf94fe7"
+  },
+  "createdAt": {
+    "$date": "2021-02-06T11:23:03.304Z"
+  },
+  "updatedAt": {
+    "$date": "2021-02-06T11:23:03.304Z"
+  },
+  "__v": 0
+},{
+  "_id": {
+    "$oid": "601e7c25b9e11506f586a20b"
+  },
+  "status": true,
+  "shippingCharges": 0,
+  "deletedAt": 0,
+  "pincode": "203203",
+  "stateId": {
+    "$oid": "5feca6ef7a5c3411ccf94fe5"
+  },
+  "cityId": {
+    "$oid": "5feca7d27a5c3411ccf94fe7"
+  },
+  "createdAt": {
+    "$date": "2021-02-06T11:23:17.407Z"
+  },
+  "updatedAt": {
+    "$date": "2021-02-06T11:23:17.407Z"
+  },
+  "__v": 0
+},{
+  "_id": {
+    "$oid": "601e7c88b9e11506f586a20c"
+  },
+  "status": true,
+  "shippingCharges": 0,
+  "deletedAt": 0,
+  "pincode": "203208",
+  "stateId": {
+    "$oid": "5feca6ef7a5c3411ccf94fe5"
+  },
+  "cityId": {
+    "$oid": "5feca7d27a5c3411ccf94fe7"
+  },
+  "createdAt": {
+    "$date": "2021-02-06T11:24:56.619Z"
+  },
+  "updatedAt": {
+    "$date": "2021-02-06T11:24:56.619Z"
+  },
+  "__v": 0
+},{
+  "_id": {
+    "$oid": "601e7c9fb9e11506f586a20d"
+  },
+  "status": true,
+  "shippingCharges": 0,
+  "deletedAt": 0,
+  "pincode": "203209",
+  "stateId": {
+    "$oid": "5feca6ef7a5c3411ccf94fe5"
+  },
+  "cityId": {
+    "$oid": "5feca7d27a5c3411ccf94fe7"
+  },
+  "createdAt": {
+    "$date": "2021-02-06T11:25:19.979Z"
+  },
+  "updatedAt": {
+    "$date": "2021-02-06T11:25:19.979Z"
+  },
+  "__v": 0
+},{
+  "_id": {
+    "$oid": "601e7cc0b9e11506f586a20e"
+  },
+  "status": true,
+  "shippingCharges": 0,
+  "deletedAt": 0,
+  "pincode": "245101",
+  "stateId": {
+    "$oid": "5feca6ef7a5c3411ccf94fe5"
+  },
+  "cityId": {
+    "$oid": "601e7642b9e11506f586a1f1"
+  },
+  "createdAt": {
+    "$date": "2021-02-06T11:25:52.084Z"
+  },
+  "updatedAt": {
+    "$date": "2021-02-06T11:25:52.084Z"
+  },
+  "__v": 0
+},{
+  "_id": {
+    "$oid": "601e7cd2b9e11506f586a20f"
+  },
+  "status": true,
+  "shippingCharges": 0,
+  "deletedAt": 0,
+  "pincode": "245201",
+  "stateId": {
+    "$oid": "5feca6ef7a5c3411ccf94fe5"
+  },
+  "cityId": {
+    "$oid": "601e7642b9e11506f586a1f1"
+  },
+  "createdAt": {
+    "$date": "2021-02-06T11:26:10.988Z"
+  },
+  "updatedAt": {
+    "$date": "2021-02-06T11:26:10.988Z"
+  },
+  "__v": 0
+},{
+  "_id": {
+    "$oid": "601e7ceab9e11506f586a210"
+  },
+  "status": true,
+  "shippingCharges": 0,
+  "deletedAt": 0,
+  "pincode": "245205",
+  "stateId": {
+    "$oid": "5feca6ef7a5c3411ccf94fe5"
+  },
+  "cityId": {
+    "$oid": "601e7642b9e11506f586a1f1"
+  },
+  "createdAt": {
+    "$date": "2021-02-06T11:26:34.915Z"
+  },
+  "updatedAt": {
+    "$date": "2021-02-06T11:26:34.915Z"
+  },
+  "__v": 0
+},{
+  "_id": {
+    "$oid": "601e7cfdb9e11506f586a211"
+  },
+  "status": true,
+  "shippingCharges": 0,
+  "deletedAt": 0,
+  "pincode": "245207",
+  "stateId": {
+    "$oid": "5feca6ef7a5c3411ccf94fe5"
+  },
+  "cityId": {
+    "$oid": "601e7642b9e11506f586a1f1"
+  },
+  "createdAt": {
+    "$date": "2021-02-06T11:26:53.438Z"
+  },
+  "updatedAt": {
+    "$date": "2021-02-06T11:26:53.438Z"
+  },
+  "__v": 0
+},{
+  "_id": {
+    "$oid": "601e7d15b9e11506f586a212"
+  },
+  "status": true,
+  "shippingCharges": 0,
+  "deletedAt": 0,
+  "pincode": "245208",
+  "stateId": {
+    "$oid": "5feca6ef7a5c3411ccf94fe5"
+  },
+  "cityId": {
+    "$oid": "601e7642b9e11506f586a1f1"
+  },
+  "createdAt": {
+    "$date": "2021-02-06T11:27:17.713Z"
+  },
+  "updatedAt": {
+    "$date": "2021-02-06T11:27:17.713Z"
+  },
+  "__v": 0
+},{
+  "_id": {
+    "$oid": "601e7d2eb9e11506f586a213"
+  },
+  "status": true,
+  "shippingCharges": 0,
+  "deletedAt": 0,
+  "pincode": "245301",
+  "stateId": {
+    "$oid": "5feca6ef7a5c3411ccf94fe5"
+  },
+  "cityId": {
+    "$oid": "601e7642b9e11506f586a1f1"
+  },
+  "createdAt": {
+    "$date": "2021-02-06T11:27:42.205Z"
+  },
+  "updatedAt": {
+    "$date": "2021-02-06T11:27:42.205Z"
+  },
+  "__v": 0
+},{
+  "_id": {
+    "$oid": "601e7d41b9e11506f586a214"
+  },
+  "status": true,
+  "shippingCharges": 0,
+  "deletedAt": 0,
+  "pincode": "245304",
+  "stateId": {
+    "$oid": "5feca6ef7a5c3411ccf94fe5"
+  },
+  "cityId": {
+    "$oid": "601e7642b9e11506f586a1f1"
+  },
+  "createdAt": {
+    "$date": "2021-02-06T11:28:01.586Z"
+  },
+  "updatedAt": {
+    "$date": "2021-02-06T11:28:01.586Z"
+  },
+  "__v": 0
+},{
+  "_id": {
+    "$oid": "6026baf55cad9d2184a3f776"
+  },
+  "status": true,
+  "shippingCharges": 10,
+  "deletedAt": 0,
+  "pincode": "245301",
+  "stateId": {
+    "$oid": "5feca6ef7a5c3411ccf94fe5"
+  },
+  "cityId": {
+    "$oid": "5feca7d27a5c3411ccf94fe7"
+  },
+  "createdAt": {
+    "$date": "2021-02-12T17:29:25.738Z"
+  },
+  "updatedAt": {
+    "$date": "2021-02-12T17:29:25.738Z"
+  },
+  "__v": 0
+},{
+  "_id": {
+    "$oid": "6026bc190c2ff420e0ab31ce"
+  },
+  "status": true,
+  "shippingCharges": 10,
+  "deletedAt": 0,
+  "pincode": "245301",
+  "stateId": {
+    "$oid": "5feca6ef7a5c3411ccf94fe5"
+  },
+  "cityId": {
+    "$oid": "5feca7dd7a5c3411ccf94fe8"
+  },
+  "createdAt": {
+    "$date": "2021-02-12T17:34:17.979Z"
+  },
+  "updatedAt": {
+    "$date": "2021-02-12T17:34:17.979Z"
+  },
+  "__v": 0
+},{
+  "_id": {
+    "$oid": "60277d49a0db7134b9c7384a"
+  },
+  "status": true,
+  "shippingCharges": 100,
+  "deletedAt": 0,
+  "pincode": "212665",
+  "stateId": {
+    "$oid": "5feca6ef7a5c3411ccf94fe5"
+  },
+  "cityId": {
+    "$oid": "5feca7dd7a5c3411ccf94fe8"
+  },
+  "createdAt": {
+    "$date": "2021-02-13T07:18:33.332Z"
+  },
+  "updatedAt": {
+    "$date": "2021-02-13T07:18:33.332Z"
+  },
+  "__v": 0
+}]

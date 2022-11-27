@@ -1,0 +1,73 @@
+[{
+  "_id": {
+    "$oid": "60085683b9e11506f586a0a2"
+  },
+  "status": true,
+  "deletedAt": 0,
+  "name": " Almond",
+  "categoryId": {
+    "$oid": "5feca99b7a5c3411ccf94ff2"
+  },
+  "slug": "almond",
+  "order": 1,
+  "image": {
+    "thumbnail": "1611159282157_Almond1.jpg",
+    "small": "1611159282173_Almond1.jpg",
+    "large": "1611159282175_Almond1.jpg"
+  },
+  "createdAt": {
+    "$date": "2021-01-20T16:12:51.648Z"
+  },
+  "updatedAt": {
+    "$date": "2021-01-20T16:12:51.648Z"
+  },
+  "__v": 0
+},{
+  "_id": {
+    "$oid": "60085737b9e11506f586a0a3"
+  },
+  "status": true,
+  "deletedAt": 0,
+  "name": " Cashew",
+  "categoryId": {
+    "$oid": "5feca99b7a5c3411ccf94ff2"
+  },
+  "slug": "cashew",
+  "order": 2,
+  "image": {
+    "thumbnail": "1611159351818_Cashew1.jpg",
+    "small": "1611159351819_Cashew1.jpg",
+    "large": "1611159351820_Cashew1.jpg"
+  },
+  "createdAt": {
+    "$date": "2021-01-20T16:15:51.821Z"
+  },
+  "updatedAt": {
+    "$date": "2021-01-20T16:15:51.821Z"
+  },
+  "__v": 0
+},{
+  "_id": {
+    "$oid": "6008576fb9e11506f586a0a4"
+  },
+  "status": true,
+  "deletedAt": 0,
+  "name": " Dates",
+  "categoryId": {
+    "$oid": "5feca99b7a5c3411ccf94ff2"
+  },
+  "slug": "dates",
+  "order": 3,
+  "image": {
+    "thumbnail": "1611159407835_Dates.jpg",
+    "small": "1611159407837_Dates.jpg",
+    "large": "1611159407837_Dates.jpg"
+  },
+  "createdAt": {
+    "$date": "2021-01-20T16:16:47.839Z"
+  },
+  "updatedAt": {
+    "$date": "2021-01-20T16:16:47.839Z"
+  },
+  "__v": 0
+}]

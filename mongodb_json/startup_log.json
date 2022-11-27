@@ -1,0 +1,1105 @@
+[{
+  "_id": "e2e-68-120-1604855129317",
+  "hostname": "e2e-68-120",
+  "startTime": {
+    "$date": "2020-11-08T17:05:29Z"
+  },
+  "startTimeLocal": "Sun Nov  8 22:35:29.317",
+  "cmdLine": {
+    "config": "/etc/mongod.conf",
+    "net": {
+      "bindIp": "127.0.0.1",
+      "port": 27017
+    },
+    "processManagement": {
+      "fork": true,
+      "pidFilePath": "/var/run/mongodb/mongod.pid",
+      "timeZoneInfo": "/usr/share/zoneinfo"
+    },
+    "storage": {
+      "dbPath": "/var/lib/mongo",
+      "journal": {
+        "enabled": true
+      }
+    },
+    "systemLog": {
+      "destination": "file",
+      "logAppend": true,
+      "path": "/var/log/mongodb/mongod.log"
+    }
+  },
+  "pid": 10539,
+  "buildinfo": {
+    "version": "4.2.10",
+    "gitVersion": "88276238fa97b47c0ef14362b343c5317ecbd739",
+    "modules": [],
+    "allocator": "tcmalloc",
+    "javascriptEngine": "mozjs",
+    "sysInfo": "deprecated",
+    "versionArray": [
+      4,
+      2,
+      10,
+      0
+    ],
+    "openssl": {
+      "running": "OpenSSL 1.0.1e-fips 11 Feb 2013",
+      "compiled": "OpenSSL 1.0.1e-fips 11 Feb 2013"
+    },
+    "buildEnvironment": {
+      "distmod": "rhel70",
+      "distarch": "x86_64",
+      "cc": "/opt/mongodbtoolchain/v3/bin/gcc: gcc (GCC) 8.2.0",
+      "ccflags": "-fno-omit-frame-pointer -fno-strict-aliasing -ggdb -pthread -Wall -Wsign-compare -Wno-unknown-pragmas -Winvalid-pch -Werror -O2 -Wno-unused-local-typedefs -Wno-unused-function -Wno-deprecated-declarations -Wno-unused-const-variable -Wno-unused-but-set-variable -Wno-missing-braces -fstack-protector-strong -fno-builtin-memcmp",
+      "cxx": "/opt/mongodbtoolchain/v3/bin/g++: g++ (GCC) 8.2.0",
+      "cxxflags": "-Woverloaded-virtual -Wno-maybe-uninitialized -fsized-deallocation -std=c++17",
+      "linkflags": "-pthread -Wl,-z,now -rdynamic -Wl,--fatal-warnings -fstack-protector-strong -fuse-ld=gold -Wl,--build-id -Wl,--hash-style=gnu -Wl,-z,noexecstack -Wl,--warn-execstack -Wl,-z,relro",
+      "target_arch": "x86_64",
+      "target_os": "linux"
+    },
+    "bits": 64,
+    "debug": false,
+    "maxBsonObjectSize": 16777216,
+    "storageEngines": [
+      "biggie",
+      "devnull",
+      "ephemeralForTest",
+      "wiredTiger"
+    ]
+  }
+},{
+  "_id": "e2e-68-120-1605453550750",
+  "hostname": "e2e-68-120",
+  "startTime": {
+    "$date": "2020-11-15T15:19:10Z"
+  },
+  "startTimeLocal": "Sun Nov 15 20:49:10.750",
+  "cmdLine": {
+    "config": "/etc/mongod.conf",
+    "net": {
+      "bindIp": "127.0.0.1",
+      "port": 27017
+    },
+    "processManagement": {
+      "fork": true,
+      "pidFilePath": "/var/run/mongodb/mongod.pid",
+      "timeZoneInfo": "/usr/share/zoneinfo"
+    },
+    "storage": {
+      "dbPath": "/var/lib/mongo",
+      "journal": {
+        "enabled": true
+      }
+    },
+    "systemLog": {
+      "destination": "file",
+      "logAppend": true,
+      "path": "/var/log/mongodb/mongod.log"
+    }
+  },
+  "pid": 1437,
+  "buildinfo": {
+    "version": "4.2.10",
+    "gitVersion": "88276238fa97b47c0ef14362b343c5317ecbd739",
+    "modules": [],
+    "allocator": "tcmalloc",
+    "javascriptEngine": "mozjs",
+    "sysInfo": "deprecated",
+    "versionArray": [
+      4,
+      2,
+      10,
+      0
+    ],
+    "openssl": {
+      "running": "OpenSSL 1.0.1e-fips 11 Feb 2013",
+      "compiled": "OpenSSL 1.0.1e-fips 11 Feb 2013"
+    },
+    "buildEnvironment": {
+      "distmod": "rhel70",
+      "distarch": "x86_64",
+      "cc": "/opt/mongodbtoolchain/v3/bin/gcc: gcc (GCC) 8.2.0",
+      "ccflags": "-fno-omit-frame-pointer -fno-strict-aliasing -ggdb -pthread -Wall -Wsign-compare -Wno-unknown-pragmas -Winvalid-pch -Werror -O2 -Wno-unused-local-typedefs -Wno-unused-function -Wno-deprecated-declarations -Wno-unused-const-variable -Wno-unused-but-set-variable -Wno-missing-braces -fstack-protector-strong -fno-builtin-memcmp",
+      "cxx": "/opt/mongodbtoolchain/v3/bin/g++: g++ (GCC) 8.2.0",
+      "cxxflags": "-Woverloaded-virtual -Wno-maybe-uninitialized -fsized-deallocation -std=c++17",
+      "linkflags": "-pthread -Wl,-z,now -rdynamic -Wl,--fatal-warnings -fstack-protector-strong -fuse-ld=gold -Wl,--build-id -Wl,--hash-style=gnu -Wl,-z,noexecstack -Wl,--warn-execstack -Wl,-z,relro",
+      "target_arch": "x86_64",
+      "target_os": "linux"
+    },
+    "bits": 64,
+    "debug": false,
+    "maxBsonObjectSize": 16777216,
+    "storageEngines": [
+      "biggie",
+      "devnull",
+      "ephemeralForTest",
+      "wiredTiger"
+    ]
+  }
+},{
+  "_id": "e2e-68-120-1605714527322",
+  "hostname": "e2e-68-120",
+  "startTime": {
+    "$date": "2020-11-18T15:48:47Z"
+  },
+  "startTimeLocal": "Wed Nov 18 21:18:47.322",
+  "cmdLine": {
+    "config": "/etc/mongod.conf",
+    "net": {
+      "bindIp": "127.0.0.1",
+      "port": 27017
+    },
+    "processManagement": {
+      "fork": true,
+      "pidFilePath": "/var/run/mongodb/mongod.pid",
+      "timeZoneInfo": "/usr/share/zoneinfo"
+    },
+    "storage": {
+      "dbPath": "/var/lib/mongo",
+      "journal": {
+        "enabled": true
+      }
+    },
+    "systemLog": {
+      "destination": "file",
+      "logAppend": true,
+      "path": "/var/log/mongodb/mongod.log"
+    }
+  },
+  "pid": 17919,
+  "buildinfo": {
+    "version": "4.2.11",
+    "gitVersion": "ea38428f0c6742c7c2c7f677e73d79e17a2aab96",
+    "modules": [],
+    "allocator": "tcmalloc",
+    "javascriptEngine": "mozjs",
+    "sysInfo": "deprecated",
+    "versionArray": [
+      4,
+      2,
+      11,
+      0
+    ],
+    "openssl": {
+      "running": "OpenSSL 1.0.1e-fips 11 Feb 2013",
+      "compiled": "OpenSSL 1.0.1e-fips 11 Feb 2013"
+    },
+    "buildEnvironment": {
+      "distmod": "rhel70",
+      "distarch": "x86_64",
+      "cc": "/opt/mongodbtoolchain/v3/bin/gcc: gcc (GCC) 8.2.0",
+      "ccflags": "-fno-omit-frame-pointer -fno-strict-aliasing -ggdb -pthread -Wall -Wsign-compare -Wno-unknown-pragmas -Winvalid-pch -Werror -O2 -Wno-unused-local-typedefs -Wno-unused-function -Wno-deprecated-declarations -Wno-unused-const-variable -Wno-unused-but-set-variable -Wno-missing-braces -fstack-protector-strong -fno-builtin-memcmp",
+      "cxx": "/opt/mongodbtoolchain/v3/bin/g++: g++ (GCC) 8.2.0",
+      "cxxflags": "-Woverloaded-virtual -Wno-maybe-uninitialized -fsized-deallocation -std=c++17",
+      "linkflags": "-pthread -Wl,-z,now -rdynamic -Wl,--fatal-warnings -fstack-protector-strong -fuse-ld=gold -Wl,--build-id -Wl,--hash-style=gnu -Wl,-z,noexecstack -Wl,--warn-execstack -Wl,-z,relro",
+      "target_arch": "x86_64",
+      "target_os": "linux"
+    },
+    "bits": 64,
+    "debug": false,
+    "maxBsonObjectSize": 16777216,
+    "storageEngines": [
+      "biggie",
+      "devnull",
+      "ephemeralForTest",
+      "wiredTiger"
+    ]
+  }
+},{
+  "_id": "e2e-68-120-1605801001978",
+  "hostname": "e2e-68-120",
+  "startTime": {
+    "$date": "2020-11-19T15:50:01Z"
+  },
+  "startTimeLocal": "Thu Nov 19 21:20:01.978",
+  "cmdLine": {
+    "config": "/etc/mongod.conf",
+    "net": {
+      "bindIp": "127.0.0.1",
+      "port": 27017
+    },
+    "processManagement": {
+      "fork": true,
+      "pidFilePath": "/var/run/mongodb/mongod.pid",
+      "timeZoneInfo": "/usr/share/zoneinfo"
+    },
+    "storage": {
+      "dbPath": "/var/lib/mongo",
+      "journal": {
+        "enabled": true
+      }
+    },
+    "systemLog": {
+      "destination": "file",
+      "logAppend": true,
+      "path": "/var/log/mongodb/mongod.log"
+    }
+  },
+  "pid": 17264,
+  "buildinfo": {
+    "version": "4.2.11",
+    "gitVersion": "ea38428f0c6742c7c2c7f677e73d79e17a2aab96",
+    "modules": [],
+    "allocator": "tcmalloc",
+    "javascriptEngine": "mozjs",
+    "sysInfo": "deprecated",
+    "versionArray": [
+      4,
+      2,
+      11,
+      0
+    ],
+    "openssl": {
+      "running": "OpenSSL 1.0.1e-fips 11 Feb 2013",
+      "compiled": "OpenSSL 1.0.1e-fips 11 Feb 2013"
+    },
+    "buildEnvironment": {
+      "distmod": "rhel70",
+      "distarch": "x86_64",
+      "cc": "/opt/mongodbtoolchain/v3/bin/gcc: gcc (GCC) 8.2.0",
+      "ccflags": "-fno-omit-frame-pointer -fno-strict-aliasing -ggdb -pthread -Wall -Wsign-compare -Wno-unknown-pragmas -Winvalid-pch -Werror -O2 -Wno-unused-local-typedefs -Wno-unused-function -Wno-deprecated-declarations -Wno-unused-const-variable -Wno-unused-but-set-variable -Wno-missing-braces -fstack-protector-strong -fno-builtin-memcmp",
+      "cxx": "/opt/mongodbtoolchain/v3/bin/g++: g++ (GCC) 8.2.0",
+      "cxxflags": "-Woverloaded-virtual -Wno-maybe-uninitialized -fsized-deallocation -std=c++17",
+      "linkflags": "-pthread -Wl,-z,now -rdynamic -Wl,--fatal-warnings -fstack-protector-strong -fuse-ld=gold -Wl,--build-id -Wl,--hash-style=gnu -Wl,-z,noexecstack -Wl,--warn-execstack -Wl,-z,relro",
+      "target_arch": "x86_64",
+      "target_os": "linux"
+    },
+    "bits": 64,
+    "debug": false,
+    "maxBsonObjectSize": 16777216,
+    "storageEngines": [
+      "biggie",
+      "devnull",
+      "ephemeralForTest",
+      "wiredTiger"
+    ]
+  }
+},{
+  "_id": "e2e-68-120-1606278920338",
+  "hostname": "e2e-68-120",
+  "startTime": {
+    "$date": "2020-11-25T04:35:20Z"
+  },
+  "startTimeLocal": "Wed Nov 25 10:05:20.338",
+  "cmdLine": {
+    "config": "/etc/mongod.conf",
+    "net": {
+      "bindIp": "127.0.0.1",
+      "port": 27017
+    },
+    "processManagement": {
+      "fork": true,
+      "pidFilePath": "/var/run/mongodb/mongod.pid",
+      "timeZoneInfo": "/usr/share/zoneinfo"
+    },
+    "storage": {
+      "dbPath": "/var/lib/mongo",
+      "journal": {
+        "enabled": true
+      }
+    },
+    "systemLog": {
+      "destination": "file",
+      "logAppend": true,
+      "path": "/var/log/mongodb/mongod.log"
+    }
+  },
+  "pid": 1450,
+  "buildinfo": {
+    "version": "4.2.11",
+    "gitVersion": "ea38428f0c6742c7c2c7f677e73d79e17a2aab96",
+    "modules": [],
+    "allocator": "tcmalloc",
+    "javascriptEngine": "mozjs",
+    "sysInfo": "deprecated",
+    "versionArray": [
+      4,
+      2,
+      11,
+      0
+    ],
+    "openssl": {
+      "running": "OpenSSL 1.0.1e-fips 11 Feb 2013",
+      "compiled": "OpenSSL 1.0.1e-fips 11 Feb 2013"
+    },
+    "buildEnvironment": {
+      "distmod": "rhel70",
+      "distarch": "x86_64",
+      "cc": "/opt/mongodbtoolchain/v3/bin/gcc: gcc (GCC) 8.2.0",
+      "ccflags": "-fno-omit-frame-pointer -fno-strict-aliasing -ggdb -pthread -Wall -Wsign-compare -Wno-unknown-pragmas -Winvalid-pch -Werror -O2 -Wno-unused-local-typedefs -Wno-unused-function -Wno-deprecated-declarations -Wno-unused-const-variable -Wno-unused-but-set-variable -Wno-missing-braces -fstack-protector-strong -fno-builtin-memcmp",
+      "cxx": "/opt/mongodbtoolchain/v3/bin/g++: g++ (GCC) 8.2.0",
+      "cxxflags": "-Woverloaded-virtual -Wno-maybe-uninitialized -fsized-deallocation -std=c++17",
+      "linkflags": "-pthread -Wl,-z,now -rdynamic -Wl,--fatal-warnings -fstack-protector-strong -fuse-ld=gold -Wl,--build-id -Wl,--hash-style=gnu -Wl,-z,noexecstack -Wl,--warn-execstack -Wl,-z,relro",
+      "target_arch": "x86_64",
+      "target_os": "linux"
+    },
+    "bits": 64,
+    "debug": false,
+    "maxBsonObjectSize": 16777216,
+    "storageEngines": [
+      "biggie",
+      "devnull",
+      "ephemeralForTest",
+      "wiredTiger"
+    ]
+  }
+},{
+  "_id": "e2e-68-120-1608303508298",
+  "hostname": "e2e-68-120",
+  "startTime": {
+    "$date": "2020-12-18T14:58:28Z"
+  },
+  "startTimeLocal": "Fri Dec 18 20:28:28.298",
+  "cmdLine": {
+    "config": "/etc/mongod.conf",
+    "net": {
+      "bindIp": "127.0.0.1",
+      "port": 27017
+    },
+    "processManagement": {
+      "fork": true,
+      "pidFilePath": "/var/run/mongodb/mongod.pid",
+      "timeZoneInfo": "/usr/share/zoneinfo"
+    },
+    "storage": {
+      "dbPath": "/var/lib/mongo",
+      "journal": {
+        "enabled": true
+      }
+    },
+    "systemLog": {
+      "destination": "file",
+      "logAppend": true,
+      "path": "/var/log/mongodb/mongod.log"
+    }
+  },
+  "pid": 23921,
+  "buildinfo": {
+    "version": "4.2.11",
+    "gitVersion": "ea38428f0c6742c7c2c7f677e73d79e17a2aab96",
+    "modules": [],
+    "allocator": "tcmalloc",
+    "javascriptEngine": "mozjs",
+    "sysInfo": "deprecated",
+    "versionArray": [
+      4,
+      2,
+      11,
+      0
+    ],
+    "openssl": {
+      "running": "OpenSSL 1.0.1e-fips 11 Feb 2013",
+      "compiled": "OpenSSL 1.0.1e-fips 11 Feb 2013"
+    },
+    "buildEnvironment": {
+      "distmod": "rhel70",
+      "distarch": "x86_64",
+      "cc": "/opt/mongodbtoolchain/v3/bin/gcc: gcc (GCC) 8.2.0",
+      "ccflags": "-fno-omit-frame-pointer -fno-strict-aliasing -ggdb -pthread -Wall -Wsign-compare -Wno-unknown-pragmas -Winvalid-pch -Werror -O2 -Wno-unused-local-typedefs -Wno-unused-function -Wno-deprecated-declarations -Wno-unused-const-variable -Wno-unused-but-set-variable -Wno-missing-braces -fstack-protector-strong -fno-builtin-memcmp",
+      "cxx": "/opt/mongodbtoolchain/v3/bin/g++: g++ (GCC) 8.2.0",
+      "cxxflags": "-Woverloaded-virtual -Wno-maybe-uninitialized -fsized-deallocation -std=c++17",
+      "linkflags": "-pthread -Wl,-z,now -rdynamic -Wl,--fatal-warnings -fstack-protector-strong -fuse-ld=gold -Wl,--build-id -Wl,--hash-style=gnu -Wl,-z,noexecstack -Wl,--warn-execstack -Wl,-z,relro",
+      "target_arch": "x86_64",
+      "target_os": "linux"
+    },
+    "bits": 64,
+    "debug": false,
+    "maxBsonObjectSize": 16777216,
+    "storageEngines": [
+      "biggie",
+      "devnull",
+      "ephemeralForTest",
+      "wiredTiger"
+    ]
+  }
+},{
+  "_id": "e2e-68-120-1609065840277",
+  "hostname": "e2e-68-120",
+  "startTime": {
+    "$date": "2020-12-27T10:44:00Z"
+  },
+  "startTimeLocal": "Sun Dec 27 16:14:00.277",
+  "cmdLine": {
+    "config": "/etc/mongod.conf",
+    "net": {
+      "bindIp": "0.0.0.0",
+      "port": 27017
+    },
+    "processManagement": {
+      "fork": true,
+      "pidFilePath": "/var/run/mongodb/mongod.pid",
+      "timeZoneInfo": "/usr/share/zoneinfo"
+    },
+    "storage": {
+      "dbPath": "/var/lib/mongo",
+      "journal": {
+        "enabled": true
+      }
+    },
+    "systemLog": {
+      "destination": "file",
+      "logAppend": true,
+      "path": "/var/log/mongodb/mongod.log"
+    }
+  },
+  "pid": 23929,
+  "buildinfo": {
+    "version": "4.2.11",
+    "gitVersion": "ea38428f0c6742c7c2c7f677e73d79e17a2aab96",
+    "modules": [],
+    "allocator": "tcmalloc",
+    "javascriptEngine": "mozjs",
+    "sysInfo": "deprecated",
+    "versionArray": [
+      4,
+      2,
+      11,
+      0
+    ],
+    "openssl": {
+      "running": "OpenSSL 1.0.1e-fips 11 Feb 2013",
+      "compiled": "OpenSSL 1.0.1e-fips 11 Feb 2013"
+    },
+    "buildEnvironment": {
+      "distmod": "rhel70",
+      "distarch": "x86_64",
+      "cc": "/opt/mongodbtoolchain/v3/bin/gcc: gcc (GCC) 8.2.0",
+      "ccflags": "-fno-omit-frame-pointer -fno-strict-aliasing -ggdb -pthread -Wall -Wsign-compare -Wno-unknown-pragmas -Winvalid-pch -Werror -O2 -Wno-unused-local-typedefs -Wno-unused-function -Wno-deprecated-declarations -Wno-unused-const-variable -Wno-unused-but-set-variable -Wno-missing-braces -fstack-protector-strong -fno-builtin-memcmp",
+      "cxx": "/opt/mongodbtoolchain/v3/bin/g++: g++ (GCC) 8.2.0",
+      "cxxflags": "-Woverloaded-virtual -Wno-maybe-uninitialized -fsized-deallocation -std=c++17",
+      "linkflags": "-pthread -Wl,-z,now -rdynamic -Wl,--fatal-warnings -fstack-protector-strong -fuse-ld=gold -Wl,--build-id -Wl,--hash-style=gnu -Wl,-z,noexecstack -Wl,--warn-execstack -Wl,-z,relro",
+      "target_arch": "x86_64",
+      "target_os": "linux"
+    },
+    "bits": 64,
+    "debug": false,
+    "maxBsonObjectSize": 16777216,
+    "storageEngines": [
+      "biggie",
+      "devnull",
+      "ephemeralForTest",
+      "wiredTiger"
+    ]
+  }
+},{
+  "_id": "e2e-68-120-1609067179266",
+  "hostname": "e2e-68-120",
+  "startTime": {
+    "$date": "2020-12-27T11:06:19Z"
+  },
+  "startTimeLocal": "Sun Dec 27 16:36:19.266",
+  "cmdLine": {
+    "config": "/etc/mongod.conf",
+    "net": {
+      "bindIp": "0.0.0.0",
+      "port": 27017
+    },
+    "processManagement": {
+      "fork": true,
+      "pidFilePath": "/var/run/mongodb/mongod.pid",
+      "timeZoneInfo": "/usr/share/zoneinfo"
+    },
+    "storage": {
+      "dbPath": "/var/lib/mongo",
+      "journal": {
+        "enabled": true
+      }
+    },
+    "systemLog": {
+      "destination": "file",
+      "logAppend": true,
+      "path": "/var/log/mongodb/mongod.log"
+    }
+  },
+  "pid": 6522,
+  "buildinfo": {
+    "version": "4.2.11",
+    "gitVersion": "ea38428f0c6742c7c2c7f677e73d79e17a2aab96",
+    "modules": [],
+    "allocator": "tcmalloc",
+    "javascriptEngine": "mozjs",
+    "sysInfo": "deprecated",
+    "versionArray": [
+      4,
+      2,
+      11,
+      0
+    ],
+    "openssl": {
+      "running": "OpenSSL 1.0.1e-fips 11 Feb 2013",
+      "compiled": "OpenSSL 1.0.1e-fips 11 Feb 2013"
+    },
+    "buildEnvironment": {
+      "distmod": "rhel70",
+      "distarch": "x86_64",
+      "cc": "/opt/mongodbtoolchain/v3/bin/gcc: gcc (GCC) 8.2.0",
+      "ccflags": "-fno-omit-frame-pointer -fno-strict-aliasing -ggdb -pthread -Wall -Wsign-compare -Wno-unknown-pragmas -Winvalid-pch -Werror -O2 -Wno-unused-local-typedefs -Wno-unused-function -Wno-deprecated-declarations -Wno-unused-const-variable -Wno-unused-but-set-variable -Wno-missing-braces -fstack-protector-strong -fno-builtin-memcmp",
+      "cxx": "/opt/mongodbtoolchain/v3/bin/g++: g++ (GCC) 8.2.0",
+      "cxxflags": "-Woverloaded-virtual -Wno-maybe-uninitialized -fsized-deallocation -std=c++17",
+      "linkflags": "-pthread -Wl,-z,now -rdynamic -Wl,--fatal-warnings -fstack-protector-strong -fuse-ld=gold -Wl,--build-id -Wl,--hash-style=gnu -Wl,-z,noexecstack -Wl,--warn-execstack -Wl,-z,relro",
+      "target_arch": "x86_64",
+      "target_os": "linux"
+    },
+    "bits": 64,
+    "debug": false,
+    "maxBsonObjectSize": 16777216,
+    "storageEngines": [
+      "biggie",
+      "devnull",
+      "ephemeralForTest",
+      "wiredTiger"
+    ]
+  }
+},{
+  "_id": "e2e-68-120-1609228201676",
+  "hostname": "e2e-68-120",
+  "startTime": {
+    "$date": "2020-12-29T07:50:01Z"
+  },
+  "startTimeLocal": "Tue Dec 29 13:20:01.676",
+  "cmdLine": {
+    "config": "/etc/mongod.conf",
+    "net": {
+      "bindIp": "0.0.0.0",
+      "port": 27017
+    },
+    "processManagement": {
+      "fork": true,
+      "pidFilePath": "/var/run/mongodb/mongod.pid",
+      "timeZoneInfo": "/usr/share/zoneinfo"
+    },
+    "storage": {
+      "dbPath": "/var/lib/mongo",
+      "journal": {
+        "enabled": true
+      }
+    },
+    "systemLog": {
+      "destination": "file",
+      "logAppend": true,
+      "path": "/var/log/mongodb/mongod.log"
+    }
+  },
+  "pid": 28041,
+  "buildinfo": {
+    "version": "4.2.11",
+    "gitVersion": "ea38428f0c6742c7c2c7f677e73d79e17a2aab96",
+    "modules": [],
+    "allocator": "tcmalloc",
+    "javascriptEngine": "mozjs",
+    "sysInfo": "deprecated",
+    "versionArray": [
+      4,
+      2,
+      11,
+      0
+    ],
+    "openssl": {
+      "running": "OpenSSL 1.0.1e-fips 11 Feb 2013",
+      "compiled": "OpenSSL 1.0.1e-fips 11 Feb 2013"
+    },
+    "buildEnvironment": {
+      "distmod": "rhel70",
+      "distarch": "x86_64",
+      "cc": "/opt/mongodbtoolchain/v3/bin/gcc: gcc (GCC) 8.2.0",
+      "ccflags": "-fno-omit-frame-pointer -fno-strict-aliasing -ggdb -pthread -Wall -Wsign-compare -Wno-unknown-pragmas -Winvalid-pch -Werror -O2 -Wno-unused-local-typedefs -Wno-unused-function -Wno-deprecated-declarations -Wno-unused-const-variable -Wno-unused-but-set-variable -Wno-missing-braces -fstack-protector-strong -fno-builtin-memcmp",
+      "cxx": "/opt/mongodbtoolchain/v3/bin/g++: g++ (GCC) 8.2.0",
+      "cxxflags": "-Woverloaded-virtual -Wno-maybe-uninitialized -fsized-deallocation -std=c++17",
+      "linkflags": "-pthread -Wl,-z,now -rdynamic -Wl,--fatal-warnings -fstack-protector-strong -fuse-ld=gold -Wl,--build-id -Wl,--hash-style=gnu -Wl,-z,noexecstack -Wl,--warn-execstack -Wl,-z,relro",
+      "target_arch": "x86_64",
+      "target_os": "linux"
+    },
+    "bits": 64,
+    "debug": false,
+    "maxBsonObjectSize": 16777216,
+    "storageEngines": [
+      "biggie",
+      "devnull",
+      "ephemeralForTest",
+      "wiredTiger"
+    ]
+  }
+},{
+  "_id": "e2e-68-120-1609228434823",
+  "hostname": "e2e-68-120",
+  "startTime": {
+    "$date": "2020-12-29T07:53:54Z"
+  },
+  "startTimeLocal": "Tue Dec 29 13:23:54.823",
+  "cmdLine": {
+    "config": "/etc/mongod.conf",
+    "net": {
+      "bindIp": "0.0.0.0",
+      "port": 27017
+    },
+    "processManagement": {
+      "fork": true,
+      "pidFilePath": "/var/run/mongodb/mongod.pid",
+      "timeZoneInfo": "/usr/share/zoneinfo"
+    },
+    "storage": {
+      "dbPath": "/var/lib/mongo",
+      "journal": {
+        "enabled": true
+      }
+    },
+    "systemLog": {
+      "destination": "file",
+      "logAppend": true,
+      "path": "/var/log/mongodb/mongod.log"
+    }
+  },
+  "pid": 30880,
+  "buildinfo": {
+    "version": "4.2.11",
+    "gitVersion": "ea38428f0c6742c7c2c7f677e73d79e17a2aab96",
+    "modules": [],
+    "allocator": "tcmalloc",
+    "javascriptEngine": "mozjs",
+    "sysInfo": "deprecated",
+    "versionArray": [
+      4,
+      2,
+      11,
+      0
+    ],
+    "openssl": {
+      "running": "OpenSSL 1.0.1e-fips 11 Feb 2013",
+      "compiled": "OpenSSL 1.0.1e-fips 11 Feb 2013"
+    },
+    "buildEnvironment": {
+      "distmod": "rhel70",
+      "distarch": "x86_64",
+      "cc": "/opt/mongodbtoolchain/v3/bin/gcc: gcc (GCC) 8.2.0",
+      "ccflags": "-fno-omit-frame-pointer -fno-strict-aliasing -ggdb -pthread -Wall -Wsign-compare -Wno-unknown-pragmas -Winvalid-pch -Werror -O2 -Wno-unused-local-typedefs -Wno-unused-function -Wno-deprecated-declarations -Wno-unused-const-variable -Wno-unused-but-set-variable -Wno-missing-braces -fstack-protector-strong -fno-builtin-memcmp",
+      "cxx": "/opt/mongodbtoolchain/v3/bin/g++: g++ (GCC) 8.2.0",
+      "cxxflags": "-Woverloaded-virtual -Wno-maybe-uninitialized -fsized-deallocation -std=c++17",
+      "linkflags": "-pthread -Wl,-z,now -rdynamic -Wl,--fatal-warnings -fstack-protector-strong -fuse-ld=gold -Wl,--build-id -Wl,--hash-style=gnu -Wl,-z,noexecstack -Wl,--warn-execstack -Wl,-z,relro",
+      "target_arch": "x86_64",
+      "target_os": "linux"
+    },
+    "bits": 64,
+    "debug": false,
+    "maxBsonObjectSize": 16777216,
+    "storageEngines": [
+      "biggie",
+      "devnull",
+      "ephemeralForTest",
+      "wiredTiger"
+    ]
+  }
+},{
+  "_id": "e2e-68-120-1609910065146",
+  "hostname": "e2e-68-120",
+  "startTime": {
+    "$date": "2021-01-06T05:14:25Z"
+  },
+  "startTimeLocal": "Wed Jan  6 10:44:25.146",
+  "cmdLine": {
+    "config": "/etc/mongod.conf",
+    "net": {
+      "bindIp": "0.0.0.0",
+      "port": 27017
+    },
+    "processManagement": {
+      "fork": true,
+      "pidFilePath": "/var/run/mongodb/mongod.pid",
+      "timeZoneInfo": "/usr/share/zoneinfo"
+    },
+    "storage": {
+      "dbPath": "/var/lib/mongo",
+      "journal": {
+        "enabled": true
+      }
+    },
+    "systemLog": {
+      "destination": "file",
+      "logAppend": true,
+      "path": "/var/log/mongodb/mongod.log"
+    }
+  },
+  "pid": 1391,
+  "buildinfo": {
+    "version": "4.2.11",
+    "gitVersion": "ea38428f0c6742c7c2c7f677e73d79e17a2aab96",
+    "modules": [],
+    "allocator": "tcmalloc",
+    "javascriptEngine": "mozjs",
+    "sysInfo": "deprecated",
+    "versionArray": [
+      4,
+      2,
+      11,
+      0
+    ],
+    "openssl": {
+      "running": "OpenSSL 1.0.1e-fips 11 Feb 2013",
+      "compiled": "OpenSSL 1.0.1e-fips 11 Feb 2013"
+    },
+    "buildEnvironment": {
+      "distmod": "rhel70",
+      "distarch": "x86_64",
+      "cc": "/opt/mongodbtoolchain/v3/bin/gcc: gcc (GCC) 8.2.0",
+      "ccflags": "-fno-omit-frame-pointer -fno-strict-aliasing -ggdb -pthread -Wall -Wsign-compare -Wno-unknown-pragmas -Winvalid-pch -Werror -O2 -Wno-unused-local-typedefs -Wno-unused-function -Wno-deprecated-declarations -Wno-unused-const-variable -Wno-unused-but-set-variable -Wno-missing-braces -fstack-protector-strong -fno-builtin-memcmp",
+      "cxx": "/opt/mongodbtoolchain/v3/bin/g++: g++ (GCC) 8.2.0",
+      "cxxflags": "-Woverloaded-virtual -Wno-maybe-uninitialized -fsized-deallocation -std=c++17",
+      "linkflags": "-pthread -Wl,-z,now -rdynamic -Wl,--fatal-warnings -fstack-protector-strong -fuse-ld=gold -Wl,--build-id -Wl,--hash-style=gnu -Wl,-z,noexecstack -Wl,--warn-execstack -Wl,-z,relro",
+      "target_arch": "x86_64",
+      "target_os": "linux"
+    },
+    "bits": 64,
+    "debug": false,
+    "maxBsonObjectSize": 16777216,
+    "storageEngines": [
+      "biggie",
+      "devnull",
+      "ephemeralForTest",
+      "wiredTiger"
+    ]
+  }
+},{
+  "_id": "e2e-68-120-1611330555164",
+  "hostname": "e2e-68-120",
+  "startTime": {
+    "$date": "2021-01-22T15:49:15Z"
+  },
+  "startTimeLocal": "Fri Jan 22 21:19:15.164",
+  "cmdLine": {
+    "config": "/etc/mongod.conf",
+    "net": {
+      "bindIp": "0.0.0.0",
+      "port": 27017
+    },
+    "processManagement": {
+      "fork": true,
+      "pidFilePath": "/var/run/mongodb/mongod.pid",
+      "timeZoneInfo": "/usr/share/zoneinfo"
+    },
+    "storage": {
+      "dbPath": "/var/lib/mongo",
+      "journal": {
+        "enabled": true
+      }
+    },
+    "systemLog": {
+      "destination": "file",
+      "logAppend": true,
+      "path": "/var/log/mongodb/mongod.log"
+    }
+  },
+  "pid": 1497,
+  "buildinfo": {
+    "version": "4.2.12",
+    "gitVersion": "5593fd8e33b60c75802edab304e23998fa0ce8a5",
+    "modules": [],
+    "allocator": "tcmalloc",
+    "javascriptEngine": "mozjs",
+    "sysInfo": "deprecated",
+    "versionArray": [
+      4,
+      2,
+      12,
+      0
+    ],
+    "openssl": {
+      "running": "OpenSSL 1.0.1e-fips 11 Feb 2013",
+      "compiled": "OpenSSL 1.0.1e-fips 11 Feb 2013"
+    },
+    "buildEnvironment": {
+      "distmod": "rhel70",
+      "distarch": "x86_64",
+      "cc": "/opt/mongodbtoolchain/v3/bin/gcc: gcc (GCC) 8.2.0",
+      "ccflags": "-fno-omit-frame-pointer -fno-strict-aliasing -ggdb -pthread -Wall -Wsign-compare -Wno-unknown-pragmas -Winvalid-pch -Werror -O2 -Wno-unused-local-typedefs -Wno-unused-function -Wno-deprecated-declarations -Wno-unused-const-variable -Wno-unused-but-set-variable -Wno-missing-braces -fstack-protector-strong -fno-builtin-memcmp",
+      "cxx": "/opt/mongodbtoolchain/v3/bin/g++: g++ (GCC) 8.2.0",
+      "cxxflags": "-Woverloaded-virtual -Wno-maybe-uninitialized -fsized-deallocation -std=c++17",
+      "linkflags": "-pthread -Wl,-z,now -rdynamic -Wl,--fatal-warnings -fstack-protector-strong -fuse-ld=gold -Wl,--build-id -Wl,--hash-style=gnu -Wl,-z,noexecstack -Wl,--warn-execstack -Wl,-z,relro",
+      "target_arch": "x86_64",
+      "target_os": "linux"
+    },
+    "bits": 64,
+    "debug": false,
+    "maxBsonObjectSize": 16777216,
+    "storageEngines": [
+      "biggie",
+      "devnull",
+      "ephemeralForTest",
+      "wiredTiger"
+    ]
+  }
+},{
+  "_id": "e2e-68-120-1611762514271",
+  "hostname": "e2e-68-120",
+  "startTime": {
+    "$date": "2021-01-27T15:48:34Z"
+  },
+  "startTimeLocal": "Wed Jan 27 21:18:34.271",
+  "cmdLine": {
+    "config": "/etc/mongod.conf",
+    "net": {
+      "bindIp": "0.0.0.0",
+      "port": 27017
+    },
+    "processManagement": {
+      "fork": true,
+      "pidFilePath": "/var/run/mongodb/mongod.pid",
+      "timeZoneInfo": "/usr/share/zoneinfo"
+    },
+    "storage": {
+      "dbPath": "/var/lib/mongo",
+      "journal": {
+        "enabled": true
+      }
+    },
+    "systemLog": {
+      "destination": "file",
+      "logAppend": true,
+      "path": "/var/log/mongodb/mongod.log"
+    }
+  },
+  "pid": 25274,
+  "buildinfo": {
+    "version": "4.2.12",
+    "gitVersion": "5593fd8e33b60c75802edab304e23998fa0ce8a5",
+    "modules": [],
+    "allocator": "tcmalloc",
+    "javascriptEngine": "mozjs",
+    "sysInfo": "deprecated",
+    "versionArray": [
+      4,
+      2,
+      12,
+      0
+    ],
+    "openssl": {
+      "running": "OpenSSL 1.0.1e-fips 11 Feb 2013",
+      "compiled": "OpenSSL 1.0.1e-fips 11 Feb 2013"
+    },
+    "buildEnvironment": {
+      "distmod": "rhel70",
+      "distarch": "x86_64",
+      "cc": "/opt/mongodbtoolchain/v3/bin/gcc: gcc (GCC) 8.2.0",
+      "ccflags": "-fno-omit-frame-pointer -fno-strict-aliasing -ggdb -pthread -Wall -Wsign-compare -Wno-unknown-pragmas -Winvalid-pch -Werror -O2 -Wno-unused-local-typedefs -Wno-unused-function -Wno-deprecated-declarations -Wno-unused-const-variable -Wno-unused-but-set-variable -Wno-missing-braces -fstack-protector-strong -fno-builtin-memcmp",
+      "cxx": "/opt/mongodbtoolchain/v3/bin/g++: g++ (GCC) 8.2.0",
+      "cxxflags": "-Woverloaded-virtual -Wno-maybe-uninitialized -fsized-deallocation -std=c++17",
+      "linkflags": "-pthread -Wl,-z,now -rdynamic -Wl,--fatal-warnings -fstack-protector-strong -fuse-ld=gold -Wl,--build-id -Wl,--hash-style=gnu -Wl,-z,noexecstack -Wl,--warn-execstack -Wl,-z,relro",
+      "target_arch": "x86_64",
+      "target_os": "linux"
+    },
+    "bits": 64,
+    "debug": false,
+    "maxBsonObjectSize": 16777216,
+    "storageEngines": [
+      "biggie",
+      "devnull",
+      "ephemeralForTest",
+      "wiredTiger"
+    ]
+  }
+},{
+  "_id": "e2e-68-120-1612454458411",
+  "hostname": "e2e-68-120",
+  "startTime": {
+    "$date": "2021-02-04T16:00:58Z"
+  },
+  "startTimeLocal": "Thu Feb  4 21:30:58.411",
+  "cmdLine": {
+    "config": "/etc/mongod.conf",
+    "net": {
+      "bindIp": "0.0.0.0",
+      "port": 27017
+    },
+    "processManagement": {
+      "fork": true,
+      "pidFilePath": "/var/run/mongodb/mongod.pid",
+      "timeZoneInfo": "/usr/share/zoneinfo"
+    },
+    "storage": {
+      "dbPath": "/var/lib/mongo",
+      "journal": {
+        "enabled": true
+      }
+    },
+    "systemLog": {
+      "destination": "file",
+      "logAppend": true,
+      "path": "/var/log/mongodb/mongod.log"
+    }
+  },
+  "pid": 22652,
+  "buildinfo": {
+    "version": "4.2.12",
+    "gitVersion": "5593fd8e33b60c75802edab304e23998fa0ce8a5",
+    "modules": [],
+    "allocator": "tcmalloc",
+    "javascriptEngine": "mozjs",
+    "sysInfo": "deprecated",
+    "versionArray": [
+      4,
+      2,
+      12,
+      0
+    ],
+    "openssl": {
+      "running": "OpenSSL 1.0.1e-fips 11 Feb 2013",
+      "compiled": "OpenSSL 1.0.1e-fips 11 Feb 2013"
+    },
+    "buildEnvironment": {
+      "distmod": "rhel70",
+      "distarch": "x86_64",
+      "cc": "/opt/mongodbtoolchain/v3/bin/gcc: gcc (GCC) 8.2.0",
+      "ccflags": "-fno-omit-frame-pointer -fno-strict-aliasing -ggdb -pthread -Wall -Wsign-compare -Wno-unknown-pragmas -Winvalid-pch -Werror -O2 -Wno-unused-local-typedefs -Wno-unused-function -Wno-deprecated-declarations -Wno-unused-const-variable -Wno-unused-but-set-variable -Wno-missing-braces -fstack-protector-strong -fno-builtin-memcmp",
+      "cxx": "/opt/mongodbtoolchain/v3/bin/g++: g++ (GCC) 8.2.0",
+      "cxxflags": "-Woverloaded-virtual -Wno-maybe-uninitialized -fsized-deallocation -std=c++17",
+      "linkflags": "-pthread -Wl,-z,now -rdynamic -Wl,--fatal-warnings -fstack-protector-strong -fuse-ld=gold -Wl,--build-id -Wl,--hash-style=gnu -Wl,-z,noexecstack -Wl,--warn-execstack -Wl,-z,relro",
+      "target_arch": "x86_64",
+      "target_os": "linux"
+    },
+    "bits": 64,
+    "debug": false,
+    "maxBsonObjectSize": 16777216,
+    "storageEngines": [
+      "biggie",
+      "devnull",
+      "ephemeralForTest",
+      "wiredTiger"
+    ]
+  }
+},{
+  "_id": "e2e-68-120-1613027840882",
+  "hostname": "e2e-68-120",
+  "startTime": {
+    "$date": "2021-02-11T07:17:20Z"
+  },
+  "startTimeLocal": "Thu Feb 11 12:47:20.882",
+  "cmdLine": {
+    "config": "/etc/mongod.conf",
+    "net": {
+      "bindIp": "0.0.0.0",
+      "port": 27017
+    },
+    "processManagement": {
+      "fork": true,
+      "pidFilePath": "/var/run/mongodb/mongod.pid",
+      "timeZoneInfo": "/usr/share/zoneinfo"
+    },
+    "storage": {
+      "dbPath": "/var/lib/mongo",
+      "journal": {
+        "enabled": true
+      }
+    },
+    "systemLog": {
+      "destination": "file",
+      "logAppend": true,
+      "path": "/var/log/mongodb/mongod.log"
+    }
+  },
+  "pid": 24903,
+  "buildinfo": {
+    "version": "4.2.12",
+    "gitVersion": "5593fd8e33b60c75802edab304e23998fa0ce8a5",
+    "modules": [],
+    "allocator": "tcmalloc",
+    "javascriptEngine": "mozjs",
+    "sysInfo": "deprecated",
+    "versionArray": [
+      4,
+      2,
+      12,
+      0
+    ],
+    "openssl": {
+      "running": "OpenSSL 1.0.1e-fips 11 Feb 2013",
+      "compiled": "OpenSSL 1.0.1e-fips 11 Feb 2013"
+    },
+    "buildEnvironment": {
+      "distmod": "rhel70",
+      "distarch": "x86_64",
+      "cc": "/opt/mongodbtoolchain/v3/bin/gcc: gcc (GCC) 8.2.0",
+      "ccflags": "-fno-omit-frame-pointer -fno-strict-aliasing -ggdb -pthread -Wall -Wsign-compare -Wno-unknown-pragmas -Winvalid-pch -Werror -O2 -Wno-unused-local-typedefs -Wno-unused-function -Wno-deprecated-declarations -Wno-unused-const-variable -Wno-unused-but-set-variable -Wno-missing-braces -fstack-protector-strong -fno-builtin-memcmp",
+      "cxx": "/opt/mongodbtoolchain/v3/bin/g++: g++ (GCC) 8.2.0",
+      "cxxflags": "-Woverloaded-virtual -Wno-maybe-uninitialized -fsized-deallocation -std=c++17",
+      "linkflags": "-pthread -Wl,-z,now -rdynamic -Wl,--fatal-warnings -fstack-protector-strong -fuse-ld=gold -Wl,--build-id -Wl,--hash-style=gnu -Wl,-z,noexecstack -Wl,--warn-execstack -Wl,-z,relro",
+      "target_arch": "x86_64",
+      "target_os": "linux"
+    },
+    "bits": 64,
+    "debug": false,
+    "maxBsonObjectSize": 16777216,
+    "storageEngines": [
+      "biggie",
+      "devnull",
+      "ephemeralForTest",
+      "wiredTiger"
+    ]
+  }
+},{
+  "_id": "e2e-68-120-1613464023421",
+  "hostname": "e2e-68-120",
+  "startTime": {
+    "$date": "2021-02-16T08:27:03Z"
+  },
+  "startTimeLocal": "Tue Feb 16 13:57:03.421",
+  "cmdLine": {
+    "config": "/etc/mongod.conf",
+    "net": {
+      "bindIp": "0.0.0.0",
+      "port": 27017
+    },
+    "processManagement": {
+      "fork": true,
+      "pidFilePath": "/var/run/mongodb/mongod.pid",
+      "timeZoneInfo": "/usr/share/zoneinfo"
+    },
+    "storage": {
+      "dbPath": "/var/lib/mongo",
+      "journal": {
+        "enabled": true
+      }
+    },
+    "systemLog": {
+      "destination": "file",
+      "logAppend": true,
+      "path": "/var/log/mongodb/mongod.log"
+    }
+  },
+  "pid": 12586,
+  "buildinfo": {
+    "version": "4.2.12",
+    "gitVersion": "5593fd8e33b60c75802edab304e23998fa0ce8a5",
+    "modules": [],
+    "allocator": "tcmalloc",
+    "javascriptEngine": "mozjs",
+    "sysInfo": "deprecated",
+    "versionArray": [
+      4,
+      2,
+      12,
+      0
+    ],
+    "openssl": {
+      "running": "OpenSSL 1.0.1e-fips 11 Feb 2013",
+      "compiled": "OpenSSL 1.0.1e-fips 11 Feb 2013"
+    },
+    "buildEnvironment": {
+      "distmod": "rhel70",
+      "distarch": "x86_64",
+      "cc": "/opt/mongodbtoolchain/v3/bin/gcc: gcc (GCC) 8.2.0",
+      "ccflags": "-fno-omit-frame-pointer -fno-strict-aliasing -ggdb -pthread -Wall -Wsign-compare -Wno-unknown-pragmas -Winvalid-pch -Werror -O2 -Wno-unused-local-typedefs -Wno-unused-function -Wno-deprecated-declarations -Wno-unused-const-variable -Wno-unused-but-set-variable -Wno-missing-braces -fstack-protector-strong -fno-builtin-memcmp",
+      "cxx": "/opt/mongodbtoolchain/v3/bin/g++: g++ (GCC) 8.2.0",
+      "cxxflags": "-Woverloaded-virtual -Wno-maybe-uninitialized -fsized-deallocation -std=c++17",
+      "linkflags": "-pthread -Wl,-z,now -rdynamic -Wl,--fatal-warnings -fstack-protector-strong -fuse-ld=gold -Wl,--build-id -Wl,--hash-style=gnu -Wl,-z,noexecstack -Wl,--warn-execstack -Wl,-z,relro",
+      "target_arch": "x86_64",
+      "target_os": "linux"
+    },
+    "bits": 64,
+    "debug": false,
+    "maxBsonObjectSize": 16777216,
+    "storageEngines": [
+      "biggie",
+      "devnull",
+      "ephemeralForTest",
+      "wiredTiger"
+    ]
+  }
+}]

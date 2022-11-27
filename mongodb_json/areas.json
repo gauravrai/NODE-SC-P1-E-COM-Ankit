@@ -1,0 +1,162 @@
+[{
+  "_id": {
+    "$oid": "5feca9137a5c3411ccf94fef"
+  },
+  "status": true,
+  "deletedAt": 0,
+  "name": "Chalera",
+  "stateId": {
+    "$oid": "5feca6ef7a5c3411ccf94fe5"
+  },
+  "cityId": {
+    "$oid": "5feca7d27a5c3411ccf94fe7"
+  },
+  "pincodeId": {
+    "$oid": "5feca8297a5c3411ccf94feb"
+  },
+  "createdAt": {
+    "$date": "2020-12-30T16:21:39.370Z"
+  },
+  "updatedAt": {
+    "$date": "2020-12-30T16:21:39.370Z"
+  },
+  "__v": 0
+},{
+  "_id": {
+    "$oid": "5feca92b7a5c3411ccf94ff0"
+  },
+  "status": true,
+  "deletedAt": 0,
+  "name": "Supertech",
+  "stateId": {
+    "$oid": "5feca6ef7a5c3411ccf94fe5"
+  },
+  "cityId": {
+    "$oid": "5feca7d27a5c3411ccf94fe7"
+  },
+  "pincodeId": {
+    "$oid": "5feca8007a5c3411ccf94fe9"
+  },
+  "createdAt": {
+    "$date": "2020-12-30T16:22:03.037Z"
+  },
+  "updatedAt": {
+    "$date": "2020-12-30T16:22:03.037Z"
+  },
+  "__v": 0
+},{
+  "_id": {
+    "$oid": "5ff13e2fcfa6db7acf2d31c6"
+  },
+  "status": true,
+  "deletedAt": 0,
+  "name": "Kaka Dev",
+  "stateId": {
+    "$oid": "5feca6ef7a5c3411ccf94fe5"
+  },
+  "cityId": {
+    "$oid": "5feca7dd7a5c3411ccf94fe8"
+  },
+  "pincodeId": {
+    "$oid": "5ff13e05cfa6db7acf2d31c4"
+  },
+  "createdAt": {
+    "$date": "2021-01-03T03:46:55.454Z"
+  },
+  "updatedAt": {
+    "$date": "2021-01-03T03:46:55.454Z"
+  },
+  "__v": 0
+},{
+  "_id": {
+    "$oid": "5ff13e3fcfa6db7acf2d31c7"
+  },
+  "status": true,
+  "deletedAt": 0,
+  "name": "Ramadevi",
+  "stateId": {
+    "$oid": "5feca6ef7a5c3411ccf94fe5"
+  },
+  "cityId": {
+    "$oid": "5feca7dd7a5c3411ccf94fe8"
+  },
+  "pincodeId": {
+    "$oid": "5ff13e05cfa6db7acf2d31c4"
+  },
+  "createdAt": {
+    "$date": "2021-01-03T03:47:11.531Z"
+  },
+  "updatedAt": {
+    "$date": "2021-01-03T03:47:11.531Z"
+  },
+  "__v": 0
+},{
+  "_id": {
+    "$oid": "5ff13e50cfa6db7acf2d31c8"
+  },
+  "status": true,
+  "deletedAt": 0,
+  "name": "Civil Lines",
+  "stateId": {
+    "$oid": "5feca6ef7a5c3411ccf94fe5"
+  },
+  "cityId": {
+    "$oid": "5feca7dd7a5c3411ccf94fe8"
+  },
+  "pincodeId": {
+    "$oid": "5ff13e05cfa6db7acf2d31c4"
+  },
+  "createdAt": {
+    "$date": "2021-01-03T03:47:28.072Z"
+  },
+  "updatedAt": {
+    "$date": "2021-01-03T03:47:28.072Z"
+  },
+  "__v": 0
+},{
+  "_id": {
+    "$oid": "5ff66cecea64ed07a9131f44"
+  },
+  "status": true,
+  "deletedAt": 0,
+  "name": "A1",
+  "stateId": {
+    "$oid": "5feca6fd7a5c3411ccf94fe6"
+  },
+  "cityId": {
+    "$oid": "5fecb2c6895b2e1234ad0f1b"
+  },
+  "pincodeId": {
+    "$oid": "5ff13df9cfa6db7acf2d31c3"
+  },
+  "createdAt": {
+    "$date": "2021-01-07T02:07:40.779Z"
+  },
+  "updatedAt": {
+    "$date": "2021-01-07T02:07:40.779Z"
+  },
+  "__v": 0
+},{
+  "_id": {
+    "$oid": "5ff66cfcea64ed07a9131f45"
+  },
+  "status": true,
+  "deletedAt": 0,
+  "name": "A2",
+  "stateId": {
+    "$oid": "5feca6fd7a5c3411ccf94fe6"
+  },
+  "cityId": {
+    "$oid": "5fecb2c6895b2e1234ad0f1b"
+  },
+  "pincodeId": {
+    "$oid": "5ff13df9cfa6db7acf2d31c3"
+  },
+  "createdAt": {
+    "$date": "2021-01-07T02:07:56.777Z"
+  },
+  "updatedAt": {
+    "$date": "2021-01-07T02:07:56.777Z"
+  },
+  "__v": 0
+}]

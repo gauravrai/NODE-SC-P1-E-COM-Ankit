@@ -1,0 +1,183 @@
+[{
+  "_id": {
+    "$oid": "5fecb22d1e21255a8d7223d2"
+  },
+  "status": true,
+  "deletedAt": 0,
+  "name": "Socicty Alpha",
+  "stateId": {
+    "$oid": "5feca6ef7a5c3411ccf94fe5"
+  },
+  "cityId": {
+    "$oid": "5feca7d27a5c3411ccf94fe7"
+  },
+  "pincodeId": {
+    "$oid": "5feca8007a5c3411ccf94fe9"
+  },
+  "areaId": {
+    "$oid": "5feca92b7a5c3411ccf94ff0"
+  },
+  "createdAt": {
+    "$date": "2020-12-30T17:00:29.509Z"
+  },
+  "updatedAt": {
+    "$date": "2020-12-30T17:00:29.509Z"
+  },
+  "__v": 0
+},{
+  "_id": {
+    "$oid": "5fecb2411e21255a8d7223d3"
+  },
+  "status": true,
+  "deletedAt": 0,
+  "name": "Socicty Beta",
+  "stateId": {
+    "$oid": "5feca6ef7a5c3411ccf94fe5"
+  },
+  "cityId": {
+    "$oid": "5feca7d27a5c3411ccf94fe7"
+  },
+  "pincodeId": {
+    "$oid": "5feca8007a5c3411ccf94fe9"
+  },
+  "areaId": {
+    "$oid": "5feca92b7a5c3411ccf94ff0"
+  },
+  "createdAt": {
+    "$date": "2020-12-30T17:00:49.550Z"
+  },
+  "updatedAt": {
+    "$date": "2020-12-30T17:00:49.550Z"
+  },
+  "__v": 0
+},{
+  "_id": {
+    "$oid": "5ff13e68cfa6db7acf2d31c9"
+  },
+  "status": true,
+  "deletedAt": 0,
+  "name": "Anand Nagar",
+  "stateId": {
+    "$oid": "5feca6ef7a5c3411ccf94fe5"
+  },
+  "cityId": {
+    "$oid": "5feca7dd7a5c3411ccf94fe8"
+  },
+  "pincodeId": {
+    "$oid": "5ff13e05cfa6db7acf2d31c4"
+  },
+  "areaId": {
+    "$oid": "5ff13e2fcfa6db7acf2d31c6"
+  },
+  "createdAt": {
+    "$date": "2021-01-03T03:47:52.435Z"
+  },
+  "updatedAt": {
+    "$date": "2021-01-03T03:47:52.435Z"
+  },
+  "__v": 0
+},{
+  "_id": {
+    "$oid": "5ff13e8fcfa6db7acf2d31ca"
+  },
+  "status": true,
+  "deletedAt": 0,
+  "name": "Greens Echo",
+  "stateId": {
+    "$oid": "5feca6ef7a5c3411ccf94fe5"
+  },
+  "cityId": {
+    "$oid": "5feca7dd7a5c3411ccf94fe8"
+  },
+  "pincodeId": {
+    "$oid": "5ff13e05cfa6db7acf2d31c4"
+  },
+  "areaId": {
+    "$oid": "5ff13e3fcfa6db7acf2d31c7"
+  },
+  "createdAt": {
+    "$date": "2021-01-03T03:48:31.367Z"
+  },
+  "updatedAt": {
+    "$date": "2021-01-03T03:48:31.367Z"
+  },
+  "__v": 0
+},{
+  "_id": {
+    "$oid": "5ff66d11ea64ed07a9131f46"
+  },
+  "status": true,
+  "deletedAt": 0,
+  "name": "S1",
+  "stateId": {
+    "$oid": "5feca6fd7a5c3411ccf94fe6"
+  },
+  "cityId": {
+    "$oid": "5fecb2c6895b2e1234ad0f1b"
+  },
+  "pincodeId": {
+    "$oid": "5ff13df9cfa6db7acf2d31c3"
+  },
+  "areaId": {
+    "$oid": "5ff66cecea64ed07a9131f44"
+  },
+  "createdAt": {
+    "$date": "2021-01-07T02:08:17.187Z"
+  },
+  "updatedAt": {
+    "$date": "2021-01-07T02:08:17.187Z"
+  },
+  "__v": 0
+},{
+  "_id": {
+    "$oid": "5ff66d37ea64ed07a9131f47"
+  },
+  "status": true,
+  "deletedAt": 0,
+  "name": "S2",
+  "stateId": {
+    "$oid": "5feca6fd7a5c3411ccf94fe6"
+  },
+  "cityId": {
+    "$oid": "5fecb2c6895b2e1234ad0f1b"
+  },
+  "pincodeId": {
+    "$oid": "5ff13df9cfa6db7acf2d31c3"
+  },
+  "areaId": {
+    "$oid": "5ff66cfcea64ed07a9131f45"
+  },
+  "createdAt": {
+    "$date": "2021-01-07T02:08:55.066Z"
+  },
+  "updatedAt": {
+    "$date": "2021-01-07T02:08:55.066Z"
+  },
+  "__v": 0
+},{
+  "_id": {
+    "$oid": "601ada91b9e11506f586a1c0"
+  },
+  "status": true,
+  "deletedAt": 0,
+  "name": "Inside Chalera",
+  "stateId": {
+    "$oid": "5feca6ef7a5c3411ccf94fe5"
+  },
+  "cityId": {
+    "$oid": "5feca7d27a5c3411ccf94fe7"
+  },
+  "pincodeId": {
+    "$oid": "5feca8297a5c3411ccf94feb"
+  },
+  "areaId": {
+    "$oid": "5feca9137a5c3411ccf94fef"
+  },
+  "createdAt": {
+    "$date": "2021-02-03T17:17:05.707Z"
+  },
+  "updatedAt": {
+    "$date": "2021-02-03T17:17:05.708Z"
+  },
+  "__v": 0
+}]

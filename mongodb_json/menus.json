@@ -1,0 +1,305 @@
+[{
+  "_id": {
+    "$oid": "5f25bb3092dbb0c905b88b13"
+  },
+  "name": "Role Management",
+  "order": 1,
+  "class": "fa fa-user",
+  "status": true,
+  "deletedAt": 0,
+  "submenu": [
+    {
+      "id": {
+        "$oid": "5f25bb3092dbb0c905b88b11"
+      },
+      "name": "Manage Role",
+      "slug": "manage_role"
+    },
+    {
+      "id": {
+        "$oid": "5f25bb3092dbb0c905b88b12"
+      },
+      "name": "Manage Administrator",
+      "slug": "manage_administrator"
+    }
+  ]
+},{
+  "_id": {
+    "$oid": "5f25bb4a92dbb0c905b88b16"
+  },
+  "name": "Category Management",
+  "order": 2,
+  "class": "fa fa-bars",
+  "status": true,
+  "deletedAt": 0,
+  "submenu": [
+    {
+      "id": {
+        "$oid": "5f25bb4a92dbb0c905b88b14"
+      },
+      "name": "Manage Category",
+      "slug": "manage_category"
+    },
+    {
+      "id": {
+        "$oid": "5f25bb4a92dbb0c905b88b15"
+      },
+      "name": "Manage Subcategory",
+      "slug": "manage_subcategory"
+    }
+  ]
+},{
+  "_id": {
+    "$oid": "5f25bb6792dbb0c905b88b1d"
+  },
+  "name": "Location Management",
+  "order": 3,
+  "class": "fa fa-location-arrow",
+  "status": true,
+  "deletedAt": 0,
+  "submenu": [
+    {
+      "id": {
+        "$oid": "5f25bb6792dbb0c905b88b17"
+      },
+      "name": "Manage State",
+      "slug": "manage_state"
+    },
+    {
+      "id": {
+        "$oid": "5f25bb6792dbb0c905b88b18"
+      },
+      "name": "Manage City",
+      "slug": "manage_city"
+    },
+    {
+      "id": {
+        "$oid": "5f25bb6792dbb0c905b88b19"
+      },
+      "name": "Manage Pincode",
+      "slug": "manage_pincode"
+    },
+    {
+      "id": {
+        "$oid": "5f25bb6792dbb0c905b88b1a"
+      },
+      "name": "Manage Area",
+      "slug": "manage_area"
+    },
+    {
+      "id": {
+        "$oid": "5f25bb6792dbb0c905b88b1b"
+      },
+      "name": "Manage Society",
+      "slug": "manage_society"
+    },
+    {
+      "id": {
+        "$oid": "5f25bb6792dbb0c905b88b1c"
+      },
+      "name": "Manage Tower",
+      "slug": "manage_tower"
+    }
+  ]
+},{
+  "_id": {
+    "$oid": "5f25bbf692dbb0c905b88b1f"
+  },
+  "name": "Offer Management",
+  "order": 4,
+  "class": "fa fa-plus-square",
+  "status": true,
+  "deletedAt": 0,
+  "submenu": [
+    {
+      "id": {
+        "$oid": "5f25bbf692dbb0c905b88b1e"
+      },
+      "name": "Manage Offer",
+      "slug": "manage_offer"
+    }
+  ]
+},{
+  "_id": {
+    "$oid": "5f25bc0992dbb0c905b88b21"
+  },
+  "name": "Discount & Coupon Management",
+  "order": 5,
+  "class": "fa fa-gift",
+  "status": true,
+  "deletedAt": 0,
+  "submenu": [
+    {
+      "id": {
+        "$oid": "5f25bc0992dbb0c905b88b20"
+      },
+      "name": "Manage Discount & Coupon",
+      "slug": "manage_discount"
+    }
+  ]
+},{
+  "_id": {
+    "$oid": "5f3cd0a71da2901fc82520f9"
+  },
+  "name": "Store Management",
+  "order": 6,
+  "class": "fa fa-store-alt",
+  "status": true,
+  "deletedAt": 0,
+  "submenu": [
+    {
+      "id": {
+        "$oid": "5f3cd0a2573eed47a5afbb55"
+      },
+      "name": "Manage Store",
+      "slug": "manage_store"
+    }
+  ]
+},{
+  "_id": {
+    "$oid": "5f3f5f7b50c7b13d20389528"
+  },
+  "name": "Product Management",
+  "order": 7,
+  "class": "fa fa-barcode",
+  "status": true,
+  "deletedAt": 0,
+  "submenu": [
+    {
+      "id": {
+        "$oid": "5f3f5f776acaeb2da18e7d29"
+      },
+      "name": "Manage Product",
+      "slug": "manage_product"
+    },
+    {
+      "id": {
+        "$oid": "5f8e4114878dd0200442dbcf"
+      },
+      "name": "Manage Varient",
+      "slug": "manage_varient"
+    },
+    {
+      "id": {
+        "$oid": "5fb68060223aea31281fba1a"
+      },
+      "name": "Product Request",
+      "slug": "manage_product_request"
+    }
+  ]
+},{
+  "_id": {
+    "$oid": "5f4c8f316ac5ab2a1ce9a35e"
+  },
+  "name": "Brand Management",
+  "order": 8,
+  "class": "fa fa-certificate",
+  "status": true,
+  "deletedAt": 0,
+  "submenu": [
+    {
+      "id": {
+        "$oid": "5f4c8f2f027b6466b204a4ba"
+      },
+      "name": "Manage Brand",
+      "slug": "manage_brand"
+    }
+  ]
+},{
+  "_id": {
+    "$oid": "5f78a272f88b8814082a826b"
+  },
+  "name": "Stock Management",
+  "order": 9,
+  "class": "fa fa-database",
+  "status": true,
+  "deletedAt": 0,
+  "submenu": [
+    {
+      "id": {
+        "$oid": "5fba84b4d7090739b4454f38"
+      },
+      "name": "Manage Stock",
+      "slug": "manage_stock"
+    },
+    {
+      "id": {
+        "$oid": "5fba84b7d7090739b4454f3a"
+      },
+      "name": "Transfer Stock",
+      "slug": "transfer_stock"
+    }
+  ]
+},{
+  "_id": {
+    "$oid": "5f8c78a21a247339585178d3"
+  },
+  "name": "Wallet Management",
+  "order": 10,
+  "class": "fa fa-wallet",
+  "status": true,
+  "deletedAt": 0,
+  "submenu": [
+    {
+      "id": {
+        "$oid": "5f8c78cb64a14b39589c0327"
+      },
+      "name": "Manage Wallet",
+      "slug": "manage_wallet"
+    }
+  ]
+},{
+  "_id": {
+    "$oid": "5f8f02e642cacc37b0d86e76"
+  },
+  "name": "Customer Management",
+  "order": 11,
+  "class": "fa fa-users",
+  "status": true,
+  "deletedAt": 0,
+  "submenu": [
+    {
+      "id": {
+        "$oid": "5fba84c1d7090739b4454f3c"
+      },
+      "name": "Manage Customer",
+      "slug": "manage_customer"
+    }
+  ]
+},{
+  "_id": {
+    "$oid": "5f91aadc669d4e189fc1639c"
+  },
+  "name": "Order Management",
+  "order": 12,
+  "class": "fa fa-shopping-cart",
+  "status": true,
+  "deletedAt": 0,
+  "submenu": [
+    {
+      "id": {
+        "$oid": "5fba84a5d7090739b4454f36"
+      },
+      "name": "Manage Order",
+      "slug": "manage_order"
+    }
+  ]
+},{
+  "_id": {
+    "$oid": "5fba877e179f0339b43bd23e"
+  },
+  "name": "Contact Management",
+  "order": 13,
+  "class": "fa fa-phone",
+  "status": true,
+  "deletedAt": 0,
+  "submenu": [
+    {
+      "id": {
+        "$oid": "5fba878cd7090739b4454f40"
+      },
+      "name": "Manage Contact",
+      "slug": "manage_contact"
+    }
+  ]
+}]

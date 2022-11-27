@@ -1,0 +1,123 @@
+[{
+  "_id": {
+    "$oid": "5ff1fa515fefef37ed611491"
+  },
+  "offerCategoryId": [
+    "5feca99b7a5c3411ccf94ff2"
+  ],
+  "offerSubcategoryId": [
+    "60085683b9e11506f586a0a2"
+  ],
+  "offerProductId": [
+    "600858a5b9e11506f586a0a5"
+  ],
+  "status": true,
+  "deletedAt": 0,
+  "name": "New Year Offer Is Going On",
+  "from": {
+    "$date": "2021-01-01T00:00:00Z"
+  },
+  "to": {
+    "$date": "2021-05-28T00:00:00Z"
+  },
+  "multipleOf": 2,
+  "freeItem": 2,
+  "applyFor": "both",
+  "capping": "1000",
+  "offerVarient": "default",
+  "freeCategoryId": {
+    "$oid": "5feca9787a5c3411ccf94ff1"
+  },
+  "freeProductId": {
+    "$oid": "5ff1fa195fefef37ed611483"
+  },
+  "freeVarientId": "5fecad471e21255a8d7223b2",
+  "bannerImage": "1609693777743_banner5.jpg",
+  "createdAt": {
+    "$date": "2021-01-03T17:09:37.749Z"
+  },
+  "updatedAt": {
+    "$date": "2021-01-03T17:09:37.749Z"
+  },
+  "__v": 0
+},{
+  "_id": {
+    "$oid": "5ff2ae210d927525ed8f38df"
+  },
+  "offerCategoryId": [
+    "5feca9787a5c3411ccf94ff1"
+  ],
+  "offerSubcategoryId": [],
+  "offerProductId": [
+    "5ff1fa195fefef37ed611484"
+  ],
+  "status": true,
+  "deletedAt": 0,
+  "name": "Feb Month Is Running Now",
+  "from": {
+    "$date": "2021-01-01T00:00:00Z"
+  },
+  "to": {
+    "$date": "2021-02-28T00:00:00Z"
+  },
+  "multipleOf": 1,
+  "freeItem": 2,
+  "applyFor": "both",
+  "capping": "1000",
+  "offerVarient": "default",
+  "freeCategoryId": {
+    "$oid": "5feca9787a5c3411ccf94ff1"
+  },
+  "freeProductId": {
+    "$oid": "5ff1fa195fefef37ed61148f"
+  },
+  "freeVarientId": "5fecad471e21255a8d7223b2",
+  "bannerImage": "1609739809262_photo-1506617564039-2f3b650b7010.jpeg",
+  "createdAt": {
+    "$date": "2021-01-04T05:56:49.268Z"
+  },
+  "updatedAt": {
+    "$date": "2021-01-04T05:56:49.268Z"
+  },
+  "__v": 0
+},{
+  "_id": {
+    "$oid": "60269e49d3268540546800c9"
+  },
+  "offerCategoryId": [
+    "5feca9787a5c3411ccf94ff1"
+  ],
+  "offerSubcategoryId": [],
+  "offerProductId": [
+    "5ff1fa195fefef37ed611481"
+  ],
+  "status": true,
+  "deletedAt": 0,
+  "name": "Dynamic Product",
+  "from": {
+    "$date": "2021-02-12T00:00:00Z"
+  },
+  "to": {
+    "$date": "2021-05-29T00:00:00Z"
+  },
+  "multipleOf": 2,
+  "freeItem": 1,
+  "applyFor": "both",
+  "capping": "10000",
+  "offerVarient": "default",
+  "freeCategoryId": {
+    "$oid": "5feca99b7a5c3411ccf94ff2"
+  },
+  "freeProductId": {
+    "$oid": "6008599fb9e11506f586a0a6"
+  },
+  "freeVarientId": "5fedb4f0eba8b06399153b05",
+  "bannerImage": "1613143625536_241-2413641_all-type-of-grocery-items-available-grocery-items.jpg",
+  "createdAt": {
+    "$date": "2021-02-12T15:27:05.554Z"
+  },
+  "updatedAt": {
+    "$date": "2021-02-12T15:27:05.554Z"
+  },
+  "__v": 0
+}]

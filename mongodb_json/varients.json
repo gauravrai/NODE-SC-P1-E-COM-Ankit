@@ -1,0 +1,166 @@
+[{
+  "_id": {
+    "$oid": "5fecad471e21255a8d7223b2"
+  },
+  "status": true,
+  "deletedAt": 0,
+  "label": "1",
+  "measurementUnit": "KG",
+  "createdAt": {
+    "$date": "2020-12-30T16:39:35.555Z"
+  },
+  "updatedAt": {
+    "$date": "2020-12-30T16:39:35.555Z"
+  },
+  "__v": 0
+},{
+  "_id": {
+    "$oid": "5fecad531e21255a8d7223b3"
+  },
+  "status": true,
+  "deletedAt": 0,
+  "label": "2",
+  "measurementUnit": "KG",
+  "createdAt": {
+    "$date": "2020-12-30T16:39:47.474Z"
+  },
+  "updatedAt": {
+    "$date": "2020-12-30T16:39:47.474Z"
+  },
+  "__v": 0
+},{
+  "_id": {
+    "$oid": "5fecad621e21255a8d7223b4"
+  },
+  "status": true,
+  "deletedAt": 2,
+  "label": "3",
+  "measurementUnit": "KG",
+  "createdAt": {
+    "$date": "2020-12-30T16:40:02.233Z"
+  },
+  "updatedAt": {
+    "$date": "2020-12-30T16:40:02.234Z"
+  },
+  "__v": 0
+},{
+  "_id": {
+    "$oid": "5fecad6b1e21255a8d7223b5"
+  },
+  "status": true,
+  "deletedAt": 2,
+  "label": "2",
+  "measurementUnit": "GM",
+  "createdAt": {
+    "$date": "2020-12-30T16:40:11.593Z"
+  },
+  "updatedAt": {
+    "$date": "2020-12-30T16:40:11.593Z"
+  },
+  "__v": 0
+},{
+  "_id": {
+    "$oid": "5fecad7e1e21255a8d7223b6"
+  },
+  "status": true,
+  "deletedAt": 2,
+  "label": "1",
+  "measurementUnit": "ML",
+  "createdAt": {
+    "$date": "2020-12-30T16:40:30.030Z"
+  },
+  "updatedAt": {
+    "$date": "2020-12-30T16:40:30.030Z"
+  },
+  "__v": 0
+},{
+  "_id": {
+    "$oid": "5fedb4f0eba8b06399153b05"
+  },
+  "status": true,
+  "deletedAt": 0,
+  "label": "5",
+  "measurementUnit": "KG",
+  "createdAt": {
+    "$date": "2020-12-31T11:24:32.699Z"
+  },
+  "updatedAt": {
+    "$date": "2020-12-31T11:24:32.699Z"
+  },
+  "__v": 0
+},{
+  "_id": {
+    "$oid": "5fedb501eba8b06399153b06"
+  },
+  "status": true,
+  "deletedAt": 0,
+  "label": "10",
+  "measurementUnit": "KG",
+  "createdAt": {
+    "$date": "2020-12-31T11:24:49.252Z"
+  },
+  "updatedAt": {
+    "$date": "2020-12-31T11:24:49.252Z"
+  },
+  "__v": 0
+},{
+  "_id": {
+    "$oid": "5fedb513eba8b06399153b07"
+  },
+  "status": true,
+  "deletedAt": 0,
+  "label": "250",
+  "measurementUnit": "GM",
+  "createdAt": {
+    "$date": "2020-12-31T11:25:07.086Z"
+  },
+  "updatedAt": {
+    "$date": "2020-12-31T11:25:07.086Z"
+  },
+  "__v": 0
+},{
+  "_id": {
+    "$oid": "5fedb527eba8b06399153b08"
+  },
+  "status": true,
+  "deletedAt": 0,
+  "label": "500",
+  "measurementUnit": "GM",
+  "createdAt": {
+    "$date": "2020-12-31T11:25:27.335Z"
+  },
+  "updatedAt": {
+    "$date": "2020-12-31T11:25:27.336Z"
+  },
+  "__v": 0
+},{
+  "_id": {
+    "$oid": "5fedb53aeba8b06399153b09"
+  },
+  "status": true,
+  "deletedAt": 0,
+  "label": "100",
+  "measurementUnit": "GM",
+  "createdAt": {
+    "$date": "2020-12-31T11:25:46.738Z"
+  },
+  "updatedAt": {
+    "$date": "2020-12-31T11:25:46.738Z"
+  },
+  "__v": 0
+},{
+  "_id": {
+    "$oid": "5fedb715eba8b06399153b0a"
+  },
+  "status": true,
+  "deletedAt": 0,
+  "label": "100",
+  "measurementUnit": "ML",
+  "createdAt": {
+    "$date": "2020-12-31T11:33:41.826Z"
+  },
+  "updatedAt": {
+    "$date": "2020-12-31T11:33:41.826Z"
+  },
+  "__v": 0
+}]

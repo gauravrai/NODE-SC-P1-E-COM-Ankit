@@ -1,0 +1,43 @@
+[{
+  "_id": {
+    "$oid": "5feca6ef7a5c3411ccf94fe5"
+  },
+  "status": true,
+  "deletedAt": 0,
+  "name": "Uttar Pradesh",
+  "createdAt": {
+    "$date": "2020-12-30T16:12:31.876Z"
+  },
+  "updatedAt": {
+    "$date": "2020-12-30T16:12:31.876Z"
+  },
+  "__v": 0
+},{
+  "_id": {
+    "$oid": "5feca6fd7a5c3411ccf94fe6"
+  },
+  "status": true,
+  "deletedAt": 0,
+  "name": "Bihar",
+  "createdAt": {
+    "$date": "2020-12-30T16:12:45.326Z"
+  },
+  "updatedAt": {
+    "$date": "2020-12-30T16:12:45.326Z"
+  },
+  "__v": 0
+},{
+  "_id": {
+    "$oid": "6026b7b52c11ed2ab09b1b5b"
+  },
+  "status": true,
+  "deletedAt": 0,
+  "name": "Bihar",
+  "createdAt": {
+    "$date": "2021-02-12T17:15:33.241Z"
+  },
+  "updatedAt": {
+    "$date": "2021-02-12T17:15:33.241Z"
+  },
+  "__v": 0
+}]

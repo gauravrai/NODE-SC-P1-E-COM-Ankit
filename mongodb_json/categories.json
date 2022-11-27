@@ -1,0 +1,127 @@
+[{
+  "_id": {
+    "$oid": "5feca9787a5c3411ccf94ff1"
+  },
+  "status": true,
+  "deletedAt": 0,
+  "name": "Atta , Flours, Cereal & Muesli",
+  "slug": "atta--flours-cereal--muesli",
+  "order": 1,
+  "image": {
+    "thumbnail": "1609345400480_Atta , Flours, Cereal & Muesli.png",
+    "small": "1609345400483_Atta , Flours, Cereal & Muesli.png",
+    "large": "1609345400484_Atta , Flours, Cereal & Muesli.png"
+  },
+  "createdAt": {
+    "$date": "2020-12-30T16:23:20.486Z"
+  },
+  "updatedAt": {
+    "$date": "2020-12-30T16:23:20.486Z"
+  },
+  "__v": 0
+},{
+  "_id": {
+    "$oid": "5feca99b7a5c3411ccf94ff2"
+  },
+  "status": true,
+  "deletedAt": 0,
+  "name": "Dry Fruits / Nuts",
+  "slug": "dry-fruits--nuts",
+  "order": 2,
+  "image": {
+    "thumbnail": "1609345435916_Dry Fruits.png",
+    "small": "1609345435926_Dry Fruits.png",
+    "large": "1609345435933_Dry Fruits.png"
+  },
+  "createdAt": {
+    "$date": "2020-12-30T16:23:55.935Z"
+  },
+  "updatedAt": {
+    "$date": "2020-12-30T16:23:55.935Z"
+  },
+  "__v": 0
+},{
+  "_id": {
+    "$oid": "5feca9b37a5c3411ccf94ff3"
+  },
+  "status": true,
+  "deletedAt": 0,
+  "name": "Grams and Pulses",
+  "slug": "grams-and-pulses",
+  "order": 3,
+  "image": {
+    "thumbnail": "1609345459629_Gram and Pulses.jpg",
+    "small": "1609345459631_Gram and Pulses.jpg",
+    "large": "1609345459632_Gram and Pulses.jpg"
+  },
+  "createdAt": {
+    "$date": "2020-12-30T16:24:19.634Z"
+  },
+  "updatedAt": {
+    "$date": "2020-12-30T16:24:19.634Z"
+  },
+  "__v": 0
+},{
+  "_id": {
+    "$oid": "5feca9cf7a5c3411ccf94ff4"
+  },
+  "status": true,
+  "deletedAt": 0,
+  "name": "Healthy Seeds",
+  "slug": "healthy-seeds",
+  "order": 4,
+  "image": {
+    "thumbnail": "1609345487270_healthy seeds.jpg",
+    "small": "1609345487280_healthy seeds.jpg",
+    "large": "1609345487283_healthy seeds.jpg"
+  },
+  "createdAt": {
+    "$date": "2020-12-30T16:24:47.290Z"
+  },
+  "updatedAt": {
+    "$date": "2020-12-30T16:24:47.290Z"
+  },
+  "__v": 0
+},{
+  "_id": {
+    "$oid": "5feca9fd7a5c3411ccf94ff5"
+  },
+  "status": true,
+  "deletedAt": 0,
+  "name": "Spices and Masalas",
+  "slug": "spices-and-masalas",
+  "order": 5,
+  "image": {
+    "thumbnail": "1609345533871_Spices and Masala.jpg",
+    "small": "1609345533872_Spices and Masala.jpg",
+    "large": "1609345533873_Spices and Masala.jpg"
+  },
+  "createdAt": {
+    "$date": "2020-12-30T16:25:33.875Z"
+  },
+  "updatedAt": {
+    "$date": "2020-12-30T16:25:33.875Z"
+  },
+  "__v": 0
+},{
+  "_id": {
+    "$oid": "6020b185b9e11506f586a258"
+  },
+  "status": true,
+  "deletedAt": 0,
+  "name": "Staples",
+  "slug": "staples",
+  "order": 6,
+  "image": {
+    "thumbnail": "1612755333350_grocery-staples-335px.png",
+    "small": "1612755333354_grocery-staples-335px.png",
+    "large": "1612755333356_grocery-staples-335px.png"
+  },
+  "createdAt": {
+    "$date": "2021-02-08T03:35:33.358Z"
+  },
+  "updatedAt": {
+    "$date": "2021-02-08T03:35:33.358Z"
+  },
+  "__v": 0
+}]

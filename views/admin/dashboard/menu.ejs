@@ -4,42 +4,44 @@
           <span class="brand-text font-weight-light"><%= APPCONSTANT.SITENAME %></span>
         </a>
 
-        <div class="sidebar">
-          <div class="user-panel mt-3 pb-3 mb-3 d-flex">
-            <div class="image">
-              <img src="/assets/media/user/avatar5.png" class="img-circle elevation-2" alt="User Image">
-            </div>
-            <div class="info">
-              <a href="javascript:void(0)" class="d-block"><%=SESSION.ADMINNAME%></a>
-            </div>
-          </div>
+<div class="sidebar">
+    <div class="user-panel mt-3 pb-3 mb-3 d-flex">
+        <div class="image">
+            <img src="/assets/media/user/avatar5.png" class="img-circle elevation-2" alt="User Image">
+        </div>
+        <div class="info">
+            <a href="javascript:void(0)" class="d-block">
+                <%=SESSION.ADMINNAME%>
+            </a>
+        </div>
+    </div>
 
-          <nav class="mt-2">
-            <ul class="nav nav-pills nav-sidebar flex-column side-menu" data-widget="treeview" role="menu" data-accordion="false">
-              <li class="nav-item">
+    <nav class="mt-2">
+        <ul class="nav nav-pills nav-sidebar flex-column side-menu" data-widget="treeview" role="menu" data-accordion="false">
+            <li class="nav-item">
                 <a href="<%=APPCONSTANT.ADMINCALLURL%>/dashboard" class="nav-link">
-                  <i class="nav-icon fas fa-tachometer-alt"></i>
-                  <p>
-                    Dashboard
-                  </p>
+                    <i class="nav-icon fas fa-tachometer-alt"></i>
+                    <p>
+                        Dashboard
+                    </p>
                 </a>
-              </li>
-              <%let menu_status = false%>
-              <% 
+            </li>
+            <%let menu_status = false%>
+                <% 
                 for(let i=0; i < allMenu.length; i++) {
                   let menu = allMenu[i];
                   if(menu.name){            
               %>
-              <li class="nav-item has-treeview">
-                <a href="javascript:void(0)" class="nav-link">
+                    <li class="nav-item has-treeview">
+                        <a href="javascript:void(0)" class="nav-link">
                   <i class="nav-icon fas <%=menu.class%>"></i>
                   <p>
                     <%=menu.name%>
                     <i class="fas fa-angle-left right"></i>
                   </p>
                 </a>
-                <ul class="nav nav-treeview">
-                 <%
+                        <ul class="nav nav-treeview">
+                            <%
                     let item=0;
                     if(menu.submenu && menu.submenu.length){
                       for(let j=0; j < menu.submenu.length; j++) {
@@ -49,30 +51,32 @@
                         menu_status =true
                         item++;
                   %>
-                  <li class="nav-item">
-                    <a href="<%=APPCONSTANT.ADMINCALLURL%>/<%=submenu.slug%>" class="nav-link">
-                      <i class="far fa-circle nav-icon"></i>
-                      <p><%=submenu.name%></p>
-                    </a>
-                  </li>
-                  <% }
+                                <li class="nav-item">
+                                    <a href="<%=APPCONSTANT.ADMINCALLURL%>/<%=submenu.slug%>" class="nav-link">
+                                        <i class="far fa-circle nav-icon"></i>
+                                        <p>
+                                            <%=submenu.name%>
+                                        </p>
+                                    </a>
+                                </li>
+                                <% }
                     //}
                     }
                   %>
-                </ul>
-              </li>
-              <%
+                        </ul>
+                    </li>
+                    <%
                 }
                 }
               %>
-              <li class="nav-item">
-                <a href="<%=APPCONSTANT.ADMINCALLURL%>/logout" class="nav-link active">
-                  <i class="nav-icon fas fa-sign-out-alt"></i>
-                  <p>
-                    Logout
-                  </p>
-                </a>
-              </li>
-            </ul>
-          </nav>
-        </div>
+                        <li class="nav-item">
+                            <a href="<%=APPCONSTANT.ADMINCALLURL%>/logout" class="nav-link active">
+                                <i class="nav-icon fas fa-sign-out-alt"></i>
+                                <p>
+                                    Logout
+                                </p>
+                            </a>
+                        </li>
+        </ul>
+    </nav>
+</div>

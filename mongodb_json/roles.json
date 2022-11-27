@@ -1,0 +1,547 @@
+[{
+  "_id": {
+    "$oid": "5f2ec71b9efde53114b89c49"
+  },
+  "permission": [
+    {
+      "id": "5f25bb3092dbb0c905b88b13",
+      "add": "1",
+      "edit": "0",
+      "delete": "0"
+    },
+    {
+      "id": "5f25bb4a92dbb0c905b88b16",
+      "add": "1",
+      "edit": "0",
+      "delete": "0"
+    },
+    {
+      "id": "5f25bb6792dbb0c905b88b1d",
+      "add": "1",
+      "edit": "0",
+      "delete": "0"
+    },
+    {
+      "id": "5f25bbf692dbb0c905b88b1f",
+      "add": "1",
+      "edit": "0",
+      "delete": "0"
+    },
+    {
+      "id": "5f25bc0992dbb0c905b88b21",
+      "add": "1",
+      "edit": "0",
+      "delete": "0"
+    },
+    {
+      "id": "5f3cd0a71da2901fc82520f9",
+      "add": "1",
+      "edit": "0",
+      "delete": "0"
+    },
+    {
+      "id": "5f3f5f7b50c7b13d20389528",
+      "add": "1",
+      "edit": "0",
+      "delete": "0"
+    },
+    {
+      "id": "5f4c8f316ac5ab2a1ce9a35e",
+      "add": "1",
+      "edit": "0",
+      "delete": "0"
+    },
+    {
+      "id": "5f78a272f88b8814082a826b",
+      "add": "1",
+      "edit": "0",
+      "delete": "0"
+    },
+    {
+      "id": "5f8c78a21a247339585178d3",
+      "add": "1",
+      "edit": "0",
+      "delete": "0"
+    },
+    {
+      "id": "5f8f02e642cacc37b0d86e76",
+      "add": "1",
+      "edit": "0",
+      "delete": "0"
+    },
+    {
+      "id": "5f91aadc669d4e189fc1639c",
+      "add": "1",
+      "edit": "0",
+      "delete": "0"
+    },
+    {
+      "id": "5fba877e179f0339b43bd23e",
+      "add": "1",
+      "edit": "0",
+      "delete": "0"
+    },
+    {
+      "id": "5f25bb3092dbb0c905b88b11",
+      "add": "1",
+      "edit": "1",
+      "delete": "1"
+    },
+    {
+      "id": "5f25bb3092dbb0c905b88b12",
+      "add": "1",
+      "edit": "1",
+      "delete": "1"
+    },
+    {
+      "id": "5f25bb4a92dbb0c905b88b14",
+      "add": "1",
+      "edit": "1",
+      "delete": "1"
+    },
+    {
+      "id": "5f25bb4a92dbb0c905b88b15",
+      "add": "1",
+      "edit": "1",
+      "delete": "1"
+    },
+    {
+      "id": "5f25bb6792dbb0c905b88b17",
+      "add": "1",
+      "edit": "1",
+      "delete": "1"
+    },
+    {
+      "id": "5f25bb6792dbb0c905b88b18",
+      "add": "1",
+      "edit": "1",
+      "delete": "1"
+    },
+    {
+      "id": "5f25bb6792dbb0c905b88b19",
+      "add": "1",
+      "edit": "1",
+      "delete": "1"
+    },
+    {
+      "id": "5f25bb6792dbb0c905b88b1a",
+      "add": "1",
+      "edit": "1",
+      "delete": "1"
+    },
+    {
+      "id": "5f25bb6792dbb0c905b88b1b",
+      "add": "1",
+      "edit": "1",
+      "delete": "1"
+    },
+    {
+      "id": "5f25bb6792dbb0c905b88b1c",
+      "add": "1",
+      "edit": "1",
+      "delete": "1"
+    },
+    {
+      "id": "5f25bbf692dbb0c905b88b1e",
+      "add": "1",
+      "edit": "1",
+      "delete": "1"
+    },
+    {
+      "id": "5f25bc0992dbb0c905b88b20",
+      "add": "1",
+      "edit": "1",
+      "delete": "1"
+    },
+    {
+      "id": "5f3cd0a2573eed47a5afbb55",
+      "add": "1",
+      "edit": "1",
+      "delete": "1"
+    },
+    {
+      "id": "5f3f5f776acaeb2da18e7d29",
+      "add": "1",
+      "edit": "1",
+      "delete": "1"
+    },
+    {
+      "id": "5f8e4114878dd0200442dbcf",
+      "add": "1",
+      "edit": "1",
+      "delete": "1"
+    },
+    {
+      "id": "5fb68060223aea31281fba1a",
+      "add": "1",
+      "edit": "1",
+      "delete": "1"
+    },
+    {
+      "id": "5f4c8f2f027b6466b204a4ba",
+      "add": "1",
+      "edit": "1",
+      "delete": "1"
+    },
+    {
+      "id": "5fba84b4d7090739b4454f38",
+      "add": "1",
+      "edit": "1",
+      "delete": "1"
+    },
+    {
+      "id": "5fba84b7d7090739b4454f3a",
+      "add": "1",
+      "edit": "1",
+      "delete": "1"
+    },
+    {
+      "id": "5f8c78cb64a14b39589c0327",
+      "add": "1",
+      "edit": "1",
+      "delete": "1"
+    },
+    {
+      "id": "5fba84c1d7090739b4454f3c",
+      "add": "1",
+      "edit": "1",
+      "delete": "1"
+    },
+    {
+      "id": "5fba84a5d7090739b4454f36",
+      "add": "1",
+      "edit": "1",
+      "delete": "1"
+    },
+    {
+      "id": "5fba878cd7090739b4454f40",
+      "add": "0",
+      "edit": "0",
+      "delete": "1"
+    }
+  ],
+  "status": true,
+  "deletedAt": 0,
+  "name": "Superadmin",
+  "description": "This role has all permission.",
+  "createdAt": {
+    "$date": "2020-08-08T15:39:07.267Z"
+  },
+  "updatedAt": {
+    "$date": "2020-08-08T15:39:07.267Z"
+  },
+  "__v": 0
+},{
+  "_id": {
+    "$oid": "5feca8db7a5c3411ccf94fee"
+  },
+  "permission": [
+    {
+      "id": "5f25bb3092dbb0c905b88b13",
+      "add": "1",
+      "edit": "0",
+      "delete": "0"
+    },
+    {
+      "id": "5f25bb4a92dbb0c905b88b16",
+      "add": "1",
+      "edit": "0",
+      "delete": "0"
+    },
+    {
+      "id": "5f25bb6792dbb0c905b88b1d",
+      "add": "1",
+      "edit": "0",
+      "delete": "0"
+    },
+    {
+      "id": "5f4c8f316ac5ab2a1ce9a35e",
+      "add": "1",
+      "edit": "0",
+      "delete": "0"
+    },
+    {
+      "id": "5f78a272f88b8814082a826b",
+      "add": "1",
+      "edit": "0",
+      "delete": "0"
+    },
+    {
+      "id": "5f8c78a21a247339585178d3",
+      "add": "1",
+      "edit": "0",
+      "delete": "0"
+    },
+    {
+      "id": "5f8f02e642cacc37b0d86e76",
+      "add": "1",
+      "edit": "0",
+      "delete": "0"
+    },
+    {
+      "id": "5f91aadc669d4e189fc1639c",
+      "add": "1",
+      "edit": "0",
+      "delete": "0"
+    },
+    {
+      "id": "5fba877e179f0339b43bd23e",
+      "add": "1",
+      "edit": "0",
+      "delete": "0"
+    },
+    {
+      "id": "5f25bb3092dbb0c905b88b11",
+      "add": "1",
+      "edit": "1",
+      "delete": "1"
+    },
+    {
+      "id": "5f25bb3092dbb0c905b88b12",
+      "add": "1",
+      "edit": "1",
+      "delete": "1"
+    },
+    {
+      "id": "5f25bb4a92dbb0c905b88b14",
+      "add": "1",
+      "edit": "1",
+      "delete": "1"
+    },
+    {
+      "id": "5f25bb4a92dbb0c905b88b15",
+      "add": "1",
+      "edit": "1",
+      "delete": "1"
+    },
+    {
+      "id": "5f25bb6792dbb0c905b88b17",
+      "add": "1",
+      "edit": "1",
+      "delete": "1"
+    },
+    {
+      "id": "5f25bb6792dbb0c905b88b18",
+      "add": "1",
+      "edit": "1",
+      "delete": "1"
+    },
+    {
+      "id": "5f25bb6792dbb0c905b88b19",
+      "add": "1",
+      "edit": "1",
+      "delete": "1"
+    },
+    {
+      "id": "5f25bb6792dbb0c905b88b1a",
+      "add": "1",
+      "edit": "1",
+      "delete": "1"
+    },
+    {
+      "id": "5f25bb6792dbb0c905b88b1b",
+      "add": "1",
+      "edit": "1",
+      "delete": "1"
+    },
+    {
+      "id": "5f25bb6792dbb0c905b88b1c",
+      "add": "1",
+      "edit": "1",
+      "delete": "1"
+    },
+    {
+      "id": "5f4c8f2f027b6466b204a4ba",
+      "add": "1",
+      "edit": "1",
+      "delete": "1"
+    },
+    {
+      "id": "5fba84b4d7090739b4454f38",
+      "add": "1",
+      "edit": "1",
+      "delete": "1"
+    },
+    {
+      "id": "5fba84b7d7090739b4454f3a",
+      "add": "1",
+      "edit": "1",
+      "delete": "1"
+    },
+    {
+      "id": "5f8c78cb64a14b39589c0327",
+      "add": "1",
+      "edit": "1",
+      "delete": "1"
+    },
+    {
+      "id": "5fba84c1d7090739b4454f3c",
+      "add": "1",
+      "edit": "1",
+      "delete": "1"
+    },
+    {
+      "id": "5fba84a5d7090739b4454f36",
+      "add": "1",
+      "edit": "1",
+      "delete": "1"
+    },
+    {
+      "id": "5fba878cd7090739b4454f40",
+      "add": "1",
+      "edit": "1",
+      "delete": "1"
+    }
+  ],
+  "status": true,
+  "deletedAt": 0,
+  "name": "Data Processor",
+  "description": "Its Test ",
+  "createdAt": {
+    "$date": "2020-12-30T16:20:43.057Z"
+  },
+  "updatedAt": {
+    "$date": "2020-12-30T16:20:43.057Z"
+  },
+  "__v": 0
+},{
+  "_id": {
+    "$oid": "5fecb6ede5be2e26d8fb4a6a"
+  },
+  "permission": [
+    {
+      "id": "5f25bb3092dbb0c905b88b13",
+      "add": "1",
+      "edit": "0",
+      "delete": "0"
+    },
+    {
+      "id": "5f25bb3092dbb0c905b88b11",
+      "add": "1",
+      "edit": "1",
+      "delete": "1"
+    },
+    {
+      "id": "5f25bb3092dbb0c905b88b12",
+      "add": "1",
+      "edit": "1",
+      "delete": "1"
+    }
+  ],
+  "status": true,
+  "deletedAt": 2,
+  "name": "test role",
+  "description": "This is test role",
+  "createdAt": {
+    "$date": "2020-12-30T17:20:45.054Z"
+  },
+  "updatedAt": {
+    "$date": "2020-12-30T17:20:45.054Z"
+  },
+  "__v": 0
+},{
+  "_id": {
+    "$oid": "5fecb711167c1e01bcf01367"
+  },
+  "permission": [
+    {
+      "id": "5f25bb3092dbb0c905b88b13",
+      "add": "1",
+      "edit": "0",
+      "delete": "0"
+    },
+    {
+      "id": "5f25bb3092dbb0c905b88b11",
+      "add": "1",
+      "edit": "1",
+      "delete": "1"
+    },
+    {
+      "id": "5f25bb3092dbb0c905b88b12",
+      "add": "1",
+      "edit": "1",
+      "delete": "1"
+    }
+  ],
+  "status": true,
+  "deletedAt": 2,
+  "name": "Test Role",
+  "description": "This is test role.",
+  "createdAt": {
+    "$date": "2020-12-30T17:21:21.090Z"
+  },
+  "updatedAt": {
+    "$date": "2020-12-30T17:21:21.090Z"
+  },
+  "__v": 0
+},{
+  "_id": {
+    "$oid": "5fecb78b167c1e01bcf01368"
+  },
+  "permission": [
+    {
+      "id": "5f25bb3092dbb0c905b88b13",
+      "add": "1",
+      "edit": "0",
+      "delete": "0"
+    },
+    {
+      "id": "5f25bb3092dbb0c905b88b11",
+      "add": "1",
+      "edit": "1",
+      "delete": "1"
+    },
+    {
+      "id": "5f25bb3092dbb0c905b88b12",
+      "add": "1",
+      "edit": "1",
+      "delete": "1"
+    }
+  ],
+  "status": true,
+  "deletedAt": 2,
+  "name": "Agency 1",
+  "description": "sfdsf",
+  "createdAt": {
+    "$date": "2020-12-30T17:23:23.349Z"
+  },
+  "updatedAt": {
+    "$date": "2020-12-30T17:23:23.349Z"
+  },
+  "__v": 0
+},{
+  "_id": {
+    "$oid": "5fecb7ab167c1e01bcf01369"
+  },
+  "permission": [
+    {
+      "id": "5f25bb3092dbb0c905b88b13",
+      "add": "1",
+      "edit": "0",
+      "delete": "0"
+    },
+    {
+      "id": "5f25bb3092dbb0c905b88b11",
+      "add": "1",
+      "edit": "1",
+      "delete": "1"
+    },
+    {
+      "id": "5f25bb3092dbb0c905b88b12",
+      "add": "1",
+      "edit": "1",
+      "delete": "1"
+    }
+  ],
+  "status": true,
+  "deletedAt": 2,
+  "name": "Agency 1",
+  "description": "fdsdsv",
+  "createdAt": {
+    "$date": "2020-12-30T17:23:55.469Z"
+  },
+  "updatedAt": {
+    "$date": "2020-12-30T17:23:55.469Z"
+  },
+  "__v": 0
+}]

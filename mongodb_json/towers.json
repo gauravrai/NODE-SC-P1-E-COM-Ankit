@@ -1,0 +1,233 @@
+[{
+  "_id": {
+    "$oid": "5fecb25a1e21255a8d7223d4"
+  },
+  "status": true,
+  "deletedAt": 0,
+  "name": "Tower A",
+  "stateId": {
+    "$oid": "5feca6ef7a5c3411ccf94fe5"
+  },
+  "cityId": {
+    "$oid": "5feca7d27a5c3411ccf94fe7"
+  },
+  "pincodeId": {
+    "$oid": "5feca8007a5c3411ccf94fe9"
+  },
+  "areaId": {
+    "$oid": "5feca92b7a5c3411ccf94ff0"
+  },
+  "societyId": {
+    "$oid": "5fecb22d1e21255a8d7223d2"
+  },
+  "createdAt": {
+    "$date": "2020-12-30T17:01:14.409Z"
+  },
+  "updatedAt": {
+    "$date": "2020-12-30T17:01:14.409Z"
+  },
+  "__v": 0
+},{
+  "_id": {
+    "$oid": "5fecb2721e21255a8d7223d5"
+  },
+  "status": true,
+  "deletedAt": 0,
+  "name": "Tower B",
+  "stateId": {
+    "$oid": "5feca6ef7a5c3411ccf94fe5"
+  },
+  "cityId": {
+    "$oid": "5feca7d27a5c3411ccf94fe7"
+  },
+  "pincodeId": {
+    "$oid": "5feca8007a5c3411ccf94fe9"
+  },
+  "areaId": {
+    "$oid": "5feca92b7a5c3411ccf94ff0"
+  },
+  "societyId": {
+    "$oid": "5fecb22d1e21255a8d7223d2"
+  },
+  "createdAt": {
+    "$date": "2020-12-30T17:01:38.926Z"
+  },
+  "updatedAt": {
+    "$date": "2020-12-30T17:01:38.926Z"
+  },
+  "__v": 0
+},{
+  "_id": {
+    "$oid": "5fecb2901e21255a8d7223d6"
+  },
+  "status": true,
+  "deletedAt": 0,
+  "name": "Tower C",
+  "stateId": {
+    "$oid": "5feca6ef7a5c3411ccf94fe5"
+  },
+  "cityId": {
+    "$oid": "5feca7d27a5c3411ccf94fe7"
+  },
+  "pincodeId": {
+    "$oid": "5feca8007a5c3411ccf94fe9"
+  },
+  "areaId": {
+    "$oid": "5feca92b7a5c3411ccf94ff0"
+  },
+  "societyId": {
+    "$oid": "5fecb2411e21255a8d7223d3"
+  },
+  "createdAt": {
+    "$date": "2020-12-30T17:02:08.207Z"
+  },
+  "updatedAt": {
+    "$date": "2020-12-30T17:02:08.207Z"
+  },
+  "__v": 0
+},{
+  "_id": {
+    "$oid": "5fecb35d1e21255a8d7223d7"
+  },
+  "status": true,
+  "deletedAt": 0,
+  "name": "TOWER Z",
+  "stateId": {
+    "$oid": "5feca6ef7a5c3411ccf94fe5"
+  },
+  "cityId": {
+    "$oid": "5feca7d27a5c3411ccf94fe7"
+  },
+  "pincodeId": {
+    "$oid": "5feca8007a5c3411ccf94fe9"
+  },
+  "areaId": {
+    "$oid": "5feca92b7a5c3411ccf94ff0"
+  },
+  "societyId": {
+    "$oid": "5fecb22d1e21255a8d7223d2"
+  },
+  "createdAt": {
+    "$date": "2020-12-30T17:05:33.789Z"
+  },
+  "updatedAt": {
+    "$date": "2020-12-30T17:05:33.789Z"
+  },
+  "__v": 0
+},{
+  "_id": {
+    "$oid": "5ff13f9dcfa6db7acf2d31cb"
+  },
+  "status": true,
+  "deletedAt": 0,
+  "name": "Tower alpha ",
+  "stateId": {
+    "$oid": "5feca6ef7a5c3411ccf94fe5"
+  },
+  "cityId": {
+    "$oid": "5feca7d27a5c3411ccf94fe7"
+  },
+  "pincodeId": {
+    "$oid": "5feca8007a5c3411ccf94fe9"
+  },
+  "areaId": {
+    "$oid": "5feca92b7a5c3411ccf94ff0"
+  },
+  "societyId": {
+    "$oid": "5fecb2411e21255a8d7223d3"
+  },
+  "createdAt": {
+    "$date": "2021-01-03T03:53:01.972Z"
+  },
+  "updatedAt": {
+    "$date": "2021-01-03T03:53:01.972Z"
+  },
+  "__v": 0
+},{
+  "_id": {
+    "$oid": "5ff66d50ea64ed07a9131f48"
+  },
+  "status": true,
+  "deletedAt": 0,
+  "name": "T1",
+  "stateId": {
+    "$oid": "5feca6fd7a5c3411ccf94fe6"
+  },
+  "cityId": {
+    "$oid": "5fecb2c6895b2e1234ad0f1b"
+  },
+  "pincodeId": {
+    "$oid": "5ff13df9cfa6db7acf2d31c3"
+  },
+  "areaId": {
+    "$oid": "5ff66cecea64ed07a9131f44"
+  },
+  "societyId": {
+    "$oid": "5ff66d11ea64ed07a9131f46"
+  },
+  "createdAt": {
+    "$date": "2021-01-07T02:09:20.461Z"
+  },
+  "updatedAt": {
+    "$date": "2021-01-07T02:09:20.461Z"
+  },
+  "__v": 0
+},{
+  "_id": {
+    "$oid": "5ff66d6aea64ed07a9131f49"
+  },
+  "status": true,
+  "deletedAt": 0,
+  "name": "T2",
+  "stateId": {
+    "$oid": "5feca6fd7a5c3411ccf94fe6"
+  },
+  "cityId": {
+    "$oid": "5fecb2c6895b2e1234ad0f1b"
+  },
+  "pincodeId": {
+    "$oid": "5ff13df9cfa6db7acf2d31c3"
+  },
+  "areaId": {
+    "$oid": "5ff66cfcea64ed07a9131f45"
+  },
+  "societyId": {
+    "$oid": "5ff66d37ea64ed07a9131f47"
+  },
+  "createdAt": {
+    "$date": "2021-01-07T02:09:46.327Z"
+  },
+  "updatedAt": {
+    "$date": "2021-01-07T02:09:46.327Z"
+  },
+  "__v": 0
+},{
+  "_id": {
+    "$oid": "5ff66ee3ea64ed07a9131f4a"
+  },
+  "status": true,
+  "deletedAt": 0,
+  "name": "f",
+  "stateId": {
+    "$oid": "5feca6ef7a5c3411ccf94fe5"
+  },
+  "cityId": {
+    "$oid": "5feca7dd7a5c3411ccf94fe8"
+  },
+  "pincodeId": {
+    "$oid": "5ff13e05cfa6db7acf2d31c4"
+  },
+  "areaId": {
+    "$oid": "5ff13e2fcfa6db7acf2d31c6"
+  },
+  "societyId": {
+    "$oid": "5ff13e68cfa6db7acf2d31c9"
+  },
+  "createdAt": {
+    "$date": "2021-01-07T02:16:03.020Z"
+  },
+  "updatedAt": {
+    "$date": "2021-01-07T02:16:03.020Z"
+  },
+  "__v": 0
+}]

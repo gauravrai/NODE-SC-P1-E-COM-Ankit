@@ -1,0 +1,61 @@
+[{
+  "_id": {
+    "$oid": "5ff1fac65fefef37ed611492"
+  },
+  "percentage": 10,
+  "fixed": null,
+  "firstOrder": true,
+  "status": true,
+  "deletedAt": 0,
+  "couponNo": "O82Q68",
+  "couponName": "First Coupan",
+  "orderValue": 100,
+  "noOfUses": 1,
+  "offerType": "percentage",
+  "from": {
+    "$date": "2021-01-01T00:00:00Z"
+  },
+  "to": {
+    "$date": "2021-03-25T00:00:00Z"
+  },
+  "capping": "100",
+  "applyFor": "both",
+  "createdAt": {
+    "$date": "2021-01-03T17:11:34.770Z"
+  },
+  "updatedAt": {
+    "$date": "2021-01-03T17:11:34.770Z"
+  },
+  "__v": 0,
+  "couponUsesLimit": 0
+},{
+  "_id": {
+    "$oid": "5ff1faf05fefef37ed611493"
+  },
+  "percentage": null,
+  "fixed": 30,
+  "firstOrder": false,
+  "status": true,
+  "deletedAt": 0,
+  "couponNo": "MK4AGE",
+  "couponName": "New Year Coupan",
+  "orderValue": 50,
+  "noOfUses": 5,
+  "offerType": "fixed",
+  "from": {
+    "$date": "2021-01-01T00:00:00Z"
+  },
+  "to": {
+    "$date": "2021-04-30T00:00:00Z"
+  },
+  "capping": "10000",
+  "applyFor": "both",
+  "createdAt": {
+    "$date": "2021-01-03T17:12:16.382Z"
+  },
+  "updatedAt": {
+    "$date": "2021-01-03T17:12:16.382Z"
+  },
+  "__v": 0,
+  "couponUsesLimit": 10
+}]
