@@ -201,7 +201,7 @@ module.exports = {
             }
             let searchTag = req.body.searchTag ? req.body.searchTag.split(",") : [];
             productData = {
-                // categoryId : mongoose.mongo.ObjectId(req.body.categoryId),
+                categoryId: mongoose.mongo.ObjectId(req.body.categoryId),
                 name: req.body.name,
                 offer: req.body.offer,
                 discount: req.body.discount,
@@ -664,13 +664,11 @@ module.exports = {
             deletedAt: 0,
         });
         if (productData.length > 0) {
-            return res
-                .status(200)
-                .json({
-                    code: 1,
-                    status: "exists",
-                    message: "Stock Keeping Unit Already Inserted !!",
-                });
+            return res.status(200).json({
+                code: 1,
+                status: "exists",
+                message: "Stock Keeping Unit Already Inserted !!",
+            });
         } else {
             return res.status(200).json({ code: 0, status: "", message: "" });
         }
