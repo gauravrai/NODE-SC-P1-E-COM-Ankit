@@ -277,6 +277,8 @@ module.exports = {
             let thumbnailArr = req.files.thumbnail;
             let smallArr = req.files.small;
             let largeArr = req.files.large;
+
+            return;
             if (!Array.isArray(thumbnailArr)) {
                 thumbnailArr = [thumbnailArr];
             }
@@ -485,8 +487,7 @@ module.exports = {
                             });
                             let storeFieldObj = {
                                 uniqueCode: typeof uniqueCodeArr != "undefined" && uniqueCodeArr[j] ?
-                                    uniqueCodeArr[j] :
-                                    "LB" + uniqueCode++,
+                                    uniqueCodeArr[j] : "LB" + uniqueCode++,
                                 varientId: mongoose.mongo.ObjectID(varientArr[j]),
                                 storeId: mongoose.mongo.ObjectID(storeId[i]),
                                 varient: varientData.label + " " + varientData.measurementUnit,
@@ -513,6 +514,7 @@ module.exports = {
             }
             productData.inventory = inventory;
             productData.price = price;
+
             if (Object.keys(req.files).length !== 0) {
                 let imageLength = req.body.imageLength;
                 let thumbnailArr = [];
@@ -810,15 +812,12 @@ module.exports = {
                                     description: xlData[i]["Description"],
                                     featured: typeof xlData[i]["Featured Product"] != "undefined" &&
                                         xlData[i]["Featured Product"] == "Yes" ?
-                                        true :
-                                        false,
+                                        true : false,
                                     outOfStock: typeof xlData[i]["Out Of Stock"] != "undefined" &&
                                         xlData[i]["Out Of Stock"] == "Yes" ?
-                                        true :
-                                        false,
+                                        true : false,
                                     tax: typeof xlData[i]["Tax"] != "undefined" ?
-                                        xlData[i]["Tax"] :
-                                        0,
+                                        xlData[i]["Tax"] : 0,
                                     image: image,
                                 };
                                 if (req.body.subcategoryId) {
