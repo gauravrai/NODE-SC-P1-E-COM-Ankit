@@ -6,7 +6,7 @@ let IpAddressSchema = new Schema({
     brandId: {
         type: ObjectId,
     },
-    ip: {
+    ipAddress: {
         type: String,
     },
     status: {

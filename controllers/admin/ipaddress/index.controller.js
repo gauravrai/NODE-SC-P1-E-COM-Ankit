@@ -7,9 +7,10 @@ const bcrypt = require("bcrypt-nodejs");
 const moment = require("moment");
 const Brand = model.brand;
 const ADMINCALLURL = config.constant.ADMINCALLURL;
+const IpAddress = model.ip_address;
 
 module.exports = {
-    manageSubCategory: async function(req, res) {
+    manageIpAddress: async function(req, res) {
         let moduleName = "IP Address Management";
         let pageTitle = "Manage IP Address";
         var detail = {};
@@ -28,8 +29,7 @@ module.exports = {
             }
         );
     },
-
-    listSubCategory: function(req, res) {
+    listIpAddress: function(req, res) {
         var search = { deletedAt: 0 };
         let searchValue = req.body.search.value;
         if (searchValue) {
@@ -42,14 +42,14 @@ module.exports = {
             config.constant.LIMIT;
         async.parallel({
                 count: function(callback) {
-                    SubCategory.countDocuments(search)
+                    IpAddress.countDocuments(search)
                         .sort({ createdAt: -1 })
                         .exec(function(err, data_count) {
                             callback(null, data_count);
                         });
                 },
                 data: function(callback) {
-                    SubCategory.find(search)
+                    IpAddress.find(search)
                         .skip(skip)
                         .limit(limit)
                         .sort({ createdAt: -1 })
@@ -74,25 +74,21 @@ module.exports = {
                     async function(err, permissionData) {
                         for (i = 0; i < data.length; i++) {
                             var arr1 = [];
-                            let src =
-                                config.constant.SUBCATEGORYTHUMBNAILSHOWPATH +
-                                data[i].image.thumbnail;
-                            arr1.push('<img src="' + src + '" width="50px" height="50px">');
-                            arr1.push(data[i].name);
-                            await config.helpers.category.getNameById(
-                                data[i].categoryId,
-                                async function(categoryName) {
-                                    var cat_name = categoryName ? categoryName.name : "N/A";
+
+                            arr1.push(data[i].ipAddress);
+                            await config.helpers.brand.getNameById(
+                                data[i].brandId,
+                                async function(brandName) {
+                                    var brand_name = brandName ? brandName.name : "N/A";
                                     //console.log(categoryName.name);return false;
                                     //arr1.push(categoryName.name);
-                                    arr1.push(cat_name);
+                                    arr1.push(brand_name);
                                 }
                             );
-                            arr1.push(data[i].slug);
                             arr1.push(moment(data[i].createdAt).format("DD-MM-YYYY"));
                             if (!data[i].status) {
                                 let change_status =
-                                    "changeStatus(this,'1','change_status_subcategory','list_subcategory','subcategory');";
+                                    "changeStatus(this,'1','change_status_subcategory','list_ipaddress','ipaddress');";
                                 arr1.push(
                                     '<span class="badge bg-danger" style="cursor:pointer;" onclick="' +
                                     change_status +
@@ -102,7 +98,7 @@ module.exports = {
                                 );
                             } else {
                                 let change_status =
-                                    "changeStatus(this,'0','change_status_subcategory','list_subcategory','subcategory');";
+                                    "changeStatus(this,'0','change_status_subcategory','list_ipaddress','ipaddress');";
                                 arr1.push(
                                     '<span class="badge bg-success" style="cursor:pointer;" onclick="' +
                                     change_status +
@@ -116,14 +112,14 @@ module.exports = {
                                 $but_edit =
                                     '<span><a href="' +
                                     ADMINCALLURL +
-                                    "/edit_subcategory?id=" +
+                                    "/edit_ipaddress?id=" +
                                     data[i]._id +
                                     '" class="btn btn-flat btn-info btn-outline-primary" title="Edit"><i class="fas fa-edit"></i></a></span>';
                             }
                             let $but_delete = " - ";
                             if (permissionData.delete == "1") {
                                 let remove =
-                                    "deleteData(this,'delete_subcategory','list_subcategory','subcategory');";
+                                    "deleteData(this,'delete_subcategory','list_ipaddress','subcategory');";
                                 $but_delete =
                                     '&nbsp;&nbsp;<span><a href="javascript:void(0)" class="btn btn-flat btn-info btn-outline-danger" title="Delete" onclick="' +
                                     remove +
@@ -141,5 +137,90 @@ module.exports = {
                 );
             }
         );
+    },
+    addIpAddress: async function(req, res) {
+        if (req.method == "GET") {
+            let moduleName = "IP Address Management";
+            let pageTitle = "Add IP Address";
+            let brandData = await Brand.find({ status: true, deletedAt: 0 });
+            console.log(brandData);
+            res.render("admin/subcategory/add.ejs", {
+                layout: "admin/layout/layout",
+                pageTitle: pageTitle,
+                moduleName: moduleName,
+                brandData: brandData,
+            });
+        } else {
+            let subcategoryData = {
+                name: req.body.ip_address,
+                categoryId: req.body.brandId,
+                order: req.body.order,
+            };
+            let image = {};
+            new Promise(function(resolve, reject) {
+                    let thumbnailPath = config.constant.SUBCATEGORYTHUMBNAILUPLOADPATH;
+                    let thumbnailName = Date.now() + "_" + req.files.thumbnail.name;
+                    image.thumbnail = thumbnailName;
+                    req.files.thumbnail.mv(
+                        thumbnailPath + thumbnailName,
+                        function(err, data) {
+                            if (err) {
+                                console.log(err);
+                                reject(err);
+                            } else {
+                                resolve();
+                            }
+                        }
+                    );
+                })
+                .then(async() => {
+                    new Promise(function(resolve1, reject1) {
+                        let smallPath = config.constant.SUBCATEGORYSMALLUPLOADPATH;
+                        let smallName = Date.now() + "_" + req.files.small.name;
+                        image.small = smallName;
+                        req.files.small.mv(smallPath + smallName, function(err, data) {
+                            if (err) {
+                                console.log(err);
+                                reject1(err);
+                            } else {
+                                resolve1();
+                            }
+                        });
+                    }).then(async() => {
+                        new Promise(function(resolve2, reject2) {
+                            let largePath = config.constant.SUBCATEGORYLARGEUPLOADPATH;
+                            let largeName = Date.now() + "_" + req.files.large.name;
+                            image.large = largeName;
+                            req.files.large.mv(largePath + largeName, function(err, data) {
+                                if (err) {
+                                    console.log(err);
+                                    reject2(err);
+                                } else {
+                                    resolve2();
+                                }
+                            });
+                        }).then(async() => {
+                            subcategoryData.image = image;
+                            let subcategory = new SubCategory(subcategoryData);
+                            subcategory.save(function(err, data) {
+                                if (err) {
+                                    console.log(err);
+                                }
+                                req.flash("msg", {
+                                    msg: "Sub Category has been Created Successfully",
+                                    status: true,
+                                });
+                                res.redirect(
+                                    config.constant.ADMINCALLURL + "/manage_subcategory"
+                                );
+                                req.flash({});
+                            });
+                        });
+                    });
+                })
+                .catch((err) => {
+                    console.log(err);
+                });
+        }
     },
 };

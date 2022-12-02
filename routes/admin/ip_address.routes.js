@@ -5,31 +5,21 @@ module.exports = function(router) {
     router.all(
         config.constant.ADMINCALLURL + "/manage_ipaddress",
         isloggedin,
-        indexController.manageSubCategory
+        indexController.manageIpAddress
     );
     router.all(
         config.constant.ADMINCALLURL + "/list_ipaddress",
         isloggedin,
-        indexController.listSubCategory
+        indexController.listIpAddress
     );
     router.all(
         config.constant.ADMINCALLURL + "/add_ipaddress",
         isloggedin,
-        indexController.addSubCategory
+        indexController.addIpAddress
     );
-    router.all(
-        config.constant.ADMINCALLURL + "/edit_ipaddress",
-        isloggedin,
-        indexController.editSubCategory
-    );
-    router.all(
-        config.constant.ADMINCALLURL + "/change_status_ipaddress/:id",
-        isloggedin,
-        indexController.changeStatusSubCategory
-    );
-    router.all(
-        config.constant.ADMINCALLURL + "/delete_ipaddress/:id",
-        isloggedin,
-        indexController.deleteSubCategory
-    );
+    // router.all(
+    //     config.constant.ADMINCALLURL + "/edit_ipaddress",
+    //     isloggedin,
+    //     indexController.editIpAddress
+    // );
 };
