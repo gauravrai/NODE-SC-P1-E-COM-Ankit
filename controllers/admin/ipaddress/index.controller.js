@@ -74,21 +74,19 @@ module.exports = {
                     async function(err, permissionData) {
                         for (i = 0; i < data.length; i++) {
                             var arr1 = [];
-
+                            arr1.push(i + 1);
                             arr1.push(data[i].ipAddress);
                             await config.helpers.brand.getNameById(
                                 data[i].brandId,
                                 async function(brandName) {
                                     var brand_name = brandName ? brandName.name : "N/A";
-                                    //console.log(categoryName.name);return false;
-                                    //arr1.push(categoryName.name);
                                     arr1.push(brand_name);
                                 }
                             );
                             arr1.push(moment(data[i].createdAt).format("DD-MM-YYYY"));
                             if (!data[i].status) {
                                 let change_status =
-                                    "changeStatus(this,'1','change_status_subcategory','list_ipaddress','ipaddress');";
+                                    "changeStatus(this,'1','change_status_ipaddress','list_ipaddress','ipaddress');";
                                 arr1.push(
                                     '<span class="badge bg-danger" style="cursor:pointer;" onclick="' +
                                     change_status +
@@ -98,7 +96,7 @@ module.exports = {
                                 );
                             } else {
                                 let change_status =
-                                    "changeStatus(this,'0','change_status_subcategory','list_ipaddress','ipaddress');";
+                                    "changeStatus(this,'0','change_status_ipaddress','list_ipaddress','ipaddress');";
                                 arr1.push(
                                     '<span class="badge bg-success" style="cursor:pointer;" onclick="' +
                                     change_status +
@@ -119,7 +117,7 @@ module.exports = {
                             let $but_delete = " - ";
                             if (permissionData.delete == "1") {
                                 let remove =
-                                    "deleteData(this,'delete_subcategory','list_ipaddress','subcategory');";
+                                    "deleteData(this,'delete_ipaddress','list_ipaddress','ipaddress');";
                                 $but_delete =
                                     '&nbsp;&nbsp;<span><a href="javascript:void(0)" class="btn btn-flat btn-info btn-outline-danger" title="Delete" onclick="' +
                                     remove +
@@ -143,84 +141,86 @@ module.exports = {
             let moduleName = "IP Address Management";
             let pageTitle = "Add IP Address";
             let brandData = await Brand.find({ status: true, deletedAt: 0 });
-            console.log(brandData);
-            res.render("admin/subcategory/add.ejs", {
+            res.render("admin/ipaddress/add.ejs", {
                 layout: "admin/layout/layout",
                 pageTitle: pageTitle,
                 moduleName: moduleName,
                 brandData: brandData,
             });
         } else {
-            let subcategoryData = {
-                name: req.body.ip_address,
-                categoryId: req.body.brandId,
+            let ipAddressData = {
+                ipAddress: req.body.ip_address,
+                brandId: req.body.brandId,
                 order: req.body.order,
             };
-            let image = {};
-            new Promise(function(resolve, reject) {
-                    let thumbnailPath = config.constant.SUBCATEGORYTHUMBNAILUPLOADPATH;
-                    let thumbnailName = Date.now() + "_" + req.files.thumbnail.name;
-                    image.thumbnail = thumbnailName;
-                    req.files.thumbnail.mv(
-                        thumbnailPath + thumbnailName,
-                        function(err, data) {
-                            if (err) {
-                                console.log(err);
-                                reject(err);
-                            } else {
-                                resolve();
-                            }
-                        }
-                    );
-                })
-                .then(async() => {
-                    new Promise(function(resolve1, reject1) {
-                        let smallPath = config.constant.SUBCATEGORYSMALLUPLOADPATH;
-                        let smallName = Date.now() + "_" + req.files.small.name;
-                        image.small = smallName;
-                        req.files.small.mv(smallPath + smallName, function(err, data) {
-                            if (err) {
-                                console.log(err);
-                                reject1(err);
-                            } else {
-                                resolve1();
-                            }
-                        });
-                    }).then(async() => {
-                        new Promise(function(resolve2, reject2) {
-                            let largePath = config.constant.SUBCATEGORYLARGEUPLOADPATH;
-                            let largeName = Date.now() + "_" + req.files.large.name;
-                            image.large = largeName;
-                            req.files.large.mv(largePath + largeName, function(err, data) {
-                                if (err) {
-                                    console.log(err);
-                                    reject2(err);
-                                } else {
-                                    resolve2();
-                                }
-                            });
-                        }).then(async() => {
-                            subcategoryData.image = image;
-                            let subcategory = new SubCategory(subcategoryData);
-                            subcategory.save(function(err, data) {
-                                if (err) {
-                                    console.log(err);
-                                }
-                                req.flash("msg", {
-                                    msg: "Sub Category has been Created Successfully",
-                                    status: true,
-                                });
-                                res.redirect(
-                                    config.constant.ADMINCALLURL + "/manage_subcategory"
-                                );
-                                req.flash({});
-                            });
-                        });
-                    });
-                })
-                .catch((err) => {
+            let ipAddress = new IpAddress(ipAddressData);
+            ipAddress.save(function(err, data) {
+                if (err) {
                     console.log(err);
+                }
+                req.flash("msg", {
+                    msg: "IP Address has been Added Successfully",
+                    status: true,
                 });
+                res.redirect(config.constant.ADMINCALLURL + "/manage_ipaddress");
+                req.flash({});
+            });
+        }
+    },
+    editIpAddress: async function(req, res) {
+        if (req.method == "GET") {
+            let moduleName = "IP Address Management";
+            let pageTitle = "Edit IP Address";
+            let id = req.body.id;
+            let ipAddressData = await IpAddress.findOne({
+                _id: mongoose.mongo.ObjectId(id),
+                deletedAt: 0,
+            });
+            let brandData = await Brand.find({
+                status: true,
+                deletedAt: 0,
+            });
+            res.render("admin/ipaddress/edit", {
+                layout: "admin/layout/layout",
+                pageTitle: pageTitle,
+                moduleName: moduleName,
+                ipAddressData: ipAddressData,
+                brandData: brandData,
+            });
+        }
+        if (req.method == "POST") {
+            let ipAddressData = {
+                ipAddress: req.body.ip_address,
+                brandId: req.body.brandId,
+                order: req.body.order,
+            };
+            await IpAddress.update({ _id: mongoose.mongo.ObjectId(req.body.id) },
+                ipAddressData,
+                function(err, data) {
+                    if (err) {
+                        console.log(err);
+                    }
+                    req.flash("msg", {
+                        msg: "IP Address has been Updated Successfully",
+                        status: true,
+                    });
+                    res.redirect(config.constant.ADMINCALLURL + "/manage_ipaddress");
+                    req.flash({});
+                }
+            );
+        }
+    },
+    deleteIpAddress: async function(req, res) {
+        let id = req.param("id");
+        if (empty(id)) {
+            res.send("There are some issue in this ip address.");
+        } else {
+            return IpAddress.updateOne({ _id: mongoose.mongo.ObjectId(id) }, { deletedAt: 2 },
+                function(err, data) {
+                    if (err) console.error(err);
+                    res.send("done");
+                }
+            );
         }
     },
 };

@@ -9,6 +9,9 @@ let IpAddressSchema = new Schema({
     ipAddress: {
         type: String,
     },
+    order: {
+        type: Number,
+    },
     status: {
         type: Boolean,
         default: true,

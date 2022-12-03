@@ -17,9 +17,14 @@ module.exports = function(router) {
         isloggedin,
         indexController.addIpAddress
     );
-    // router.all(
-    //     config.constant.ADMINCALLURL + "/edit_ipaddress",
-    //     isloggedin,
-    //     indexController.editIpAddress
-    // );
+    router.all(
+        config.constant.ADMINCALLURL + "/edit_ipaddress",
+        isloggedin,
+        indexController.editIpAddress
+    );
+    router.all(
+        config.constant.ADMINCALLURL + "/delete_ipaddress",
+        isloggedin,
+        indexController.deleteIpAddress
+    );
 };
