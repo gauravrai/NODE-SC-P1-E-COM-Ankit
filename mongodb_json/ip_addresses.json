@@ -1,0 +1,111 @@
+[{
+  "_id": {
+    "$oid": "638aaf22de976d20b8b9dd49"
+  },
+  "status": true,
+  "deletedAt": 0,
+  "ipAddress": "198.144.12.1",
+  "brandId": {
+    "$oid": "638562dea018bf11400acf8a"
+  },
+  "order": 1,
+  "createdAt": {
+    "$date": {
+      "$numberLong": "1670033186956"
+    }
+  },
+  "updatedAt": {
+    "$date": {
+      "$numberLong": "1670033186956"
+    }
+  },
+  "__v": 0
+},{
+  "_id": {
+    "$oid": "638aaf2fde976d20b8b9dd57"
+  },
+  "status": true,
+  "deletedAt": 0,
+  "ipAddress": "198.144.12.22",
+  "brandId": {
+    "$oid": "638562e9a018bf11400acf96"
+  },
+  "order": 22,
+  "createdAt": {
+    "$date": {
+      "$numberLong": "1670033199594"
+    }
+  },
+  "updatedAt": {
+    "$date": {
+      "$numberLong": "1670033199594"
+    }
+  },
+  "__v": 0
+},{
+  "_id": {
+    "$oid": "638d39eb03d67b43a8a5ad6c"
+  },
+  "status": false,
+  "deletedAt": 0,
+  "ipAddress": "198.144.12.11",
+  "brandId": {
+    "$oid": "638562e9a018bf11400acf96"
+  },
+  "order": 2,
+  "createdAt": {
+    "$date": {
+      "$numberLong": "1670199787247"
+    }
+  },
+  "updatedAt": {
+    "$date": {
+      "$numberLong": "1670199787247"
+    }
+  },
+  "__v": 0
+},{
+  "_id": {
+    "$oid": "638d39fc03d67b43a8a5ad7b"
+  },
+  "status": true,
+  "deletedAt": 0,
+  "ipAddress": "198.144.12.12",
+  "brandId": {
+    "$oid": "638562d7a018bf11400acf7e"
+  },
+  "order": 3,
+  "createdAt": {
+    "$date": {
+      "$numberLong": "1670199804801"
+    }
+  },
+  "updatedAt": {
+    "$date": {
+      "$numberLong": "1670199804801"
+    }
+  },
+  "__v": 0
+},{
+  "_id": {
+    "$oid": "638d423ca84f8b1e88a0e998"
+  },
+  "status": true,
+  "deletedAt": 0,
+  "ipAddress": "198.144.11.1",
+  "brandId": {
+    "$oid": "638562dea018bf11400acf8a"
+  },
+  "order": 2,
+  "createdAt": {
+    "$date": {
+      "$numberLong": "1670201916291"
+    }
+  },
+  "updatedAt": {
+    "$date": {
+      "$numberLong": "1670201916291"
+    }
+  },
+  "__v": 0
+}]
