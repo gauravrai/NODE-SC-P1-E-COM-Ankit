@@ -86,7 +86,7 @@ module.exports = {
                             arr1.push(moment(data[i].createdAt).format("DD-MM-YYYY"));
                             if (!data[i].status) {
                                 let change_status =
-                                    "changeStatus(this,'1','change_status_ipaddress','list_ipaddress','ipaddress');";
+                                    "changeStatus(this,'1','change_status_ipaddress','list_ipaddress','ipAddress');";
                                 arr1.push(
                                     '<span class="badge bg-danger" style="cursor:pointer;" onclick="' +
                                     change_status +
@@ -96,7 +96,7 @@ module.exports = {
                                 );
                             } else {
                                 let change_status =
-                                    "changeStatus(this,'0','change_status_ipaddress','list_ipaddress','ipaddress');";
+                                    "changeStatus(this,'0','change_status_ipaddress','list_ipaddress','ipAddress');";
                                 arr1.push(
                                     '<span class="badge bg-success" style="cursor:pointer;" onclick="' +
                                     change_status +
@@ -117,7 +117,7 @@ module.exports = {
                             let $but_delete = " - ";
                             if (permissionData.delete == "1") {
                                 let remove =
-                                    "deleteData(this,'delete_ipaddress','list_ipaddress','ipaddress');";
+                                    "deleteData(this,'delete_ipaddress','list_ipaddress','ipAddress');";
                                 $but_delete =
                                     '&nbsp;&nbsp;<span><a href="javascript:void(0)" class="btn btn-flat btn-info btn-outline-danger" title="Delete" onclick="' +
                                     remove +
@@ -212,7 +212,7 @@ module.exports = {
     },
     deleteIpAddress: async function(req, res) {
         let id = req.param("id");
-        if (empty(id)) {
+        if (id == "") {
             res.send("There are some issue in this ip address.");
         } else {
             return IpAddress.updateOne({ _id: mongoose.mongo.ObjectId(id) }, { deletedAt: 2 },
@@ -222,5 +222,33 @@ module.exports = {
                 }
             );
         }
+    },
+    changeStatusIpAddress: function(req, res) {
+        let id = req.param("id");
+        let status = req.param("status");
+        return IpAddress.updateOne({ _id: mongoose.mongo.ObjectId(id) }, {
+                status: parseInt(status) ? true : false,
+            },
+            function(err, data) {
+                if (err) console.error(err);
+                if (status == "1") {
+                    let change_status =
+                        "changeStatus(this,'0','change_status_ipaddress','list_ipaddress','ipAddress');";
+                    res.send(
+                        '<span class="badge bg-success" style="cursor:pointer;" onclick="' +
+                        change_status +
+                        '">Active</span>'
+                    );
+                } else {
+                    let change_status =
+                        "changeStatus(this,'1','change_status_ipaddress','list_ipaddress','ipAddress');";
+                    res.send(
+                        '<span class="badge bg-danger" style="cursor:pointer;" onclick="' +
+                        change_status +
+                        '">Inactive</span>'
+                    );
+                }
+            }
+        );
     },
 };

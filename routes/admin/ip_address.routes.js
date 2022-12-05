@@ -23,8 +23,13 @@ module.exports = function(router) {
         indexController.editIpAddress
     );
     router.all(
-        config.constant.ADMINCALLURL + "/delete_ipaddress",
+        config.constant.ADMINCALLURL + "/delete_ipaddress/:id",
         isloggedin,
         indexController.deleteIpAddress
+    );
+    router.all(
+        config.constant.ADMINCALLURL + "/change_status_ipaddress/:id",
+        isloggedin,
+        indexController.changeStatusIpAddress
     );
 };
