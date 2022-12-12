@@ -107,4 +107,9 @@ module.exports = function(router) {
         isloggedin,
         indexController.exportIpAddress
     );
+    router.all(
+        config.constant.ADMINCALLURL + "/export_profile",
+        isloggedin,
+        indexController.exportProfile
+    );
 };

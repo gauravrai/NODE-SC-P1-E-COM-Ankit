@@ -1,0 +1,82 @@
+<div class="content-wrapper">
+    <section class="content-header">
+        <div class="container-fluid">
+            <div class="row mb-2">
+                <div class="col-sm-6">
+                    <h1>
+                        <%=pageTitle%>
+                    </h1>
+                </div>
+                <div class="col-sm-6">
+                    <ol class="breadcrumb float-sm-right">
+                        <li class="breadcrumb-item">
+                            <a href="javascript:void(0)">
+                                <%=moduleName%>
+                            </a>
+                        </li>
+                        <li class="breadcrumb-item active">
+                            <%=pageTitle%>
+                        </li>
+                    </ol>
+                </div>
+            </div>
+        </div>
+    </section>
+    <section class="content">
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="card card-primary card-outline">
+                        <div class="card-header d-flex p-0">
+                            <h3 class="card-title p-3">Profile Information</h3>
+                            <ul class="nav nav-pills ml-auto p-2">
+                                <li class="nav-item"><a class="btn btn-block btn-secondary" href="<%=APPCONSTANT.ADMINCALLURL%>/manage_profile">Back</a></li>
+                            </ul>
+                        </div>
+                        <form role="form" id="addProfileForm" method="post" enctype="multipart/form-data">
+                            <div class="card-body">
+                                <div class="form-group">
+                                    <label for="name">Name</label>
+                                    <input type="text" name="name" class="form-control" id="name" placeholder="Profile Name" onblur="checkSlug('check_slug_profile', 'checkFromName', '')">
+                                </div>
+                                <div class="form-group">
+                                    <label for="slug">Slug</label>
+                                    <input type="text" name="slug" class="form-control" id="slug" placeholder="Slug" onblur="checkSlug('check_slug_profile', 'checkFromSlug', '')" readonly>
+                                    <span id="slug_error" class="customError"></span>
+                                </div>
+                                <div class="form-group">
+                                    <label for="order">Order</label>
+                                    <input type="text" name="order" class="form-control" id="order" placeholder="Order">
+                                </div>
+                                <div class="form-row">
+                                    <div class="form-group col-md-4">
+                                        <label for="thumbnail">Thumbnail</label>
+                                        <input type="file" name="thumbnail">
+                                        <p class="text-warning"> Image size should be 100 X 100</p>
+                                    </div>
+                                    <div class="form-group col-md-4">
+                                        <label for="small">Small</label>
+                                        <input type="file" name="small">
+                                        <p class="text-warning"> Image size should be 260 X 260</p>
+                                    </div>
+                                    <div class="form-group col-md-4">
+                                        <label for="large">Large</label>
+                                        <input type="file" name="large">
+                                        <p class="text-warning"> Image size should be 450 X 450</p>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="card-footer">
+                                <a href="<%=APPCONSTANT.ADMINCALLURL%>/manage_profile" class="btn btn-default">Cancel</a>
+                                <button type="submit" class="btn btn-primary" id="submitBtn">Submit</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+                <div class="col-md-6">
+
+                </div>
+            </div>
+        </div>
+    </section>
+</div>

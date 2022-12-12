@@ -30,6 +30,7 @@ const Stock = model.stock;
 const Stockentry = model.stock_entries;
 const Notification = model.notification;
 const IpAddress = model.ip_address;
+const Profile = model.profile;
 
 module.exports = {
     exportRole: async function(req, res) {
@@ -1596,6 +1597,54 @@ module.exports = {
         res.setHeader(
             "Content-Disposition",
             "attachment; filename=" + "IPAddress Master.xlsx"
+        );
+
+        return workbook.xlsx.write(res).then(function() {
+            res.status(200).end();
+        });
+    },
+    exportProfile: async function(req, res) {
+        let profileData = await Profile.aggregate([{
+                $match: { deletedAt: 0 },
+            },
+            {
+                $project: {
+                    _id: 0,
+                    name: 1,
+                    order: 1,
+                    status: {
+                        $cond: { if: true, then: "Active", else: "Inactive" },
+                    },
+                    createdAt: {
+                        $dateToString: { format: "%Y-%m-%d", date: "$createdAt" },
+                    },
+                },
+            },
+            {
+                $sort: {
+                    name: 1,
+                },
+            },
+        ]);
+        let workbook = new excel.Workbook();
+        let worksheet = workbook.addWorksheet("Profile Master");
+
+        worksheet.columns = [
+            { header: "Name", key: "name", width: 25 },
+            { header: "Order", key: "order", width: 25 },
+            { header: "Status", key: "status", width: 10 },
+            { header: "Created Date", key: "createdAt", width: 20 },
+        ];
+
+        worksheet.addRows(profileData);
+
+        res.setHeader(
+            "Content-Type",
+            "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
+        );
+        res.setHeader(
+            "Content-Disposition",
+            "attachment; filename=" + "Profile Master.xlsx"
         );
 
         return workbook.xlsx.write(res).then(function() {

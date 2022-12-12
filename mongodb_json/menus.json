@@ -302,4 +302,40 @@
       "slug": "manage_contact"
     }
   ]
+},{
+  "_id": {
+    "$oid": "6387f31ceb17ef78ddc66e5d"
+  },
+  "name": "IP Address Management",
+  "order": 14,
+  "class": "fa fa-users",
+  "status": true,
+  "deletedAt": 0,
+  "submenu": [
+    {
+      "id": {
+        "$oid": "5fba84c1d7090739b4454f2c"
+      },
+      "name": "Manage IP Address",
+      "slug": "manage_ipaddress"
+    }
+  ]
+},{
+  "_id": {
+    "$oid": "63912cd64692984f25644c47"
+  },
+  "name": "Profile Management",
+  "order": 15,
+  "class": "fa fa-users",
+  "status": true,
+  "deletedAt": 0,
+  "submenu": [
+    {
+      "id": {
+        "$oid": "5fba84c1d7090739b4454f2d"
+      },
+      "name": "Manage Profile",
+      "slug": "manage_profile"
+    }
+  ]
 }]

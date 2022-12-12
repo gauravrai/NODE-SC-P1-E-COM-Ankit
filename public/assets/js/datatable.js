@@ -21,6 +21,16 @@ $(document).ready(function() {
         },
     });
 
+    $("#profileTable").DataTable({
+        scrollX: true,
+        processing: true,
+        serverSide: true,
+        ordering: false,
+        ajax: {
+            url: "list_profile",
+            type: "POST",
+        },
+    });
     $("#categoryTable").DataTable({
         scrollX: true,
         processing: true,

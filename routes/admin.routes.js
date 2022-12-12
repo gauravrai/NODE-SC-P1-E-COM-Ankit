@@ -31,6 +31,7 @@ module.exports = function(app) {
     var ajaxRoutes = require("./admin/ajax.routes");
     var exportRoutes = require("./admin/export.routes");
     var ipAddressRoutes = require("./admin/ip_address.routes");
+    var profileRoutes = require("./admin/profile.routes");
     var router = express.Router();
     app.use("", router);
 
@@ -64,4 +65,5 @@ module.exports = function(app) {
     ajaxRoutes(router);
     exportRoutes(router);
     ipAddressRoutes(router);
+    profileRoutes(router);
 };

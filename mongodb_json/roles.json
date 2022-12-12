@@ -82,6 +82,18 @@
       "delete": "0"
     },
     {
+      "id": "6387f31ceb17ef78ddc66e5d",
+      "add": "1",
+      "edit": "0",
+      "delete": "0"
+    },
+    {
+      "id": "63912cd64692984f25644c47",
+      "add": "1",
+      "edit": "0",
+      "delete": "0"
+    },
+    {
       "id": "5f25bb3092dbb0c905b88b11",
       "add": "1",
       "edit": "1",
@@ -215,8 +227,20 @@
     },
     {
       "id": "5fba878cd7090739b4454f40",
-      "add": "0",
-      "edit": "0",
+      "add": "1",
+      "edit": "1",
+      "delete": "1"
+    },
+    {
+      "id": "5fba84c1d7090739b4454f2c",
+      "add": "1",
+      "edit": "1",
+      "delete": "1"
+    },
+    {
+      "id": "5fba84c1d7090739b4454f2d",
+      "add": "1",
+      "edit": "1",
       "delete": "1"
     }
   ],
@@ -225,10 +249,14 @@
   "name": "Superadmin",
   "description": "This role has all permission.",
   "createdAt": {
-    "$date": "2020-08-08T15:39:07.267Z"
+    "$date": {
+      "$numberLong": "1596901147267"
+    }
   },
   "updatedAt": {
-    "$date": "2020-08-08T15:39:07.267Z"
+    "$date": {
+      "$numberLong": "1596901147267"
+    }
   },
   "__v": 0
 },{
@@ -398,10 +426,14 @@
   "name": "Data Processor",
   "description": "Its Test ",
   "createdAt": {
-    "$date": "2020-12-30T16:20:43.057Z"
+    "$date": {
+      "$numberLong": "1609345243057"
+    }
   },
   "updatedAt": {
-    "$date": "2020-12-30T16:20:43.057Z"
+    "$date": {
+      "$numberLong": "1609345243057"
+    }
   },
   "__v": 0
 },{
@@ -433,10 +465,14 @@
   "name": "test role",
   "description": "This is test role",
   "createdAt": {
-    "$date": "2020-12-30T17:20:45.054Z"
+    "$date": {
+      "$numberLong": "1609348845054"
+    }
   },
   "updatedAt": {
-    "$date": "2020-12-30T17:20:45.054Z"
+    "$date": {
+      "$numberLong": "1609348845054"
+    }
   },
   "__v": 0
 },{
@@ -468,10 +504,14 @@
   "name": "Test Role",
   "description": "This is test role.",
   "createdAt": {
-    "$date": "2020-12-30T17:21:21.090Z"
+    "$date": {
+      "$numberLong": "1609348881090"
+    }
   },
   "updatedAt": {
-    "$date": "2020-12-30T17:21:21.090Z"
+    "$date": {
+      "$numberLong": "1609348881090"
+    }
   },
   "__v": 0
 },{
@@ -503,10 +543,14 @@
   "name": "Agency 1",
   "description": "sfdsf",
   "createdAt": {
-    "$date": "2020-12-30T17:23:23.349Z"
+    "$date": {
+      "$numberLong": "1609349003349"
+    }
   },
   "updatedAt": {
-    "$date": "2020-12-30T17:23:23.349Z"
+    "$date": {
+      "$numberLong": "1609349003349"
+    }
   },
   "__v": 0
 },{
@@ -538,10 +582,14 @@
   "name": "Agency 1",
   "description": "fdsdsv",
   "createdAt": {
-    "$date": "2020-12-30T17:23:55.469Z"
+    "$date": {
+      "$numberLong": "1609349035469"
+    }
   },
   "updatedAt": {
-    "$date": "2020-12-30T17:23:55.469Z"
+    "$date": {
+      "$numberLong": "1609349035469"
+    }
   },
   "__v": 0
 }]

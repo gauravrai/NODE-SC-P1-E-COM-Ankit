@@ -1,0 +1,51 @@
+[{
+  "_id": {
+    "$oid": "6395229f68d3100628ae0e96"
+  },
+  "status": true,
+  "deletedAt": 2,
+  "name": "Alok Tiwari Sonu",
+  "slug": "alok-tiwari-sonu",
+  "order": 2,
+  "image": {
+    "thumbnail": "1670719049519_domainPayment.png",
+    "small": "1670719049525_Passbook.jpeg",
+    "large": "1670719049529_Passbook.jpeg"
+  },
+  "createdAt": {
+    "$date": {
+      "$numberLong": "1670718111978"
+    }
+  },
+  "updatedAt": {
+    "$date": {
+      "$numberLong": "1670718111979"
+    }
+  },
+  "__v": 0
+},{
+  "_id": {
+    "$oid": "6395260f71e45736303e9798"
+  },
+  "status": false,
+  "deletedAt": 0,
+  "name": "Pawan Kumar",
+  "slug": "pawan-kumar",
+  "order": 1,
+  "image": {
+    "thumbnail": "1670718991198_pawan.jpg",
+    "small": "1670718991199_pawan.jpg",
+    "large": "1670718991200_pawan.jpg"
+  },
+  "createdAt": {
+    "$date": {
+      "$numberLong": "1670718991207"
+    }
+  },
+  "updatedAt": {
+    "$date": {
+      "$numberLong": "1670718991207"
+    }
+  },
+  "__v": 0
+}]
